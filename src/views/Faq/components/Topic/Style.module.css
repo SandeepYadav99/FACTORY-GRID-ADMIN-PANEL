@@ -1,0 +1,150 @@
+.plainBg{
+    padding: 12px;
+    background: white;
+    border-radius: 10px;
+    height: 300px;
+}
+
+.upperFlex{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.title{
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.notSelected{
+    text-align: left !important;
+    width: 100%;
+    display: inline-block !important;
+    font-weight: 500 !important;
+    position: relative !important;
+    padding: 12px 0px 12px 20px !important;
+}
+.selected{
+   text-align: left !important;
+    width: 100%;
+    display: inline-block !important;
+    font-weight: 500 !important;
+    position: relative !important;
+    padding: 12px 0px 12px 20px !important;
+    transition: all 0.3s ease 0s !important;
+    background-color: rgb(255, 255, 255) !important;
+}
+
+.selected::before {
+    position: absolute;
+    left: -25px;
+    top: 0px;
+    height: 100%;
+    width: 2px;
+    border-radius: 10px;
+    opacity: 0;
+    visibility: hidden;
+    content: "";
+    background: rgb(95, 99, 242);
+    transition: all 0.5s ease 0s;
+}
+
+.selected.active{
+    padding-left: 25px !important;
+}
+
+.selected.active::before {
+    opacity: 1;
+    visibility: visible;
+    left: -7px;
+}
+
+.selected ::after {
+    position: absolute;
+    left: 0px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    content: "";
+    background: rgba(95, 99, 242, 0.314);
+    transition: all 0.5s ease 0s;
+}
+
+.selected.active ::after {
+    left: 3px;
+    background: rgb(95, 99, 242);
+}
+
+
+.notSelected::before {
+    position: absolute;
+    left: -25px;
+    top: 0px;
+    height: 100%;
+    width: 2px;
+    border-radius: 10px;
+    opacity: 0;
+    visibility: hidden;
+    content: "";
+    background: rgb(95, 99, 242);
+    transition: all 0.5s ease 0s;
+}
+
+.notSelected.active{
+    padding-left: 25px !important;
+}
+
+.notSelected.active::before {
+    opacity: 1;
+    visibility: visible;
+    left: -7px;
+}
+
+.notSelected ::after {
+    position: absolute;
+    left: 0px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    content: "";
+    background: rgba(95, 99, 242, 0.314);
+    transition: all 0.5s ease 0s;
+}
+
+.notSelected.active ::after {
+    left: 3px;
+    background: rgb(95, 99, 242);
+}
+
+.list{
+    padding: 0;
+    margin: 0;
+    list-style-type: none;
+}
+
+.item{
+    display: flex;
+}
+
+.outerFlex{
+    display: flex;
+}
+
+.left{
+    flex: 0.5;
+    margin-right: 10px;
+}
+
+.right {
+    flex: 1;
+    margin-left: 10px;
+}
+
+.line{
+    margin-left: 30px;
+    margin-right: 30px;
+}

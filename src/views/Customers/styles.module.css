@@ -1,0 +1,36 @@
+.headerContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.headerContainer .title {
+    font-size: 1rem;
+}
+.userImage {
+    width:100px;
+    height: 100px;
+    border-radius: 50%;
+}
+.firstCellFlex {
+    display: flex;
+    align-items: center;
+}
+.firstCellFlex img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+.firstCellInfo {
+    margin-left: 10px;
+}
+
+.userForm{
+    margin: 0 30%;
+}
+
+.saveButton{
+    display: flex;
+    justify-content: flex-end;
+    padding-top: 15px;
+    padding-bottom: 15px;
+}

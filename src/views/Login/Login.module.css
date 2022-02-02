@@ -1,0 +1,184 @@
+/**
+ * Created by charnjeetelectrovese@gmail.com on 12/13/2018.
+ */
+.mainLoginView {
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+    /*background-image: url('../../assets/img/background.jpg');*/
+    /*background-size: cover;*/
+    /*background-repeat: no-repeat;*/
+}
+.loginFlex1 {
+    background-image: url('../../assets/img/background.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: 50%;
+    flex: 1;
+    display: block;
+    position: relative;
+    width: 100%;
+    padding: 40px;
+    color: #fff;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+
+.loginFlex2 {
+    background-color: #fff;
+    flex: 1.5;
+    display: flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    box-sizing: border-box;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+/*.loginFlex1:after {*/
+    /*position:absolute;*/
+    /*top:0;*/
+    /*!*left:-99px;*!*/
+    /*content:'';*/
+    /*height:0vh;*/
+    /*width:0;*/
+    /*border-right: 100px solid white;*/
+    /*border-bottom:0vh solid transparent;*/
+    /*border-top:100vh solid transparent;*/
+    /*overflow:hidden;*/
+    /*right: -1px;*/
+/*}*/
+
+.loginSignupText {
+    text-align: left;
+}
+
+.bottomSignUp {
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.subText {
+    margin:20px 0px;
+    font-weight: 400;
+    /*font-size: 18px;*/
+    text-align: justify;
+}
+
+.bottomContainer {
+    position: absolute;
+    bottom: 40px;
+}
+
+.headingText {
+    margin: 0px;
+    /*font-weight: 600;*/
+    color: black;
+    font-family: CircularStd-Bold;
+}
+
+
+.bottomSignup {
+    font-size: 0.8rem;
+}
+
+.forgotBtn {
+    color: #5F63F2 !important;
+    text-decoration: underline !important;
+    font-size: 0.7rem;
+    font-weight: 600;
+}
+
+.heading{
+    margin-bottom: 30px;
+    color: white;
+    font-size: 38px;
+    font-weight:500;
+    font-family: 'CircularStd-Medium';
+}
+
+.innerFlex {
+    display: flex;
+    align-items: center;
+}
+.icons {
+    height: 70px;
+    width: 70px;
+}
+
+.textRight {
+    margin-left: 15px;
+}
+
+.titleText {
+    font-size: 22px;
+    font-family: 'CircularStd-Book';
+}
+
+.subHeading {
+    font-size: 14px;
+    /*font-family: CircularStd-Book;*/
+}
+.logFlex{
+    margin-left: 17px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 7px;
+}
+
+.negativeSpacing{
+    margin-left: -20px;
+}
+
+.privacyLinks{
+    /*position: absolute;*/
+    bottom: 0;
+}
+
+.privacyFlex{
+    display: flex;
+    justify-content: space-between;
+    padding: 5% 15%;
+    font-weight: 600;
+}
+
+.privacyContainer{
+    /*padding: 20px 60px;*/
+}
+
+.bottomLinks{
+    font-size: 0.7rem;
+    color: #5F63F2;
+}
+
+.signContainer{
+    padding: 10% 15%;
+}
+
+.login {
+    padding: 15px 60px 15px 60px!important;
+    border-radius: 7px !important;
+    /*background-image:  linear-gradient(to right, #0f49a0);*/
+    color: black !important;
+    /*font-family: Poppins-Medium;*/
+    background: white !important;
+    /*text-transform: uppercase;*/
+    border: 1px solid black !important;
+    margin-top: 15px !important;
+    background-size: 200% 100%;
+    background-position: right bottom;
+    transition: all .5s ease-out;
+}
+
+.login:hover{
+    background-image:   linear-gradient(to left , #0dc9c2,#072ead) !important;
+    color:white !important;
+    transition: 0.2s;
+    /*transition-timing-function:linear;*/
+    border:  1px solid white !important;
+    background-position: left bottom;
+}

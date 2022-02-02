@@ -1,0 +1,60 @@
+.plain{
+    border-radius: 10px;
+    padding: 1.2rem 1.2rem;
+    margin-bottom: 20px;
+    background-color: white;
+    box-shadow: 0 0 8px rgb(0 0 0 / 15%);
+}
+
+.noteFlex{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.7rem;
+}
+
+.weight{
+    font-weight: 600;
+}
+
+.recordFlex{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.event{
+    text-decoration: underline;
+}
+
+.noteCard{
+    font-size: 0.7rem;
+}
+
+.assign{
+    font-weight: 600;
+}
+
+.assignedTo{
+    font-size: 0.7rem;
+    display: flex;
+    align-items: center;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.assignee{
+    margin-left: 10px;
+}
+
+.note{
+    padding-bottom: 10px;
+}
+
+.formContainer{
+    padding: 20px 50px;
+}
+
+.submitBtn{
+    text-align: center;
+}

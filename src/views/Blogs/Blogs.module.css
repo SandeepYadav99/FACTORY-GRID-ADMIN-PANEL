@@ -1,0 +1,44 @@
+.headerContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.headerContainer .title {
+    font-size: 16px;
+}
+.editorContainer {
+    max-height: 500px;
+    overflow: scroll;
+    overflow-x: hidden;
+}
+.editorContainer::-webkit-scrollbar { width: 5px; }
+.editorContainer::-webkit-scrollbar-track { background-color: #e6e6e6; }
+.editorContainer::-webkit-scrollbar-thumb { background-color: #c5c5c4; border-radius: 5px; }
+.headerFlex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.infoTitle{
+    margin-bottom: 15px;
+    padding-bottom: 5px;
+    margin-left: 15px;
+    border-bottom: 1px solid;
+    width: 100%;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+}
+
+.heading{
+    margin-right: 5px;
+}
+
+.enter{
+    font-size: 0.8rem;
+    margin-left: 15px;
+    font-weight: 600;
+    /*padding-bottom: 10px;*/
+    display: block;
+}
