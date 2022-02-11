@@ -127,6 +127,8 @@ class Industry extends Component {
             show_confirm: false,
             included: null,
             questionnaire: [],
+            kyc: [],
+            is_kyc: false
             };
         this._handleSubmit = this._handleSubmit.bind(this);
         this._handleFileChange = this._handleFileChange.bind(this);
@@ -143,9 +145,9 @@ class Industry extends Component {
     componentDidMount() {
         const {data} = this.props;
         if (data) {
-            requiredFields = ['name', 'description'];
+            requiredFields = [];
             Object.keys(data).forEach((val) => {
-                if (['image', 'is_featured'].indexOf(val) == -1) {
+                if (['logo', 'is_featured','banner','is_coming_soon','status'].indexOf(val) == -1) {
                     const temp = data[val];
                     this.props.change(val, temp);
                 }
@@ -153,22 +155,45 @@ class Industry extends Component {
             this.setState({
                 is_active: data.status == 'ACTIVE',
                 is_featured: data.is_featured,
-                questionnaire: data.field_data ? data.field_data : [],
-                type: data.type,
+                coming_soon: data.is_coming_soon,
+                questionnaire: data.kyc ? data.kyc : [],
             })
         } else {
-            requiredFields = ['name', 'image', 'description'];
+            requiredFields = []; //'name','description','banner','logo'
         }
     }
 
     _handleSubmit(tData) {
-        console.log(tData)
+        // console.log(tData)
+        const { questionnaire,kyc } = this.state;
+        //console.log(questionnaire)
+        if(Array.isArray(questionnaire) && questionnaire.length > 0){
+            this.setState({
+                is_kyc: true
+            });
+            let isValid = true;
+            questionnaire.forEach((val) => {
+                if(val.name == '' || val.type == ''){
+                    EventEmitter.dispatch(EventEmitter.THROW_ERROR, {error: 'Please Enter Valid Values',type:'error'});
+                    isValid = false;
+                }
+            });
+            if (!isValid) {
+                return true;
+            }
+        }
+
         const fd = new FormData();
         Object.keys(tData).forEach((key) => {
-            fd.append(key, tData[key]);
+            if (['is_featured','is_kyc','kyc','status'].indexOf(key) < 0) {
+                fd.append(key, tData[key]);
+            }
         });
         fd.append('is_featured', (this.state.is_featured));
+        fd.append('is_coming_soon', (this.state.coming_soon))
         fd.append('status', (this.state.is_active ? 'ACTIVE' : 'INACTIVE'));
+        fd.append('kyc',JSON.stringify(questionnaire))
+        fd.append('is_kyc',this.state.is_kyc)
         const {data} = this.props;
         if (data) {
             this.props.handleDataSave(fd, 'UPDATE')
@@ -328,13 +353,18 @@ class Industry extends Component {
                         </Tooltip>
 
                     </h4>
-                    {data && <Button variant={'contained'}
-                                     // color={'secondary'}
-                                     className={this.props.classes.deleteBtn}
+                    {data && <IconButton variant={'contained'} className={this.props.classes.iconBtnError}
                                          onClick={this._handleDelete}
                                          type="button">
-                      Delete
-                    </Button> }
+                        <DeleteIcon/>
+                    </IconButton>}
+                    {/*{data && <Button variant={'contained'}*/}
+                    {/*                 // color={'secondary'}*/}
+                    {/*                 className={this.props.classes.deleteBtn}*/}
+                    {/*                     onClick={this._handleDelete}*/}
+                    {/*                     type="button">*/}
+                    {/*  Delete*/}
+                    {/*</Button> }*/}
                 </div>
 
                 <form onSubmit={handleSubmit(this._handleSubmit)}>
@@ -342,14 +372,14 @@ class Industry extends Component {
                         <div className={''} style={{ margin: '0px 20px'}}>
                             <Field
                                 max_size={2 * 1024 * 1024}
-                                type={['jpg', 'png', 'pdf', 'jpeg']}
+                                type={['jpg', 'png', 'jpeg']}
                                 fullWidth={true}
-                                name="image"
+                                name="logo"
                                 component={renderFileField}
-                                label=""
+                                //label=""
                                 show_image
-                                default_image={data ? data.image : ''}
-                                link={data ? data.image : ''}
+                                default_image={data ? data.logo : ''}
+                                link={data ? data.logo : ''}
                             />
                         </div>
                         <div className={'formGroup'}>
@@ -375,14 +405,14 @@ class Industry extends Component {
                     <div className={'formGroup'}>
                         <Field
                             max_size={1024*1024*5}
-                            type={['jpg', 'png', 'pdf', 'jpeg']}
+                            type={['jpg', 'png', 'jpeg']}
                             fullWidth={true}
                             error_text={'Max Size 5MB and valid files are jpg, png, jpeg'}
-                            name="banner_image"
+                            name="banner"
                             component={renderFileField}
-                            accept={'image/*, application/pdf'}
+                            // accept={'image/*, application/pdf'}
                             label="Banner Image"
-                            // link={data ? data.id_proof : null}
+                            link={data ? data.banner : ''}
                         />
                     </div>
 

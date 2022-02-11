@@ -94,7 +94,7 @@ class SidePanelComponent extends Component {
         this._handleWidth = this._handleWidth.bind(this);
     }
 
-    _handleWidth  (data) {
+    _handleWidth (data) {
         this.setState({
             delta: data,
         })

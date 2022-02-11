@@ -41,12 +41,16 @@ class QuestionaireComponent extends Component {
         this.state = {
             popover_open: false,
             anchorEl: null,
+            applied: '',
+            checked: true
         };
         this._handlePopover = this._handlePopover.bind(this);
         this._handleTouchTap = this._handleTouchTap.bind(this);
         this._addField = this._addField.bind(this);
         this._handleTextChange = this._handleTextChange.bind(this);
         this._handleRemoveField = this._handleRemoveField.bind(this);
+        this._handleMenuClick = this._handleMenuClick.bind(this);
+        this._handleChange = this._handleChange.bind(this);
     }
 
     _handleTouchTap(event) {
@@ -66,16 +70,16 @@ class QuestionaireComponent extends Component {
 
     _addField(field, type = null) {
         this.setState({
-            popover_open: false
+            popover_open: false,
         });
         const tempQuestionnaire = this.props.questionnaire;
-        let tempQuestion = { field: '', name: '', options: ['yes', 'no'], type: '' };
+        let tempQuestion = {name: '', type: '', is_mandatory: false, applies_to:''};
         if(field == 'TEXT') {
-            tempQuestion = { ...tempQuestion, field: field };
+            tempQuestion = { ...tempQuestion, type: field };
         } else if(field == 'FILE') {
-            tempQuestion = { ...tempQuestion, field: field, type: type };
+            tempQuestion = { ...tempQuestion, type: field };
         } else if(field == 'CHECKBOX') {
-            tempQuestion = { ...tempQuestion, field: field };
+            tempQuestion = { ...tempQuestion, type: field };
         }
         tempQuestionnaire.push(tempQuestion);
         this.props.handleQuestionnaire(tempQuestionnaire);
@@ -93,6 +97,29 @@ class QuestionaireComponent extends Component {
         indexData.name = e.target.value;
         this.props.handleQuestionnaire(tempQuestionnaire);
     }
+
+    _handleChange(e, index){
+        this.setState({
+            applied: e.target.value
+        })
+        const tempQuestionnaire = this.props.questionnaire;
+        const indexData = tempQuestionnaire[index];
+        indexData.applies_to = e.target.value;
+        this.props.handleQuestionnaire(tempQuestionnaire);
+    }
+
+    _handleMenuClick(e, index){
+        const {checked} = this.state
+        this.setState({
+            checked: !this.state.checked
+        }, () => {
+            const tempQuestionnaire = JSON.parse(JSON.stringify(this.props.questionnaire));
+            const indexData = tempQuestionnaire[index];
+            indexData.is_mandatory = !this.state.checked;
+            this.props.handleQuestionnaire(tempQuestionnaire);
+        })
+    }
+
     _renderQuestionnaire() {
         const { isDisabled } = this.props;
         return this.props.questionnaire.map((val, index) => {
@@ -100,18 +127,18 @@ class QuestionaireComponent extends Component {
                 <div style={styles.questionnaireContainer}>
                     <div>
                         <Checkbox
-                            name={'is_included'}
-                            // checked={this.props.data.is_included}
-                            // onChange={this._handleIsFeatured}
+                            name={'is_mandatory'}
+                             checked={val.is_mandatory}
+                             onChange={(e) => this._handleMenuClick(e,index)}
                         />
                     </div>
                     <div style={styles.flex1}>
                     <TextField
                         margin={'dense'}
-                        onChange={(e) => {this._handleTextChange(e, index) }}
+                        onChange={(e) => {this._handleTextChange(e, index)}}
                         value={val.name}
                         fullWidth={true}
-                        label={`${val.field} Field`}
+                        label={`${val.type} Field`}
                         // floatingLabelText={`${val.field} Field`}
                         name={'title'}
                         // inputStyle={styles.inputStyle}
@@ -126,17 +153,17 @@ class QuestionaireComponent extends Component {
                             <FormControl variant="outlined" fullWidth>
                                 <InputLabel  margin={'dense'}>Applies To</InputLabel>
                                 <Select
-                                    onChange={this._handleChange}
-                                    // value={this.props.data.apply}
+                                    onChange={(e) => {this._handleChange(e, index)}}
+                                     value={val.applies_to}
                                     fullWidth={true}
                                     // floatingLabelText="Title"
-                                    name={'apply'}
+                                    name={'applies_to'}
                                     margin={'dense'}
                                     // variant={'outlined'}
                                     label={'Applies To'}
                                 >
                                     <MenuItem value={'CUSTOMER'}>Customer</MenuItem>
-                                    <MenuItem value={'MANUFACTURER'}>Manufacturer</MenuItem>
+                                    <MenuItem value={'MANUFACTURE'}>Manufacturer</MenuItem>
                                     <MenuItem value={'BOTH'}>Both</MenuItem>
                                 </Select>
                             </FormControl>

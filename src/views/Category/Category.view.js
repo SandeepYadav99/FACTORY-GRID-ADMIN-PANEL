@@ -124,6 +124,7 @@ class Category extends Component {
             show_confirm: false,
             included: null,
             questionnaire: [],
+            is_kyc: false
             };
         this._handleSubmit = this._handleSubmit.bind(this);
         this._handleFileChange = this._handleFileChange.bind(this);
@@ -139,9 +140,9 @@ class Category extends Component {
     componentDidMount() {
         const {data} = this.props;
         if (data) {
-            requiredFields = ['name', 'description'];
+            requiredFields = [];
             Object.keys(data).forEach((val) => {
-                if (['is_featured'].indexOf(val) == -1) {
+                if (['logo', 'is_featured','status'].indexOf(val) == -1) {
                     const temp = data[val];
                     this.props.change(val, temp);
                 }
@@ -149,29 +150,52 @@ class Category extends Component {
             this.setState({
                 is_active: data.status == 'ACTIVE',
                 is_featured: data.is_featured,
-                questionnaire: data.field_data ? data.field_data : [],
-                type: data.type,
+                questionnaire: data.kyc ? data.kyc : [],
             })
         } else {
-            requiredFields = ['name','description'];
+            requiredFields = []; //'name','description','banner','logo'
         }
     }
 
     _handleSubmit(tData) {
-        console.log(tData)
+        const {industry_id} = this.props;
+        const { questionnaire,kyc } = this.state;
+        console.log(questionnaire)
+        if(Array.isArray(questionnaire) && questionnaire.length > 0){
+            this.setState({
+                is_kyc: true
+            });
+            let isValid = true;
+            questionnaire.forEach((val) => {
+                if(val.name == '' || val.type == ''){
+                    EventEmitter.dispatch(EventEmitter.THROW_ERROR, {error: 'Please Enter Valid Values',type:'error'});
+                    isValid = false;
+                }
+            });
+            if (!isValid) {
+                return true;
+            }
+        }
+
         const fd = new FormData();
         Object.keys(tData).forEach((key) => {
-            fd.append(key, tData[key]);
+            if (['is_featured','is_kyc','kyc','status',].indexOf(key) < 0) {
+                fd.append(key, tData[key]);
+            }
         });
         fd.append('is_featured', (this.state.is_featured));
+        if (industry_id) {
+            fd.append('industry_id', industry_id);
+        }
         fd.append('status', (this.state.is_active ? 'ACTIVE' : 'INACTIVE'));
+        fd.append('kyc',JSON.stringify(questionnaire))
+        fd.append('is_kyc',this.state.is_kyc)
         const {data} = this.props;
         if (data) {
             this.props.handleDataSave(fd, 'UPDATE')
         } else {
             this.props.handleDataSave(fd, 'CREATE')
         }
-
     }
 
     _handleActive() {
@@ -296,7 +320,7 @@ class Category extends Component {
 
 
     render() {
-        const {handleSubmit, data} = this.props;
+        const {handleSubmit, data, industry_id} = this.props;
         const {included} = this.state;
         return (
             <div>
@@ -320,14 +344,14 @@ class Category extends Component {
                         <div className={''} style={{ margin: '0px 20px'}}>
                             <Field
                                 max_size={2 * 1024 * 1024}
-                                type={['jpg', 'png', 'pdf', 'jpeg']}
+                                type={['jpg', 'png', 'jpeg']}
                                 fullWidth={true}
-                                name="image"
+                                name="logo"
                                 component={renderFileField}
-                                label=""
+                                //label=""
                                 show_image
-                                default_image={data ? data.image : ''}
-                                link={data ? data.image : ''}
+                                default_image={data ? data.logo : ''}
+                                link={data ? data.logo : ''}
                             />
                         </div>
                         <div className={'formGroup'}>
@@ -335,6 +359,20 @@ class Category extends Component {
                                    margin={'dense'}
                                    label="Category Name"/>
                         </div>
+                    </div>
+
+                    <div className={'formFlex'}>
+                        {!industry_id && (<div className={'formGroup'}>
+                        <Field fullWidth={true}
+                               name="industry_id"
+                               component={renderOutlinedSelectField}
+                               margin={'dense'}
+                               label="Industry">
+                            {this.props.industries.map((val) => {
+                                return (<MenuItem value={val.id}>{val.name}</MenuItem>);
+                            })}
+                        </Field>
+                    </div>)}
                     </div>
 
                     <div className={'formFlex'}>

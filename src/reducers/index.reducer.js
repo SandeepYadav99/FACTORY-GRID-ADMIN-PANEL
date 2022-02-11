@@ -18,6 +18,8 @@ import BlogsReducer from './Blogs.reducer';
 import SupportReducer from './Support.reducer';
 import TypeReducer from './Type.reducer';
 import UnitReducer from './Unit.reducer';
+import FaqReducer from './Faq.reducer';
+import FaqQuestion from './Faq_question.reducer';
 import AppSettingReducer from './AppSettings.reducer';
 
 const rootReducer = combineReducers({
@@ -37,6 +39,8 @@ const rootReducer = combineReducers({
     support: SupportReducer,
     type: TypeReducer,
     unit: UnitReducer,
+    faq: FaqReducer,
+    faq_question: FaqQuestion,
     customers: Customers,
     // form: formReducer,
 });

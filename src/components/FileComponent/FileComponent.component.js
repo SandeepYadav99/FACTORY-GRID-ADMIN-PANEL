@@ -89,12 +89,12 @@ class File extends Component {
                 <div className={styles.imageBtnContainer}>
                     <div>
                         <div className={styles.imagePlus} style={{ backgroundImage: "url("+(this._getImageUrl(value))+")",
-                            backgroundSize: 'cover', backgroundPosition: 'center'}}></div>
+                            backgroundSize: 'cover', backgroundPosition: 'center',borderColor: (error ? 'red' : '#c2c2c2')}}></div>
                     </div>
                     <div className={styles.imgLowerContainer}>
                         <div className={styles.imgFileLabelPlus}>
                             <span className={styles.plus}>{!value && !default_image ? '+' :''}</span>
-                            <div className={styles.textUpload} style={error ? {backgroundColor: 'red',color:"white" } : {}}>{!value  && !default_image ? 'Upload':''}</div></div>
+                            <div className={styles.textUpload} style={error ? {} : {}}>{!value  && !default_image ? 'Upload':''}</div></div>
                         <input multiple={multiple} id="upload" data-value={'JPG'} accept={accept ? accept : 'image/*'}
                                onChange={this._handleFileChange}
                                className={styles.fileInput}
@@ -102,12 +102,12 @@ class File extends Component {
                     </div>
                     {/*<label style={{fontSize:'14px',fontWeight:'500'}}>{this.props.placeholder}</label>*/}
                 </div>
-                    <div className={styles.tooltipFlex}>
-                        <Tooltip title="Info" aria-label="info" placement="top">
-                            <InfoIcon fontSize={'small'}/>
-                        </Tooltip>
-                        <span className={styles.tipText}>Guidelines</span>
-                    </div>
+                    {/*<div className={styles.tooltipFlex}>*/}
+                    {/*    <Tooltip title="Info" aria-label="info" placement="top">*/}
+                    {/*        <InfoIcon fontSize={'small'}/>*/}
+                    {/*    </Tooltip>*/}
+                    {/*    <span className={styles.tipText}>Guidelines</span>*/}
+                    {/*</div>*/}
                 </div>
             );
         }

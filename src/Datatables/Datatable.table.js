@@ -193,6 +193,9 @@ const useStyles = {
     root: {
         width: '100%',
     },
+    centerText: {
+        textAlign: 'center'
+    },
     paper: {
         width: '100%',
         // marginBottom: theme.spacing(2),
@@ -326,7 +329,7 @@ class EnhancedTable extends React.Component {
     }
 
     _renderTableBody() {
-        const {data} = this.props;
+        const {data, classes} = this.props;
         const {rowsPerPage, page, order, orderBy, selected, dense} = this.state;
         const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
         const isSelected = name => selected.indexOf(name) !== -1;
@@ -355,7 +358,9 @@ class EnhancedTable extends React.Component {
         } else {
             return (
                 <TableRow style={{height: (dense ? 33 : 53) * emptyRows}}>
-                    <TableCell colSpan={6}/>
+                    <TableCell colSpan={this.props.columns.length} classes={{root: classes.centerText}}>
+                        <strong>No Data Available</strong>
+                    </TableCell>
                 </TableRow>
             );
         }

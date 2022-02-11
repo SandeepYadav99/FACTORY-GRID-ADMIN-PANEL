@@ -44,6 +44,7 @@ class Collapse extends Component {
     }
 
     _handleLowerView(){
+        const { onEditClick, quesIndex } = this.props;
         if(this.props.newValue) {
             return (
                 <div>
@@ -74,7 +75,7 @@ class Collapse extends Component {
                             <span className={styles.iconContainer} onClick={this._handleClick}>
                         {!this.state.open ? (<DownIcon/>) : (<UpIcon/>)}
                         </span>
-                            <IconButton>
+                            <IconButton onClick={() => { onEditClick && onEditClick(quesIndex) }}>
                                 <Edit color={'primary'} fontSize={'small'}/>
                             </IconButton>
                         </div>

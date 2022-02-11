@@ -258,7 +258,7 @@ class IndustryList extends Component {
     }
 
     _handleCategories(data) {
-        this.props.history.push('category');
+        this.props.history.push('/industry/category/' + data.id);
     }
 
     render() {
@@ -275,30 +275,6 @@ class IndustryList extends Component {
                 sortable: false,
                 render: (temp, all) => <div >{all.count}</div>,
             },
-            // {
-            //     key: 'type',
-            //     label: 'Type',
-            //     sortable: true,
-            //     render: (temp, all) => <div >{all.type}</div>,
-            // },
-            // {
-            //     key: 'tag',
-            //     label: 'Tag',
-            //     sortable: true,
-            //     render: (temp, all) => <div >{all.tag}</div>,
-            // },
-            // {
-            //     key: 'category',
-            //     label: 'Category',
-            //     sortable: false,
-            //     render: (temp, all) => <div >{all.ref_name}</div>,
-            // },
-            // {
-            //     key: 'createdAt',
-            //     label: 'Date',
-            //     sortable: true,
-            //     render: (temp, all) => <div>{all.createdAt}</div>,
-            // },
             {
                 key: 'status',
                 label: 'Status',

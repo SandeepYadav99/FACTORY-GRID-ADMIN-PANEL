@@ -33,6 +33,7 @@ import {
 } from '../../actions/Category.action';
 import {serviceGetListData} from "../../services/index.services";
 import {serviceGetCustomList} from "../../services/Common.service";
+import {serviceGetIndustryList} from "../../services/Industry.service";
 
 let CreateProvider = null;
 
@@ -74,19 +75,16 @@ class CategoryList extends Component {
     componentDidMount() {
         // if (this.props.total_count <= 0) {
         this.props.actionFetchData();
+        const request = serviceGetIndustryList();
+        request.then((data)=> {
+            if(!data.error){
+                this.setState({
+                    industries: data.data
+                })
+                // this.configFilter[2].fields = data.data;
+            }
+        })
         // }
-
-        // const request = serviceGetCustomList(['CATEGORY', 'PRODUCT']);
-        // request.then((data)=> {
-        //     if(!data.error){
-        //         this.setState({
-        //             listData: data.data,
-        //             is_calling: false
-        //         });
-        //         this.configFilter[2].fields = data.data.categories;
-        //     }
-        // });
-
     }
 
 
@@ -190,25 +188,12 @@ class CategoryList extends Component {
     //     }}>{(status)}</span>);
     // }
 
-    renderStatus(val) {
-        // const status = val.replace('_', ' ');
-        // let color = 'green';
-        // if (status == 'REJECTED') {
-        //     color = 'red';
-        // } else if (status == 'SUSPENDED' || status == 'DELETED') {
-        //     color = '#ff4610';
-        // } else if (status == 'PENDING' || val == 'INACTIVE') {
-        //     color = 'orange'
-        // }
-        // return (<span style={{
-        //     ...styles.spanFont,
-        //     fontSize: '12px',
-        //     color: 'white',
-        //     background: `${color}`,
-        //     padding: '3px 10px',
-        //     borderRadius: '20px',
-        //     textTransform: 'capitalize'
-        // }}>{(status)}</span>);
+    renderStatus(status) {
+        let className = 'warning';
+        if (status in Constants.STATUS) {
+            className = Constants.STATUS[status];
+        }
+        return (<span className={classNames('status', className)}>{(status)}</span>);
     }
 
     renderFirstCell(user) {
@@ -254,16 +239,20 @@ class CategoryList extends Component {
             CreateProvider = require('./Category.view').default;
         }
         if (this.state.side_panel) {
+            const { id } = this.props.match.params;
             return (<CreateProvider
                 handleDataSave={this._handleDataSave}
                 listData={this.state.listData}
                 data={this.state.edit_data}
+                industries = {this.state.industries}
+                industry_id={id}
                 handleDelete={this._handleDelete}></CreateProvider>);
         }
         return null;
     }
 
     render() {
+        const { id } = this.props.match.params;
         const tableStructure = [
             {
                 key: 'name',
@@ -336,9 +325,9 @@ class CategoryList extends Component {
             <div>
                 <PageBox>
                     <div className={styles.headerContainer}>
-                        <ButtonBase onClick={this._handleBack}>
+                        {id !== undefined ?<ButtonBase onClick={this._handleBack}>
                             <KeyboardArrowLeft fontSize={'large'}/>
-                        </ButtonBase>
+                        </ButtonBase> : ''}
                         <span className={styles.title}>Categories List</span>
                         <Button onClick={this._handleSideToggle} variant={'contained'} color={'primary'}
                                 // disabled={this.state.is_calling}

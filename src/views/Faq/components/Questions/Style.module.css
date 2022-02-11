@@ -1,0 +1,90 @@
+.plainBg{
+    padding: 12px;
+    background: white;
+    border-radius: 10px;
+    /*height: 300px;*/
+}
+
+.upperFlex{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.title{
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+/**/
+.headerContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 15px;
+}
+.headerContainer .title {
+    font-size: 16px;
+    font-weight: 600;
+}
+.editorContainer {
+    max-height: 500px;
+    overflow: scroll;
+    overflow-x: hidden;
+}
+.editorContainer::-webkit-scrollbar { width: 5px; }
+.editorContainer::-webkit-scrollbar-track { background-color: #e6e6e6; }
+.editorContainer::-webkit-scrollbar-thumb { background-color: #c5c5c4; border-radius: 5px; }
+.headerFlex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.infoTitle{
+    margin-bottom: 15px;
+    padding-bottom: 5px;
+    margin-left: 15px;
+    border-bottom: 1px solid;
+    width: 100%;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+}
+
+.heading{
+    margin-right: 5px;
+}
+
+.lblTxt{
+    font-weight: 600;
+    font-size: 1rem;
+    padding: 10px 15px;
+}
+
+.bottomFlex{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.delete{
+    color: red;
+}
+
+.submitBtn{
+    text-align: center;
+}
+
+.outerFlex{
+    display: flex;
+}
+
+.left{
+    flex: 0.5;
+    margin-right: 10px;
+}
+
+.right {
+    flex: 1;
+    margin-left: 10px;
+}

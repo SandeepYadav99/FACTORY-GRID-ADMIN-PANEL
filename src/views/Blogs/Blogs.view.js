@@ -77,11 +77,21 @@ const validate = (values) => {
             errors[field] = 'Required'
         }
     });
-    if (values.title && !/^[A-Z ]*$/i.test(values.title)) {
-        errors.title = 'Only alphabets are allowed';
+    if (values['read_time'] == 0) {
+        errors['read_time'] = 'Read Time cannot be 0'
     }
+    // if (values.title && !/^[A-Z ]*$/i.test(values.title)) {
+    //     errors.title = 'Only alphabets are allowed';
+    // }
     return errors
 };
+
+const negativeNormalize = (value, prevValue) => {
+    if (!value || value >= 0 && value.length < 5) {
+        return value
+    } return prevValue;
+};
+
 
 const defaultTheme = createMuiTheme()
 
@@ -104,7 +114,7 @@ class Blogs extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            is_checked: false,
+            is_featured: false,
             editor: null,
             editor_data: null,
             anchor: null,
@@ -131,16 +141,21 @@ class Blogs extends Component {
         const {data} = this.props;
         let htmlData = '';
         if (data) {
+            console.log(data.is_featured)
+            this.setState({
+                is_featured: data.is_featured
+            })
             requiredFields = ['title', 'tags'];
             Object.keys(data).forEach((val) => {
-                if (['cover_image', 'description', 'tags','status','view_count','slug','id','createdAt','industry_name'].indexOf(val) < 0) {
+                if (['cover_image', 'description', 'tags','status','view_count','slug','createdAt','industry_name'].indexOf(val) < 0) {
                     const temp = data[val];
                     this.props.change(val, temp);
                 }
             });
             this.setState({
                 is_active: data.status == 'ACTIVE',
-                tags: data.tags
+                tags: data.tags,
+                is_featured: data.is_featured
             })
             htmlData = data.description;
         } else {
@@ -168,16 +183,20 @@ class Blogs extends Component {
 
     _handleSubmit(tData) {
         const { editor,tags} = this.state;
+        //console.log(editor)
         if(tags.length == 0){
             EventEmitter.dispatch(EventEmitter.THROW_ERROR, {error: 'Please Enter Tags',type:'error'});
         }
         else if (editor) {
             const fd = new FormData();
             Object.keys(tData).forEach((key) => {
-                fd.append(key, tData[key]);
+                if (['is_featured'].indexOf(key) < 0) {
+                    fd.append(key, tData[key]);
+                }
             });
             fd.append('description', editor);
             fd.append('tags',(this.state.tags));
+            fd.append('is_featured', JSON.stringify(this.state.is_featured));
             // fd.append('status', (this.state.is_active ? 'ACTIVE' : 'INACTIVE'));
             const {data} = this.props;
             if (data) {
@@ -185,17 +204,24 @@ class Blogs extends Component {
             } else {
                 this.props.handleDataSave(fd, 'CREATE')
             }
+        } else {
+            EventEmitter.dispatch(EventEmitter.THROW_ERROR, {error: 'Please Enter Description',type:'error'});
         }
     }
 
     _handleEditor(data, b) {
-
-        // console.log('data',convertFromRaw(data));
-        const html = stateToHTML(data.getCurrentContent());
-        console.log('data', data);
-        this.setState({
-            editor: html
-        })
+        if (!data.getCurrentContent().hasText()) {
+            this.setState({
+                editor: null
+            })
+        } else {
+            // console.log('data',convertFromRaw(data));
+            const html = stateToHTML(data.getCurrentContent());
+            console.log('data', data);
+            this.setState({
+                editor: html
+            })
+        }
     }
 
     _handleActive() {
@@ -318,7 +344,7 @@ class Blogs extends Component {
 
     _handleChange() {
         this.setState({
-            is_checked: !this.state.is_checked
+            is_featured: !this.state.is_featured,
         })
     }
 
@@ -427,12 +453,12 @@ class Blogs extends Component {
         }
 
 
-        if (filterdData.length <=10  ) {
+        if (filterdData.length <=6  ) {
             this.setState({
                 tags: filterdData
             })
-        } else if (tempKeywords.length > 10)  {
-            EventEmitter.dispatch(EventEmitter.THROW_ERROR, {error: 'Maximum 10 Keywords ', type: 'error'});
+        } else if (tempKeywords.length > 6)  {
+            EventEmitter.dispatch(EventEmitter.THROW_ERROR, {error: 'Maximum 6 Keywords ', type: 'error'});
         }
     }
 
@@ -448,11 +474,11 @@ class Blogs extends Component {
                         </Tooltip>
 
                     </h4>
-                    {/*{data && <IconButton variant={'contained'} className={this.props.classes.iconBtnError}*/}
-                    {/*onClick={this._handleDelete}*/}
-                    {/*type="button">*/}
-                    {/*<DeleteIcon />*/}
-                    {/*</IconButton> }*/}
+                    {data && <IconButton variant={'contained'} className={this.props.classes.iconBtnError}
+                                         onClick={this._handleDelete}
+                                         type="button">
+                        <DeleteIcon/>
+                    </IconButton>}
                 </div>
                 <form onSubmit={handleSubmit(this._handleSubmit)}>
                     <div className={'formFlex'}>
@@ -519,6 +545,7 @@ class Blogs extends Component {
                         <div className={'formGroup'}>
                             <Field fullWidth={true} name="read_time" component={renderOutlinedTextField}
                                    margin={'dense'} type={'number'}
+                                   normalize={negativeNormalize}
                                    label="No. of Mins of Read"/>
                         </div>
                     </div>

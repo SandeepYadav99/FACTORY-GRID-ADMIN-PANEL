@@ -30,10 +30,11 @@ import {
     actionUpdateBlogs, actionDeleteBlogs
 } from '../../actions/Blogs.action';
 import TopicView from "./components/Topic/Topic.view";
+import QuestionView from "./components/Questions/QuestionView";
 
 
 let CreateProvider = null;
-class BlogsList extends Component {
+class FaqList extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -48,7 +49,8 @@ class BlogsList extends Component {
             cities:[],
             anchorEl: null,
             open: false,
-            faq_type: ''
+            faq_type: '',
+            selectedCategory: null
         };
         this.configFilter = [
             // {label: 'Country', name: 'country', type: 'text'},
@@ -70,11 +72,12 @@ class BlogsList extends Component {
         this._handleDelete = this._handleDelete.bind(this);
         this.handleClick = this.handleClick.bind(this);
         this.handleClose = this.handleClose.bind(this);
+        this._handleCategoryChange = this._handleCategoryChange.bind(this);
     }
 
     componentDidMount() {
         // if (this.props.total_count <= 0) {
-        this.props.actionFetchData();
+        //this.props.actionFetchData();
 
     }
 
@@ -179,10 +182,10 @@ class BlogsList extends Component {
     }
 
     _handleSideToggle(type) {
-        console.log(type)
+        // console.log(type)
         this.setState({
             side_panel: !this.state.side_panel,
-            faq_type: type
+            //faq_type: type
         });
     }
 
@@ -194,6 +197,11 @@ class BlogsList extends Component {
         });
     }
 
+    _handleCategoryChange(category) {
+        this.setState({
+            selectedCategory: category
+        })
+    }
 
     _renderCreateForm () {
         if (CreateProvider == null) {
@@ -211,6 +219,7 @@ class BlogsList extends Component {
             ></CreateProvider>);
         } return null;
     }
+
     _handleChangeStatus(data, type) {
         this.props.actionChangeStatus({...data, type: type});
         this.setState({
@@ -221,6 +230,7 @@ class BlogsList extends Component {
 
     _handleDataSave(data, type) {
         // this.props.actionChangeStatus({...data, type: type});
+
         if (type == 'CREATE') {
             this.props.actionCreateBlogs(data)
         } else {
@@ -248,6 +258,7 @@ class BlogsList extends Component {
     }
 
     render() {
+        const {selectedCategory} = this.state;
         return (
             <div>
                 {/*<PageBox>*/}
@@ -262,14 +273,26 @@ class BlogsList extends Component {
                 {/*</PageBox>*/}
 
 
-                <TopicView handleSideToggle={this._handleSideToggle}/>
+                <div className={styles.outerFlex}>
+                    <div className={styles.left}>
+                        <TopicView
+                            selectedCategory={selectedCategory}
+                             handleCategoryChange={this._handleCategoryChange}
+                        />
+                    </div>
+                    <div className={styles.right}>
+                        <QuestionView
+                             category={selectedCategory}
+                        />
+                    </div>
+                </div>
 
+                {/*<SidePanelComponent*/}
+                {/*    handleToggle={this._handleSideToggle}*/}
+                {/*    title={'Add/Manage FAQ Topic'} open={this.state.side_panel} side={'right'}>*/}
+                {/*    {this._renderCreateForm()}*/}
+                {/*</SidePanelComponent>*/}
 
-                <SidePanelComponent
-                    handleToggle={this._handleSideToggle}
-                    title={'Add/Manage FAQ Topic'} open={this.state.side_panel} side={'right'}>
-                    {this._renderCreateForm()}
-                </SidePanelComponent>
             </div>
         )
     }
@@ -278,28 +301,14 @@ class BlogsList extends Component {
 
 function mapStateToProps(state) {
     return {
-        data: state.blogs.present,
-        total_count: state.blogs.all.length,
-        currentPage: state.blogs.currentPage,
-        serverPage: state.blogs.serverPage,
-        sorting_data: state.blogs.sorting_data,
-        is_fetching: state.blogs.is_fetching,
-        query: state.blogs.query,
-        query_data: state.blogs.query_data,
+
     };
 }
 
 function mapDispatchToProps(dispatch) {
     return bindActionCreators({
-        actionFetchData: actionFetchBlogs,
-        actionSetPage: actionSetPageBlogs,
-        actionResetFilter: actionResetFilterBlogs,
-        actionSetFilter: actionFilterBlogs,
-        actionChangeStatus: actionChangeStatusBlogs,
-        actionCreateBlogs: actionCreateBlogs,
-        actionUpdateBlogs: actionUpdateBlogs,
-        actionDelete: actionDeleteBlogs
+
     }, dispatch);
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(BlogsList);
+export default connect(mapStateToProps, mapDispatchToProps)(FaqList);

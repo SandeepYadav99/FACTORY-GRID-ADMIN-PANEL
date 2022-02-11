@@ -8,6 +8,7 @@ class QuestionsView extends Component{
     }
 
     _renderFAQ(){
+        return  null
         return(
             ['Topic Question 1 can be there in 2 lines at max after which it will be truncated','Topic Question 1 can be there in 2 lines at max after which it will be truncated'].map((val)=> {
                 return(
