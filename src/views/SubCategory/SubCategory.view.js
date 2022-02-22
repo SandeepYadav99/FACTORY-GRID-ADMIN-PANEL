@@ -24,12 +24,10 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogActions from "@material-ui/core/DialogActions";
 import Slide from "@material-ui/core/Slide";
 import {bindActionCreators} from "redux";
-import QuestionaireChild from '../../components/Questionnaire/Questionaire.component';
-
-import Tooltip from '@material-ui/core/Tooltip';
-import Fab from '@material-ui/core/Fab';
-import InfoIcon from '@material-ui/icons/Info';
-import IncludeForm from './components/includes/Includes.component';
+import QuestionaireChild from '../../components/Questionnaire/Questionaire.component'
+import Tooltip from "@material-ui/core/Tooltip";
+import InfoIcon from "@material-ui/icons/Info";
+// import IncludeForm from './components/includes/Includes.component';
 // import {serviceProviderEmailExists} from "../../services/ProviderRequest.service";
 // import {servicePromotionCheck} from "../../services/Promotion.service";
 
@@ -58,17 +56,19 @@ const validate = (values) => {
     return errors
 };
 
-const descNormalize = (val, prevVal) => {
-    if (val.length > 500) {
-        return prevVal;
-    } return val;
-}
+const countNormalize = (value, prevValue) => {
+    if (value.length > 200) {
+        return prevValue;
+    }
+    return value;
+};
 
 const titleNormalize = (val, prevVal) => {
     if(val.length <= 50){
         return val;
     } return prevVal;
 }
+
 // const educationNormalize = (value, prevValue) => {
 //     if (value.length > 300) {
 //         return prevValue
@@ -122,19 +122,17 @@ let isValueExists = false
 // };
 
 
-class Industry extends Component {
+class Category extends Component {
     constructor(props) {
         super(props);
         this.includes = null;
         this.state = {
             is_active: true,
             is_featured: false,
-            coming_soon: false,
             type: 'GENERAL',
             show_confirm: false,
             included: null,
             questionnaire: [],
-            kyc: [],
             is_kyc: false
             };
         this._handleSubmit = this._handleSubmit.bind(this);
@@ -146,35 +144,31 @@ class Industry extends Component {
         this._handleQuestionnaire = this._handleQuestionnaire.bind(this);
         this._suspendItem = this._suspendItem.bind(this);
         this._handleType = this._handleType.bind(this);
-        this._handleComingSoon = this._handleComingSoon.bind(this);
     }
 
     componentDidMount() {
         const {data} = this.props;
         if (data) {
-            requiredFields = ['name','description'];
+            requiredFields = ['name'];
             Object.keys(data).forEach((val) => {
-                if (['logo', 'is_featured','banner','is_coming_soon','status'].indexOf(val) == -1) {
+                if (['status'].indexOf(val) == -1) {
                     const temp = data[val];
                     this.props.change(val, temp);
                 }
             });
-
             this.setState({
                 is_active: data.status == 'ACTIVE',
-                is_featured: data.is_featured,
-                coming_soon: data.is_coming_soon,
                 questionnaire: data.kyc ? data.kyc : [],
             })
         } else {
-            requiredFields = ['name','description','banner','logo']; //'name','description','banner','logo'
+            requiredFields = ['name']; //,'description','banner','logo'
         }
     }
 
     _handleSubmit(tData) {
-        // console.log(tData)
-        const { questionnaire,kyc } = this.state;
-        console.log(questionnaire)
+        // const {category_id} = this.props;
+        const { questionnaire } = this.state;
+        //console.log(questionnaire)
         if(Array.isArray(questionnaire) && questionnaire.length > 0){
             this.setState({
                 is_kyc: true
@@ -190,25 +184,22 @@ class Industry extends Component {
                 return true;
             }
         }
-
-        const fd = new FormData();
-        Object.keys(tData).forEach((key) => {
-            if (['is_featured','is_kyc','kyc','status'].indexOf(key) < 0) {
-                fd.append(key, tData[key]);
-            }
-        });
-        fd.append('is_featured', (this.state.is_featured));
-        fd.append('is_coming_soon', (this.state.coming_soon))
-        fd.append('status', (this.state.is_active ? 'ACTIVE' : 'INACTIVE'));
-        fd.append('kyc',JSON.stringify(questionnaire))
-        fd.append('is_kyc',this.state.is_kyc)
+        // const fd = new FormData();
+        // Object.keys(tData).forEach((key) => {
+        //     if (['is_featured','is_kyc','kyc','status',].indexOf(key) < 0) {
+        //         fd.append(key, tData[key]);
+        //     }
+        // });
+        const category_id =  this.props.category_id
+        const status = this.state.is_active ? 'ACTIVE' : 'INACTIVE';
+        const kyc = (questionnaire);
+        const is_kyc = questionnaire.length > 0 ? true : false
         const {data} = this.props;
         if (data) {
-            this.props.handleDataSave(fd, 'UPDATE')
+            this.props.handleDataSave({ ...tData, status: status, id: data.id, category_id, is_kyc, kyc }, 'UPDATE')
         } else {
-            this.props.handleDataSave(fd, 'CREATE')
+            this.props.handleDataSave({...tData,status: status, category_id, is_kyc, kyc },  'CREATE')
         }
-
     }
 
     _handleActive() {
@@ -233,7 +224,8 @@ class Industry extends Component {
                 }
                 label="Active ?"
             />);
-        } else {
+        }
+        else {
             return null
         }
     }
@@ -331,31 +323,15 @@ class Industry extends Component {
         }
     }
 
-    _handleComingSoon(){
-        this.setState({
-            coming_soon: !this.state.coming_soon,
-        });
-    }
-
-    _renderComing(){
-        return (<FormControlLabel
-            control={
-                <Switch color={'secondary'} checked={this.state.coming_soon} onChange={this._handleComingSoon}
-                        value="coming_soon"/>
-            }
-            label="Coming Soon ?"
-        />);
-    }
-
 
     render() {
-        const {handleSubmit, data} = this.props;
+        const {handleSubmit, data, industry_id} = this.props;
         const {included} = this.state;
         return (
             <div>
                 <div className={styles.headerFlex}>
                     <h4 className={styles.infoTitle}>
-                        <div className={styles.heading}>Industry</div>
+                        <div className={styles.heading}>SubCategory</div>
                         <Tooltip title="Info" aria-label="info" placement="right">
                             <InfoIcon fontSize={'small'}/>
                         </Tooltip>
@@ -364,67 +340,59 @@ class Industry extends Component {
                     {data && <IconButton variant={'contained'} className={this.props.classes.iconBtnError}
                                          onClick={this._handleDelete}
                                          type="button">
-                        <DeleteIcon/>
-                    </IconButton>}
-                    {/*{data && <Button variant={'contained'}*/}
-                    {/*                 // color={'secondary'}*/}
-                    {/*                 className={this.props.classes.deleteBtn}*/}
-                    {/*                     onClick={this._handleDelete}*/}
-                    {/*                     type="button">*/}
-                    {/*  Delete*/}
-                    {/*</Button> }*/}
+                        <DeleteIcon />
+                    </IconButton> }
                 </div>
 
                 <form onSubmit={handleSubmit(this._handleSubmit)}>
-                    <div className={'formFlex'} >
-                        <div className={''} style={{ margin: '0px 20px'}}>
-                            <Field
-                                max_size={2 * 1024 * 1024}
-                                type={['jpg', 'png', 'jpeg']}
-                                fullWidth={true}
-                                name="logo"
-                                component={renderFileField}
-                                //label=""
-                                show_image
-                                default_image={data ? data.logo : ''}
-                                link={data ? data.logo : ''}
-                            />
-                        </div>
+                    <div className={'formFlex'} style={{ }}>
+                        {/*<div className={''} style={{ margin: '0px 20px'}}>*/}
+                        {/*    <Field*/}
+                        {/*        max_size={2 * 1024 * 1024}*/}
+                        {/*        type={['jpg', 'png', 'jpeg']}*/}
+                        {/*        fullWidth={true}*/}
+                        {/*        name="logo"*/}
+                        {/*        component={renderFileField}*/}
+                        {/*        //label=""*/}
+                        {/*        show_image*/}
+                        {/*        default_image={data ? data.logo : ''}*/}
+                        {/*        link={data ? data.logo : ''}*/}
+                        {/*    />*/}
+                        {/*</div>*/}
                         <div className={'formGroup'}>
                             <Field fullWidth={true} name="name" component={renderOutlinedTextField}
                                    margin={'dense'}
                                    normalize={titleNormalize}
-                                   label="Industry Name"/>
+                                   label="SubCategory Name"/>
                         </div>
                     </div>
 
-                    <div className={'formFlex'}>
-                        <div className={'formGroup'}>
-                            <Field
-                                fullWidth={true}
-                                multiline
-                                rows={3}
-                                name="description"
-                                normalize={descNormalize}
-                                component={renderOutlinedTextField}
-                                margin={'dense'}
-                                label="Description"/>
-                        </div>
-                    </div>
+                    {/*<div className={'formFlex'}>*/}
+                    {/*    {!industry_id && (<div className={'formGroup'}>*/}
+                    {/*    <Field fullWidth={true}*/}
+                    {/*           name="industry_id"*/}
+                    {/*           component={renderOutlinedSelectField}*/}
+                    {/*           margin={'dense'}*/}
+                    {/*           label="Industry">*/}
+                    {/*        {this.props.industries.map((val) => {*/}
+                    {/*            return (<MenuItem value={val.id}>{val.name}</MenuItem>);*/}
+                    {/*        })}*/}
+                    {/*    </Field>*/}
+                    {/*</div>)}*/}
+                    {/*</div>*/}
 
-                    <div className={'formGroup'}>
-                        <Field
-                            max_size={1024*1024*5}
-                            type={['jpg', 'png', 'jpeg']}
-                            fullWidth={true}
-                            error_text={'Max Size 5MB and valid files are jpg, png, jpeg'}
-                            name="banner"
-                            component={renderFileField}
-                            // accept={'image/*, application/pdf'}
-                            label="Banner Image"
-                            link={data ? data.banner : ''}
-                        />
-                    </div>
+                    {/*<div className={'formFlex'}>*/}
+                    {/*    <div className={'formGroup'}>*/}
+                    {/*        <Field fullWidth={true}*/}
+                    {/*               name="description"*/}
+                    {/*               component={renderOutlinedTextField}*/}
+                    {/*               multiline*/}
+                    {/*               rows="3"*/}
+                    {/*               margin={'dense'}*/}
+                    {/*               normalize={countNormalize}*/}
+                    {/*               label="Description"/>*/}
+                    {/*    </div>*/}
+                    {/*</div>*/}
 
                     <label htmlFor="" className={styles.includeContainer}>
                         KYC
@@ -443,22 +411,13 @@ class Industry extends Component {
                     </div>
 
                     <div className={'formFlex'}>
-                        <div className={'formGroup'}>
-                            {this._renderFeatured()}
-                        </div>
+                        {/*<div className={'formGroup'}>*/}
+                        {/*    {this._renderFeatured()}*/}
+                        {/*</div>*/}
                         <div className={'formGroup'}>
                             {this._renderActive()}
                         </div>
                     </div>
-                    <div className={'formFlex'}>
-                        <div className={'formGroup'}>
-                            {this._renderComing()}
-                        </div>
-                        <div className={'formGroup'}>
-
-                        </div>
-                    </div>
-
                     <div style={{float: 'right'}}>
                         <Button variant={'contained'} color={'primary'} type={'submit'}>
                             Submit
@@ -474,33 +433,24 @@ class Industry extends Component {
 const useStyle = theme => ({
     iconBtnError: {
         color: theme.palette.error.dark
-    },
-    deleteBtn: {
-        backgroundColor:'red',
-        color:'white',
-        '&:hover': {
-            color: 'white',
-            backgroundColor: 'red',
-        }
     }
 });
 
 
 const ReduxForm = reduxForm({
-    form: 'industry',  // a unique identifier for this form
+    form: 'category',  // a unique identifier for this form
     validate,
     // asyncValidate,
     enableReinitialize: true,
     onSubmitFail: errors => {
         EventEmitter.dispatch(EventEmitter.THROW_ERROR, {error: 'Please enter values', type: 'error'});
     }
-})(withStyles(useStyle, {withTheme: true})(Industry));
+})(withStyles(useStyle, {withTheme: true})(Category));
 
 
 function mapStateToProps(state) {
     return {
-        country_code: state.auth.user_profile.country_code,
-        country_currency: state.auth.user_profile.country_currency,
+
     };
 }
 

@@ -20,6 +20,7 @@ import TypeReducer from './Type.reducer';
 import UnitReducer from './Unit.reducer';
 import FaqReducer from './Faq.reducer';
 import FaqQuestion from './Faq_question.reducer';
+import Subcategory from './SubCategory.reducer'
 import AppSettingReducer from './AppSettings.reducer';
 
 const rootReducer = combineReducers({
@@ -35,6 +36,7 @@ const rootReducer = combineReducers({
     // user: UserReducer,
     industry: Industry,
     category: Category,
+    subcategory: Subcategory,
     blogs: BlogsReducer,
     support: SupportReducer,
     type: TypeReducer,

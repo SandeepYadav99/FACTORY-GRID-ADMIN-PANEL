@@ -69,4 +69,5 @@
 .right {
     flex: 1;
     margin-left: 10px;
+    overflow: hidden;
 }

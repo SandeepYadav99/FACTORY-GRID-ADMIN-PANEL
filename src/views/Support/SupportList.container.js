@@ -269,12 +269,12 @@ class SupportList extends Component {
             <div>
                 <div className={styles.caseId}>{user.name}</div>
                 <div className={styles.mobileFlex}>
-                    <img src={require('../../assets/img/varified_icon.png')} alt="" height={12}/>
-                    <div className={styles.mob}>Mobile No.</div>
+                    {/*<img src={require('../../assets/img/varified_icon.png')} alt="" height={12}/>*/}
+                    <div className={styles.mob}>{user.contact}</div>
                 </div>
                 <div className={styles.mobileFlex}>
-                    <img src={require('../../assets/img/varified_icon.png')} alt="" height={12}/>
-                    <div className={styles.mob}>Email</div>
+                    {/*<img src={require('../../assets/img/varified_icon.png')} alt="" height={12}/>*/}
+                    <div className={styles.mob}>{user.email}</div>
                 </div>
             </div>
         )
@@ -299,7 +299,7 @@ class SupportList extends Component {
                 label: 'Case ID',
                 sortable: true,
                 style: { width: '10%'},
-                render: (temp, all) => <div><div className={styles.caseId}>{all.case}</div>24/12/2021</div>,
+                render: (temp, all) => <div><div className={styles.caseId}>{all.case}</div></div>,
             },
             {
                 key: 'customer',
@@ -313,14 +313,14 @@ class SupportList extends Component {
                 label: 'Concern',
                 sortable: false,
                 // style: { width: '20%'},
-                render: (temp, all) => <div><div className={styles.caseId}>{all.concern}</div><div>The brief of concern is shown in max 2 lines</div></div>,
+                render: (temp, all) => <div><div className={styles.caseId}>{all.concern}</div><div>{all.message}</div></div>,
             },
             {
                 key: 'assigned_to',
                 label: 'Assigned To',
                 sortable: false,
                 // style: { width: '20%'},
-                render: (temp, all) => <div><div className={styles.caseId}>{all.assigned}</div>11/10/2021</div>,
+                render: (temp, all) => <div><div className={styles.caseId}>{all.assigned}</div></div>,
             },
             {
                 key: 'status',
@@ -332,7 +332,7 @@ class SupportList extends Component {
                 key: 'updatedAt',
                 label: 'Last Updated',
                 sortable: true,
-                render: (temp, all) => <div className={styles.caseId}>{all.updatedAt}<br/>1:00 PM</div>,
+                render: (temp, all) => <div className={styles.caseId}>{all.createdAt}</div>,
             },
             {
                 key: 'priority',

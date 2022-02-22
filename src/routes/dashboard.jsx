@@ -38,6 +38,7 @@ import CustomerTabs from "../views/Customers/components/UpperTabs/CustomerTabs.v
 import ManufacturerTabs from '../views/Manufacturer/components/UpperTabs/ManufacturerTabs.view';
 import Support from "../views/Support/Support.view";
 import UnitList from "../views/Unit/UnitList.container";
+import SubCategoryList from "../views/SubCategory/SubCategoryList.container";
 
 const dashboardRoutes = [
     {
@@ -84,6 +85,7 @@ const dashboardRoutes = [
         component: IndustryList,
         is_sidebar: true,
         is_protect: true,
+        should_regex: true,
         parent: 'masters',
     },
     {
@@ -94,17 +96,28 @@ const dashboardRoutes = [
         component: CategoryList,
         is_sidebar: false,
         is_protect: true,
+        should_regex: true,
         // parent: 'masters',
     },
+    // {
+    //     path: "/industry/category/",
+    //     sidebarName: "Categories",
+    //     navbarName: "Categories",
+    //     icon: Dashboard,
+    //     component: CategoryList,
+    //     is_sidebar: true,
+    //     is_protect: true,
+    //      parent: 'masters',
+    // },
     {
-        path: "/industry/category/",
-        sidebarName: "Categories",
-        navbarName: "Categories",
+        path: "/industry/category/subcategory/:id",
+        sidebarName: "SubCategory",
+        navbarName: "SubCategory",
         icon: Dashboard,
-        component: CategoryList,
-        is_sidebar: true,
+        component: SubCategoryList,
+        is_sidebar: false,
         is_protect: true,
-         parent: 'masters',
+        // parent: 'masters',
     },
     {
         path: "/users",

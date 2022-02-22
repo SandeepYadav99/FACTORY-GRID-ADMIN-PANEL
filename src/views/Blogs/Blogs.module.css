@@ -6,6 +6,7 @@
 .headerContainer .title {
     font-size: 16px;
 }
+
 .editorContainer {
     max-height: 500px;
     overflow: scroll;

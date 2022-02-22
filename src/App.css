@@ -200,3 +200,7 @@ input[type=radio] + label:hover {
 .log .MuiTypography-body1{
     font-size: 0.8rem;
 }
+
+.innerHtml{
+    word-wrap: break-word;
+}

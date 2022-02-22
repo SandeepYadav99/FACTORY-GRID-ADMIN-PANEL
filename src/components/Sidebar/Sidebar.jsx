@@ -155,6 +155,13 @@ const Sidebar = ({...props}) => {
         return routeName == props.location.pathname;
         // return props.location.pathname.indexOf(routeName) > -1 ? true : false;
     }
+    // function activeRoute(routeName, otherData) {
+    //     if (!otherData.should_regex) {
+    //         return routeName == props.location.pathname;
+    //     }
+    //      return routeName == props.location.pathname || props.location.pathname.indexOf(routeName) > -1 ? true : false ;
+    //     // return props.location.pathname.indexOf(routeName) > -1 ? true : false;
+    // }
 
     const {classes, color, logo, image, logoText, routes} = props;
     var brand = (

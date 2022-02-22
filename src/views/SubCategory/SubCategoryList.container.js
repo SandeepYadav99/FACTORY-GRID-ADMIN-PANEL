@@ -21,23 +21,20 @@ import DataTables from '../../Datatables/Datatable.table';
 import Constants from '../../config/constants';
 import FilterComponent from '../../components/Filter/Filter.component';
 import {
-    actionFetchCategory,
-    actionChangePageCategory,
-    actionChangeStatusCategory,
-    actionFilterCategory,
-    actionResetFilterCategory,
-    actionSetPageCategory,
-    actionCreateCategory,
-    actionUpdateCategory,
-    actionDeleteCategory
-} from '../../actions/Category.action';
-import {serviceGetListData} from "../../services/index.services";
-import {serviceGetCustomList} from "../../services/Common.service";
-import {serviceGetIndustryList} from "../../services/Industry.service";
+    actionFetchSubCategory,
+    actionChangePageSubCategory,
+    actionChangeStatusSubCategory,
+    actionFilterSubCategory,
+    actionResetFilterSubCategory,
+    actionSetPageSubCategory,
+    actionCreateSubCategory,
+    actionUpdateSubCategory,
+    actionDeleteSubCategory
+} from '../../actions/SubCategory.action';
 
 let CreateProvider = null;
 
-class CategoryList extends Component {
+class SubCategoryList extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -75,15 +72,6 @@ class CategoryList extends Component {
     componentDidMount() {
         // if (this.props.total_count <= 0) {
         this.props.actionFetchData();
-        const request = serviceGetIndustryList();
-        request.then((data)=> {
-            if(!data.error){
-                this.setState({
-                    industries: data.data
-                })
-                // this.configFilter[2].fields = data.data;
-            }
-        })
         // }
     }
 
@@ -101,9 +89,9 @@ class CategoryList extends Component {
     _handleDataSave(data, type) {
         // this.props.actionChangeStatus({...data, type: type});
         if (type == 'CREATE') {
-            this.props.actionCreateCategory(data)
+            this.props.actionCreateSubCategory(data)
         } else {
-            this.props.actionUpdateCategory(data)
+            this.props.actionUpdateSubCategory(data)
         }
         this.setState({
             side_panel: !this.state.side_panel,
@@ -154,11 +142,12 @@ class CategoryList extends Component {
     }
 
     _handleBack() {
-        this.props.history.push('/industry');
+        this.props.history.goBack()
+        // this.props.history.push('/industry');
     }
 
     _handleSubCategories(data) {
-        this.props.history.push('/industry/category/subcategory/' + data.id);
+        // this.props.history.push('subcategory');
     }
 
 
@@ -212,7 +201,7 @@ class CategoryList extends Component {
     }
 
     _handleDelete(id) {
-        this.props.actionDeleteCategory(id);
+        this.props.actionDeleteSubCategory(id);
         this.setState({
             side_panel: !this.state.side_panel,
             edit_data: null,
@@ -236,7 +225,7 @@ class CategoryList extends Component {
     _renderCreateForm() {
         if (CreateProvider == null) {
             // import CreateProvider from './Create.container';
-            CreateProvider = require('./Category.view').default;
+            CreateProvider = require('./SubCategory.view').default;
         }
         if (this.state.side_panel) {
             const { id } = this.props.match.params;
@@ -245,7 +234,7 @@ class CategoryList extends Component {
                 listData={this.state.listData}
                 data={this.state.edit_data}
                 industries = {this.state.industries}
-                industry_id={id}
+                category_id={id}
                 handleDelete={this._handleDelete}></CreateProvider>);
         }
         return null;
@@ -260,35 +249,11 @@ class CategoryList extends Component {
                 sortable: true,
                 render: (value, all) => <div>{this.renderFirstCell(all)}</div>,
             }, {
-                key: 'total_subcategories',
-                label: 'Sub Category Count',
+                key: 'category_name',
+                label: 'Category Name',
                 sortable: false,
-                render: (temp, all) => <div >{all.total_subcategories}</div>,
+                render: (temp, all) => <div >{all.category_name}</div>,
             },
-            // {
-            //     key: 'type',
-            //     label: 'Type',
-            //     sortable: true,
-            //     render: (temp, all) => <div >{all.type}</div>,
-            // },
-            // {
-            //     key: 'tag',
-            //     label: 'Tag',
-            //     sortable: true,
-            //     render: (temp, all) => <div >{all.tag}</div>,
-            // },
-            // {
-            //     key: 'category',
-            //     label: 'Category',
-            //     sortable: false,
-            //     render: (temp, all) => <div >{all.ref_name}</div>,
-            // },
-            // {
-            //     key: 'createdAt',
-            //     label: 'Date',
-            //     sortable: true,
-            //     render: (temp, all) => <div>{all.createdAt}</div>,
-            // },
             {
                 key: 'status',
                 label: 'Status',
@@ -298,8 +263,7 @@ class CategoryList extends Component {
             {
                 key: 'user_id',
                 label: 'Action',
-                render: (temp, all) => (<div><Button onClick={this._handleEdit.bind(this, all)}>Info</Button>
-                    <Button onClick={this._handleSubCategories.bind(this, all)} color={'primary'}>Sub-Category</Button></div>),
+                render: (temp, all) => (<div><Button onClick={this._handleEdit.bind(this, all)}>Info</Button></div>)
             },
 
 
@@ -328,7 +292,7 @@ class CategoryList extends Component {
                         {id !== undefined ?<ButtonBase onClick={this._handleBack}>
                             <KeyboardArrowLeft fontSize={'large'}/>
                         </ButtonBase> : ''}
-                        <span className={styles.title}>Categories List</span>
+                        <span className={styles.title}>SubCategories List</span>
                         <Button onClick={this._handleSideToggle} variant={'contained'} color={'primary'}
                                 // disabled={this.state.is_calling}
                         >
@@ -357,7 +321,7 @@ class CategoryList extends Component {
                 </PageBox>
                 <SidePanelComponent
                     handleToggle={this._handleSideToggle}
-                    title={'New Category'} open={this.state.side_panel} side={'right'}>
+                    title={'New SubCategory'} open={this.state.side_panel} side={'right'}>
                     {this._renderCreateForm()}
                 </SidePanelComponent>
             </div>
@@ -367,28 +331,28 @@ class CategoryList extends Component {
 
 function mapStateToProps(state) {
     return {
-        data: state.category.present,
-        total_count: state.category.all.length,
-        currentPage: state.category.currentPage,
-        serverPage: state.category.serverPage,
-        sorting_data: state.category.sorting_data,
-        is_fetching: state.category.is_fetching,
-        query: state.category.query,
-        query_data: state.category.query_data,
+        data: state.subcategory.present,
+        total_count: state.subcategory.all.length,
+        currentPage: state.subcategory.currentPage,
+        serverPage: state.subcategory.serverPage,
+        sorting_data: state.subcategory.sorting_data,
+        is_fetching: state.subcategory.is_fetching,
+        query: state.subcategory.query,
+        query_data: state.subcategory.query_data,
     };
 }
 
 function mapDispatchToProps(dispatch) {
     return bindActionCreators({
-        actionFetchData: actionFetchCategory,
-        actionSetPage: actionSetPageCategory,
-        actionResetFilter: actionResetFilterCategory,
-        actionSetFilter: actionFilterCategory,
-        actionChangeStatus: actionChangeStatusCategory,
-        actionCreateCategory: actionCreateCategory,
-        actionUpdateCategory: actionUpdateCategory,
-        actionDeleteCategory: actionDeleteCategory,
+        actionFetchData: actionFetchSubCategory,
+        actionSetPage: actionSetPageSubCategory,
+        actionResetFilter: actionResetFilterSubCategory,
+        actionSetFilter: actionFilterSubCategory,
+        actionChangeStatus: actionChangeStatusSubCategory,
+        actionCreateSubCategory: actionCreateSubCategory,
+        actionUpdateSubCategory: actionUpdateSubCategory,
+        actionDeleteSubCategory: actionDeleteSubCategory,
     }, dispatch);
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(CategoryList);
+export default connect(mapStateToProps, mapDispatchToProps)(SubCategoryList);

@@ -89,7 +89,7 @@ class QuestionView extends Component{
                 return (
 
                         <Accordion quesIndex={index} key={val.id} onEditClick={this._handleEdit} title={val.question} initial="hide">
-                            <div dangerouslySetInnerHTML={{__html: val.description}}></div>
+                            <div className={'innerHtml'} dangerouslySetInnerHTML={{__html: val.description}}></div>
                          </Accordion>
                 )
             })

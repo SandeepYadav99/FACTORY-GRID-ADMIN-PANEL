@@ -47,6 +47,7 @@ export const renderOutlinedTextField = ({input, label, meta: {touched, error}, .
             {...input}
             {...custom}
             label={label}
+            //onBlur={() => input.onChange(input.value.trim())}
             // helperText={touched && error}
             variant={'outlined'}
         />
@@ -59,7 +60,7 @@ export const renderOutlinedTextFieldWithLimit = ({input, label, maxLimit, meta: 
     return (
         <TextField
             error={(touched && error) ? true : false}
-            helperText={((touched && error) ? true : false) ? custom.errorText : ''}
+            helperText={((touched && error) ? true : false) ? (custom.errorText ? custom.errorText : error) : ''}
             {...input}
             {...custom}
             label={tempLabel}

@@ -41,6 +41,9 @@ const validate = (values) => {
             errors[field] = 'Required'
         }
     });
+    if (values.name && !/^[A-Z ]*$/i.test(values.name)) {
+        errors.name = 'Only alphabets are allowed';
+    }
     if (values.email && !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
         errors.email = 'Invalid email address'
     }
@@ -53,8 +56,13 @@ const validate = (values) => {
     return errors
 };
 
+const titleNormalize = (val, prevVal) => {
+    if(val.length <= 50){
+        return val;
+    } return prevVal;
+}
 const countNormalize = (value, prevValue) => {
-    if (value.length > 200) {
+    if (value.length > 500) {
         return prevValue;
     }
     return value;
@@ -140,7 +148,7 @@ class Category extends Component {
     componentDidMount() {
         const {data} = this.props;
         if (data) {
-            requiredFields = [];
+            requiredFields = ['name','description'];
             Object.keys(data).forEach((val) => {
                 if (['logo', 'is_featured','status'].indexOf(val) == -1) {
                     const temp = data[val];
@@ -153,7 +161,7 @@ class Category extends Component {
                 questionnaire: data.kyc ? data.kyc : [],
             })
         } else {
-            requiredFields = []; //'name','description','banner','logo'
+            requiredFields = ['name','description','banner','logo'];
         }
     }
 
@@ -167,7 +175,7 @@ class Category extends Component {
             });
             let isValid = true;
             questionnaire.forEach((val) => {
-                if(val.name == '' || val.type == ''){
+                if(val.name == '' || val.applies_to == ''){
                     EventEmitter.dispatch(EventEmitter.THROW_ERROR, {error: 'Please Enter Valid Values',type:'error'});
                     isValid = false;
                 }
@@ -179,7 +187,7 @@ class Category extends Component {
 
         const fd = new FormData();
         Object.keys(tData).forEach((key) => {
-            if (['is_featured','is_kyc','kyc','status',].indexOf(key) < 0) {
+            if (['is_featured','is_kyc','kyc','status','industry_id'].indexOf(key) < 0) {
                 fd.append(key, tData[key]);
             }
         });
@@ -332,11 +340,11 @@ class Category extends Component {
                         </Tooltip>
 
                     </h4>
-                    {/*{data && <IconButton variant={'contained'} className={this.props.classes.iconBtnError}*/}
-                                         {/*onClick={this._handleDelete}*/}
-                                         {/*type="button">*/}
-                        {/*<DeleteIcon />*/}
-                    {/*</IconButton> }*/}
+                    {data && <IconButton variant={'contained'} className={this.props.classes.iconBtnError}
+                                         onClick={this._handleDelete}
+                                         type="button">
+                        <DeleteIcon />
+                    </IconButton> }
                 </div>
 
                 <form onSubmit={handleSubmit(this._handleSubmit)}>
@@ -357,6 +365,7 @@ class Category extends Component {
                         <div className={'formGroup'}>
                             <Field fullWidth={true} name="name" component={renderOutlinedTextField}
                                    margin={'dense'}
+                                   normalize={titleNormalize}
                                    label="Category Name"/>
                         </div>
                     </div>
@@ -408,9 +417,9 @@ class Category extends Component {
                         <div className={'formGroup'}>
                             {this._renderFeatured()}
                         </div>
-                        {/*<div className={'formGroup'}>*/}
-                        {/*    {this._renderActive()}*/}
-                        {/*</div>*/}
+                        <div className={'formGroup'}>
+                            {this._renderActive()}
+                        </div>
                     </div>
                     <div style={{float: 'right'}}>
                         <Button variant={'contained'} color={'primary'} type={'submit'}>

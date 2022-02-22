@@ -41,10 +41,23 @@ const validate = (values) => {
             errors[field] = 'Required'
         }
     });
-    if (values.title && !/^[A-Z ]*$/i.test(values.title)) {
-        errors.title = 'Only alphabets are allowed';
-    }
+    // if (values.title && !/^[A-Z ]*$/i.test(values.title)) {
+    //     errors.title = 'Only alphabets are allowed';
+    // }
     return errors
+};
+
+const descNormalize = (value, prevValue) => {
+    if (value.length > 100) {
+        return prevValue;
+    }
+    return value;
+};
+
+const negativeNormalize = (value, prevValue) => {
+    if (!value || value >= 0 && value.length < 2) {
+        return value
+    } return prevValue;
 };
 
 const defaultTheme = createMuiTheme()
@@ -227,7 +240,10 @@ class Faq extends Component {
                                 name="title"
                                 component={renderOutlinedTextFieldWithLimit}
                                 maxLimit={100}
+                                multiline
+                                rows="1"
                                 margin={'dense'}
+                                normalize={descNormalize}
                                 label="Topic Header/Question"/>
                         </div>
                     </div>
@@ -254,6 +270,7 @@ class Faq extends Component {
                                 type={'number'}
                                 component={renderOutlinedTextField}
                                 margin={'dense'}
+                                normalize={negativeNormalize}
                                 label="Priority"/>
                         </div>
                     </div>

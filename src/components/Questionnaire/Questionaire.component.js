@@ -95,7 +95,9 @@ class QuestionaireComponent extends Component {
         const tempQuestionnaire = this.props.questionnaire;
         const indexData = tempQuestionnaire[index];
         indexData.name = e.target.value;
-        this.props.handleQuestionnaire(tempQuestionnaire);
+        if(e.target.value.length <= 100) {
+            this.props.handleQuestionnaire(tempQuestionnaire);
+        }
     }
 
     _handleChange(e, index){

@@ -54,6 +54,13 @@ const validate = (values) => {
     return errors
 };
 
+const descNormalize = (value, prevValue) => {
+    if (value.length > 500) {
+        return prevValue;
+    }
+    return value;
+};
+
 const defaultTheme = createMuiTheme()
 
 Object.assign(defaultTheme, {
@@ -106,7 +113,7 @@ class QuestionsFormView extends Component {
         let htmlData = '';
         if (data) {
             this.setState({
-                is_active: data.status
+                is_active: data.status == 'ACTIVE'
             })
             requiredFields = ['title','visible_to','priority','question'];
             Object.keys(data).forEach((val) => {
@@ -151,19 +158,24 @@ class QuestionsFormView extends Component {
                 this.props.handleDataSave({...tData, status: status, faq_category_id: category.id,description:editor}, 'CREATE')
             }
         } else {
-            EventEmitter.dispatch(EventEmitter.THROW_ERROR, 'Please Write Content');
+            EventEmitter.dispatch(EventEmitter.THROW_ERROR, {error: 'Please Enter Description',type:'error'});
         }
 
     }
 
     _handleEditor(data, b) {
-
         // console.log('data',convertFromRaw(data));
-        const html = stateToHTML(data.getCurrentContent());
-        console.log('data', data);
-        this.setState({
-            editor: html
-        })
+        if (!data.getCurrentContent().hasText()) {
+            this.setState({
+                editor: null
+            })
+        } else {
+            const html = stateToHTML(data.getCurrentContent());
+            console.log('data', data);
+            this.setState({
+                editor: html
+            })
+        }
     }
 
     _handleActive() {
@@ -205,27 +217,27 @@ class QuestionsFormView extends Component {
     }
 
     _uploadImage(file) {
-        console.log(file);
-        return new Promise(async (res, rej) => {
-            const fd = new FormData();
-            fd.append('image', file);
-            const req = await serviceUploadBlogImage(fd );
-            if (!req.error) {
-                res({
-                    data: {
-                        src:req.data.image,
-                        url: req.data.image,
-                        width: 300,
-                        // height: 200,
-                        alignment: "left", // or "center", "right"
-                        type: "image" // or "video"
-                    }
-                })
-            } else {
-                rej();
-            }
-
-        })
+        // console.log(file);
+        // return new Promise(async (res, rej) => {
+        //     const fd = new FormData();
+        //     fd.append('image', file);
+        //     const req = await serviceUploadBlogImage(fd );
+        //     if (!req.error) {
+        //         res({
+        //             data: {
+        //                 src:req.data.image,
+        //                 url: req.data.image,
+        //                 width: 300,
+        //                 // height: 200,
+        //                 alignment: "left", // or "center", "right"
+        //                 type: "image" // or "video"
+        //             }
+        //         })
+        //     } else {
+        //         rej();
+        //     }
+        //
+        // })
     }
 
     _setAnchor(anchor) {
@@ -377,8 +389,10 @@ class QuestionsFormView extends Component {
                             <Field
                                 fullWidth={true}
                                 name="question"
+                                component={renderOutlinedTextFieldWithLimit}
+                                maxLimit={500}
                                 margin={'dense'}
-                                component={renderOutlinedTextField}
+                                normalize={descNormalize}
                                 label="Question Name"/>
                         </div>
                     </div>

@@ -210,7 +210,7 @@ class IndustryList extends Component {
         return (
             <div className={styles.firstCellFlex}>
                 <div>
-                    <img src={user.image} alt=""/>
+                    <img src={user.logo} alt=""/>
                 </div>
                 <div className={classNames(styles.firstCellInfo, 'openSans')}>
                     <span><strong>{`${user.name}`}</strong></span> <br/>
@@ -270,10 +270,10 @@ class IndustryList extends Component {
                 render: (value, all) => <div>{this.renderFirstCell(all)}</div>,
             },
             {
-                key: 'count',
+                key: 'total_categories',
                 label: 'Category Count',
                 sortable: false,
-                render: (temp, all) => <div >{all.count}</div>,
+                render: (temp, all) => <div >{all.total_categories}</div>,
             },
             {
                 key: 'status',

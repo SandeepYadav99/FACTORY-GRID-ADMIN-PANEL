@@ -79,7 +79,8 @@ const nameNormalize = (value, prevValue) => {
     if ((value.length) > 25) {
         return prevValue
     } else {
-        return value ? value.toLowerCase() : value;
+        return value
+            // ? value.toLowerCase() : value;
     }
 }
 
@@ -91,8 +92,6 @@ class CreateContainer extends Component {
             is_active:false,
             is_general: false,
             show_confirm: false,
-            tour_types: [{name:'A',id:'1'},{name:'B',id:'2'}],
-            unit: [{name:'A',id:'1'},{name:'B',id:'2'}]
         };
         this._handleSubmit = this._handleSubmit.bind(this);
         this._handleActive = this._handleActive.bind(this);
@@ -114,12 +113,12 @@ class CreateContainer extends Component {
                 }
             });
             this.setState({
-                is_active: data.status == 'ACTIVE'
+                is_active: data.status == 'ACTIVE',
+                is_general: data.is_general
             })
         }
         else {
-            requiredFields=['name','industry_name','subcategory','unit']
-            // this.props.change('type', 'INDIVIDUAL');
+            requiredFields=['name']
         }
     }
 
@@ -131,14 +130,14 @@ class CreateContainer extends Component {
 
 
     _handleSubmit(tData) {
-        console.log(tData)
-
+        //console.log(tData)
+        const general = this.state.is_general
         const status = this.state.is_active ? 'ACTIVE' : 'INACTIVE';
         const {data} = this.props;
         if (data) {
-            this.props.handleDataSave({ ...tData, status: status, id: data.id }, 'UPDATE')
+            this.props.handleDataSave({ ...tData, status: status,is_general: general, id: data.id }, 'UPDATE')
         } else {
-            this.props.handleDataSave({...tData}, 'CREATE')
+            this.props.handleDataSave({...tData, status: status,is_general: general}, 'CREATE')
         }
     }
 

@@ -141,7 +141,7 @@ class Blogs extends Component {
         const {data} = this.props;
         let htmlData = '';
         if (data) {
-            console.log(data.is_featured)
+            // console.log(data.is_featured)
             this.setState({
                 is_featured: data.is_featured
             })
@@ -197,7 +197,7 @@ class Blogs extends Component {
             fd.append('description', editor);
             fd.append('tags',(this.state.tags));
             fd.append('is_featured', JSON.stringify(this.state.is_featured));
-            // fd.append('status', (this.state.is_active ? 'ACTIVE' : 'INACTIVE'));
+            fd.append('status', (this.state.is_active ? 'ACTIVE' : 'INACTIVE'));
             const {data} = this.props;
             if (data) {
                 this.props.handleDataSave(fd, 'UPDATE')
@@ -310,7 +310,7 @@ class Blogs extends Component {
                         onChange={this._handleEditor}
                         onSave={this._handleSave}
                         label="Start typing..."
-                        controls={["bold", "italic", "underline", "strikethrough", "highlight", "undo", "redo", "numberList", "bulletList", "quote", "media", "upload-image",]} //"save","link"
+                        controls={["bold", "italic", "underline", "strikethrough", "undo", "redo", "numberList", "bulletList", "quote", "media",]} //"save","link","upload-image", "highlight"
                         inlineToolbar={true}
                         // customControls={[
                         //     {
@@ -523,7 +523,8 @@ class Blogs extends Component {
                                         ))
                                     }
                                     renderInput={(params) => (
-                                        <TextField {...params} variant="outlined" label="Tags" placeholder="Tags" margin={'dense'}/>
+                                        //console.log(params)
+                                          <TextField {...params} variant="outlined" label="Tags" placeholder="Tags" margin={'dense'}/>
                                     )}
                                 />
                             </div>
@@ -612,7 +613,7 @@ class Blogs extends Component {
 
                     <br/>
                     <br/>
-                    {/*{this._renderStatus()}*/}
+                    {this._renderStatus()}
                     <div style={{float: 'right'}}>
                         <Button variant={'contained'} color={'primary'} type={'submit'}>
                             Submit

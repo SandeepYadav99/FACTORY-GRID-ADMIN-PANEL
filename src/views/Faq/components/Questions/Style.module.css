@@ -14,6 +14,7 @@
 .title{
     font-size: 0.9rem;
     font-weight: 600;
+    word-break: break-word;
 }
 /**/
 .headerContainer {

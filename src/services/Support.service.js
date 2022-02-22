@@ -4,5 +4,5 @@
 import {postRequest} from '../libs/AxiosService.util';
 
 export async function serviceGetSupport(params) {
-    return await postRequest('concern', params);
+    return await postRequest('support', params);
 }

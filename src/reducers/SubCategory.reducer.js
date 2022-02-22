@@ -1,7 +1,9 @@
 /**
- * Created by charnjeetelectrovese@gmail.com on 6/29/2020.
+ * Created by charnjeetelectrovese@gmail.com on 4/10/2020.
  */
-
+/**
+ * Created by charnjeetelectrovese@gmail.com on 4/8/2020.
+ */
 import {
     FETCH_NEXT,
     FETCH_INIT,
@@ -16,8 +18,8 @@ import {
     SET_SERVER_PAGE,
     CREATE_DATA,
     UPDATE_DATA,
-    CLEAN_LIST, UPDATE_STATUS
-} from '../actions/Support.action';
+    DELETE_ITEM
+} from '../actions/SubCategory.action';
 import Constants from '../config/constants';
 
 function mapPresetPRequest(all, pageId) {
@@ -30,25 +32,20 @@ function mapPresetPRequest(all, pageId) {
 
 const initialState = {
     all: [],
-    present: [], //{case:'CA/2021/AA2021',name:'Pranav Bhasin',concern:'Concern from Dropdown',assigned:'Ashutosh',status:'PENDING',updatedAt:'21/10/2021',priority:'High'}
+    present: [],
     currentPage: 0,
     serverPage: 0,
     query: null, // search text data
     query_data: null, // popover filter data change
     sorting_data: {row: null, order: null},
-    is_fetching: false,
-    batch_id: null,
+    is_fetching: false
 };
 
 export default function (state = JSON.parse(JSON.stringify(initialState)), action) {
     switch (action.type) {
-        case CLEAN_LIST: {
-            return { ...state, ...JSON.parse(JSON.stringify(initialState)) };
-        }
         case FETCH_INIT: {
             return {...state, is_fetching: true};
         }
-
         case FETCHED: {
             const newData = (action.payload).data;
             const page = action.payload.page;
@@ -65,34 +62,11 @@ export default function (state = JSON.parse(JSON.stringify(initialState)), actio
         case SET_SORTING: {
             return {...state, sorting_data: action.payload};
         }
-        case UPDATE_STATUS: {
-            if (action.payload) {
-                let tempIndex = null;
-                const prevState = state.all;
-                prevState.some((val, index) => {
-                    if (val.id == action.payload.id) {
-                        tempIndex = index;
-                        return true;
-                    }
-                });
-                if (tempIndex != null) {
-                    prevState[tempIndex].status = action.payload.status
-                }
-                // const newState = state.all.map((val) => {
-                //     if (val.id == action.payload.id) {
-                //         return { ...val, status: action.payload.status == 'SUSPEND' ? 'SUSPEND' : 'ACTIVE' };
-                //     } return { ...val };
-                // });
-                const tableData = mapPresetPRequest(prevState, state.currentPage);
-                return {...state, all: prevState, present: tableData};
-            }
-            return state;
-        }
         case CHANGE_STATUS: {
             if (action.payload) {
                 let tempIndex = null;
                 const prevState = state.all;
-                prevState.some((val, index) => {
+                prevState.some((val, index)=> {
                     if (val.id == action.payload) {
                         tempIndex = index;
                         return true;
@@ -101,11 +75,56 @@ export default function (state = JSON.parse(JSON.stringify(initialState)), actio
                 if (tempIndex != null) {
                     prevState.splice(tempIndex, 1);
                 }
-                // const newState = state.all.map((val) => {
-                //     if (val.id == action.payload.id) {
-                //         return { ...val, status: action.payload.status == 'SUSPEND' ? 'SUSPEND' : 'ACTIVE' };
-                //     } return { ...val };
-                // });
+                const tableData = mapPresetPRequest(prevState, state.currentPage);
+                return { ...state, all: prevState, present: tableData };
+            }
+            return state;
+        }
+        case CREATE_DATA: {
+            if (action.payload) {
+                const prevState = state.all;
+                prevState.unshift(action.payload);
+                const tableData = mapPresetPRequest(prevState, state.currentPage);
+                return {...state, all: prevState, present: tableData};
+            }
+            return state;
+        }
+        case UPDATE_DATA: {
+            if (action.payload) {
+                const prevState = state.all;
+                let tIndex = null;
+                prevState.some((val, index) => {
+                    if (val.id == action.payload.id) {
+                        tIndex = index;
+                        return true;
+                    }
+                });
+                if (tIndex != null) {
+                    prevState[tIndex] = {...prevState[tIndex], ...action.payload};
+                    // prevState[tIndex] = action.payload;
+                }
+                const tableData = mapPresetPRequest(prevState, state.currentPage);
+                return {...state, all: prevState, present: tableData};
+            }
+            return state;
+        }
+
+        case DELETE_ITEM: {
+            if (action.payload) {
+                let tempIndex = null;
+                const prevState = state.all;
+                const id = action.payload;
+
+                prevState.some((val, index) => {
+                    if (val.id == id) {
+                        tempIndex = (index);
+                        return true;
+                    }
+                });
+
+                if (tempIndex != null) {
+                    prevState.splice(tempIndex, 1);
+                }
                 const tableData = mapPresetPRequest(prevState, state.currentPage);
                 return {...state, all: prevState, present: tableData};
             }
@@ -144,46 +163,6 @@ export default function (state = JSON.parse(JSON.stringify(initialState)), actio
         case SET_SERVER_PAGE: {
             return {...state, serverPage: action.payload};
         }
-
-        case CREATE_DATA: {
-            if (action.payload) {
-                const prevState = state.all;
-                prevState.unshift(action.payload);
-                const tableData = mapPresetPRequest(prevState, state.currentPage);
-                return {...state, all: prevState, present: tableData};
-            }
-            return state;
-        }
-        case UPDATE_DATA: {
-            if (action.payload) {
-                const prevState = state.all;
-                let tIndex = null;
-                prevState.some((val, index) => {
-                    if (val.id == action.payload.id) {
-                        tIndex = index;
-                        return true;
-                    }
-                });
-                if (tIndex != null) {
-                    const newData = action.payload;
-                    const oldData = prevState[tIndex];
-                    if (newData.type == 'STATUS_UPDATE') {
-                        const timeStamps = oldData.timestamps;
-                        timeStamps[newData.status] = newData.current_timestamp;
-                        newData.timestamps = timeStamps;
-                    }
-                    prevState[tIndex] = {
-                        ...oldData,
-                        ...newData,
-                    };
-                }
-                const tableData = mapPresetPRequest(prevState, state.currentPage);
-                return {...state, all: prevState, present: tableData};
-            }
-            return state;
-        }
-
-
         default: {
             return state;
         }

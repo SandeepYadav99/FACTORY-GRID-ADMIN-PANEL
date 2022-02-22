@@ -44,7 +44,7 @@ export default function LongMenu({handleEdit}) {
                     },
                 }}
             >
-                <MenuItem onClick={handleClose}>Publish</MenuItem>
+                {/*<MenuItem onClick={handleClose}>Publish</MenuItem>*/}
                 <MenuItem onClick={_handleEdit}>Edit</MenuItem>
                 <MenuItem onClick={handleClose}>Preview</MenuItem>
             </Menu>
