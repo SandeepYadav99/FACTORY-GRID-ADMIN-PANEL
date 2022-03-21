@@ -1,19 +1,11 @@
 import React, {Component} from 'react';
-import PageBox from '../../components/PageBox/PageBox.component';
 import startsWith from 'lodash.startswith';
 import {Button, MenuItem, withStyles, FormControlLabel, Switch, IconButton, Paper} from '@material-ui/core';
 import { Delete as DeleteIcon } from '@material-ui/icons';
 import {Field, reduxForm} from 'redux-form'
 import {connect} from 'react-redux';
-import {
-    renderTextField,
-    renderSelectField,
-    renderOutlinedTextField,
-    renderOutlinedSelectField,
-    renderFileField,
-    renderOutlinedMultipleSelectField, renderCountryContact
-} from '../../libs/redux-material.utils';
-import EventEmitter from "../../libs/Events.utils";
+import {renderOutlinedSelectField, renderDatePicker} from '../../../../libs/redux-material.utils';
+import EventEmitter from "../../../../libs/Events.utils";
 
 import Dialog from "@material-ui/core/Dialog";
 import DialogTitle from "@material-ui/core/DialogTitle";
@@ -91,7 +83,7 @@ let isValueExists = false;
 //     });
 // };
 
-class User extends Component {
+class WorkProfile extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -109,20 +101,18 @@ class User extends Component {
     componentDidMount() {
         const {data} = this.props;
         if (data) {
-            requiredFields = ['name', 'email', 'contact', 'role'];
+            requiredFields = [''];
             Object.keys(data).forEach((val) => {
-                if (['image', 'contact', 'country_code', 'status'].indexOf(val) == -1) {
+                if ([].indexOf(val) == -1) {
                     const temp = data[val];
                     this.props.change(val, temp);
-                } else if (val == 'contact') {
-                    this.props.change(val, `${data['country_code']} ${data['contact']}`)
                 }
             });
             this.setState({
                 is_active: data.status == 'ACTIVE',
             })
         } else {
-            requiredFields = ['name', 'image', 'email', 'contact', 'role',];
+            requiredFields = ['designation'];
         }
     }
 
@@ -228,70 +218,31 @@ class User extends Component {
         return (
             <div>
 
-                <div className={styles.headerFlex}>
-                    {/*<h2>User</h2>*/}
-                    {/*{data && <IconButton variant={'contained'} className={this.props.classes.iconBtnError}*/}
-                    {/*                     onClick={this._handleDelete}*/}
-                    {/*                     type="button">*/}
-                    {/*    <DeleteIcon />*/}
-                    {/*</IconButton> }*/}
-                </div>
                 <form onSubmit={handleSubmit(this._handleSubmit)} className={styles.userForm}>
-                    <div className={'formFlex'} style={{justifyContent:'center'}}>
-                        <div className={''} style={{marginRight: '20px'}}>
-                            <Field
-                                max_size={2 * 1024 * 1024}
-                                type={['jpg', 'png', 'pdf']}
-                                fullWidth={true}
-                                name="image"
-                                component={renderFileField}
-                                // label="User Image"
-                                link={data ? data.image : ''}
-                                user_image
-                                default_image={data ? data.image : null}
+
+                    <div className={'formFlex'}>
+                        <div className={'formGroup'}>
+                            <Field fullWidth={true}
+                                   name='doj'
+                                   component={renderDatePicker}
+                                   margin={'dense'}
+                                   label="Joining Date"
+                                   ampm={false}
+                                   inputId={'doj'}
+                                   maxDate={new Date()}
                             />
                         </div>
                     </div>
 
                     <div className={'formFlex'}>
                         <div className={'formGroup'}>
-                            <div>
-                                <Field fullWidth={true} name="name" component={renderOutlinedTextField}
-                                       margin={'dense'}
-                                       label="Full Name"/>
-                            </div>
-                            <br/>
-                            <div>
-                                <Field fullWidth={true}
-                                       type={'email'}
-                                       name="email"
-                                       component={renderOutlinedTextField}
-                                       margin={'dense'}
-                                       label="Email"/>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className={'formFlex'}>
-                        <div className={'formGroup'}>
                             <Field fullWidth={true}
-                                   name="contact"
-                                   type={'number'}
-                                   component={renderCountryContact}
-                                   margin={'dense'}
-                                   label="Phone No"/>
-                        </div>
-                    </div>
-
-                    <div className={'formFlex'}>
-                        <div className={'formGroup'}>
-                            <Field fullWidth={true}
-                                   name="role"
+                                   name="department"
                                    component={renderOutlinedSelectField}
                                    margin={'dense'}
-                                   label="User Role">
-                                <MenuItem value={'MANAGER'}>Manager</MenuItem>
-                                <MenuItem value={'OWNER'}>Owner</MenuItem>
+                                   label="Department">
+                                <MenuItem value={'A'}>A</MenuItem>
+                                <MenuItem value={'B'}>B</MenuItem>
                             </Field>
                         </div>
                     </div>
@@ -299,26 +250,27 @@ class User extends Component {
                     <div className={'formFlex'}>
                         <div className={'formGroup'}>
                             <Field fullWidth={true}
-                                   name="employee_id"
-                                   //type={'number'}
-                                   component={renderOutlinedTextField}
+                                   name="designation"
+                                   component={renderOutlinedSelectField}
                                    margin={'dense'}
-                                   label="Employee ID"/>
+                                   label="Designation">
+                                <MenuItem value={'A'}>A</MenuItem>
+                                <MenuItem value={'B'}>B</MenuItem>
+                            </Field>
                         </div>
                     </div>
 
-                    {/*<div className={'formFlex'}>*/}
-                    {/*    <div className={'formGroup'}>*/}
-                    {/*        <Field fullWidth={true}*/}
-                    {/*               name="designation"*/}
-                    {/*               component={renderOutlinedSelectField}*/}
-                    {/*               margin={'dense'}*/}
-                    {/*               label="Designation">*/}
-                    {/*            <MenuItem value={'A'}>A</MenuItem>*/}
-                    {/*            <MenuItem value={'B'}>B</MenuItem>*/}
-                    {/*        </Field>*/}
-                    {/*    </div>*/}
-                    {/*</div>*/}
+                    <div className={'formFlex'}>
+                        <div className={'formGroup'}>
+                            <Field fullWidth={true}
+                                   name="manager"
+                                   component={renderOutlinedSelectField}
+                                   margin={'dense'}
+                                   label="Manager">
+                                <MenuItem value={'SUPER_ADMIN'}>Super Admin</MenuItem>
+                            </Field>
+                        </div>
+                    </div>
 
                     {/*{this._renderActive()}*/}
 
@@ -343,14 +295,14 @@ const useStyle = theme => ({
 
 
 const ReduxForm = reduxForm({
-    form: 'user',  // a unique identifier for this form
+    form: 'work_profile',  // a unique identifier for this form
     validate,
     // asyncValidate,
     enableReinitialize: true,
     onSubmitFail: errors => {
         EventEmitter.dispatch(EventEmitter.THROW_ERROR, {error: 'Please enter values', type: 'error'});
     }
-})(withStyles(useStyle, {withTheme: true})(User));
+})(withStyles(useStyle, {withTheme: true})(WorkProfile));
 
 function mapStateToProps(state) {
     return {};

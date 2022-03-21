@@ -11,7 +11,7 @@ import {ButtonBase} from "@material-ui/core";
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
-import {Add, Lock} from "@material-ui/icons";
+import {Add, Assignment, CalendarToday, Description, Details, Lock} from "@material-ui/icons";
 import ResetPasswordDialog from '../ForgotPassword/ResetPassword.view'
 
 class Profile extends Component {
@@ -55,10 +55,12 @@ class Profile extends Component {
                 <div className={styles.profileFlex}>
                     <div className={styles.leftSection}>
                         <div className={styles.plain}>
+                            <ButtonBase className={styles.edit}>Edit</ButtonBase>
                             <div className={styles.profileContainer}>
-                                <img src={require('../../assets/img/download.png')}/>
+                                <img src={require('../../assets/img/download.png')}/>{/*<div>NO PHOTO THEN SHOW INITIALS</div>*/}
+
                                 <div className={styles.name}>Duran Clyton</div>
-                                <div className={styles.position}>UI/UX Designer</div>
+                                <div className={styles.position}>Emp. ID</div>
 
                                 <div className={styles.designation}>Administrator</div>
                                 <div className={styles.status}>Active</div>
@@ -71,7 +73,14 @@ class Profile extends Component {
                                 <div className={styles.contactFlex}><CallIcon className={styles.contactIcons}/> <span className={styles.email}>+132 23242 3434</span></div>
                             </div>
 
-                            <br/>
+
+                            <h5 className={styles.heading}>Work Info</h5>
+                            <div>
+                                <div className={styles.activityFlex}><Description className={styles.contactIcons}/><span className={styles.activity}>Department</span></div>
+                                <div className={styles.activityFlex}><Details className={styles.contactIcons}/><span className={styles.activity}>Designation</span></div>
+                                <div className={styles.activityFlex}><CalendarToday className={styles.contactIcons}/><span className={styles.activity}>Date Of Joining</span></div>
+                                <div className={styles.activityFlex}><Assignment className={styles.contactIcons}/><span className={styles.activity}>Manager</span></div>
+                            </div>
 
                             <h5 className={styles.heading}>Activity Info</h5>
                             <div>

@@ -59,7 +59,7 @@ class BlogsList extends Component {
         this.configFilter = [
             // {label: 'Country', name: 'country', type: 'text'},
             {label: 'Request Date', name: 'createdAt', type: 'date', options:{maxDate: new Date()}},
-            {label: 'Status', name: 'status', type: 'select', fields: ['PENDING', 'ACTIVE']},
+            {label: 'Status', name: 'status', type: 'select', fields: ['INACTIVE', 'ACTIVE']},
             {label: 'Industry', name: 'industry_id', type: 'selectObject', custom: { extract: { id: 'id', title: 'name' } } , fields: []},
         ];
 

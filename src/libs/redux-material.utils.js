@@ -210,7 +210,7 @@ const useStyles = {
         flexWrap: 'wrap',
     },
     chip: {
-        margin: '0px 2px',
+        margin: '2px',
         height: 20
     },
 };

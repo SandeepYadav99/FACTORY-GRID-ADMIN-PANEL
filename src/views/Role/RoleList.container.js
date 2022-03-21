@@ -273,8 +273,8 @@ class RoleList extends Component {
         console.log(this.props.data)
         const tableStructure = [
             {
-                key: 'name',
-                label: 'Info',
+                key: 'role',
+                label: 'Role',
                 sortable: true,
                 render: (value, all) => <div>{this.renderFirstCell(all)}</div>,
             }, {
@@ -284,8 +284,8 @@ class RoleList extends Component {
                 render: (temp, all) => <div >{all.description}</div>,
             },
             {
-                key: 'team',
-                label: 'Team',
+                key: 'users',
+                label: 'Users',
                 sortable: true,
                 render: (temp, all) => <div >{this.renderTeams(all)}</div>,
             },

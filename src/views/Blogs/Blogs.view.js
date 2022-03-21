@@ -93,6 +93,16 @@ const negativeNormalize = (value, prevValue) => {
 };
 
 
+const titleNormalize = (value, prevValue) => {
+    if ((value.length) > 150) {
+        return prevValue
+    } else {
+        return value
+        // ? value.toLowerCase() : value;
+    }
+}
+
+
 const defaultTheme = createMuiTheme()
 
 Object.assign(defaultTheme, {
@@ -145,7 +155,7 @@ class Blogs extends Component {
             this.setState({
                 is_featured: data.is_featured
             })
-            requiredFields = ['title', 'tags'];
+            requiredFields = ['title', 'tags','industry_id','read_time','author','meta_description'];
             Object.keys(data).forEach((val) => {
                 if (['cover_image', 'description', 'tags','status','view_count','slug','createdAt','industry_name'].indexOf(val) < 0) {
                     const temp = data[val];
@@ -310,7 +320,7 @@ class Blogs extends Component {
                         onChange={this._handleEditor}
                         onSave={this._handleSave}
                         label="Start typing..."
-                        controls={["bold", "italic", "underline", "strikethrough", "undo", "redo", "numberList", "bulletList", "quote", "media",]} //"save","link","upload-image", "highlight"
+                        controls={["bold", "italic", "underline", "strikethrough", "undo", "redo", "numberList", "bulletList", "quote","link"]} //"save","upload-image", "highlight","media"
                         inlineToolbar={true}
                         // customControls={[
                         //     {
@@ -489,6 +499,7 @@ class Blogs extends Component {
                                 component={renderOutlinedTextField}
                                 type={'text'}
                                 margin={'dense'}
+                                normalize={titleNormalize}
                                 // onChange={this._handleTitleChange}
                                 label="Title"/>
                         </div>
@@ -571,11 +582,12 @@ class Blogs extends Component {
                                    // multiline
                                    // rows="2"
                                    margin={'dense'}
-                                   // normalize={countNormalize}
+                                   normalize={titleNormalize}
                                    label="Meta Description"/>
                         </div>
                     </div>
 
+                    <label className={styles.enter}>Image should be in JPG, PNG format and should of 16:9 ratio</label>
                     <div className="formFlex">
                         <div className={'formGroup'}>
                             <Field

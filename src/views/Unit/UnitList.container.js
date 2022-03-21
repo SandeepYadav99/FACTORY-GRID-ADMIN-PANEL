@@ -217,6 +217,12 @@ class UnitList extends Component {
                 render: (value, all) => <div>{this.renderFirstCell(all)}</div>,
             },
             {
+                key: 'is_general',
+                label: 'Is General',
+                sortable: true,
+                render: (value, all) => <div>{all.is_general == true ? 'Yes' : 'No'}</div>,
+            },
+            {
                 key: 'status',
                 label: 'Status',
                 sortable: true,

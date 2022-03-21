@@ -7,6 +7,7 @@ import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import UserView from '../../User.view';
+import WorkProfile from '../../components/Work/WorkProfile.view'
 import PersonOutlineIcon from '@material-ui/icons/PersonOutline';
 import WorkOutlineIcon from '@material-ui/icons/WorkOutline';
 import ShareIcon from '@material-ui/icons/Share';
@@ -100,7 +101,7 @@ class ProfileView extends React.Component {
                         <UserView/>
                     </TabPanel>
                     <TabPanel value={this.state.value} index={1} dir={theme.direction}>
-
+                        <WorkProfile/>
                     </TabPanel>
                     <TabPanel value={this.state.value} index={2} dir={theme.direction}>
 

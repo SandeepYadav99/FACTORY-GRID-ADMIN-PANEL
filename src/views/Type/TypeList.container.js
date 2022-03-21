@@ -29,6 +29,7 @@ import {
     actionCreateType,
     actionUpdateType, actionDeleteType
 } from '../../actions/Type.action';
+import {serviceGetListData} from "../../services/index.services";
 
 let CreateProvider = null;
 class TypeList extends Component {
@@ -42,7 +43,9 @@ class TypeList extends Component {
             total: Constants.DEFAULT_PAGE_VALUE + 1,
             side_panel: false,
             edit_data: null,
-            tour_types:[]
+            industries:[],
+            units: [],
+            subcategories: []
         };
         this.configFilter = [
 
@@ -66,15 +69,16 @@ class TypeList extends Component {
     componentDidMount() {
         // if (this.props.total_count <= 0) {
         this.props.actionFetchData();
-        // const request = serviceFetchTourTypes();
-        // request.then((data)=> {
-        //     if(!data.error){
-        //         this.setState({
-        //             tour_types:data.data
-        //         })
-        //     }
-        // })
-        // }
+        const request = serviceGetListData();
+        request.then((data)=> {
+            if(!data.error){
+                this.setState({
+                    industries: data.data.industries,
+                    units: data.data.units,
+                    subcategories: data.data.subcategories,
+                })
+            }
+        })
     }
 
 
@@ -182,6 +186,9 @@ class TypeList extends Component {
         if (this.state.side_panel) {
             return (<CreateProvider
                 data={this.state.edit_data}
+                industries = {this.state.industries}
+                units = {this.state.units}
+                subcategories = {this.state.subcategories}
                 handleDataSave={this._handleDataSave}
                 handleDelete={this._handleDelete}
             ></CreateProvider>);
@@ -216,12 +223,12 @@ class TypeList extends Component {
                 sortable: true,
                 render: (value, all) => <div>{this.renderFirstCell(all)}</div>,
             },
-            {
-                key: 'name',
-                label: 'Industry Name',
-                sortable: true,
-                render: (value, all) => <div>{all.industry_name}</div>,
-            },
+            // {
+            //     key: 'name',
+            //     label: 'Industry Name',
+            //     sortable: true,
+            //     render: (value, all) => <div>{all.industry_name}</div>,
+            // },
 
             {
                 key: 'status',

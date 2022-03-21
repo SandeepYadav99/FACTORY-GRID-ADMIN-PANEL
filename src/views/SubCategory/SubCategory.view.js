@@ -27,6 +27,7 @@ import {bindActionCreators} from "redux";
 import QuestionaireChild from '../../components/Questionnaire/Questionaire.component'
 import Tooltip from "@material-ui/core/Tooltip";
 import InfoIcon from "@material-ui/icons/Info";
+import {serviceSubCategoryCheck} from "../../services/SubCategory.service";
 // import IncludeForm from './components/includes/Includes.component';
 // import {serviceProviderEmailExists} from "../../services/ProviderRequest.service";
 // import {servicePromotionCheck} from "../../services/Promotion.service";
@@ -82,45 +83,32 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 });
 
 let lastValue = '';
-let isValueExists = false
+let isExists = false
 
-// const asyncValidate = (values, dispatch, props) => {
-//     return new Promise((resolve, reject) => {
-//         if (values.name) {
-//             const value = values.name;
-//             if (lastValue == value && isValueExists && false) {
-//                 reject({name: 'Name Already Registered'});
-//             } else {
-//                 const tempQuery = {name: value};
-//                 const {data} = props;
-//                 if (data) {
-//                     tempQuery['id'] = data.id;
-//                 }
-//                 serviceCategoryCheck(tempQuery).then((data) => {
-//                     console.log(data);
-//                     lastValue = value;
-//                     if (!data.error) {
-//                         const error = {};
-//                         let isError = false;
-//                         if (data.data.is_exists) {
-//                             error['name'] = 'Name Already Registered';
-//                             isError = true;
-//                         }
-//                         if (isError) {
-//                             reject(error);
-//                         } else {
-//                             resolve({});
-//                         }
-//                     }
-//                     resolve({});
-//                 })
-//             }
-//         } else {
-//             resolve({});
-//         }
-//     });
-// };
-
+const asyncValidate = (values, dispatch, props) => {
+    return new Promise((resolve, reject) => {
+        if (values.name) {
+            const value = values.name;
+            if (lastValue == value && isExists && false) {
+                reject({name: 'Subcategory Name already Taken'});
+            } else {
+                const data = props.data;
+                serviceSubCategoryCheck({name: value, id: data ? data.id : null }).then((data) => {
+                    console.log(data);
+                    lastValue = value;
+                    if (!data.error) {
+                        if (data.data.is_exists) {
+                            reject({name: 'Subcategory Name already Taken'});
+                        }
+                    }
+                    resolve({});
+                })
+            }
+        } else {
+            resolve({});
+        }
+    });
+};
 
 class Category extends Component {
     constructor(props) {
@@ -161,7 +149,7 @@ class Category extends Component {
                 questionnaire: data.kyc ? data.kyc : [],
             })
         } else {
-            requiredFields = ['name']; //,'description','banner','logo'
+            requiredFields = ['name','type_id']; //,'description','banner','logo'
         }
     }
 
@@ -367,19 +355,19 @@ class Category extends Component {
                         </div>
                     </div>
 
-                    {/*<div className={'formFlex'}>*/}
-                    {/*    {!industry_id && (<div className={'formGroup'}>*/}
-                    {/*    <Field fullWidth={true}*/}
-                    {/*           name="industry_id"*/}
-                    {/*           component={renderOutlinedSelectField}*/}
-                    {/*           margin={'dense'}*/}
-                    {/*           label="Industry">*/}
-                    {/*        {this.props.industries.map((val) => {*/}
-                    {/*            return (<MenuItem value={val.id}>{val.name}</MenuItem>);*/}
-                    {/*        })}*/}
-                    {/*    </Field>*/}
-                    {/*</div>)}*/}
-                    {/*</div>*/}
+                    <div className={'formFlex'}>
+                       <div className={'formGroup'}>
+                        <Field fullWidth={true}
+                               name="type_id"
+                               component={renderOutlinedSelectField}
+                               margin={'dense'}
+                               label="Type">
+                            {this.props.types.map((val) => {
+                                return (<MenuItem value={val.id}>{val.name}</MenuItem>);
+                            })}
+                        </Field>
+                    </div>
+                    </div>
 
                     {/*<div className={'formFlex'}>*/}
                     {/*    <div className={'formGroup'}>*/}
@@ -438,9 +426,9 @@ const useStyle = theme => ({
 
 
 const ReduxForm = reduxForm({
-    form: 'category',  // a unique identifier for this form
+    form: 'subcategory',  // a unique identifier for this form
     validate,
-    // asyncValidate,
+    asyncValidate,
     enableReinitialize: true,
     onSubmitFail: errors => {
         EventEmitter.dispatch(EventEmitter.THROW_ERROR, {error: 'Please enter values', type: 'error'});

@@ -118,9 +118,9 @@ class File extends Component {
                     <label className={styles.file_upload__label}>
                         <div className={styles.image} style={{ backgroundImage: "url("+(this._getImageUrl(value))+")", backgroundRepeat:'no-repeat',
                             backgroundPosition: 'center', backgroundSize: 'cover', borderColor: (error ? 'red' : '#c2c2c2')}}></div>
-                        <div className={styles.imgEditBtn}>
-                            <CameraAltIcon className={styles.cameraIcon} />
-                        </div>
+                        {/*<div className={styles.imgEditBtn}>*/}
+                        {/*    <CameraAltIcon className={styles.cameraIcon} />*/}
+                        {/*</div>*/}
                     </label>
                     <div className={styles.imgLowerContainer}>
                         <input multiple={multiple} id="upload" data-value={'JPG'} accept={accept ? accept : 'image/*'}

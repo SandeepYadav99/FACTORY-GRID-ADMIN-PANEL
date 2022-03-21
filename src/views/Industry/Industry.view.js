@@ -30,6 +30,7 @@ import Tooltip from '@material-ui/core/Tooltip';
 import Fab from '@material-ui/core/Fab';
 import InfoIcon from '@material-ui/icons/Info';
 import IncludeForm from './components/includes/Includes.component';
+import {serviceIndustryCheck} from "../../services/Industry.service";
 // import {serviceProviderEmailExists} from "../../services/ProviderRequest.service";
 // import {servicePromotionCheck} from "../../services/Promotion.service";
 
@@ -82,44 +83,32 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 });
 
 let lastValue = '';
-let isValueExists = false
+let isExists = false
 
-// const asyncValidate = (values, dispatch, props) => {
-//     return new Promise((resolve, reject) => {
-//         if (values.name) {
-//             const value = values.name;
-//             if (lastValue == value && isValueExists && false) {
-//                 reject({name: 'Name Already Registered'});
-//             } else {
-//                 const tempQuery = {name: value};
-//                 const {data} = props;
-//                 if (data) {
-//                     tempQuery['id'] = data.id;
-//                 }
-//                 serviceCategoryCheck(tempQuery).then((data) => {
-//                     console.log(data);
-//                     lastValue = value;
-//                     if (!data.error) {
-//                         const error = {};
-//                         let isError = false;
-//                         if (data.data.is_exists) {
-//                             error['name'] = 'Name Already Registered';
-//                             isError = true;
-//                         }
-//                         if (isError) {
-//                             reject(error);
-//                         } else {
-//                             resolve({});
-//                         }
-//                     }
-//                     resolve({});
-//                 })
-//             }
-//         } else {
-//             resolve({});
-//         }
-//     });
-// };
+const asyncValidate = (values, dispatch, props) => {
+    return new Promise((resolve, reject) => {
+        if (values.name) {
+            const value = values.name;
+            if (lastValue == value && isExists && false) {
+                reject({name: 'Industry Name already Taken'});
+            } else {
+                const data = props.data;
+                serviceIndustryCheck({name: value, id: data ? data.id : null }).then((data) => {
+                    console.log(data);
+                    lastValue = value;
+                    if (!data.error) {
+                        if (data.data.is_exists) {
+                            reject({name: 'Industry Name already Taken'});
+                        }
+                    }
+                    resolve({});
+                })
+            }
+        } else {
+            resolve({});
+        }
+    });
+};
 
 
 class Industry extends Component {
@@ -489,7 +478,7 @@ const useStyle = theme => ({
 const ReduxForm = reduxForm({
     form: 'industry',  // a unique identifier for this form
     validate,
-    // asyncValidate,
+     asyncValidate,
     enableReinitialize: true,
     onSubmitFail: errors => {
         EventEmitter.dispatch(EventEmitter.THROW_ERROR, {error: 'Please enter values', type: 'error'});

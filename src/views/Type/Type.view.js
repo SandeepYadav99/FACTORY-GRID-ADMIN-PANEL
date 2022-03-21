@@ -24,6 +24,8 @@ import Slide from "@material-ui/core/Slide";
 import Tooltip from "@material-ui/core/Tooltip";
 import InfoIcon from "@material-ui/icons/Info";
 import MuiStyle from "../../libs/MuiStyle";
+import {serviceIndustryCheck} from "../../services/Industry.service";
+import {serviceTypeCheck} from "../../services/Type.service";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
@@ -35,7 +37,7 @@ const validate = (values) => {
     const errors = {};
 
     requiredFields.forEach(field => {
-        if (!values[field]) {
+        if (!values[field] || (Array.isArray(values[field]) && (values[field]).length == 0)) {
             errors[field] = 'Required'
         } else if( values[field] && typeof values[field] == 'string' && !(values[field]).trim()) {
             errors[field] = 'Required'
@@ -50,36 +52,38 @@ const validate = (values) => {
 let lastValue = '';
 let isExists = false;
 
-// const asyncValidate = (values, dispatch, props) => {
-//     return new Promise((resolve, reject) => {
-//         if (values.name) {
-//             const value = values.name;
-//             if (lastValue == value && isExists && false) {
-//                 reject({name: 'Language Name already Taken'});
-//             } else {
-//                 const data = props.data;
-//                 serviceCheckLanguage({name: value, id: data ? data.id : null }).then((data) => {
-//                     console.log(data);
-//                     lastValue = value;
-//                     if (!data.error) {
-//                         if (data.data.is_exists) {
-//                             reject({name: 'Language Name already Taken'});
-//                         }
-//                     }
-//                     resolve({});
-//                 })
-//             }
-//         } else {
-//             resolve({});
-//         }
-//     });
-// };
+const asyncValidate = (values, dispatch, props) => {
+    return new Promise((resolve, reject) => {
+        if (values.name) {
+            const value = values.name;
+            if (lastValue == value && isExists && false) {
+                reject({name: 'Type Name already Taken'});
+            } else {
+                const data = props.data;
+                serviceTypeCheck({name: value, id: data ? data.id : null }).then((data) => {
+                    console.log(data);
+                    lastValue = value;
+                    if (!data.error) {
+                        if (data.data.is_exists) {
+                            reject({name: 'Type Name already Taken'});
+                        }
+                    }
+                    resolve({});
+                })
+            }
+        } else {
+            resolve({});
+        }
+    });
+};
+
 
 const nameNormalize = (value, prevValue) => {
-    if ((value.length) > 25) {
+    if ((value.length) > 50) {
         return prevValue
     } else {
-        return value ? value.toLowerCase() : value;
+        return value
+            // ? value.toLowerCase() : value;
     }
 }
 
@@ -90,8 +94,8 @@ class CreateContainer extends Component {
             type: 'INDIVIDUAL',
             is_active:false,
             show_confirm: false,
-            tour_types: [{name:'A',id:'1'},{name:'B',id:'2'}],
-            unit: [{name:'A',id:'1'},{name:'B',id:'2'}]
+            subcategory: [],
+            selectedIndustry: null
         };
         this._handleSubmit = this._handleSubmit.bind(this);
         this._handleActive = this._handleActive.bind(this);
@@ -102,9 +106,9 @@ class CreateContainer extends Component {
     }
 
     componentDidMount() {
-        const {data} = this.props;
+        const {data,subcategories,industries} = this.props;
         if (data) {
-            requiredFields=['name']
+            requiredFields=['name','industry_id','subcategory','unit']
             Object.keys(data).forEach((val) => {
                 if(['status'].indexOf(val) == -1) {
                     const temp = data[val];
@@ -112,24 +116,39 @@ class CreateContainer extends Component {
                 }
             });
             this.setState({
-                is_active: data.status == 'ACTIVE'
-            })
+                is_active: data.status == 'ACTIVE',
+            }, () => {
+                this.changeIndustry(data.industry_id, false);
+            });
         }
         else {
-            requiredFields=['name','industry_name','subcategory','unit']
-            // this.props.change('type', 'INDIVIDUAL');
+            requiredFields=['name','industry_id','subcategory','unit']
         }
     }
 
     _handleTypeChange(e) {
-        this.setState({
-            type: e.target.value
+        this.changeIndustry(e.target.value);
+    }
+
+    changeIndustry(industryId, shouldReset = true){
+        const {subcategories} = this.props;
+        const filteredSub =  subcategories.filter((val) => {
+            return val.industry_id == industryId;
         });
+        const {selectedIndustry} = this.state;
+        this.setState({
+            subcategory: filteredSub,
+            selectedIndustry: industryId,
+        }, () => {
+            if (industryId !== selectedIndustry && shouldReset) {
+                this.props.change('subcategory', []);
+            }
+        })
     }
 
 
     _handleSubmit(tData) {
-        console.log(tData)
+        //console.log(tData)
 
         const status = this.state.is_active ? 'ACTIVE' : 'INACTIVE';
         const {data} = this.props;
@@ -247,10 +266,16 @@ class CreateContainer extends Component {
         } return null;
     }
 
-
+    _renderIndustries(){
+        const {industries} = this.props;
+        return industries.map((val) => {
+            return (<MenuItem value={val.id}>{val.name}</MenuItem>);
+        });
+    }
 
     render() {
-        const {handleSubmit, data} = this.props;
+        const {handleSubmit, data,units} = this.props;
+        const {subcategory} = this.state
         return (
             <div>
                 <div className={styles.headerFlex}>
@@ -278,43 +303,43 @@ class CreateContainer extends Component {
                                    label="Type Name"/>
                         </div>
 
-                        <div className={'formGroup'}>
-                            <Field
-                                inputId={'concernSelect'}
-                                fullWidth={true}
-                                name="industry_name"
-                                onChange={this._handleTypeChange}
-                                component={renderOutlinedSelectField} margin={'dense'} label="Industry Name">
-                                <MenuItem value={'INDIVIDUAL'}>Individual</MenuItem>
-                            </Field>
-                        </div>
+                        {/*<div className={'formGroup'}>*/}
+                        {/*    <Field*/}
+                        {/*        inputId={'concernSelect'}*/}
+                        {/*        fullWidth={true}*/}
+                        {/*        name="industry_id"*/}
+                        {/*        onChange={this._handleTypeChange}*/}
+                        {/*        component={renderOutlinedSelectField} margin={'dense'} label="Industry Name">*/}
+                        {/*        {this._renderIndustries()}*/}
+                        {/*    </Field>*/}
+                        {/*</div>*/}
                     </div>
+
+                    {/*<div className={'formFlex'}>*/}
+                    {/*    <div className={'formGroup'}>*/}
+                    {/*        <Field*/}
+                    {/*            inputId={'subcategory_id'}*/}
+                    {/*            fullWidth={true}*/}
+                    {/*            name="subcategory"*/}
+                    {/*            //errorText={'Required'}*/}
+                    {/*            dataObj={this._convertData(subcategory)}*/}
+                    {/*            extract={{value: 'id', title: 'name'}}*/}
+                    {/*            data={subcategory}*/}
+                    {/*            component={renderOutlinedMultipleSelectField} margin={'dense'} label="Subcategory">*/}
+                    {/*        </Field>*/}
+                    {/*    </div>*/}
+                    {/*</div>*/}
 
                     <div className={'formFlex'}>
                         <div className={'formGroup'}>
                             <Field
-                                inputId={'subcategory'}
-                                fullWidth={true}
-                                name="subcategory"
-                                errorText={'Required'}
-                                dataObj={this._convertData(this.state.tour_types)}
-                                extract={{value: 'id', title: 'name'}}
-                                data={this.state.tour_types}
-                                component={renderOutlinedMultipleSelectField} margin={'dense'} label="Subcategory">
-                            </Field>
-                        </div>
-                    </div>
-
-                    <div className={'formFlex'}>
-                        <div className={'formGroup'}>
-                            <Field
-                                inputId={'unit'}
+                                inputId={'unit_id'}
                                 fullWidth={true}
                                 name="unit"
-                                errorText={'Required'}
-                                dataObj={this._convertData(this.state.unit)}
+                                //errorText={'Required'}
+                                dataObj={this._convertData(units)}
                                 extract={{value: 'id', title: 'name'}}
-                                data={this.state.unit}
+                                data={units}
                                 component={renderOutlinedMultipleSelectField} margin={'dense'} label="Unit">
                             </Field>
                         </div>
@@ -344,12 +369,11 @@ const useStyle = MuiStyle;
 
 
 const ReduxForm = reduxForm({
-    form: 'createprovider',  // a unique identifier for this form
+    form: 'type',  // a unique identifier for this form
     validate,
-    // asyncValidate,
-    // asyncValidate,
+    asyncValidate,
     // asyncBlurField: ['email'],
-    enableReinitialize: true,
+    // enableReinitialize: true,
     // onSubmitFail: errors => {
     //     EventEmitter.dispatch(EventEmitter.THROW_ERROR, 'Rejected');
     // }

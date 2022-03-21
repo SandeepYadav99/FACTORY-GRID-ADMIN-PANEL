@@ -264,34 +264,28 @@ class UserList extends Component {
                 label: 'Email',
                 style: { width: '15%'},
                 sortable: false,
-                render: (temp, all) => <div>{all.email}</div>,
+                render: (temp, all) => <div>{all.email}<br/>989898989</div>,
             },
             {
-                key: 'company',
-                label: 'Company',
+                key: 'designation',
+                label: 'Designation',
                 style: { width: '15%'},
                 sortable: false,
                 render: (temp, all) => <div>{all.company}</div>,
             },
             {
-                key: 'position',
-                label: 'Position',
+                key: 'role',
+                label: 'User Role',
                 style: { width: '15%'},
                 sortable: true,
                 render: (temp, all) => <div>{all.position}</div>,
             },
-            {
-                key: 'join_date',
-                label: 'Join Date',
-                style: { width: '15%'},
-                sortable: true,
-                render: (temp, all) => <div>{all.createdAt}</div>,
-            },
             // {
-            //     key: 'last_login',
-            //     label: 'Last Login',
+            //     key: 'join_date',
+            //     label: 'Join Date',
+            //     style: { width: '15%'},
             //     sortable: true,
-            //     render: (temp, all) => <div>{all.last_login ? all.last_login : 'N/A'}</div>,
+            //     render: (temp, all) => <div>{all.createdAt}</div>,
             // },
             {
                 key: 'status',
@@ -300,6 +294,13 @@ class UserList extends Component {
                 sortable: true,
                 render: (temp, all) => <div>{this.renderStatus(all.status)}</div>,
             },
+            {
+                key: 'last_login',
+                label: 'Last Login',
+                sortable: true,
+                render: (temp, all) => <div>{all.last_login ? all.last_login : 'N/A'}</div>,
+            },
+
 
             {
                 key: 'user_id',

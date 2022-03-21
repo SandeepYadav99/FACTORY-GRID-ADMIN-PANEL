@@ -105,7 +105,7 @@ class Faq extends Component {
             this.setState({
                 is_active: data.status == 'ACTIVE'
             })
-            requiredFields = ['title', 'visible_to','priority'];
+            requiredFields = ['title', 'visible_to'];
             Object.keys(data).forEach((val) => {
                 if (['status'].indexOf(val) < 0) {
                     const temp = data[val];

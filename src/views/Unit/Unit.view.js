@@ -24,6 +24,8 @@ import Slide from "@material-ui/core/Slide";
 import Tooltip from "@material-ui/core/Tooltip";
 import InfoIcon from "@material-ui/icons/Info";
 import MuiStyle from "../../libs/MuiStyle";
+import {serviceTypeCheck} from "../../services/Type.service";
+import {serviceUnitCheck} from "../../services/Unit.service";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
@@ -50,33 +52,33 @@ const validate = (values) => {
 let lastValue = '';
 let isExists = false;
 
-// const asyncValidate = (values, dispatch, props) => {
-//     return new Promise((resolve, reject) => {
-//         if (values.name) {
-//             const value = values.name;
-//             if (lastValue == value && isExists && false) {
-//                 reject({name: 'Language Name already Taken'});
-//             } else {
-//                 const data = props.data;
-//                 serviceCheckLanguage({name: value, id: data ? data.id : null }).then((data) => {
-//                     console.log(data);
-//                     lastValue = value;
-//                     if (!data.error) {
-//                         if (data.data.is_exists) {
-//                             reject({name: 'Language Name already Taken'});
-//                         }
-//                     }
-//                     resolve({});
-//                 })
-//             }
-//         } else {
-//             resolve({});
-//         }
-//     });
-// };
+const asyncValidate = (values, dispatch, props) => {
+    return new Promise((resolve, reject) => {
+        if (values.name) {
+            const value = values.name;
+            if (lastValue == value && isExists && false) {
+                reject({name: 'Unit Name already Taken'});
+            } else {
+                const data = props.data;
+                serviceUnitCheck({name: value, id: data ? data.id : null }).then((data) => {
+                    console.log(data);
+                    lastValue = value;
+                    if (!data.error) {
+                        if (data.data.is_exists) {
+                            reject({name: 'Unit Name already Taken'});
+                        }
+                    }
+                    resolve({});
+                })
+            }
+        } else {
+            resolve({});
+        }
+    });
+};
 
 const nameNormalize = (value, prevValue) => {
-    if ((value.length) > 25) {
+    if ((value.length) > 50) {
         return prevValue
     } else {
         return value
@@ -327,8 +329,7 @@ const useStyle = MuiStyle;
 const ReduxForm = reduxForm({
     form: 'createprovider',  // a unique identifier for this form
     validate,
-    // asyncValidate,
-    // asyncValidate,
+    asyncValidate,
     // asyncBlurField: ['email'],
     enableReinitialize: true,
     // onSubmitFail: errors => {

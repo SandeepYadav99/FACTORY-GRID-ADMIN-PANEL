@@ -14,3 +14,7 @@ export async function serviceDeleteCategory(params) {
 export async function serviceGetCategory(params) {
     return await postRequest('category', params);
 }
+
+export async function serviceCategoryCheck (params) {
+    return await postRequest('category/check', params);
+}

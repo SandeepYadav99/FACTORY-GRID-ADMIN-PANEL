@@ -31,6 +31,8 @@ import {
     actionUpdateSubCategory,
     actionDeleteSubCategory
 } from '../../actions/SubCategory.action';
+import {serviceGetIndustryList} from "../../services/Industry.service";
+import {serviceGetTypeList} from "../../services/Type.service";
 
 let CreateProvider = null;
 
@@ -47,6 +49,7 @@ class SubCategoryList extends Component {
             edit_data: null,
             is_calling: true,
             listData: null,
+            types: []
         };
         this.configFilter = [
             // {label: 'Created On', name: 'createdAt', type: 'date'},
@@ -72,6 +75,15 @@ class SubCategoryList extends Component {
     componentDidMount() {
         // if (this.props.total_count <= 0) {
         this.props.actionFetchData();
+        const request = serviceGetTypeList();
+        request.then((data)=> {
+            if(!data.error){
+                this.setState({
+                    types: data.data
+                })
+                //this.configFilter[2].fields = data.data;
+            }
+        })
         // }
     }
 
@@ -189,9 +201,9 @@ class SubCategoryList extends Component {
         const tempEmailRender = user.email ? (<span style={{textTransform: 'lowercase'}}>{(user.email)}</span>) : null;
         return (
             <div className={styles.firstCellFlex}>
-                <div>
-                    <img src={user.image} alt=""/>
-                </div>
+                {/*<div>*/}
+                {/*    <img src={user.image} alt=""/>*/}
+                {/*</div>*/}
                 <div className={classNames(styles.firstCellInfo, 'openSans')}>
                     <span><strong>{`${user.name}`}</strong></span> <br/>
                     {tempEmailRender}
@@ -235,6 +247,7 @@ class SubCategoryList extends Component {
                 data={this.state.edit_data}
                 industries = {this.state.industries}
                 category_id={id}
+                types={this.state.types}
                 handleDelete={this._handleDelete}></CreateProvider>);
         }
         return null;

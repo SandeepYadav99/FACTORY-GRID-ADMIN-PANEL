@@ -57,6 +57,15 @@
     text-align: center;
 }
 
+.edit{
+    color: blue !important;
+    display: flex !important;
+    align-items: flex-end !important;
+    justify-content: end !important;
+    width: 100%;
+    text-decoration: underline !important;
+}
+
 .name{
     font-family: 'Inter', sans-serif;
     margin-top: 18px;

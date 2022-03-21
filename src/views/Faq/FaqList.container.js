@@ -73,6 +73,7 @@ class FaqList extends Component {
         this.handleClick = this.handleClick.bind(this);
         this.handleClose = this.handleClose.bind(this);
         this._handleCategoryChange = this._handleCategoryChange.bind(this);
+        this._handleViewPage = this._handleViewPage.bind(this)
     }
 
     componentDidMount() {
@@ -257,6 +258,13 @@ class FaqList extends Component {
         })
     }
 
+    _handleViewPage(){
+        window.open(
+            'http://91.205.173.97:2475/contact',
+            '_blank'
+        );
+    }
+
     render() {
         const {selectedCategory} = this.state;
         return (
@@ -265,7 +273,7 @@ class FaqList extends Component {
                     <div className={styles.headerContainer}>
                         <span className={styles.title}>Frequently Asked Questions</span>
                         <Button
-                            // onClick={this._handleSideToggle}
+                             onClick={this._handleViewPage}
                             variant={'contained'} color={'primary'}>
                             View Page
                         </Button>

@@ -201,7 +201,7 @@ class CategoryList extends Component {
         return (
             <div className={styles.firstCellFlex}>
                 <div>
-                    <img src={user.image} alt=""/>
+                    <img src={user.logo} alt=""/>
                 </div>
                 <div className={classNames(styles.firstCellInfo, 'openSans')}>
                     <span><strong>{`${user.name}`}</strong></span> <br/>

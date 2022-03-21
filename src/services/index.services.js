@@ -3,7 +3,7 @@
  */
 import axios from 'axios';
 import Constants from '../config/constants';
-import { postRequest } from '../libs/AxiosService.util';
+import {getRequest, postRequest} from '../libs/AxiosService.util';
 
 export async function serviceLoginUser(data) {
     return await postRequest('login', data);
@@ -13,7 +13,7 @@ export async function serviceGetProfile () {
 }
 
 export async function serviceGetListData() {
-    return await postRequest('list/data', {});
+    return await getRequest('list/data', {});
 }
 export async function serviceForgotPassword(params) {
     return await postRequest('forgot/password', params);
