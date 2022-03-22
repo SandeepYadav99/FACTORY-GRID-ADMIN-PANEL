@@ -94,7 +94,16 @@ const negativeNormalize = (value, prevValue) => {
 
 
 const titleNormalize = (value, prevValue) => {
-    if ((value.length) > 150) {
+    if ((value.length) > 120) {
+        return prevValue
+    } else {
+        return value
+        // ? value.toLowerCase() : value;
+    }
+}
+
+const metaNormalize = (value, prevValue) => {
+    if ((value.length) > 200) {
         return prevValue
     } else {
         return value
@@ -500,24 +509,22 @@ class Blogs extends Component {
                                 type={'text'}
                                 margin={'dense'}
                                 normalize={titleNormalize}
-                                // onChange={this._handleTitleChange}
+                                onChange={this._handleTitleChange}
                                 label="Title"/>
                         </div>
-
+                        <div className={'formGroup'}>
+                            <Field
+                                fullWidth={true}
+                                name="slug"
+                                component={renderOutlinedTextField}
+                                type={'text'}
+                                //disabled={true}
+                                margin={'dense'}
+                                label="Slug"/>
+                        </div>
                     </div>
 
-                    <label className={styles.enter}>Press Enter To Add the Tag When No Tags Found</label>
                     <div className="formFlex">
-                        {/*<div className={'formGroup'}>*/}
-                        {/*    <Field*/}
-                        {/*        fullWidth={true}*/}
-                        {/*        name="slug"*/}
-                        {/*        component={renderOutlinedTextField}*/}
-                        {/*        type={'text'}*/}
-                        {/*        margin={'dense'}*/}
-                        {/*        label="Slug"/>*/}
-                        {/*</div>*/}
-
 
                             <div className={'formGroup'}>
                                 <Autocomplete
@@ -534,13 +541,13 @@ class Blogs extends Component {
                                         ))
                                     }
                                     renderInput={(params) => (
-                                        //console.log(params)
-                                          <TextField {...params} variant="outlined" label="Tags" placeholder="Tags" margin={'dense'}/>
+                                          <TextField {...params} variant="outlined" label="Tags" placeholder="Tags" />
                                     )}
                                 />
                             </div>
 
                     </div>
+                    <label className={styles.enter}>Please press enter to add a tag if not found in the search results.</label>
 
                     <div className="formFlex">
                         <div className={'formGroup'}>
@@ -567,10 +574,12 @@ class Blogs extends Component {
                             <Field
                                 fullWidth={true}
                                 name="author"
-                                component={renderOutlinedTextField}
+                                component={renderOutlinedSelectField}
                                 type={'text'}
                                 margin={'dense'}
-                                label="Author"/>
+                                label="Author">
+                                <MenuItem value={'TEST'}>Test</MenuItem>
+                            </Field>
                         </div>
                     </div>
 
@@ -582,7 +591,7 @@ class Blogs extends Component {
                                    // multiline
                                    // rows="2"
                                    margin={'dense'}
-                                   normalize={titleNormalize}
+                                   normalize={metaNormalize}
                                    label="Meta Description"/>
                         </div>
                     </div>

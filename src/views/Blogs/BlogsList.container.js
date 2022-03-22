@@ -288,6 +288,12 @@ class BlogsList extends Component {
                 render: (temp, all) => <div>{all.author}</div>,
             },
             {
+                key: 'featured',
+                label: 'Featured',
+                sortable: false,
+                render: (temp, all) => <div>{all.is_featured ? 'Yes' : 'No'}</div>,
+            },
+            {
                 key: 'createdAt',
                 label: 'Date',
                 sortable: true,
