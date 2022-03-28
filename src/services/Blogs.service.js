@@ -27,3 +27,7 @@ export async function serviceBlogsExists(params) {
 export async function serviceUploadBlogImage(params) {
     return await formDataRequest('blogs/upload/image', params);
 }
+
+export async function serviceGetTagsList(params) {
+    return await postRequest('tags', params);
+}

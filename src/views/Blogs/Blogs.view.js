@@ -15,7 +15,7 @@ import {
     renderOutlinedTextField,
     renderOutlinedSelectField, renderCheckbox, renderAutoComplete, renderFileField,
 } from '../../libs/redux-material.utils';
-import {serviceBlogsExists, serviceUploadBlogImage} from "../../services/Blogs.service";
+import {serviceBlogsExists, serviceGetTagsList, serviceUploadBlogImage} from "../../services/Blogs.service";
 import EventEmitter from "../../libs/Events.utils";
 import BackupIcon from '@material-ui/icons/Backup'
 import UploadImagePopover from './component/Popover/Popover.component';
@@ -139,7 +139,8 @@ class Blogs extends Component {
             anchor: null,
             is_active: false,
             show_confirm: false,
-            tags:[]
+            tags:[],
+            all_tags: []
         };
         this.editorRef = null;
         this._handleSubmit = this._handleSubmit.bind(this);
@@ -157,6 +158,15 @@ class Blogs extends Component {
     }
 
     componentDidMount() {
+
+        serviceGetTagsList().then((res) => {
+            if (!res.error) {
+                this.setState({
+                    all_tags: res.data,
+                });
+            }
+        });
+
         const {data} = this.props;
         let htmlData = '';
         if (data) {
@@ -209,7 +219,7 @@ class Blogs extends Component {
         else if (editor) {
             const fd = new FormData();
             Object.keys(tData).forEach((key) => {
-                if (['is_featured'].indexOf(key) < 0) {
+                if (['tags','is_featured'].indexOf(key) < 0) {
                     fd.append(key, tData[key]);
                 }
             });
@@ -482,7 +492,8 @@ class Blogs extends Component {
     }
 
     render() {
-        const {handleSubmit, cities, data} = this.props;
+        const {handleSubmit, cities, data,} = this.props;
+        const {all_tags} = this.state;
         return (
             <div>
                 <div className={styles.headerFlex}>
@@ -531,7 +542,7 @@ class Blogs extends Component {
                                     multiple
                                     onChange={this._handleChangeKeywords}
                                     id="tags-filled"
-                                    options={this.state.tags}
+                                    options={all_tags}
                                     value={this.state.tags}
                                     freeSolo
                                     // noOptionsText={this._renderNoText}

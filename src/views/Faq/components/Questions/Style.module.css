@@ -28,6 +28,7 @@
     font-weight: 600;
 }
 .editorContainer {
+    min-height: 200px;
     max-height: 500px;
     overflow: scroll;
     overflow-x: hidden;
@@ -88,4 +89,13 @@
 .right {
     flex: 1;
     margin-left: 10px;
+}
+
+.category{
+    margin-left: 15px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    word-break: break-word;
 }

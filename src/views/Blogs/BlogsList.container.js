@@ -29,7 +29,7 @@ import {
     actionCreateBlogs,
     actionUpdateBlogs, actionDeleteBlogs
 } from '../../actions/Blogs.action';
-import {serviceFetchTourTypes} from "../../services/Blogs.service";
+import {serviceFetchTourTypes, serviceGetTagsList} from "../../services/Blogs.service";
 import {serviceGetCustomList} from "../../services/Common.service";
 import IconButton from '@material-ui/core/IconButton';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
@@ -54,7 +54,8 @@ class BlogsList extends Component {
             cities:[],
             anchorEl: null,
             open: false,
-            industries: []
+            industries: [],
+            all_tags: []
         };
         this.configFilter = [
             // {label: 'Country', name: 'country', type: 'text'},
@@ -90,6 +91,14 @@ class BlogsList extends Component {
                 this.configFilter[2].fields = data.data;
             }
         })
+
+        // serviceGetTagsList().then((res) => {
+        //     if (!res.error) {
+        //         this.setState({
+        //             all_tags: res.data,
+        //         });
+        //     }
+        // });
     }
 
 
@@ -209,6 +218,7 @@ class BlogsList extends Component {
 
 
     _renderCreateForm () {
+        const {all_tags} = this.state;
         if (CreateProvider == null) {
             // import CreateProvider from './Create.container';
             CreateProvider = require('./Blogs.view').default;
