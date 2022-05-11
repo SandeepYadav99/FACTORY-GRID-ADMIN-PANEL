@@ -6,7 +6,7 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 
 const ITEM_HEIGHT = 48;
 
-export default function LongMenu({handleEdit}) {
+export default function LongMenu({handleEdit,blogId}) {
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);
 
@@ -20,6 +20,14 @@ export default function LongMenu({handleEdit}) {
 
     const _handleEdit = () => {
         handleEdit();
+    }
+
+    const handlePreview = () => {
+        window.open(
+            'http://91.205.173.97:8093/blogdetail/'+ blogId,
+            '_blank'
+        );
+        setAnchorEl(null);
     }
 
     return (
@@ -46,7 +54,7 @@ export default function LongMenu({handleEdit}) {
             >
                 {/*<MenuItem onClick={handleClose}>Publish</MenuItem>*/}
                 <MenuItem onClick={_handleEdit}>Edit</MenuItem>
-                <MenuItem onClick={handleClose}>Preview</MenuItem>
+                <MenuItem onClick={handlePreview}>Preview</MenuItem>
             </Menu>
         </div>
     );

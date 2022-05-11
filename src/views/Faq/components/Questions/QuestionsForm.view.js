@@ -266,7 +266,7 @@ class QuestionsFormView extends Component {
                             onChange={this._handleEditor}
                             onSave={this._handleSave}
                             label="Start typing..."
-                            controls={["bold", "italic", "underline"]}
+                            controls={["bold", "italic", "underline","link"]}
                             inlineToolbar={true}
                             customControls={[
                                 {
@@ -358,7 +358,7 @@ class QuestionsFormView extends Component {
 
 
     render() {
-        const {handleSubmit, cities, data,faq_type} = this.props;
+        const {handleSubmit, cities, data,faq_type,category} = this.props;
         return (
             <div>
                 <div className={styles.headerFlex}>
@@ -371,18 +371,25 @@ class QuestionsFormView extends Component {
                     </h4>
                 </div>
                 <form onSubmit={handleSubmit(this._handleSubmit)}>
-                    <div className={'formFlex'}>
-                        <div className={'formGroup'}>
-                            <Field
-                                fullWidth={true}
-                                name="title"
-                                component={renderOutlinedTextFieldWithLimit}
-                                maxLimit={100}
-                                margin={'dense'}
-                                inputProps={{readOnly: 'true'}}
-                                label="Topic Header/Question"/>
-                        </div>
+                    <div className={styles.category}>
+                        <b>Title</b> - {category.title}
                     </div>
+
+                    <div className={styles.category}>
+                        <b>Applies To</b> - {category.visible_to}
+                    </div>
+                    {/*<div className={'formFlex'}>*/}
+                    {/*    <div className={'formGroup'}>*/}
+                    {/*        <Field*/}
+                    {/*            fullWidth={true}*/}
+                    {/*            name="title"*/}
+                    {/*            component={renderOutlinedTextFieldWithLimit}*/}
+                    {/*            maxLimit={100}*/}
+                    {/*            margin={'dense'}*/}
+                    {/*            inputProps={{readOnly: 'true'}}*/}
+                    {/*            label="Topic Header/Question"/>*/}
+                    {/*    </div>*/}
+                    {/*</div>*/}
 
                     <div className={'formFlex'}>
                         <div className={'formGroup'}>
@@ -398,20 +405,20 @@ class QuestionsFormView extends Component {
                     </div>
 
 
-                    <div className={'formFlex'}>
-                        <div className={'formGroup'}>
-                            <Field fullWidth={true}
-                                   name="visible_to"
-                                   component={renderOutlinedSelectField}
-                                   margin={'dense'}
-                                   inputProps={{readOnly: 'true'}}
-                                   label="Applies To">
-                                <MenuItem value={'BOTH'}>General</MenuItem>
-                                <MenuItem value={'CUSTOMER'}>Customers</MenuItem>
-                                <MenuItem value={'MANUFACTURE'}>Manufacturers</MenuItem>
-                            </Field>
-                        </div>
-                    </div>
+                    {/*<div className={'formFlex'}>*/}
+                    {/*    <div className={'formGroup'}>*/}
+                    {/*        <Field fullWidth={true}*/}
+                    {/*               name="visible_to"*/}
+                    {/*               component={renderOutlinedSelectField}*/}
+                    {/*               margin={'dense'}*/}
+                    {/*               inputProps={{readOnly: 'true'}}*/}
+                    {/*               label="Applies To">*/}
+                    {/*            <MenuItem value={'BOTH'}>General</MenuItem>*/}
+                    {/*            <MenuItem value={'CUSTOMER'}>Customers</MenuItem>*/}
+                    {/*            <MenuItem value={'MANUFACTURE'}>Manufacturers</MenuItem>*/}
+                    {/*        </Field>*/}
+                    {/*    </div>*/}
+                    {/*</div>*/}
 
                     <div className={'formFlex'}>
                         <div className={'formGroup'}>

@@ -33,6 +33,9 @@ import InfoIcon from "@material-ui/icons/Info";
 import Chip from "@material-ui/core/Chip";
 import TextField from "@material-ui/core/TextField";
 import Autocomplete from "@material-ui/lab/Autocomplete";
+import NewEditor from "../../components/NewEditor/NewEditor.component";
+import {WaitingComponent} from "../../components/index.component";
+
 
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
@@ -140,7 +143,10 @@ class Blogs extends Component {
             is_active: false,
             show_confirm: false,
             tags:[],
-            all_tags: []
+            all_tags: [],
+            dup_tags: [],
+            blog_description: '<p></p>',
+            isFetching: true
         };
         this.editorRef = null;
         this._handleSubmit = this._handleSubmit.bind(this);
@@ -163,6 +169,8 @@ class Blogs extends Component {
             if (!res.error) {
                 this.setState({
                     all_tags: res.data,
+                    dup_tags: res.data
+
                 });
             }
         });
@@ -174,9 +182,9 @@ class Blogs extends Component {
             this.setState({
                 is_featured: data.is_featured
             })
-            requiredFields = ['title', 'tags','industry_id','read_time','author','meta_description'];
+            requiredFields = ['title', 'tags','industry_id','read_time','author','meta_description','slug'];
             Object.keys(data).forEach((val) => {
-                if (['cover_image', 'description', 'tags','status','view_count','slug','createdAt','industry_name'].indexOf(val) < 0) {
+                if (['cover_image', 'description', 'tags','status','view_count','createdAt','industry_name'].indexOf(val) < 0) {
                     const temp = data[val];
                     this.props.change(val, temp);
                 }
@@ -184,49 +192,56 @@ class Blogs extends Component {
             this.setState({
                 is_active: data.status == 'ACTIVE',
                 tags: data.tags,
-                is_featured: data.is_featured
+                is_featured: data.is_featured,
+                blog_description: data.description,
+                isFetching: false
             })
             htmlData = data.description;
         } else {
             htmlData = ''
             requiredFields = ['title','tags','industry_id','read_time','author','meta_description','cover_image'];
+            this.setState({
+                isFetching: false,
+            });
         }
 
-        const contentHTML = convertFromHTML(htmlData)
-
-        const state = ContentState.createFromBlockArray(contentHTML.contentBlocks, contentHTML.entityMap)
-        const tempData = convertToRaw(state);
-        const entityMap = tempData.entityMap;
-        Object.keys(entityMap).forEach((key, index) => {
-            const tempValue = entityMap[key];
-            if ('data' in tempValue && 'src' in tempValue.data) {
-                entityMap[key].data = { ...tempValue.data, url: tempValue.data.src };
-            }
-        });
-        this.setState({
-            editor_data:  JSON.stringify(tempData),
-        })
+        // const contentHTML = convertFromHTML(htmlData)
+        //
+        // const state = ContentState.createFromBlockArray(contentHTML.contentBlocks, contentHTML.entityMap)
+        // const tempData = convertToRaw(state);
+        // const entityMap = tempData.entityMap;
+        // Object.keys(entityMap).forEach((key, index) => {
+        //     const tempValue = entityMap[key];
+        //     if ('data' in tempValue && 'src' in tempValue.data) {
+        //         entityMap[key].data = { ...tempValue.data, url: tempValue.data.src };
+        //     }
+        // });
+        // this.setState({
+        //     editor_data:  JSON.stringify(tempData),
+        // })
 
 
     }
 
     _handleSubmit(tData) {
-        const { editor,tags} = this.state;
+        const { editor,tags,blog_description} = this.state;
+        console.log(blog_description)
         //console.log(editor)
         if(tags.length == 0){
             EventEmitter.dispatch(EventEmitter.THROW_ERROR, {error: 'Please Enter Tags',type:'error'});
         }
-        else if (editor) {
+        else if (blog_description !== '') {
             const fd = new FormData();
             Object.keys(tData).forEach((key) => {
                 if (['tags','is_featured'].indexOf(key) < 0) {
                     fd.append(key, tData[key]);
                 }
             });
-            fd.append('description', editor);
+            fd.append('description', blog_description);
             fd.append('tags',(this.state.tags));
             fd.append('is_featured', JSON.stringify(this.state.is_featured));
             fd.append('status', (this.state.is_active ? 'ACTIVE' : 'INACTIVE'));
+            // fd.append('description', editor);
             const {data} = this.props;
             if (data) {
                 this.props.handleDataSave(fd, 'UPDATE')
@@ -238,19 +253,25 @@ class Blogs extends Component {
         }
     }
 
-    _handleEditor(data, b) {
-        if (!data.getCurrentContent().hasText()) {
-            this.setState({
-                editor: null
-            })
-        } else {
-            // console.log('data',convertFromRaw(data));
-            const html = stateToHTML(data.getCurrentContent());
-            console.log('data', data);
-            this.setState({
-                editor: html
-            })
-        }
+    // _handleEditor(data, b) {
+    //     if (!data.getCurrentContent().hasText()) {
+    //         this.setState({
+    //             editor: null
+    //         })
+    //     } else {
+    //         // console.log('data',convertFromRaw(data));
+    //         const html = stateToHTML(data.getCurrentContent());
+    //         console.log('data', data);
+    //         this.setState({
+    //             editor: html
+    //         })
+    //     }
+    // }
+
+    _handleEditor(data) {
+        this.setState({
+            blog_description: data,
+        })
     }
 
     _handleActive() {
@@ -445,8 +466,9 @@ class Blogs extends Component {
     //     })
     // }
 
-    _handleChangeKeywords(event, value){
-        const {tags} = this.state;
+    _handleChangeKeywords(event, value, reason, detail){
+        const {tags,all_tags} = this.state;
+        //console.log('already', tags, 'new ', value, reason, detail);
         const tempKeywords = value.filter((val, index) => {
             if (val.trim() === '' || !/^[a-zA-Z0-9/.,\-_+# ]*$/.test(val.trim())) {
                 return false;
@@ -483,8 +505,16 @@ class Blogs extends Component {
 
 
         if (filterdData.length <=6  ) {
+            const dup = [...this.state.dup_tags];
+            filterdData.forEach((val) => {
+                const t = dup.indexOf(val);
+                if (t >= 0) {
+                    dup.splice(t, 1);
+                }
+            });
             this.setState({
-                tags: filterdData
+                tags: filterdData,
+                all_tags: dup,
             })
         } else if (tempKeywords.length > 6)  {
             EventEmitter.dispatch(EventEmitter.THROW_ERROR, {error: 'Maximum 6 Keywords ', type: 'error'});
@@ -493,7 +523,10 @@ class Blogs extends Component {
 
     render() {
         const {handleSubmit, cities, data,} = this.props;
-        const {all_tags} = this.state;
+        const {all_tags,isFetching} = this.state;
+        if (isFetching) {
+            return <WaitingComponent/>
+        }
         return (
             <div>
                 <div className={styles.headerFlex}>
@@ -545,6 +578,7 @@ class Blogs extends Component {
                                     options={all_tags}
                                     value={this.state.tags}
                                     freeSolo
+                                    selectOnFocus={false}
                                     // noOptionsText={this._renderNoText}
                                     renderTags={(value, getTagProps) =>
                                         value.map((option, index) => (
@@ -636,11 +670,12 @@ class Blogs extends Component {
                     </div>
 
                     <label className={styles.enter}>Blog Description</label>
-                    <div className={'formFlex'}>
-                        <div className={csx('formGroup', styles.editorContainer)}>
-                            {this._renderEditor()}
-                        </div>
-                    </div>
+                    <NewEditor editorData={this.state.blog_description} handleChangeEditor={this._handleEditor}/>
+                    {/*<div className={'formFlex'}>*/}
+                    {/*    <div className={csx('formGroup', styles.editorContainer)}>*/}
+                    {/*        {this._renderEditor()}*/}
+                    {/*    </div>*/}
+                    {/*</div>*/}
 
 
                     <br/>

@@ -2,7 +2,7 @@
  * Created by charnjeetelectrovese@gmail.com on 12/3/2019.
  */
 import React, {Component} from 'react';
-import {Button, Paper} from '@material-ui/core';
+import {Button, IconButton, Paper} from '@material-ui/core';
 
 import classNames from 'classnames';
 import {bindActionCreators} from 'redux';
@@ -10,7 +10,7 @@ import {connect} from 'react-redux';
 import {
     red as redColor,
 } from '@material-ui/core/colors';
-import {Add} from '@material-ui/icons';
+import {Add, RemoveRedEyeOutlined} from '@material-ui/icons';
 import PageBox from '../../components/PageBox/PageBox.component';
 import SidePanelComponent from '../../components/SidePanel/SidePanel.component';
 // import CreateProvider from './Create.container';
@@ -261,6 +261,13 @@ class IndustryList extends Component {
         this.props.history.push('/industry/category/' + data.id);
     }
 
+    _handlePreviewToggle(data){
+        window.open(
+            'http://91.205.173.97:2475/Pharmaceuticals', // + data.id
+            '_blank'
+        );
+    }
+
     render() {
         const tableStructure = [
             {
@@ -285,6 +292,7 @@ class IndustryList extends Component {
                 key: 'user_id',
                 label: 'Action',
                 render: (temp, all) => (<div><Button onClick={this._handleEdit.bind(this, all)}>Info</Button>
+                    <IconButton className={'tableActionBtn'} color='secondary' onClick={this._handlePreviewToggle.bind(this, all)}><RemoveRedEyeOutlined fontSize={'small'} /></IconButton >
                     <Button onClick={this._handleCategories.bind(this, all)} color={'primary'}>Categories</Button></div>),
             },
 
