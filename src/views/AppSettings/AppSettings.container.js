@@ -10,7 +10,8 @@ import styles from './Style.module.css';
 import {withStyles, Tabs, Tab} from "@material-ui/core";
 import Geofencing from './Components/Geofencing/Geofencing.component';
 import {WaitingComponent} from "../../components/index.component";
-import {actionUpdateGeoFence} from "../../actions/AppSettings.action";
+import {actionUpdateGeoFence, actionUpdatePolicies} from "../../actions/AppSettings.action";
+import HtmlEditor from './Components/HtmlComponent/HtmlEditor.component';
 
 class AppSettings extends Component {
     constructor(props) {
@@ -36,12 +37,20 @@ class AppSettings extends Component {
     }
 
     _renderPanel(value) {
-        const {appSetting, actionUpdateGeoFence} = this.props;
+        const {appSetting} = this.props;
         if (value == 0) {
             return (
-                <Geofencing
-                    polygon={appSetting.geofence}
-                    handleSave={actionUpdateGeoFence}
+                <HtmlEditor title={'PRIVACY'}
+                            data={appSetting.PRIVACY}
+                            handleDataSave={actionUpdatePolicies}
+                />
+            );
+        }
+        else if (value == 1) {
+            return (
+                <HtmlEditor title={'TERMS'}
+                            data={appSetting.TERMS}
+                            handleDataSave={actionUpdatePolicies}
                 />
             );
         }
@@ -49,10 +58,12 @@ class AppSettings extends Component {
             <h1>{value}</h1>
         )
     }
+
+
     render() {
         const {data, classes, appSetting} = this.props;
         const { value } = this.state;
-        if (appSetting.is_calling) {
+        if (!appSetting.is_calling) {
             return (<WaitingComponent/>);
         }
         return (
@@ -67,8 +78,8 @@ class AppSettings extends Component {
                             aria-label="Vertical tabs example"
                             className={classes.tabs}
                         >
-                            <Tab label="Geo Fence" {...this.a11yProps(0)} />
-                            <Tab label="Other" {...this.a11yProps(1)} />
+                            <Tab label="Privacy Policy" {...this.a11yProps(0)} />
+                            <Tab label="Terms and Policy" {...this.a11yProps(1)} />
                         </Tabs>
                         <div className={styles.tabPanel}>
                         {this._renderPanel(value)}
@@ -100,7 +111,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return bindActionCreators({
-        actionUpdateGeoFence: actionUpdateGeoFence,
+        actionUpdatePolicies: actionUpdatePolicies,
     }, dispatch);
 }
 

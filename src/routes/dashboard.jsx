@@ -31,7 +31,7 @@ import {
     BubbleChart,
     LocationOn,
     Notifications, EventNote,
-    ContactSupport
+    ContactSupport, Settings
 } from "@material-ui/icons";
 import Profile from '../views/Profile/MyProfile.view'
 import CustomerTabs from "../views/Customers/components/UpperTabs/CustomerTabs.view";
@@ -266,15 +266,15 @@ const dashboardRoutes = [
         is_protect: true,
         parent: 'masters'
     },
-    // {
-    //     path: "/app/settings",
-    //     sidebarName: "App Settings",
-    //     navbarName: "App Settings",
-    //     icon: Dashboard,
-    //     component: AppSettings,
-    //     is_sidebar: true,
-    //     is_protect: true,
-    // },
+    {
+        path: "/app/settings",
+        sidebarName: "App Settings",
+        navbarName: "App Settings",
+        icon: Settings,
+        component: AppSettings,
+        is_sidebar: true,
+        is_protect: true,
+    },
 
 
     // {

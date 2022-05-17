@@ -263,7 +263,7 @@ class IndustryList extends Component {
 
     _handlePreviewToggle(data){
         window.open(
-            'http://91.205.173.97:2475/Pharmaceuticals', // + data.id
+            'http://91.205.173.97:8093/industry', // + data.id
             '_blank'
         );
     }
