@@ -37,7 +37,7 @@ class AppSettings extends Component {
     }
 
     _renderPanel(value) {
-        const {appSetting} = this.props;
+        const {appSetting, actionUpdatePolicies} = this.props;
         if (value == 0) {
             return (
                 <HtmlEditor title={'PRIVACY'}
@@ -63,7 +63,7 @@ class AppSettings extends Component {
     render() {
         const {data, classes, appSetting} = this.props;
         const { value } = this.state;
-        if (!appSetting.is_calling) {
+        if (appSetting.is_calling) {
             return (<WaitingComponent/>);
         }
         return (
