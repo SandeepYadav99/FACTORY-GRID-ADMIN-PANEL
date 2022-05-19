@@ -17,7 +17,7 @@ const NewEditor = ({editorData,handleChangeEditor,type, value}) => {
         <div>
             <SunEditor
                 defaultValue={editorData}
-                setOptions={{ height: 400,buttonList: [['undo', 'redo', 'bold', 'underline', 'fontColor', 'table', 'link', 'image','indent','outdent','list','link','align', 'codeView','video']] }}
+                setOptions={{ height: 400,buttonList: [['undo', 'redo', 'bold', 'underline', 'fontColor', 'table', 'link', 'image','indent','outdent','list','link','align', 'codeView','video','formatBlock']] }}
                 onChange={handleChange}
             />
         </div>
