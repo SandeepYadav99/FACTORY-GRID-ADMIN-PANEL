@@ -20,16 +20,16 @@ import DataTables from '../../Datatables/Datatable.table';
 import Constants from '../../config/constants';
 import FilterComponent from '../../components/Filter/Filter.component';
 import {
-    actionFetchUser,
-    actionChangePageUserRequests,
-    actionChangeStatusUserRequests,
-    actionFilterUserRequests,
-    actionResetFilterUserRequests,
-    actionSetPageUserRequests,
-    actionCreateUser,
-    actionUpdateUser,
-    actionDeleteUser
-} from '../../actions/User.action';
+    actionFetchProviderUser,
+    actionChangePageProviderUserRequests,
+    actionChangeStatusProviderUserRequests,
+    actionFilterProviderUserRequests,
+    actionResetFilterProviderUserRequests,
+    actionSetPageProviderUserRequests,
+    actionCreateProviderUser,
+    actionUpdateProviderUser,
+    actionDeleteProviderUser
+} from '../../actions/ProviderUser.action';
 import OpenInNewIcon from '@material-ui/icons/OpenInNew';
 import {serviceGetListData} from "../../services/index.services";
 
@@ -332,7 +332,7 @@ class UserList extends Component {
                 <PageBox>
                     <div className={styles.headerContainer}>
                         <span className={styles.title}>User List</span>
-                        <Button disabled={this.state.is_calling}variant={'contained'} color={'primary'}>
+                        <Button disabled={this.state.is_calling}variant={'contained'} color={'primary'}  onClick={this._handleUserForm}>
                             <Add></Add> Create
                         </Button>
                     </div>
@@ -368,27 +368,27 @@ class UserList extends Component {
 
 function mapStateToProps(state) {
     return {
-        data: state.user.present,
-        total_count: state.user.all.length,
-        currentPage: state.user.currentPage,
-        serverPage: state.user.serverPage,
-        sorting_data: state.user.sorting_data,
-        is_fetching: state.user.is_fetching,
-        query: state.user.query,
-        query_data: state.user.query_data,
+        data: state.provider_user.present,
+        total_count: state.provider_user.all.length,
+        currentPage: state.provider_user.currentPage,
+        serverPage: state.provider_user.serverPage,
+        sorting_data: state.provider_user.sorting_data,
+        is_fetching: state.provider_user.is_fetching,
+        query: state.provider_user.query,
+        query_data: state.provider_user.query_data,
     };
 }
 
 function mapDispatchToProps(dispatch) {
     return bindActionCreators({
-        actionFetchData: actionFetchUser,
-        actionSetPage: actionSetPageUserRequests,
-        actionResetFilter: actionResetFilterUserRequests,
-        actionSetFilter: actionFilterUserRequests,
-        actionChangeStatus: actionChangeStatusUserRequests,
-        actionCreateUser: actionCreateUser,
-        actionUpdateUser: actionUpdateUser,
-        actionDeleteUser: actionDeleteUser
+        actionFetchData: actionFetchProviderUser,
+        actionSetPage: actionSetPageProviderUserRequests,
+        actionResetFilter: actionResetFilterProviderUserRequests,
+        actionSetFilter: actionFilterProviderUserRequests,
+        actionChangeStatus: actionChangeStatusProviderUserRequests,
+        actionCreateProviderUser: actionCreateProviderUser,
+        actionUpdateProviderUser: actionUpdateProviderUser,
+        actionDeleteProviderUser: actionDeleteProviderUser
     }, dispatch);
 }
 

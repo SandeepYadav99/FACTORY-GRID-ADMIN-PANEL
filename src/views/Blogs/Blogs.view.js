@@ -623,6 +623,11 @@ class Blogs extends Component {
                                 type={'text'}
                                 margin={'dense'}
                                 label="Author">
+                                <MenuItem value={'REVIEWER'}>Reviewer</MenuItem>
+                                <MenuItem value={'TECH'}>Tech</MenuItem>
+                                <MenuItem value={'BIZ'}>Biz</MenuItem>
+                                <MenuItem value={'KNOWLEDGE'}>Knowledge</MenuItem>
+                                <MenuItem value={'NEWS'}>News</MenuItem>
                                 <MenuItem value={'TEST'}>Test</MenuItem>
                             </Field>
                         </div>

@@ -192,18 +192,29 @@ const dashboardRoutes = [
         sidebarName: "Customers",
         navbarName: "Customers",
         icon: SupervisedUserCircle,
-        component: CustomerTabs,
+        component: CustomerList,
         is_sidebar: true,
         is_protect: true,
     },
     {
-        path: "/manufacturer",
+        path: "/customers/manufacturer",
         sidebarName: "Manufacturer",
         navbarName: "Manufacturer",
         icon: SupervisedUserCircle,
         component: ManufacturerTabs,
-        is_sidebar: true,
+        is_sidebar: false,
         is_protect: true,
+        should_regex: true
+    },
+    {
+        path: "/customer/customer",
+        sidebarName: "Customers",
+        navbarName: "Customers",
+        icon: SupervisedUserCircle,
+        component: CustomerTabs,
+        is_sidebar: false,
+        is_protect: true,
+        should_regex: true
     },
     {
         path: "/blogs",

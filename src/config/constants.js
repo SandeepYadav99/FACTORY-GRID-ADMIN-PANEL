@@ -76,4 +76,9 @@ export default {
         COMPANY_DRIVER_ADD: 'COMPANY_DRIVER_ADD',
         COMPANY_DRIVER_REMOVE: 'COMPANY_DRIVER_REMOVE',
     },
+    USER_TYPES: {
+        CUSTOMER: 'CUSTOMER',
+        MANUFACTURE: 'MANUFACTURER',
+        BOTH: 'BOTH'
+    },
 };

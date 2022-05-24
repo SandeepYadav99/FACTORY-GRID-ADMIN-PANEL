@@ -319,7 +319,7 @@ class BlogsList extends Component {
                 key: '_id',
                 label: 'Action',
                 render: (temp, all) => (<div>
-                    <MenuItemView handleEdit={this._handleEdit.bind(this,all)} blogId={all.id}/>
+                    <MenuItemView handleEdit={this._handleEdit.bind(this,all)} blogId={all.slug}/>
                 </div>),
             },
 

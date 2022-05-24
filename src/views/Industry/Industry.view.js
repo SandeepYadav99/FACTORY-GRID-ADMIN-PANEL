@@ -143,25 +143,25 @@ class Industry extends Component {
         if (data) {
             requiredFields = ['name','description'];
             Object.keys(data).forEach((val) => {
-                if (['logo', 'is_featured','banner','is_coming_soon','status'].indexOf(val) == -1) {
+                if (['logo', 'is_featured','banner','is_coming_soon',].indexOf(val) == -1) {
                     const temp = data[val];
                     this.props.change(val, temp);
                 }
             });
 
             this.setState({
-                is_active: data.status == 'ACTIVE',
+                // is_active: data.status == 'ACTIVE',
                 is_featured: data.is_featured,
-                coming_soon: data.is_coming_soon,
+                // coming_soon: data.is_coming_soon,
                 questionnaire: data.kyc ? data.kyc : [],
             })
         } else {
-            requiredFields = ['name','description','banner','logo']; //'name','description','banner','logo'
+            requiredFields = ['name','description','banner','logo','status']; //'name','description','banner','logo'
         }
     }
 
     _handleSubmit(tData) {
-        // console.log(tData)
+         console.log(tData)
         const { questionnaire,kyc } = this.state;
         console.log(questionnaire)
         if(Array.isArray(questionnaire) && questionnaire.length > 0){
@@ -187,8 +187,8 @@ class Industry extends Component {
             }
         });
         fd.append('is_featured', (this.state.is_featured));
-        fd.append('is_coming_soon', (this.state.coming_soon))
-        fd.append('status', (this.state.is_active ? 'ACTIVE' : 'INACTIVE'));
+        // fd.append('is_coming_soon', (this.state.coming_soon))
+        fd.append('status', tData.status);
         fd.append('kyc',JSON.stringify(questionnaire))
         fd.append('is_kyc',this.state.is_kyc)
         const {data} = this.props;
@@ -433,20 +433,38 @@ class Industry extends Component {
 
                     <div className={'formFlex'}>
                         <div className={'formGroup'}>
-                            {this._renderFeatured()}
+                            <Field
+                                fullWidth={true}
+                                name="status"
+                                component={renderOutlinedSelectField}
+                                margin={'dense'}
+                                label="Status">
+                                <MenuItem value={'PENDING'}>Coming Soon</MenuItem>
+                                <MenuItem value={'ACTIVE'}>Active</MenuItem>
+                                <MenuItem value={'INACTIVE'}>Inactive</MenuItem>
+                            </Field>
                         </div>
                         <div className={'formGroup'}>
-                            {this._renderActive()}
                         </div>
                     </div>
+
                     <div className={'formFlex'}>
                         <div className={'formGroup'}>
-                            {this._renderComing()}
+                            {this._renderFeatured()}
                         </div>
-                        <div className={'formGroup'}>
-
-                        </div>
+                        {/*<div className={'formGroup'}>*/}
+                        {/*    {this._renderActive()}*/}
+                        {/*</div>*/}
                     </div>
+
+                    {/*<div className={'formFlex'}>*/}
+                    {/*    <div className={'formGroup'}>*/}
+                    {/*        {this._renderComing()}*/}
+                    {/*    </div>*/}
+                    {/*    <div className={'formGroup'}>*/}
+
+                    {/*    </div>*/}
+                    {/*</div>*/}
 
                     <div style={{float: 'right'}}>
                         <Button variant={'contained'} color={'primary'} type={'submit'}>

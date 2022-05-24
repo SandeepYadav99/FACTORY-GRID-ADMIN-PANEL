@@ -22,6 +22,7 @@ import FaqReducer from './Faq.reducer';
 import FaqQuestion from './Faq_question.reducer';
 import Subcategory from './SubCategory.reducer'
 import AppSettingReducer from './AppSettings.reducer';
+import ProviderUser from './ProviderUser.reducer';
 
 const rootReducer = combineReducers({
     state: (state = {}) => state,
@@ -43,6 +44,7 @@ const rootReducer = combineReducers({
     unit: UnitReducer,
     faq: FaqReducer,
     faq_question: FaqQuestion,
+    provider_user: ProviderUser,
     customers: Customers,
     // form: formReducer,
 });

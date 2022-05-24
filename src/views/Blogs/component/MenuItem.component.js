@@ -24,7 +24,7 @@ export default function LongMenu({handleEdit,blogId}) {
 
     const handlePreview = () => {
         window.open(
-            'http://91.205.173.97:8093/blogdetail/'+ blogId,
+            'http://91.205.173.97:8093/blogs/'+ blogId,
             '_blank'
         );
         setAnchorEl(null);

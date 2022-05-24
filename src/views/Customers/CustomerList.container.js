@@ -2,7 +2,7 @@
  * Created by charnjeetelectrovese@gmail.com on 12/3/2019.
  */
 import React, {Component} from 'react';
-import {Button, Paper} from '@material-ui/core';
+import {Button, Paper,IconButton} from '@material-ui/core';
 
 import classNames from 'classnames';
 import {bindActionCreators} from 'redux';
@@ -10,7 +10,7 @@ import {connect} from 'react-redux';
 import {
     red as redColor,
 } from '@material-ui/core/colors';
-import { Add } from '@material-ui/icons';
+import {Add, Info as EditIcon} from '@material-ui/icons';
 import PageBox from '../../components/PageBox/PageBox.component';
 import SidePanelComponent from '../../components/SidePanel/SidePanel.component';
 // import CreateProvider from './Create.container';
@@ -160,22 +160,27 @@ class CustomerList extends Component {
         return (
             <div className={styles.firstCellFlex}>
                 <div>
-                    {/*<img src={user.user_image} alt=""/>*/}
+                    <img src={user.image} alt=""/>
                 </div>
                 <div className={classNames(styles.firstCellInfo, 'openSans')}>
                     <span><strong>{user.name}</strong></span> <br/>
-                    <span>{user.address.address}</span>
+                    <span>{user.industry_name}</span>
                 </div>
             </div>
         );
     }
 
 
-    _handleEdit(data) {
-        this.setState({
-            side_panel: !this.state.side_panel,
-            edit_data: data,
-        })
+    _handleEdit(type) {
+        if(type == 'MANUFACTURE'){
+            this.props.history.push('/customers/manufacturer')
+        } else if(type == 'CUSTOMER'){
+            this.props.history.push('/customers/customer')
+        }
+        // this.setState({
+        //     side_panel: !this.state.side_panel,
+        //     edit_data: data,
+        // })
     }
 
     _handleSideToggle() {
@@ -221,7 +226,8 @@ class CustomerList extends Component {
     _renderContact(all){
         return (
             <div>
-                {all.country_code}-{all.contact}
+                {/*{all.country_code}-*/}
+                {all.contact}
                 <br/>
                 <div style={{ fontSize: '11px' }}>
                 OTP-
@@ -233,9 +239,11 @@ class CustomerList extends Component {
                     borderRadius: '10px',
                     textTransform: 'capitalize'
                 }}>
-                    {all.verification_code}
+                    777777
+                    {/*{all.verification_code}*/}
                 </span>
                 </div>
+                <div>Email - {all.email}</div>
             </div>
         )
     }
@@ -248,35 +256,40 @@ class CustomerList extends Component {
                 sortable: true,
                 style: { width: '20%'},
                 render: (temp, all) => <div style={{wordBreak:'break-word'}}>{this.renderFirstCell(all)}</div>,
-            },{
-                key: 'contact',
+            },
+            {
+                key: 'contact_string',
                 label: 'Contact',
-                sortable: true,
+                sortable: false,
                 style: { width: '20%'},
                 render: (temp, all) => <div style={{wordBreak:'break-word'}}>{this._renderContact(all)}</div>,
             },
-            // {
-            //     key: 'country',
-            //     label: 'Country',
-            //     sortable: true,
-            //     style: { width: '20%'},
-            //     render: (temp, all) => <div style={{wordBreak:'break-word'}} >{all.country}</div>,
-            // },
-            // {
-            //     key: 'start_loc',
-            //     label: 'Start - End Location',
-            //     sortable: false,
-            //     render: (temp, all) => (<div>
-            //         <div>{all.start_loc.name}</div>
-            //         <div>{all.end_loc.name}</div>
-            //     </div>)
-            // },
-            // {
-            //     key: 'createdAt',
-            //     label: 'Date',
-            //     sortable: true,
-            //     render: (temp, all) => <div>{all.createdAt}</div>,
-            // },
+            {
+                key: 'user_type',
+                label: 'User Type',
+                sortable: false,
+                render: (temp, all) => <div>{Constants.USER_TYPES[all.user_type]}</div>,
+            },
+            {
+                key: 'orders',
+                label: 'Orders',
+                sortable: false,
+                render: (temp, all) => <div>{all.orders}</div>,
+            },
+            {
+                key: 'is_email_verified',
+                label: 'Email / Contact Verified',
+                sortable: false,
+                style: { width: '20%'},
+                render: (temp, all) => <div>{all.is_email_verified == true ? 'Yes' : 'No'}<div>{all.is_contact_verified == true ? 'Yes' : 'No'}</div></div>,
+            },
+            {
+                key: 'createdAt',
+                label: 'Signup Date',
+                sortable: true,
+                style: { width: '15%'},
+                render: (temp, all) => <div>{all.createdAt}<br/>{all.last_activity_at}</div>,
+            },
             {
                 key: 'status',
                 label: 'Status',
@@ -284,21 +297,13 @@ class CustomerList extends Component {
                 render: (temp, all) => <div>{this.renderStatus(all.status)}</div>,
             },
             {
-                key: 'subscription',
-                label: 'Subscription',
-                sortable: true,
-                render: (temp, all) => <div>{this.renderStatus(all.subscription)}</div>,
-            },
-            {
-                key: 'wallet_balance',
-                label: 'Wallet Balance',
-                sortable: true,
-                render: (temp, all) => <div>{all.wallet_balance}</div>,
-            },
-            {
                 key: 'user_id',
                 label: 'Action',
-                render: (temp, all) => (<div><Button onClick={this._handleEdit.bind(this, all)}>Info</Button></div>),
+                render: (temp, all) => (<div><IconButton className={'tableActionBtn'} color='secondary'
+                    // disabled={all.status != 'ACTIVE'}
+                    onClick={this._handleEdit.bind(this, all.user_type)}>
+                    <EditIcon fontSize={'small'}
+                              className={styles.black}/></IconButton></div>),
             },
 
 
@@ -349,11 +354,11 @@ class CustomerList extends Component {
                     </div>
 
                 </PageBox>
-                <SidePanelComponent
-                    handleToggle={this._handleSideToggle}
-                    title={'Customers '} open={this.state.side_panel} side={'right'}>
-                    {this._renderCreateForm()}
-                </SidePanelComponent>
+                {/*<SidePanelComponent*/}
+                {/*    handleToggle={this._handleSideToggle}*/}
+                {/*    title={'Customers '} open={this.state.side_panel} side={'right'}>*/}
+                {/*    {this._renderCreateForm()}*/}
+                {/*</SidePanelComponent>*/}
             </div>
         )
     }

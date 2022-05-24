@@ -180,29 +180,14 @@ class IndustryList extends Component {
     // }
 
     renderStatus(status) {
-        if (status === 'ACTIVE') {
-            return (
-                <span style={{
-                    fontSize: '12px',
-                    color: '#20c997',
-                    background: 'rgba(32,201,151,.1)',
-                    padding: '3px 10px',
-                    borderRadius: '20px',
-                    textTransform: 'capitalize'
-                }}>
-                    {(status)}
-                </span>
-            );
+        let className = 'warning';
+        if (status in Constants.STATUS) {
+            className = Constants.STATUS[status];
         }
-        return (<span style={{
-            ...styles.spanFont,
-            fontSize: '12px',
-            color: '#fa8b0c',
-            background: `${status == 'NEW' ? 'rgba(250,139,12,.1)' : 'rgba(250,139,12,.1)'}`,
-            padding: '3px 10px',
-            borderRadius: '20px',
-            textTransform: 'capitalize'
-        }}>{(status)}</span>);
+        if (status === 'PENDING' ) {
+            return (<span className={classNames('status', className)}>Coming Soon</span>);
+        }
+        return (<span className={classNames('status', className)}>{(status.replaceAll('_', ' '))}</span>);
     }
 
     renderFirstCell(user) {
