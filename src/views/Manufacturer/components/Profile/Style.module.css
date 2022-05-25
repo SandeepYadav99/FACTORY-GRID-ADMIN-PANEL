@@ -1,0 +1,341 @@
+.upperFlex{
+    display: flex;
+}
+
+.left{
+    flex: 0.5;
+    margin-right: 10px;
+}
+
+.right {
+    flex: 1;
+    margin-left: 10px;
+}
+
+.leftChat{
+    flex: 0.3;
+    margin-right: 15px;
+}
+
+.week{
+    font-size: 12px;
+    color: rgb(146, 153, 184);
+}
+
+.chatWidth{
+    width: 200px;
+}
+
+.rightChat{
+    flex: 1;
+    margin-left: 15px;
+}
+
+.plain{
+    border-radius: 10px;
+    padding: 1.2rem 1.2rem;
+    margin-bottom: 20px;
+    background-color: white;
+    box-shadow: 0 0 8px rgb(0 0 0 / 15%);
+}
+
+.inputCity {
+    width: calc(100%);
+    padding-left: 20px;
+    height: 40px;
+    box-sizing: border-box;
+    border: none;
+    /*border: 1px solid #80808021;*/
+    background: rgb(244, 245, 247);
+    border-radius: 30px;
+    font-size: 14px;
+    position: relative;
+    padding-right: 40px;
+    /*margin-left: 12px;*/
+    /*margin-right: 12px;*/
+}
+
+.inputCity:focus {
+    outline: none;
+}
+
+.searchIcon{
+    position: absolute;
+    right: 33px;
+    top: 28px;
+    color: gray;
+}
+
+.templateImg{
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    margin-right: 10px;
+    border: 1px solid #80808021;
+}
+
+.chatIcon{
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    margin-right: 15px;
+    border: 1px solid #80808021;
+}
+
+.chatFlex{
+    display: flex;
+    justify-content: space-around;
+    /*align-items: center;*/
+}
+
+.innerFlex{
+    display: flex;
+}
+
+.chatContainer{
+    margin-top: 30px;
+    text-align: left;
+    /*margin-bottom: 40px;*/
+}
+
+.number{
+    background: #20c997;
+    font-size: 0.7rem;
+    color: white;
+    height: 20px;
+    width: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    margin-top: 10px;
+}
+
+.weekFlex{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: end;
+}
+
+.desc{
+    color: rgb(146, 153, 184);
+    font-size: 0.8rem;
+    line-height: 20px;
+}
+
+.chatName{
+    font-weight: 600;
+    font-size: 0.8rem;
+    margin-top: 3px;
+    margin-bottom: 5px;
+}
+.removeBtn{
+    color: red !important;
+}
+
+.profile{
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.user{
+    font-size: 0.8rem;
+    font-weight: 600;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.name{
+    font-size: 0.8rem;
+    margin-bottom: 5px;
+}
+
+.categoryFlex{
+    display: flex;
+    justify-content: center;
+    margin-top: 15px;
+}
+
+.category{
+    background-color: #072ead;
+    padding: 15px 25px;
+    border-radius: 30px;
+    font-size: 0.8rem;
+    color: white;
+    width: 80px;
+    text-align: center;
+}
+
+.ageFlex{
+    display: flex;
+    justify-content: space-between;
+}
+
+.gender{
+    font-size: 0.8rem;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-top: 30px;
+    margin-bottom: 15px;
+}
+
+.key{
+    font-weight: 600;
+    font-size: 0.8rem;
+    margin-bottom: 7px;
+}
+
+.head{
+    font-weight: 600;
+    font-size: 0.8rem;
+    display: flex;
+    margin-bottom: 3px;
+}
+
+.value{
+    font-size: 0.8rem;
+    margin-left: 10px;
+    text-transform: capitalize;
+}
+
+.cert{
+    text-transform: capitalize;
+    font-size: 0.8rem;
+    margin-top: 10px;
+    margin-left: 15px;
+}
+
+.val{
+    font-size: 0.8rem;
+    margin-left: 10px;
+}
+
+.designation{
+    font-size: 0.7rem;
+}
+
+.line:after{
+    content: "";
+    display: block;
+    width: 80%;
+    border: 1px solid black;
+    margin: 20px auto;
+}
+
+.contactHeading{
+    margin-bottom: 15px;
+}
+
+.conContainer{
+    margin-bottom: 14px;
+}
+
+.attach{
+    color: #1593ff;
+}
+
+.verified{
+    color: #F76A6D;
+    font-size: 0.9rem !important;
+    margin-left: 4px;
+}
+
+.priceFlex{
+    display: flex;
+    justify-content: space-between;
+    font-size: 1rem;
+    font-weight: 600;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.rating{
+    font-size: 0.8rem !important;
+}
+
+/* ACcount*/
+.blockFlex{
+    display: flex;
+    font-size: 0.8rem;
+    justify-content: space-between;
+}
+
+.view{
+    color: #1593ff !important;
+    text-decoration: underline !important;
+    font-size: 0.7rem !important;
+}
+
+.recent{
+    margin-left: 10px;
+    font-size: 0.8rem;
+    margin-bottom: 10px;
+}
+
+
+.headings{
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.noChat{
+    text-align: center;
+    font-size: 1rem;
+    font-weight: 600;
+    padding-top: 30px;
+}
+
+.bgGreen{
+    background: #e6f9ef69;
+}
+.flex {
+    display: flex;
+    align-items: center;
+}
+
+.member{
+    font-size: 0.7rem;
+}
+
+.bottomProfile{
+    display: flex;
+    /*align-items: center;*/
+}
+
+.profileImg{
+    height: 35px;
+}
+
+.info{
+    margin-left: 10px;
+}
+
+.profileName{
+    font-weight: 600;
+    font-size: 0.8rem;
+}
+
+.accountFlex{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.industries{
+    font-size: 0.8rem;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.latest{
+    font-size: 0.8rem;
+}
+
+.activityFlex{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}

@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './style.module.css'
+import styles from './styles.module.css'
 import PropTypes from 'prop-types';
 import SwipeableViews from 'react-swipeable-views';
 import {makeStyles, useTheme, withStyles, withTheme} from '@material-ui/core/styles';
@@ -14,8 +14,11 @@ import LoyaltyIcon from '@material-ui/icons/Loyalty';
 import FormatQuoteIcon from '@material-ui/icons/FormatQuote';
 import CreditCardIcon from '@material-ui/icons/CreditCard';
 import ShoppingBasketIcon from '@material-ui/icons/ShoppingBasket';
-import {Paper} from "@material-ui/core";
-import CustomerView from '../../../Customers/components/Info/Customer.view'
+import {Button, ButtonBase, Paper} from "@material-ui/core";
+import CustomerView from '../Customers/components/Info/Customer.view'
+import {Report} from "@material-ui/icons";
+import MuiStyle from "../../libs/MuiStyle";
+import CustomerProfile from './components/Profile/CustomerProfile.view'
 
 function TabPanel(props) {
     const {children, value, index, ...other} = props;
@@ -59,7 +62,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-class CustomerTabs extends React.Component {
+class ManufacturerTabs extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -70,6 +73,21 @@ class CustomerTabs extends React.Component {
 
     componentDidMount() {
 
+    }
+
+    _renderSuspendBtn() {
+        //onClick={this._handleApprove}
+        const {data} = this.state;
+
+        // if (((['ACTIVE']).indexOf(data.status) >= 0)) {
+            return (
+                <Button variant={'contained'} className={this.props.classes.btnError}
+                        onClick={this._handleSuspendBtn} type={'button'}>
+                    <Report/> Suspend
+                </Button>
+            )
+        // }
+        return null;
     }
 
 
@@ -85,6 +103,24 @@ class CustomerTabs extends React.Component {
         const {classes, theme} = this.props
         return (
             <div>
+
+                <div className={styles.upperFlex}>
+                    <div>
+                        {/*<ButtonBase onClick={() => (history.goBack())}>*/}
+                        {/*    <ArrowBackIosIcon fontSize={'small'} className={styles.backArrow}/>*/}
+                        {/*</ButtonBase>*/}
+                        <strong>User Profile</strong>
+                    </div>
+
+                    <div className={styles.buttonFlex}>
+                        {this._renderSuspendBtn()}
+                        {/*{data && (<div>*/}
+                        {/*    {changingStatus ? (<WaitingComponent/>) : <>{this._renderApproveButton()}*/}
+                        {/*    </>}*/}
+                        {/*</div>)}*/}
+                    </div>
+                </div>
+
                 <AppBar position="static" className={styles.backgroundColor}>
                     <Tabs
                         value={this.state.value}
@@ -106,7 +142,7 @@ class CustomerTabs extends React.Component {
 
                 <div className={styles.paperBackground}>
                     <TabPanel value={this.state.value} index={0} dir={theme.direction}>
-                        <CustomerView/>
+                        <CustomerProfile/>
                     </TabPanel>
                     <TabPanel value={this.state.value} index={1} dir={theme.direction}>
 
@@ -123,5 +159,7 @@ class CustomerTabs extends React.Component {
     }
 }
 
-export default withTheme(CustomerTabs);
+const useStyle = MuiStyle;
+
+export default(withStyles(useStyle, {withTheme: true})(ManufacturerTabs))
 

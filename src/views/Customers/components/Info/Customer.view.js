@@ -28,9 +28,7 @@ class CustomerComponent extends Component{
         return(
             <div>
                 <div className={styles.btn}>
-                    <ButtonBase className={styles.suspendUser}>
-                        SUSPEND USER
-                    </ButtonBase>
+
                 </div>
                 <div className={styles.profileFlex}>
                     <div className={styles.leftSection}>
@@ -113,20 +111,7 @@ class CustomerComponent extends Component{
                     </div>
                 </div>
 
-                {/*<div className={'formFlex'}>*/}
-                {/*    /!*<div className={'formGroup'}>*!/*/}
-                {/*    /!*<label>User Image</label>*!/*/}
-                {/*    /!*<div>*!/*/}
-                {/*    /!*<img className={styles.userImage} src={data.user_image}/>*!/*/}
-                {/*    /!*</div>*!/*/}
-                {/*    /!*</div>*!/*/}
-                {/*    <div className={'formGroup'}>*/}
-                {/*        <label>Name</label>*/}
-                {/*        <div>*/}
-                {/*            {data.name}*/}
-                {/*        </div>*/}
-                {/*    </div>*/}
-                {/*</div>*/}
+
 
             </div>
         )

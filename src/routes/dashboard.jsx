@@ -35,7 +35,7 @@ import {
 } from "@material-ui/icons";
 import Profile from '../views/Profile/MyProfile.view'
 import CustomerTabs from "../views/Customers/components/UpperTabs/CustomerTabs.view";
-import ManufacturerTabs from '../views/Manufacturer/components/UpperTabs/ManufacturerTabs.view';
+import ManufacturerTabs from '../views/Manufacturer/ManufacturerTabs.view';
 import Support from "../views/Support/Support.view";
 import UnitList from "../views/Unit/UnitList.container";
 import SubCategoryList from "../views/SubCategory/SubCategoryList.container";
@@ -207,7 +207,7 @@ const dashboardRoutes = [
         should_regex: true
     },
     {
-        path: "/customer/customer",
+        path: "/customers/customer",
         sidebarName: "Customers",
         navbarName: "Customers",
         icon: SupervisedUserCircle,
