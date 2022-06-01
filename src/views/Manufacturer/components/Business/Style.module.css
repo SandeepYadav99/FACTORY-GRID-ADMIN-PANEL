@@ -143,7 +143,7 @@
     font-size: 0.8rem;
     font-weight: 600;
     margin-top: 10px;
-    margin-bottom: 10px;
+    /*margin-bottom: 10px;*/
 }
 
 .name{
@@ -194,6 +194,12 @@
     margin-bottom: 3px;
 }
 
+.kyc{
+    font-weight: 600;
+    font-size: 0.7rem;
+    display: flex;
+}
+
 .value{
     font-size: 0.8rem;
     margin-left: 10px;
@@ -210,6 +216,12 @@
 .val{
     font-size: 0.8rem;
     margin-left: 10px;
+}
+
+.website{
+    color: #072ead;
+    text-decoration: underline;
+    font-size: 0.8rem;
 }
 
 .designation{
@@ -255,7 +267,10 @@
     font-size: 0.8rem !important;
 }
 
-/* ACcount*/
+.reviews{
+    color: gray;
+}
+
 .blockFlex{
     display: flex;
     font-size: 0.8rem;
@@ -278,6 +293,20 @@
 .headings{
     font-size: 0.9rem;
     font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.brochure{
+    font-size: 0.7rem;
+    margin-right: 5px;
+}
+
+.bankingFlex{
+    display: flex;
+}
+
+.accountInfo{
+    flex: 1;
 }
 
 .noChat{
@@ -296,6 +325,9 @@
 }
 
 .member{
+    margin-top: 7px;
+    display: flex;
+    justify-content: center;
     font-size: 0.7rem;
 }
 
@@ -343,4 +375,10 @@
 
 .msgDate{
     font-weight: 600;
+}
+
+.coord{
+    color: #072ead;
+    text-decoration: underline;
+    font-size: 0.8rem;
 }

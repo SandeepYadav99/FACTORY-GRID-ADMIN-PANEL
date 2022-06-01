@@ -6,6 +6,9 @@ import Rating from '@material-ui/lab/Rating';
 import {WaitingComponent} from "../../../../components/index.component";
 import VerifyIdentityProof from "./components/VerifyIdentityProof/VerifyIdentityProof";
 import Timeline from "./components/Timeline/Timeline.view";
+import Queries from "./components/Queries/Queries.view";
+import Messages from "./components/Messages/Messages.component";
+import MessageForm from "./components/Messages/MessageForm.view"
 
 
 class ProfileView extends Component{
@@ -129,6 +132,24 @@ class ProfileView extends Component{
                                 <div className={styles.latest}><strong>Latest Activity</strong> : 12/2/21    12:00:00</div>
                             </div>
                             <Timeline/>
+                        </div>
+
+                        <div className={styles.plain}>
+                            <div className={styles.headings}>Support Queries</div>
+                            <div>
+                                <Queries/>
+                            </div>
+                        </div>
+
+                        <div className={styles.plain}>
+                            <div className={styles.activityFlex}>
+                                <div className={styles.headings}>Messages</div>
+                                <div className={styles.latest}><div>Last Message</div> <div className={styles.msgDate}>12/12/2021 | 1:00 PM</div></div>
+                            </div>
+                            <div>
+                                <Messages/>
+                                <MessageForm/>
+                            </div>
                         </div>
 
                     </div>

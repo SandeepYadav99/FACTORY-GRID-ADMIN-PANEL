@@ -1,0 +1,122 @@
+
+.imgContainer {
+    position: relative;
+    /*margin-left: 10px;*/
+    margin-right: 20px;
+    margin-top: 20px;
+    cursor: pointer;
+}
+.imgCard {
+    position: relative;
+    /*border-radius: 20px;*/
+    overflow: hidden;
+}
+
+.featuredTile {
+    position: absolute;
+    bottom: -25px;
+    left: 0px;
+    background-color: rgba(113, 37, 125, 0.77);
+    color: white;
+    width: 420px;
+    text-align: center;
+    transition: all 0.6s;
+    outline: none;
+    border: none;
+    padding: 5px 0px;
+    cursor: pointer;
+}
+.imgCard:hover .featuredTile {
+    bottom: 0px;
+}
+.img {
+    width: 170px;
+    height: 170px;
+
+}
+.imgBtn {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    background: #1BBD73;
+    border-radius: 50%;
+    color: white;
+    padding: 5px;
+    z-index: 1;
+}
+.imgLikeBtn {
+    position: absolute;
+    top: 0px;
+    left: 15px;
+    background: rgba(78, 83, 102, 0.85);
+    color: white;
+}
+
+
+.formHeading {
+    font-size: 16px;
+    font-weight: 700;
+
+}
+
+.bottomLine {
+    opacity: 0.4;
+    color: grey;
+    /*margin-bottom: 20px;*/
+}
+.flexWrap {
+    display: flex;
+    /*justify-content: space-between;*/
+    flex-wrap: wrap;
+}
+
+.addButton {
+    display: flex;
+    align-items: center;
+    color: #71257D;
+    font-weight: bold;
+    position: relative;
+    cursor: pointer;
+    z-index: 23;
+}
+.addButton::before {
+    content: ' ';
+    position: absolute;
+    bottom: -1px;
+    left: 4px;
+    width: 95%;
+    border-bottom: 2px solid #71257D;
+}
+.imageCont {
+    margin-top: 10px;
+}
+
+.noImg{
+    position: relative;
+    /*top: -25px;*/
+    font-size: 0.9rem;
+    margin-left: 15px;
+}
+
+.video{
+    position: absolute;
+    top: 10px;
+    left: 10px;
+}
+
+.icn{
+    color: white !important;
+}
+
+.updated{
+    font-size: 0.6rem;
+}
+
+.imgInfo{
+    margin-top: 5px;
+}
+
+.bottomInfo{
+    text-decoration: none;
+    color: black;
+}

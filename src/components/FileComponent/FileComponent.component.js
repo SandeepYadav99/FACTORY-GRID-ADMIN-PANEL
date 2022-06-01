@@ -73,7 +73,7 @@ class File extends Component {
 
 
     render() {
-        const {value, children, multiple, accept, error, placeholder,user_image, show_image, default_image, link} = this.props;
+        const {value, children, multiple, accept, error, placeholder,name,component,user_image, title, show_image, default_image,banner, link} = this.props;
         console.log('image', default_image);
         let tempPlaceHolder = this.props.placeholder;
         if (value != '') {
@@ -86,28 +86,53 @@ class File extends Component {
         if (show_image && !multiple) {
             return (
                 <div>
-                <div className={styles.imageBtnContainer}>
-                    <div>
-                        <div className={styles.imagePlus} style={{ backgroundImage: "url("+(this._getImageUrl(value))+")",
-                            backgroundSize: 'cover', backgroundPosition: 'center',borderColor: (error ? 'red' : '#c2c2c2')}}></div>
+                    <div className={styles.imageBtnContainer}>
+                        <div>
+                            <div className={styles.imagePlus} style={{ backgroundImage: "url("+(this._getImageUrl(value))+")",
+                                backgroundSize: 'cover', backgroundPosition: 'center',borderColor: (error ? 'red' : '#c2c2c2')}}></div>
+                        </div>
+                        <div className={styles.imgLowerContainer}>
+                            <div className={styles.imgFileLabelPlus}>
+                                <span className={styles.plus}>{!value && !default_image ? '+' :''}</span>
+                                <div className={styles.textUpload} style={error ? {} : {}}>{!value  && !default_image ? 'Upload':''}</div></div>
+                            <input multiple={multiple} id="upload" data-value={'JPG'} accept={accept ? accept : 'image/*'}
+                                   onChange={this._handleFileChange}
+                                   className={styles.fileInput}
+                                   type="file"/>
+                        </div>
+                        {/*<label style={{fontSize:'14px',fontWeight:'500'}}>{this.props.placeholder}</label>*/}
                     </div>
-                    <div className={styles.imgLowerContainer}>
-                        <div className={styles.imgFileLabelPlus}>
-                            <span className={styles.plus}>{!value && !default_image ? '+' :''}</span>
-                            <div className={styles.textUpload} style={error ? {} : {}}>{!value  && !default_image ? 'Upload':''}</div></div>
-                        <input multiple={multiple} id="upload" data-value={'JPG'} accept={accept ? accept : 'image/*'}
-                               onChange={this._handleFileChange}
-                               className={styles.fileInput}
-                               type="file"/>
+                    <div className={styles.tooltipFlex}>
+                        <span className={styles.tipText}>{title ? title : ''}</span>
                     </div>
-                    {/*<label style={{fontSize:'14px',fontWeight:'500'}}>{this.props.placeholder}</label>*/}
                 </div>
-                    {/*<div className={styles.tooltipFlex}>*/}
-                    {/*    <Tooltip title="Info" aria-label="info" placement="top">*/}
-                    {/*        <InfoIcon fontSize={'small'}/>*/}
-                    {/*    </Tooltip>*/}
-                    {/*    <span className={styles.tipText}>Guidelines</span>*/}
-                    {/*</div>*/}
+            );
+        }
+
+        if (banner && !multiple) {
+            return (
+                <div>
+                    <div className={styles.imageBtnContainerNew}>
+                        <div>
+                            <div className={styles.imagePlusNew} style={{ backgroundImage: "url("+(this._getImageUrl(value))+")",
+                                backgroundSize: 'cover', backgroundPosition: 'center',borderColor: (error ? 'red' : '#c2c2c2')}}>
+
+                                <div className={styles.imgLowerContainer}>
+                                    <div>
+                                        <span className={styles.plus}>{!value && !default_image ? '+' :''}</span>
+                                        <div className={styles.textUpload} style={error ? {} : {}}>{!value  && !default_image ? 'Upload Banner Image':''}</div></div>
+                                    <input multiple={multiple} id="upload" data-value={'JPG'} accept={accept ? accept : 'image/*'}
+                                           onChange={this._handleFileChange}
+                                           className={styles.fileInput}
+                                           type="file" title={""}/>
+                                </div>
+                            </div>
+                        </div>
+                        {/*<label style={{fontSize:'14px',fontWeight:'500'}}>{this.props.placeholder}</label>*/}
+                    </div>
+                    <div className={styles.tooltipFlex}>
+                        <span className={styles.tipText}>{title ? title : ''}</span>
+                    </div>
                 </div>
             );
         }
@@ -118,9 +143,9 @@ class File extends Component {
                     <label className={styles.file_upload__label}>
                         <div className={styles.image} style={{ backgroundImage: "url("+(this._getImageUrl(value))+")", backgroundRepeat:'no-repeat',
                             backgroundPosition: 'center', backgroundSize: 'cover', borderColor: (error ? 'red' : '#c2c2c2')}}></div>
-                        {/*<div className={styles.imgEditBtn}>*/}
-                        {/*    <CameraAltIcon className={styles.cameraIcon} />*/}
-                        {/*</div>*/}
+                        <div className={styles.imgEditBtn}>
+                            <CameraAltIcon className={styles.cameraIcon} />
+                        </div>
                     </label>
                     <div className={styles.imgLowerContainer}>
                         <input multiple={multiple} id="upload" data-value={'JPG'} accept={accept ? accept : 'image/*'}
@@ -130,6 +155,19 @@ class File extends Component {
                     </div>
                 </div>
             )
+        }
+        if (component) {
+            return (<div className={styles.positionR} >
+                <div className={styles.fileUpload} >
+                    <div >
+                        {/*<label for={name}>{component}</label>*/}
+                        {/*<input multiple={multiple} id={name} name={name} data-value={'JPG'} accept={accept ? accept : 'image/*'}*/}
+                        {/*       onChange={this._handleFileChange}*/}
+                        {/*       className={styles.fileInput}*/}
+                        {/*       type="file"/>*/}
+                    </div>
+                </div>
+            </div>)
         }
         return (
             <div className={styles.positionR}>

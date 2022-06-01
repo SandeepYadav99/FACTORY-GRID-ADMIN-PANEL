@@ -15,6 +15,8 @@ const initialState = {
     theme: 'dark',
     TERMS: '',
     PRIVACY: '',
+    ACCEPTABLE_USE: '',
+    COOKIES: '',
 };
 
 export default function (state = JSON.parse(JSON.stringify(initialState)), action) {

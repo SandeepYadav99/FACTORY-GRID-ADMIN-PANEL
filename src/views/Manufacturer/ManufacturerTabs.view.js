@@ -19,6 +19,7 @@ import CustomerView from '../Customers/components/Info/Customer.view'
 import {Report} from "@material-ui/icons";
 import MuiStyle from "../../libs/MuiStyle";
 import CustomerProfile from './components/Profile/CustomerProfile.view'
+import BusinessDetails from "./components/Business/BusinessDetails.view";
 
 function TabPanel(props) {
     const {children, value, index, ...other} = props;
@@ -145,7 +146,7 @@ class ManufacturerTabs extends React.Component {
                         <CustomerProfile/>
                     </TabPanel>
                     <TabPanel value={this.state.value} index={1} dir={theme.direction}>
-
+                        <BusinessDetails/>
                     </TabPanel>
                     <TabPanel value={this.state.value} index={2} dir={theme.direction}>
 

@@ -1,0 +1,101 @@
+.plain{
+    border-radius: 10px;
+    padding: 1.2rem 1.2rem;
+    margin-bottom: 20px;
+    background-color: white;
+    box-shadow: 0 0 8px rgb(0 0 0 / 15%);
+}
+
+.plainCont {
+    border-radius: 10px;
+    padding: 1.2rem 1.2rem;
+    margin-bottom: 20px;
+    background-color: white;
+    box-shadow: 0 0 8px rgb(0 0 0 / 15%);
+    max-height: calc(50vh);
+    overflow-y: scroll;
+
+}
+.actionBtn {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.noteFlex{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.8rem;
+}
+
+.weight{
+    font-weight: 600;
+}
+
+.recordFlex{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.event{
+    text-decoration: underline;
+}
+
+.noteCard{
+    font-size: 0.8rem;
+}
+
+.assign{
+    font-weight: 600;
+}
+
+.assignedTo{
+    font-size: 0.8rem;
+    display: flex;
+    align-items: center;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.assignee{
+    margin-left: 10px;
+}
+
+.note{
+    padding-bottom: 10px;
+}
+
+.formContainer{
+    /*padding: 20px 50px;*/
+}
+
+.submitBtn{
+    position: absolute;
+    right: 10px;
+    top: 20px;
+}
+
+.noteContainer{
+    position: relative;
+    display: flex;
+    border: 2px solid #71717129;
+    padding: 3px;
+}
+
+.txtArea{
+    width: 100%;
+    border: none;
+    resize: none !important;
+    font-family: Avenir;
+    font-size: 12px;
+    overflow: auto;
+    outline: none;
+
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+
+    resize: none;
+    position: relative;
+}

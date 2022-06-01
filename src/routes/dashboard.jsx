@@ -188,9 +188,9 @@ const dashboardRoutes = [
         is_protect: true,
     },
     {
-        path: "/customers",
-        sidebarName: "Customers",
-        navbarName: "Customers",
+        path: "/app/users",
+        sidebarName: "App Users",
+        navbarName: "App Users",
         icon: SupervisedUserCircle,
         component: CustomerList,
         is_sidebar: true,

@@ -45,11 +45,24 @@ class AppSettings extends Component {
                             handleDataSave={actionUpdatePolicies}
                 />
             );
-        }
-        else if (value == 1) {
+        } else if (value == 1) {
             return (
                 <HtmlEditor title={'TERMS'}
                             data={appSetting.TERMS}
+                            handleDataSave={actionUpdatePolicies}
+                />
+            );
+        } else if (value == 2) {
+            return (
+                <HtmlEditor title={'ACCEPTABLE_USE'}
+                            data={appSetting.ACCEPTABLE_USE}
+                            handleDataSave={actionUpdatePolicies}
+                />
+            );
+        } else if (value == 3) {
+            return (
+                <HtmlEditor title={'COOKIES'}
+                            data={appSetting.COOKIES}
                             handleDataSave={actionUpdatePolicies}
                 />
             );
@@ -80,6 +93,8 @@ class AppSettings extends Component {
                         >
                             <Tab label="Privacy Policy" {...this.a11yProps(0)} />
                             <Tab label="Terms and Policy" {...this.a11yProps(1)} />
+                            <Tab label="Acceptable Use" {...this.a11yProps(2)} />
+                            <Tab label="Cookies Notice" {...this.a11yProps(3)} />
                         </Tabs>
                         <div className={styles.tabPanel}>
                         {this._renderPanel(value)}

@@ -44,7 +44,7 @@ const validate = (values) => {
             errors[field] = 'Required'
         }
     });
-    if (values.name && !/^[A-Z ]*$/i.test(values.name)) {
+    if (values.name && !/^[A-Z &]*$/i.test(values.name)) {
         errors.name = 'Only alphabets are allowed';
     }
     if (values.email && !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
