@@ -9,11 +9,18 @@ import BadgeList from "../views/Badge/BadgeList.container";
 import ProductList from "../views/Product/ProductList.container";
 import ProductView from '../views/Product/ProductView';
 import UpperTabs from '../views/User/components/UpperTabs/UpperTabs.view';
-
 import BlogsList from '../views/Blogs/BlogsList.container';
 import FaqList from '../views/Faq/FaqList.container';
 import SupportList from "../views/Support/SupportList.container";
 import TypeList from "../views/Type/TypeList.container";
+import Profile from '../views/Profile/MyProfile.view'
+import CustomerTabs from "../views/Customers/components/UpperTabs/CustomerTabs.view";
+import ManufacturerTabs from '../views/Manufacturer/ManufacturerTabs.view';
+import Support from "../views/Support/Support.view";
+import UnitList from "../views/Unit/UnitList.container";
+import SubCategoryList from "../views/SubCategory/SubCategoryList.container";
+import QuoteList from "../views/Quotes/QuoteList.container";
+import QuoteDetail from "../views/Quotes/Quote.view"
 // import TableList from "views/TableList/TableList.jsx";
 // import Typography from "views/Typography/Typography.jsx";
 // import Icons from "views/Icons/Icons.jsx";
@@ -33,12 +40,7 @@ import {
     Notifications, EventNote,
     ContactSupport, Settings
 } from "@material-ui/icons";
-import Profile from '../views/Profile/MyProfile.view'
-import CustomerTabs from "../views/Customers/components/UpperTabs/CustomerTabs.view";
-import ManufacturerTabs from '../views/Manufacturer/ManufacturerTabs.view';
-import Support from "../views/Support/Support.view";
-import UnitList from "../views/Unit/UnitList.container";
-import SubCategoryList from "../views/SubCategory/SubCategoryList.container";
+
 
 const dashboardRoutes = [
     {
@@ -286,8 +288,27 @@ const dashboardRoutes = [
         is_sidebar: true,
         is_protect: true,
     },
-
-
+    {
+        path: "/quotes",
+        sidebarName: "Quotes",
+        navbarName: "Quotes",
+        icon: ContactSupport,
+        component: QuoteList,
+        is_sidebar: true,
+        is_protect: true,
+        is_parent: false,
+        slug: '',
+    },
+    {
+        path: "/quotes/detail/:id",
+        sidebarName: "Quotes Detail",
+        navbarName: "Quotes Detail",
+        icon: SupervisedUserCircle,
+        component: QuoteDetail,
+        is_sidebar: false,
+        is_protect: true,
+        should_regex: true
+    },
     // {
     //   path: "/notifications",
     //   sidebarName: "Notifications",

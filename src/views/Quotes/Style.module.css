@@ -1,0 +1,90 @@
+.vehicleHeading {
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.bottomLine {
+    opacity: 0.4;
+    color: grey;
+    margin-bottom: 20px;
+}
+
+.headerContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.headerContainer .title {
+    font-size: 16px;
+}
+
+.vehiclePhotographs {
+    height: 80px;
+    width: 80px;
+}
+
+.labelVehicles {
+    text-align: center;
+}
+
+.vehicleImageCont {
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    margin-left: 10px;
+    margin-right: 10px;
+
+}
+
+
+.iconFlex{
+    display: flex;
+    align-items: center;
+}
+
+.greyColor{
+    color: grey;
+    text-transform: capitalize;
+    /*font-family: Poppins-Medium;*/
+}
+
+.clock{
+    font-size: 0.9rem !important;
+    margin-right: 5px !important;
+    /*font-family: Poppins-Medium;*/
+}
+
+.upperFlex{
+    display: flex;
+}
+
+.left{
+    flex: 0.5;
+    margin-right: 10px;
+}
+
+.right {
+    flex: 1;
+    margin-left: 10px;
+}
+
+.plain{
+    border-radius: 10px;
+    padding: 1.2rem 1.2rem;
+    margin-bottom: 20px;
+    background-color: white;
+    box-shadow: 0 0 8px rgb(0 0 0 / 15%);
+}
+
+.caseFlex{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 0.8rem;
+}
+
+.weight{
+    font-weight: 600;
+}

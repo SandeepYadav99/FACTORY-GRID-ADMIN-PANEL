@@ -1,0 +1,79 @@
+.plain{
+    border-radius: 10px;
+    padding: 1.2rem 1.2rem;
+    margin-bottom: 20px;
+    background-color: white;
+    box-shadow: 0 0 8px rgb(0 0 0 / 15%);
+}
+
+.name{
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.mobileFlex{
+    display: flex;
+    /*align-items: center;*/
+    /*justify-content: center;*/
+    font-size: 0.8rem;
+    /*padding-bottom: 5px;*/
+    padding-top: 3px;
+}
+
+.mob{
+    font-size: 0.8rem;
+    /*margin-left: 10px;*/
+}
+
+.cases{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 0.8rem;
+    padding-top: 10px;
+}
+
+.prev{
+    /*color: #0f49a0;*/
+}
+
+.selectWidth {
+    width: 100% !important;
+    background-color: white;
+}
+
+.change{
+    color: #0f49a0 !important;
+    text-decoration: underline !important;
+    font-size: 0.8rem !important;
+}
+
+.queryBtn{
+    color: #0f49a0 !important;
+    text-decoration: underline !important;
+    font-size: 0.8rem !important;
+}
+
+.assign{
+    font-weight: 600;
+}
+
+.assignedTo{
+    font-size: 0.8rem;
+    display: flex;
+    align-items: center;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.assignee{
+    margin-left: 10px;
+}
+
+.newFlex{
+    display: flex;
+}
+
+.info{
+    margin-left: 15px;
+}
