@@ -56,7 +56,8 @@ class NoteDialog extends Component{
 
                             <MenuItem value={'CALL_LOG'}>Call Log</MenuItem>
                             <MenuItem value={'EMAIL'}>Email</MenuItem>
-                            <MenuItem value={'INTERNAL'}>Internal</MenuItem>
+                            <MenuItem value={'MANUFACTURER'}>Manufacturer</MenuItem>
+                            <MenuItem value={'OTHER'}>Other</MenuItem>
                         </Field>
                     </div>
                     <div>

@@ -91,16 +91,16 @@ class LoginView extends Component {
     }
 
     _handleSubmit(data) {
-        this.props.actionLoginUser(
-            {token:'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZTE4NmU3Mjc2ZjAxZTI1YmM5MzExYTAiLCJ1bmlxdWVrZXkiOiJWTHhpYiIsImlhdCI6MTY0NDMzMTE4MywiZXhwIjoxNjc1ODY3MTgzfQ.VBZoNz6fAYXzp65crVZ2sNHm5D4L9T7GaZjw_enm8Bw',id:'5e186e7276f01e25bc9311a0'}
-            )
-        // serviceLoginUser(data).then((val) => {
-        //     if (!val.error) {
-        //         this.props.actionLoginUser(val.data);
-        //     } else {
-        //         EventEmitter.dispatch(EventEmitter.THROW_ERROR, {error: 'Invalid Credentials! Please verify.', type: 'error'});
-        //     }
-        // });
+        // this.props.actionLoginUser(
+        //     {token:'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZTE4NmU3Mjc2ZjAxZTI1YmM5MzExYTAiLCJ1bmlxdWVrZXkiOiJWTHhpYiIsImlhdCI6MTY0NDMzMTE4MywiZXhwIjoxNjc1ODY3MTgzfQ.VBZoNz6fAYXzp65crVZ2sNHm5D4L9T7GaZjw_enm8Bw',id:'5e186e7276f01e25bc9311a0'}
+        //     )
+        serviceLoginUser(data).then((val) => {
+            if (!val.error) {
+                this.props.actionLoginUser(val.data);
+            } else {
+                EventEmitter.dispatch(EventEmitter.THROW_ERROR, {error: 'Invalid Credentials! Please verify.', type: 'error'});
+            }
+        });
     }
 
     _handleChange(){

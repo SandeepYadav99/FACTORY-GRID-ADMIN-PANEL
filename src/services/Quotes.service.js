@@ -1,4 +1,4 @@
-import { postRequest} from '../libs/AxiosService.util';
+import {getRequest, postRequest} from '../libs/AxiosService.util';
 
 export async function serviceGetQuotes(params) {
     return await postRequest('quotes', params);
@@ -9,25 +9,29 @@ export async function serviceGetQuoteDetail(params) {
 }
 
 export async function serviceGetQuoteNotes(params) {
-    return await postRequest('quote/notes', params);
+    return await postRequest('quotes/notes', params);
 }
 
 export async function serviceChangeQuoteStatus(params) {
-    return await postRequest('quote/change/status', params);
+    return await postRequest('quotes/change/status', params);
 }
 
 export async function serviceChangeQuotePriority(params) {
-    return await postRequest('quote/change/priority', params);
+    return await postRequest('quotes/change/priority', params);
 }
 
 export async function serviceAddQuoteNote(params) {
-    return await postRequest('quote/notes/create', params);
+    return await postRequest('quotes/notes/create', params);
 }
 
 export async function serviceAssignUserToQuote(params) {
-    return await postRequest('quote/assign/user', params);
+    return await postRequest('quotes/assign/user', params);
 }
 
 export async function serviceGetQuoteUsers(params) {
-    return await postRequest('quote/users/crm', params);
+    return await getRequest('list/admin/users', params);
+}
+
+export async function serviceGetQuoteTimeline(params) {
+    return await postRequest('quotes/timeline', params);
 }

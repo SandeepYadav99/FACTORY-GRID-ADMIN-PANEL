@@ -21,7 +21,8 @@ import {
     QUOTE_NOTES_GET_INIT,
     QUOTE_NOTES_GET_DONE,
     CHANGE_QUOTE_STATUS,
-    CHANGE_QUOTE_PRIORITY, ASSIGN_QUOTE, ADD_QUOTE_NOTES
+    CHANGE_QUOTE_PRIORITY, ASSIGN_QUOTE, ADD_QUOTE_NOTES,
+    SET_QUOTE_REQUEST_TYPE
 } from '../actions/Quotes.action';
 import Constants from '../config/constants';
 
@@ -45,7 +46,8 @@ const initialState = {
     is_quote_detail: false,
     quote_detail: null,
     is_quote_notes: false,
-    quote_notes: []
+    quote_notes: [],
+    type: 'ALL'
 };
 
 export default function (state = JSON.parse(JSON.stringify(initialState)), action) {
@@ -68,6 +70,12 @@ export default function (state = JSON.parse(JSON.stringify(initialState)), actio
         }
         case SET_SORTING: {
             return { ...state, sorting_data: action.payload };
+        }
+        case SET_QUOTE_REQUEST_TYPE: {
+            return {
+                ...state,
+                type: action.payload
+            };
         }
         case CHANGE_STATUS: {
             if (action.payload) {
@@ -218,7 +226,10 @@ export default function (state = JSON.parse(JSON.stringify(initialState)), actio
         case ASSIGN_QUOTE: {
             return {
                 ...state,
-                quote_detail: action.payload,
+                quote_detail: {
+                    ...state.quote_detail,
+                        ...action.payload,
+                },
             }
         }
         default: {

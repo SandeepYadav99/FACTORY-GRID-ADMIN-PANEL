@@ -54,6 +54,10 @@
     font-size: 0.8rem !important;
 }
 
+.assignedDate{
+    font-size: 0.7rem;
+}
+
 .assign{
     font-weight: 600;
 }

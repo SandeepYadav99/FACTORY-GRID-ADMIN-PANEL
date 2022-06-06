@@ -17,10 +17,11 @@ export const GET_PROFILE_INIT = 'GET_PROFILE_INIT';
 export function actionLoginUser(data) {
     return (dispatch) => {
         if (data) {
-            localStorage.setItem('jwt_token', data.token);
-            localStorage.setItem('user', JSON.stringify({ name: data.name,  id: data.user_id }));
-            setAuthorizationToken(data.token);
-            dispatch({ type: AUTH_USER, payload: { token: data.token, name: data.name, id: data.user_id } });
+            const token = data.tokens.access.token;
+            localStorage.setItem('jwt_token', token);
+            localStorage.setItem('user', JSON.stringify(data));
+            setAuthorizationToken(token);
+            dispatch({ type: AUTH_USER, payload: { token: token, name: data.name, id: data.user_id } });
             // dispatch(actionGetProfile());
             history.push(`/dashboard`);
         }

@@ -20,13 +20,13 @@ const LeadAssignedUser = () => {
     }, [quoteDetail, setOpen]);
 
     const renderAssigned = useMemo(() => {
-        if (false && quoteDetail.assigned_to) {
+        if (quoteDetail.assigned_data) {
             return (
                 <div className={styles.assignedTo}>
-                    <img src={require('../../../../assets/img/profile.png')} alt="" height={30}/>
+                    <img src={quoteDetail.assigned_data.image ? quoteDetail.assigned_data.image :require('../../../../assets/img/profile.png')} alt="" height={30}/>
                     <div className={styles.assignee}>
-                        <div className={styles.assign}>{quoteDetail.assigned.name}</div>
-                        <div>{quoteDetail.assignment_date}</div>
+                        <div className={styles.assign}>{quoteDetail.assigned_data.name}</div>
+                        <div className={styles.assignedDate}>{quoteDetail.assigned_data.assigned_date}</div>
                     </div>
                 </div>
             )

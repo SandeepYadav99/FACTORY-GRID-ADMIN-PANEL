@@ -42,6 +42,7 @@
 .iconFlex{
     display: flex;
     align-items: center;
+    margin-top: 3px;
 }
 
 .greyColor{
@@ -87,4 +88,25 @@
 
 .weight{
     font-weight: 600;
+}
+
+.filterButtons{
+    margin-left: 7px;
+}
+
+.noColor{
+    background: #536DFE !important;
+    color: white !important;
+    padding: 10px 35px !important;
+    font-size: 0.7rem !important;
+    border: 1px solid #80808021 !important;
+
+}
+
+.color {
+    background: white !important;
+    color: #4f4f4f !important;
+    padding: 10px 35px !important;
+    font-size: 0.7rem !important;
+    border: 1px solid #80808021 !important;
 }

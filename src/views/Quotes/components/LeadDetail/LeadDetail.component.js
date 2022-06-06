@@ -47,25 +47,25 @@ class LeadDetailComponent extends Component {
 
     render() {
         const {is_quote_detail, quote_detail: data} = this.props;
-        // if (is_quote_detail || data === null) {
-        //     return (<WaitingComponent/>)
-        // }
+        if (is_quote_detail || data === null) {
+            return (<WaitingComponent/>)
+        }
         return (
             <div>
                 <div className={styles.plain}>
                     <div className={styles.newFlex}>
                         <div>
-                            <img src={require('../../../../assets/img/profile.png')} alt="" height={50}/>
+                            <img src={data.user.image ? data.user.image : require('../../../../assets/img/profile.png')} alt="" height={50}/>
                         </div>
                         <div className={styles.info}>
-                            <div className={styles.name}>Pranav Bhasin</div>
+                            <div className={styles.name}>{data.user.name}</div>
                             <div className={styles.mobileFlex}>
                                 {/*<img src={require('../../../../assets/img/varified_icon.png')} alt="" height={14}/>*/}
-                                <div className={styles.mob}>56456546</div>
+                                <div className={styles.mob}>{data.user.contact}</div>
                             </div>
                             <div className={styles.mobileFlex}>
                                 {/*<img src={require('../../../../assets/img/varified_icon.png')} alt="" height={14}/>*/}
-                                <div className={styles.mob}>pp@pp.pp</div>
+                                <div className={styles.mob}>{data.user.email}</div>
                             </div>
                         </div>
                     </div>
@@ -80,13 +80,13 @@ class LeadDetailComponent extends Component {
                         <ButtonBase className={styles.queryBtn}>Change</ButtonBase>
                     </div>
 
-                    <LeadAssignedUser />
-                    {/*quoteId={data.quote_id}*/}
+                    <LeadAssignedUser quoteId={data.quote_id}/>
+
                     <div className={'priority'}>
                         <FormControl variant={'outlined'} margin={'dense'} className={styles.selectWidth}>
                             <InputLabel id="demo-customized-select-label">Priority</InputLabel>
                             <Select
-                                // value={data.priority}
+                                 value={data.priority}
                                 onChange={this._handlePriorityChange}>
                                 {Object.keys(constants.PRIORITY).map(key => {
                                     return (<MenuItem key={key} value={key}>{key}</MenuItem>)
@@ -99,7 +99,7 @@ class LeadDetailComponent extends Component {
                         <FormControl variant={'outlined'} margin={'dense'} className={styles.selectWidth}>
                             <InputLabel id="demo-customized-select-label">Status</InputLabel>
                             <Select
-                                // value={data.status}
+                                 value={data.status}
                                 onChange={this._handleStatusChange}>
                                 {Object.keys(constants.QUOTE_STATUS).map(key => {
                                     return (

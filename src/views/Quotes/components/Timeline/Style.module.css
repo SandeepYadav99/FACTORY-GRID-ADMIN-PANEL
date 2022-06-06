@@ -47,6 +47,16 @@
     border-radius: 15px;
 }
 
+.priority{
+    display: inline!important;
+    font-size: 12px;
+    font-weight: 500;
+    /*background-color: rgba(255,77,79,.06274509803921569);*/
+    color: #ff4d4f;
+    /*padding: 4.5px 11.85px;*/
+    border-radius: 15px;
+    text-transform: capitalize;
+}
 .weight{
     font-weight: 600;
 }

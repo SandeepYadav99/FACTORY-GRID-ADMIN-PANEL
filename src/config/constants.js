@@ -1,6 +1,6 @@
 /* eslint-disable indent,linebreak-style */
 const TABLE_LIMIT = 50;
-const tempLevel = true//!(!process.env.NODE_ENV || process.env.NODE_ENV === 'development');
+const tempLevel = !(!process.env.NODE_ENV || process.env.NODE_ENV === 'development');
 const tempDate = new Date();
 export default {
     TIME_ZONE: -(tempDate.getTimezoneOffset()/60),
@@ -81,4 +81,35 @@ export default {
         MANUFACTURE: 'MANUFACTURER',
         BOTH: 'BOTH'
     },
+    PREFERRED_TIME_TEXT: {
+        STANDARD: 'Cold Lead',
+        FAST: 'Warm Lead',
+        EXPRESS: 'Hot Lead'
+    },
+    PRIORITY: {
+        HIGH: 'HIGH',
+        MEDIUM: 'MEDIUM',
+        LOW: 'LOW'
+    },
+    QUOTE_STATUS: {
+        PENDING: 'PENDING',
+        ON_GOING: 'ON_GOING',
+        CONVERTED: 'CONVERTED',
+        JUNK: 'JUNK',
+        COMPLETED: 'COMPLETED'
+    },
+    QUOTE_STATUS_TEXT: {
+        PENDING: 'Pending',
+        ON_GOING: 'On Going',
+        CONVERTED: 'Converted',
+        JUNK: 'Junk',
+        COMPLETED: 'Completed'
+    },
+    QUOTE_STATUS_COLOR: {
+        PENDING: 'pending',
+        ON_GOING: 'on_going',
+        CONVERTED: 'converted',
+        JUNK: 'junk',
+        COMPLETED: 'completed'
+    }
 };

@@ -28,6 +28,7 @@ export const SET_PAGE = 'SET_PAGE_QUOTES';
 export const CHANGE_PAGE = 'CHANGE_PAGE_QUOTES';
 export const CHANGE_STATUS= 'CHANGE_STATE_QUOTES';
 export const SET_SERVER_PAGE = 'SET_SERVER_PAGE_QUOTES';
+export const SET_QUOTE_REQUEST_TYPE = 'SET_QUOTE_REQUEST_TYPE';
 export const CREATE_DATA = 'CREATE_QUOTES';
 export const UPDATE_DATA = 'UPDATE_QUOTES';
 
@@ -41,14 +42,17 @@ export const QUOTE_NOTES_GET_DONE = 'QUOTE_NOTES_GET_DONE';
 export const ADD_QUOTE_NOTES = 'ADD_QUOTE_NOTES';
 export const ASSIGN_QUOTE = 'ASSIGN_QUOTE';
 
-export function actionFetchQuotes(index = 1, sorting = {}, filter = {}, shouldReset=false) {
-    const request = serviceGetQuotes({ index, row: sorting.row, order: sorting.order, ...filter }); // GetQuotes
+export function actionFetchQuotes(index = 1, sorting = {}, filter = {}, shouldReset=false, status) {
+    const request = serviceGetQuotes({ index, row: sorting.row, order: sorting.order, status, ...filter }); // GetQuotes
     return (dispatch) => {
         if (shouldReset) {
             dispatch({
                 type: CHANGE_PAGE,
                 payload: 1,
             });
+            if (!status) {
+                dispatch({type: SET_QUOTE_REQUEST_TYPE, payload: 'ALL'});
+            }
         }
         dispatch({type: FETCH_INIT, payload: null});
         request.then((data) => {
@@ -75,6 +79,11 @@ export function actionUpdateQuotes(data) {
     }
 }
 
+export function actionSetQuoteRequestType(type) {
+    return (dispatch) => {
+        dispatch({type: SET_QUOTE_REQUEST_TYPE, payload: type});
+    }
+}
 
 
 export function actionChangePageQuotes(page) {

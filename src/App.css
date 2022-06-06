@@ -204,3 +204,40 @@ input[type=radio] + label:hover {
 .innerHtml{
     word-wrap: break-word;
 }
+
+
+.pending {
+    background-color: rgba(250,139,12,.06274509803921569);
+    color: #fa8b0c;
+}
+.on_going{
+    background: rgba(44, 153, 255, 0.082);
+    color: rgb(44, 153, 255);
+}
+.completed{
+    background: rgba(95, 99, 242, 0.082);
+    color: rgb(95, 99, 242);
+}
+.junk {
+    background: #4a4a4a;
+    color: #f6f7ff;
+}
+.converted {
+    background-color: #a2a0a0;
+    color: #fee253 ;
+}
+
+.STANDARD{
+    background-color:  #cce8fc;
+    color: #055379;
+}
+
+.FAST{
+    background-color: #a2a0a0;
+    color: #fee253 ;
+}
+
+.EXPRESS{
+    background-color: #f274744f;
+    color: #f44336;
+}

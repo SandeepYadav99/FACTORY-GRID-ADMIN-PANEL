@@ -48,6 +48,7 @@ class Lead extends Component{
     }
 
     render() {
+        const {id} = this.props.match.params;
         const {is_quote_detail,quote_detail} = this.props;
         return(
             <div>
@@ -55,7 +56,7 @@ class Lead extends Component{
                     <div className={styles.left}>
                         <LeadDetail/>
                         <br/>
-                        <Timeline/>
+                        <Timeline id={id}/>
                     </div>
 
 

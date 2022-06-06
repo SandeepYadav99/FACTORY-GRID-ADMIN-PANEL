@@ -25,7 +25,7 @@ const LeadNoteList = () => {
         setIsNote(e => !e);
     }, [setIsNote]);
 
-    if (!is_quote_notes) {
+    if (is_quote_notes) {
         return (<WaitingComponent/>);
     }
 
@@ -39,7 +39,7 @@ const LeadNoteList = () => {
             </div>
             <br/>
             {list}
-            <NoteDialog leadId={quote_detail ? quote_detail.quote_id : ''} open={isNote} handleClose={_handleNote}/>
+            <NoteDialog quoteId={quote_detail ? quote_detail.quote_id : ''} open={isNote} handleClose={_handleNote}/>
         </div>
     )
 };

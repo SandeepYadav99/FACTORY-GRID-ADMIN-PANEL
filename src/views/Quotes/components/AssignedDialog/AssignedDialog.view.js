@@ -62,9 +62,9 @@ class AssignedDialog extends Component{
                             component={renderOutlinedSelectField}
                             margin={"dense"}
                             label={"Assigned To"}>
-                            {/*{users.map(val => {*/}
-                            {/*    return (<MenuItem value={val.user_id} key={val.user_id}>{val.name}</MenuItem>);*/}
-                            {/*})}*/}
+                            {users.map(val => {
+                                return (<MenuItem value={val.id} key={val.id}>{val.title}</MenuItem>);
+                            })}
 
                         </Field>
                     </div>

@@ -2,7 +2,7 @@
  * Created by charnjeetelectrovese@gmail.com on 12/3/2019.
  */
 import React, {Component} from 'react';
-import {Button, capitalize, IconButton, Paper} from '@material-ui/core';
+import {Button, ButtonBase, capitalize, IconButton, Paper} from '@material-ui/core';
 
 import classNames from 'classnames';
 import {bindActionCreators} from 'redux';
@@ -27,7 +27,10 @@ import {
     actionFilterQuotes,
     actionResetFilterQuotes,
     actionSetPageQuotes,
+    actionSetQuoteRequestType
 } from '../../actions/Quotes.action';
+import {serviceGetQuoteUsers} from "../../services/Quotes.service";
+import csx from "classnames";
 
 let CreateProvider = null;
 
@@ -42,11 +45,26 @@ class QuotessList extends Component {
             total: Constants.DEFAULT_PAGE_VALUE + 1,
             side_panel: false,
             edit_data: null,
-            selectedTourIndex: null
+            selectedTourIndex: null,
+            selected: 'ALL',
         };
+        const temp = Object.keys(Constants.QUOTE_STATUS_TEXT).map((key) => {
+            return {
+                id: key,
+                name: Constants.QUOTE_STATUS_TEXT[key],
+            };
+        })
         this.configFilter = [
-            {label: 'Created Date', options:{maxDate: new Date()}, name: 'createdAt', type: 'date'},
-            // {label: 'Status', name: 'status', type: 'select', fields: [ 'ACTIVE', 'INACTIVE']},
+            // {label: 'Created Date', options:{maxDate: new Date()}, name: 'createdAt', type: 'date'},
+            {
+                label: 'Status',
+                name: 'status',
+                type: 'selectObject',
+                custom: {extract: {id: 'id', title: 'name'}},
+                fields: temp
+            },
+            {label: 'Priority', name: 'priority', type: 'select', fields: ['HIGH','MEDIUM','LOW']},
+            {label: 'Assigned To', name: 'assigned_to', type: 'selectObject', custom: { extract: { id: 'id', title: 'title' } } , fields: []},
         ];
 
         this._handleFilterDataChange = this._handleFilterDataChange.bind(this);
@@ -64,6 +82,17 @@ class QuotessList extends Component {
         // if (this.props.total_count <= 0) {
             this.props.actionFetchData();
         // }
+
+        const req =  serviceGetQuoteUsers({});
+        req.then((data)=> {
+            if(!data.error){
+                // this.setState({
+                //     listData: data.data,
+                //     is_calling: false
+                // });
+                this.configFilter[2].fields = data.data;
+            }
+        });
     }
 
 
@@ -133,29 +162,11 @@ class QuotessList extends Component {
     }
 
     renderStatus(status) {
-        if (status === 'ACTIVE') {
-            return (
-                <span style={{
-                    fontSize: '12px',
-                    color: 'white',
-                    background: 'green',
-                    padding: '3px 10px',
-                    borderRadius: '20px',
-                    textTransform: 'capitalize'
-                }}>
-                    {(status)}
-                </span>
-            );
+        let className = 'warning';
+        if (status in Constants.QUOTE_STATUS_COLOR) {
+            className = Constants.QUOTE_STATUS_COLOR[status];
         }
-        return (<span style={{
-            ...styles.spanFont,
-            fontSize: '12px',
-            color: 'white',
-            background: `${status == 'REJECTED' ? 'red' : 'orange'}`,
-            padding: '3px 10px',
-            borderRadius: '20px',
-            textTransform: 'capitalize'
-        }}>{(status)}</span>);
+        return (<span className={csx('status', className)}>{(status.replaceAll('_', ' '))}</span>);
     }
 
     renderFirstCell(user) {
@@ -172,7 +183,7 @@ class QuotessList extends Component {
 
 
     _handleEdit(data) {
-       this.props.history.push('/quotes/detail/' + data.id)
+       this.props.history.push('/quotes/detail/' + data.quote_id)
     }
 
     _handleSideToggle() {
@@ -206,7 +217,7 @@ class QuotessList extends Component {
     _renderQueryInfo(data){
         return (
             <>
-                <div>Hot Lead</div>
+                <div className={csx('status', data.preferred_time)}>{Constants.PREFERRED_TIME_TEXT[data.preferred_time]}</div>
                 <div className={styles.iconFlex}>
                     <LocationOnOutlinedIcon className={styles.clock}/><span className={styles.greyColor}>{data.location}</span>
                 </div>
@@ -220,7 +231,17 @@ class QuotessList extends Component {
         )
     }
 
+    _handleSearchClick(status) {
+        this.setState({
+            selected: status
+        }, () => {
+            this.props.actionSetQuoteRequestType(status);
+            this.props.actionFetchData(1, {}, {}, true, status);
+        })
+    }
+
     render() {
+        const {selected} = this.state;
         const tableStructure = [
             {
                 key: 'quote_no',
@@ -257,7 +278,7 @@ class QuotessList extends Component {
                 key: 'assigned_to',
                 label: 'Assigned To',
                 sortable: false,
-                render: (temp, all) => <div><div className={styles.weight}>{all.assigned_to_name ? all.assigned_to_name : 'Unassigned'}</div><div>{all.assigned_to_date ? all.assigned_to_date : 'N/A'}</div></div>,
+                render: (temp, all) => <div><div className={styles.weight}>{all.assigned_data.name !== null ? all.assigned_data.name : 'Unassigned'}</div><div>{all.assigned_date ? all.assigned_date : 'N/A'}</div></div>,
             },
             {
                 key: 'status',
@@ -300,6 +321,16 @@ class QuotessList extends Component {
         };
         return (
             <div>
+                <div className={styles.filterButtons}>
+                    <ButtonBase onClick={this._handleSearchClick.bind(this, 'ALL')} style={{borderTopLeftRadius:'15px'}}
+                                className={selected === 'ALL' ? styles.noColor : styles.color}>All</ButtonBase>
+                    <ButtonBase onClick={this._handleSearchClick.bind(this, 'PENDING')}
+                                className={selected === 'PENDING' ? styles.noColor : styles.color}>Pending</ButtonBase>
+                    <ButtonBase onClick={this._handleSearchClick.bind(this, 'ON_GOING')}
+                                className={selected === 'ON_GOING' ? styles.noColor : styles.color}>On Going</ButtonBase>
+                    <ButtonBase onClick={this._handleSearchClick.bind(this, 'COMPLETED')} style={{borderTopRightRadius:'15px'}}
+                                className={selected === 'COMPLETED' ? styles.noColor : styles.color}>Completed</ButtonBase>
+                </div>
                 <PageBox>
                     <div className={styles.headerContainer}>
                         <span className={styles.title}>Quotes List</span>
@@ -357,6 +388,7 @@ function mapDispatchToProps(dispatch) {
         actionSetPage: actionSetPageQuotes,
         actionResetFilter: actionResetFilterQuotes,
         actionSetFilter: actionFilterQuotes,
+        actionSetQuoteRequestType: actionSetQuoteRequestType
     }, dispatch);
 }
 

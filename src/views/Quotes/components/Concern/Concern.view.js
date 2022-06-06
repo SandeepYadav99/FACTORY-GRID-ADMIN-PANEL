@@ -33,7 +33,7 @@ class Concern extends Component{
                     </div>
                     <div>
                         <div className={styles.heading}>Description</div>
-                        <div className={styles.desc}>{data.requirement}</div>
+                        <div className={styles.desc}>{data.requirements}</div>
                     </div>
                     <div className={styles.preferenceFlex}>
                         <div>
