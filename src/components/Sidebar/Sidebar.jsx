@@ -43,11 +43,11 @@ class CustomListItem extends React.Component {
     _renderNavLink(prop, nested) {
         const {classes, color, key, activeRoute} = this.props;
         const listItemClasses = cx({
-            [" " + classes[color]]: activeRoute(prop.path),
+            [" " + classes[color]]: activeRoute(prop.path, prop),
             [" " + classes['nested']]: nested
         });
         const whiteFontClasses = cx({
-            [" " + classes.whiteFont]: activeRoute(prop.path)
+            [" " + classes.whiteFont]: activeRoute(prop.path, prop)
         });
         return (
             <NavLink
@@ -94,10 +94,10 @@ class CustomListItem extends React.Component {
             )
         } else if (prop.is_parent) {
             const listItemClasses = cx({
-                [" " + classes[color]]: activeRoute(prop.path)
+                [" " + classes[color]]: activeRoute(prop.path, prop)
             });
             const whiteFontClasses = cx({
-                [" " + classes.whiteFont]: activeRoute(prop.path)
+                [" " + classes.whiteFont]: activeRoute(prop.path, prop)
             });
             return (
                 <>
@@ -151,17 +151,13 @@ class CustomLink extends React.Component {
 
 const Sidebar = ({...props}) => {
     // verifies if routeName is the one active (in browser input)
-    function activeRoute(routeName) {
-        return routeName == props.location.pathname;
+    function activeRoute(routeName, otherData) {
+        if (!otherData.should_regex) {
+            return routeName == props.location.pathname;
+        }
+        return routeName == props.location.pathname || props.location.pathname.indexOf(routeName) > -1 ? true : false ;
         // return props.location.pathname.indexOf(routeName) > -1 ? true : false;
     }
-    // function activeRoute(routeName, otherData) {
-    //     if (!otherData.should_regex) {
-    //         return routeName == props.location.pathname;
-    //     }
-    //      return routeName == props.location.pathname || props.location.pathname.indexOf(routeName) > -1 ? true : false ;
-    //     // return props.location.pathname.indexOf(routeName) > -1 ? true : false;
-    // }
 
     const {classes, color, logo, image, logoText, routes} = props;
     var brand = (

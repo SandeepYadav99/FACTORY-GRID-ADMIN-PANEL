@@ -94,7 +94,7 @@ class App extends React.Component {
     render() {
         const {classes, ...rest} = this.props;
         return (
-            <div className={classes.wrapper}>
+            <div ref="mainPanel" className={classes.wrapper}>
                 <Sidebar
                     routes={dashboardRoutes}
                     logoText={this.props.title}
@@ -106,11 +106,11 @@ class App extends React.Component {
                 />
                 <div className={classNames(classes.appBar, {
                     [classes.appBarShift]: this.state.drawerOpen,
-                })} ref="mainPanel"
+                })}
                 >
                     <Header
                         handleHeaderClick={this._handleHeaderClick}
-                        routes={this._sideBarRoutes()}
+                        routes={dashboardRoutes}
                         handleDrawerToggle={this.handleDrawerToggle}
                         {...rest}
                     />

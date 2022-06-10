@@ -41,18 +41,17 @@ class Header extends React.Component {
         this._handleNoteClose = this._handleNoteClose.bind(this);
         // this.activeRoute = this.activeRoute.bind(this);
     }
-    // activeRoute = (routeName, otherData) => {
-    //     if (!otherData.should_regex) {
-    //         return routeName == this.props.location.pathname;
-    //     }
-    //     return routeName == this.props.location.pathname || this.props.location.pathname.indexOf(routeName) > -1 ? true : false ;
-    //     // return props.location.pathname.indexOf(routeName) > -1 ? true : false;
-    // }
+    activeRoute = (routeName, otherData) => {
+        if (!otherData.should_regex) {
+            return routeName == this.props.location.pathname;
+        }
+        return routeName == this.props.location.pathname || this.props.location.pathname.indexOf(routeName) > -1 ? true : false ;
+        // return props.location.pathname.indexOf(routeName) > -1 ? true : false;
+    }
     makeBrand() {
-        var name = 'Admin Panel';
+        var name = '';
         this.props.routes.map((prop, key) => {
-            if (prop.path === this.props.location.pathname) {
-            // if (this.activeRoute(prop.path, prop)) {
+            if (this.activeRoute(prop.path, prop)) {
                 name = prop.navbarName;
             }
             return null;

@@ -8,6 +8,9 @@ import {actionGetQuoteDetails, actionGetQuoteNotes} from "../../actions/Quotes.a
 import LeadNoteList from "./components/Note/NoteList.component";
 import Concern from "./components/Concern/Concern.view";
 import {WaitingComponent} from "../../components/index.component";
+import {ButtonBase} from "@material-ui/core";
+import ArrowBackIosIcon from "@material-ui/icons/ArrowBackIos";
+import history from "../../libs/history.utils";
 
 class Lead extends Component{
     constructor(props) {
@@ -52,6 +55,12 @@ class Lead extends Component{
         const {is_quote_detail,quote_detail} = this.props;
         return(
             <div>
+                <div>
+                    <ButtonBase onClick={() => (history.goBack())}>
+                        <ArrowBackIosIcon fontSize={'small'} className={styles.backArrow}/>
+                    </ButtonBase>
+                    <strong>Quote List</strong>
+                </div>
                 <div className={styles.upperFlex}>
                     <div className={styles.left}>
                         <LeadDetail/>

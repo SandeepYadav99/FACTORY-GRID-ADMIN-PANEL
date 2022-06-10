@@ -8,16 +8,24 @@
 
 .heading{
     font-size: 0.7rem;
-    font-weight: 600;
+
 }
 
 .desc{
-    font-size: 0.7rem;
+    font-size: 0.8rem;
     padding-bottom: 10px;
+    font-weight: 600;
 }
 
 .preferenceFlex{
     display: flex;
     justify-content: space-between;
     align-items: center;
+}
+
+.view{
+    color: #0f49a0 !important;
+    text-decoration: underline !important;
+    font-size: 0.8rem !important;
+    margin-left: 5px;
 }

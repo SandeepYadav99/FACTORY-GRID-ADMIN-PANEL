@@ -81,10 +81,10 @@ export default {
         MANUFACTURE: 'MANUFACTURER',
         BOTH: 'BOTH'
     },
-    PREFERRED_TIME_TEXT: {
-        STANDARD: 'Cold Lead',
-        FAST: 'Warm Lead',
-        EXPRESS: 'Hot Lead'
+    PRIORITY_TEXT: {
+        HIGH: 'Hot Lead',
+        MEDIUM: 'Warm Lead',
+        LOW: 'Cold Lead'
     },
     PRIORITY: {
         HIGH: 'HIGH',

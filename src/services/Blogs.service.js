@@ -19,9 +19,8 @@ export async function serviceDeleteBlogs(params) {
     return await formDataRequest('blogs/delete', params);
 }
 
-
 export async function serviceBlogsExists(params) {
-    return await postRequest('blogs/exists', params);
+    return await postRequest('blogs/check/slug', params);
 }
 
 export async function serviceUploadBlogImage(params) {

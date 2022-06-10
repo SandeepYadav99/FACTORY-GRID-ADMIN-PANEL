@@ -30,7 +30,10 @@ class Timeline extends Component{
     }
 
     _renderTimeline(){
-        const {timeline} = this.state
+        const {timeline} = this.state;
+        if(timeline.length == 0){
+            return (<div className={styles.noTimeline}>No timeline updates</div>)
+        }
         return timeline.map((val) => {
             return(
                 <div>
@@ -40,7 +43,7 @@ class Timeline extends Component{
                         </div>
                         <div className={styles.totalTimeline}>
                             <div className={styles.weight}>{val.createdAtText}</div>
-                            <div className={styles.weight}>Case Reported</div>
+                            <div className={styles.weight}>{val.title ? val.title : 'Status Changed'}</div>
                             <div>Status: <span className={styles.error}>{Constants.QUOTE_STATUS_TEXT[val.status]}</span></div>
                             <div>Priority: <span className={styles.priority}>{val.priority.toLowerCase()}</span></div>
                             <div>User: {val.user.name ? val.user.name : 'N/A'}</div>

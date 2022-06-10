@@ -35,7 +35,7 @@ import TextField from "@material-ui/core/TextField";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import NewEditor from "../../components/NewEditor/NewEditor.component";
 import {WaitingComponent} from "../../components/index.component";
-
+import slugify from "slugify";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
@@ -46,28 +46,28 @@ let lastValue = '';
 let isExists = false;
 
 const asyncValidate = (values, dispatch, props) => {
-    // return new Promise((resolve, reject) => {
-    //     if (values.slug) {
-    //         const value = values.slug;
-    //         if (lastValue == value && isExists) {
-    //             reject({slug: 'Slug Already Exists'});
-    //         } else {
-    //             const data = props.data;
-    //             serviceBlogsExists({slug: value, id: data ? data.id : null}).then((data) => {
-    //                 console.log(data);
-    //                 lastValue = value;
-    //                 if (!data.error) {
-    //                     if (data.data.is_exists) {
-    //                         reject({slug: 'Slug Already Exists'});
-    //                     }
-    //                 }
-    //                 resolve({});
-    //             })
-    //         }
-    //     } else {
-    //         resolve({});
-    //     }
-    // });
+    return new Promise((resolve, reject) => {
+        if (values.slug) {
+            const value = values.slug;
+            if (lastValue == value && isExists) {
+                reject({slug: 'Slug Already Exists'});
+            } else {
+                const data = props.data;
+                serviceBlogsExists({slug: value, id: data ? data.id : null}).then((data) => {
+                    console.log(data);
+                    lastValue = value;
+                    if (!data.error) {
+                        if (data.data.is_exists) {
+                            reject({slug: 'Slug Already Exists'});
+                        }
+                    }
+                    resolve({});
+                })
+            }
+        } else {
+            resolve({});
+        }
+    });
 };
 
 
@@ -225,12 +225,12 @@ class Blogs extends Component {
 
     _handleSubmit(tData) {
         const { editor,tags,blog_description} = this.state;
-        console.log(blog_description)
         //console.log(editor)
         if(tags.length == 0){
             EventEmitter.dispatch(EventEmitter.THROW_ERROR, {error: 'Please Enter Tags',type:'error'});
-        }
-        else if (blog_description !== '') {
+        } else if(blog_description.length <=11) {
+            EventEmitter.dispatch(EventEmitter.THROW_ERROR, {error: 'Please Enter Description',type:'error'});
+        } else {
             const fd = new FormData();
             Object.keys(tData).forEach((key) => {
                 if (['tags','is_featured'].indexOf(key) < 0) {
@@ -248,8 +248,6 @@ class Blogs extends Component {
             } else {
                 this.props.handleDataSave(fd, 'CREATE')
             }
-        } else {
-            EventEmitter.dispatch(EventEmitter.THROW_ERROR, {error: 'Please Enter Description',type:'error'});
         }
     }
 
@@ -389,7 +387,13 @@ class Blogs extends Component {
     }
 
     _handleTitleChange(e) {
-        this.props.change('slug', e.target.value.replace(/ /g,'-').replace(/[^\w-]+/g,'').toLowerCase());
+        let text = '';
+        if (typeof e == 'string') {
+            text = e;
+        } else {
+            text = e.target.value;
+        }
+        this.props.change('slug', slugify(text.toLowerCase()));
     }
 
     _handleChange() {
@@ -582,7 +586,7 @@ class Blogs extends Component {
                                     // noOptionsText={this._renderNoText}
                                     renderTags={(value, getTagProps) =>
                                         value.map((option, index) => (
-                                            <Chip variant="outlined" label={option} {...getTagProps({ index })} disabled={option.length < 2}/>
+                                            <Chip variant="outlined" label={option} {...getTagProps({ index })}/> // disabled={option.length < 2}
                                         ))
                                     }
                                     renderInput={(params) => (
@@ -725,8 +729,9 @@ const useStyle = theme => ({
 const ReduxForm = reduxForm({
     form: 'blogs',  // a unique identifier for this form
     validate,
+    asyncValidate
     // enableReinitialize: true,
-    // asyncValidate
+
     // onSubmitFail: errors => {
     //     console.log(errors);
     //     EventEmitter.dispatch(EventEmitter.THROW_ERROR, {error: 'Please enter values', type: 'error'});

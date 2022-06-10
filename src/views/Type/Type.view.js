@@ -340,6 +340,7 @@ class CreateContainer extends Component {
                                 dataObj={this._convertData(units)}
                                 extract={{value: 'id', title: 'name'}}
                                 data={units}
+                                inputProps={{ maxLength: 3 }}
                                 component={renderOutlinedMultipleSelectField} margin={'dense'} label="Unit">
                             </Field>
                         </div>

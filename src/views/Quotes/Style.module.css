@@ -59,6 +59,7 @@
 
 .upperFlex{
     display: flex;
+    padding-top: 15px;
 }
 
 .left{

@@ -22,6 +22,8 @@
 
 .mob{
     font-size: 0.8rem;
+    display: flex;
+    align-items: center;
     /*margin-left: 10px;*/
 }
 
@@ -54,6 +56,10 @@
     font-size: 0.8rem !important;
 }
 
+.businessQuery{
+    color: #536DFE;
+    font-size: 0.8rem;
+}
 .assignedDate{
     font-size: 0.7rem;
 }
@@ -70,6 +76,11 @@
     padding-bottom: 5px;
 }
 
+.notAssignedTo{
+    font-size: 0.8rem;
+    color: red;
+    font-weight: 500;
+}
 .assignee{
     margin-left: 10px;
 }
@@ -80,4 +91,15 @@
 
 .info{
     margin-left: 15px;
+}
+
+.caseFlex{
+    padding-top: 5px;
+    padding-bottom: 15px;
+}
+
+.verified{
+    color: #F76A6D;
+    font-size: 0.9rem !important;
+    margin-right: 4px;
 }

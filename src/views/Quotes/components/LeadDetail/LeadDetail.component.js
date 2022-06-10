@@ -8,6 +8,7 @@ import {actionChangeQuotePriority, actionChangeQuoteStatus} from "../../../../ac
 import {WaitingComponent} from "../../../../components/index.component";
 import constants from "../../../../config/constants";
 import AssignedDialog from '../AssignedDialog/AssignedDialog.view';
+import VerifiedUserIcon from '@material-ui/icons/VerifiedUser';
 import LeadAssignedUser from "../AssignedDialog/LeadAssignedUser.component";
 
 class LeadDetailComponent extends Component {
@@ -61,11 +62,11 @@ class LeadDetailComponent extends Component {
                             <div className={styles.name}>{data.user.name}</div>
                             <div className={styles.mobileFlex}>
                                 {/*<img src={require('../../../../assets/img/varified_icon.png')} alt="" height={14}/>*/}
-                                <div className={styles.mob}>{data.user.contact}</div>
+                                <div className={styles.mob}>{data ? <span><VerifiedUserIcon className={styles.verified}/></span> : ''}{data.user.contact}</div>
                             </div>
                             <div className={styles.mobileFlex}>
                                 {/*<img src={require('../../../../assets/img/varified_icon.png')} alt="" height={14}/>*/}
-                                <div className={styles.mob}>{data.user.email}</div>
+                                <div className={styles.mob}>{data.is_email_verified == true ? <span><VerifiedUserIcon className={styles.verified}/></span> : ''}{data.user.email}</div>
                             </div>
                         </div>
                     </div>
@@ -76,7 +77,7 @@ class LeadDetailComponent extends Component {
                     </div>
 
                     <div className={styles.cases}>
-                        <ButtonBase className={styles.queryBtn}>Business Query</ButtonBase>
+                        <div className={styles.businessQuery}>Business Query</div>
                         <ButtonBase className={styles.queryBtn}>Change</ButtonBase>
                     </div>
 

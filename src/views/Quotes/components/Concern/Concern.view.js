@@ -24,7 +24,7 @@ class Concern extends Component{
                         <div className={styles.desc}>{data.qty} {data.unit}</div>
                     </div>
                     <div>
-                        <div className={styles.heading}>Location</div>
+                        <div className={styles.heading}>Location <span><a target={'_blank'} href={`https://maps.google.com/?q=${data.loc[0]},${data.loc[1]}`} className={styles.view}>View on Google</a></span></div>
                         <div className={styles.desc}>{data.location}</div>
                     </div>
                     <div>

@@ -217,15 +217,15 @@ class QuotessList extends Component {
     _renderQueryInfo(data){
         return (
             <>
-                <div className={csx('status', data.preferred_time)}>{Constants.PREFERRED_TIME_TEXT[data.preferred_time]}</div>
+                <div className={csx('status', data.priority)}>{Constants.PRIORITY_TEXT[data.priority]}</div>
                 <div className={styles.iconFlex}>
                     <LocationOnOutlinedIcon className={styles.clock}/><span className={styles.greyColor}>{data.location}</span>
                 </div>
                 <div className={styles.iconFlex}>
-                    <ScheduleOutlinedIcon className={styles.clock}/><span className={styles.greyColor}>{data.preference.toLowerCase() + 'Preference'}</span>
+                    <ScheduleOutlinedIcon className={styles.clock}/><span className={styles.greyColor}>{data.preference.toLowerCase() + ' Preference'}</span>
                 </div>
                 <div className={styles.iconFlex}>
-                    <LocalShippingOutlinedIcon className={styles.clock}/><span className={styles.greyColor}>{data.preferred_time.toLowerCase()}</span>
+                    <LocalShippingOutlinedIcon className={styles.clock}/><span className={styles.greyColor}>{data.preferred_time.toLowerCase() + ' Delivery'}</span>
                 </div>
             </>
         )
@@ -247,7 +247,7 @@ class QuotessList extends Component {
                 key: 'quote_no',
                 label: 'ID',
                 sortable: false,
-                // style: { width: '20%'},
+                 style: { width: '10%'},
                 render: (temp, all) => <div><div className={styles.weight}>{all.quote_no}</div><div>{all.createdAtText}</div></div>,
             },
             {
@@ -272,6 +272,7 @@ class QuotessList extends Component {
                 key: 'query_info',
                 label: 'Query Info',
                 sortable: true,
+                // style: { width: '40%'},
                 render: (temp, all) => <div>{this._renderQueryInfo(all)}</div>,
             },
             {
@@ -321,16 +322,16 @@ class QuotessList extends Component {
         };
         return (
             <div>
-                <div className={styles.filterButtons}>
-                    <ButtonBase onClick={this._handleSearchClick.bind(this, 'ALL')} style={{borderTopLeftRadius:'15px'}}
-                                className={selected === 'ALL' ? styles.noColor : styles.color}>All</ButtonBase>
-                    <ButtonBase onClick={this._handleSearchClick.bind(this, 'PENDING')}
-                                className={selected === 'PENDING' ? styles.noColor : styles.color}>Pending</ButtonBase>
-                    <ButtonBase onClick={this._handleSearchClick.bind(this, 'ON_GOING')}
-                                className={selected === 'ON_GOING' ? styles.noColor : styles.color}>On Going</ButtonBase>
-                    <ButtonBase onClick={this._handleSearchClick.bind(this, 'COMPLETED')} style={{borderTopRightRadius:'15px'}}
-                                className={selected === 'COMPLETED' ? styles.noColor : styles.color}>Completed</ButtonBase>
-                </div>
+                {/*<div className={styles.filterButtons}>*/}
+                {/*    <ButtonBase onClick={this._handleSearchClick.bind(this, 'ALL')} style={{borderTopLeftRadius:'15px'}}*/}
+                {/*                className={selected === 'ALL' ? styles.noColor : styles.color}>All</ButtonBase>*/}
+                {/*    <ButtonBase onClick={this._handleSearchClick.bind(this, 'PENDING')}*/}
+                {/*                className={selected === 'PENDING' ? styles.noColor : styles.color}>Pending</ButtonBase>*/}
+                {/*    <ButtonBase onClick={this._handleSearchClick.bind(this, 'ON_GOING')}*/}
+                {/*                className={selected === 'ON_GOING' ? styles.noColor : styles.color}>On Going</ButtonBase>*/}
+                {/*    <ButtonBase onClick={this._handleSearchClick.bind(this, 'COMPLETED')} style={{borderTopRightRadius:'15px'}}*/}
+                {/*                className={selected === 'COMPLETED' ? styles.noColor : styles.color}>Completed</ButtonBase>*/}
+                {/*</div>*/}
                 <PageBox>
                     <div className={styles.headerContainer}>
                         <span className={styles.title}>Quotes List</span>

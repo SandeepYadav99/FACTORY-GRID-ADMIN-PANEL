@@ -227,17 +227,17 @@ input[type=radio] + label:hover {
     color: #fee253 ;
 }
 
-.STANDARD{
+.LOW{
     background-color:  #cce8fc;
     color: #055379;
 }
 
-.FAST{
-    background-color: #a2a0a0;
-    color: #fee253 ;
+.MEDIUM{
+    background-color: rgba(250,139,12,.06274509803921569);
+    color: #fa8b0c;
 }
 
-.EXPRESS{
+.HIGH{
     background-color: #f274744f;
     color: #f44336;
 }

@@ -47,7 +47,9 @@ export const renderOutlinedTextField = ({input, label, meta: {touched, error}, .
             {...input}
             {...custom}
             label={label}
-            //onBlur={() => input.onChange(input.value.trim())}
+            onBlur={() => {  if(input.value && typeof input.value === 'string') {
+                input.onChange(input.value.trim())
+            }}}
             // helperText={touched && error}
             variant={'outlined'}
         />

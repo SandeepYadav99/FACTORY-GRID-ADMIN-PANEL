@@ -20,7 +20,7 @@ const LeadAssignedUser = () => {
     }, [quoteDetail, setOpen]);
 
     const renderAssigned = useMemo(() => {
-        if (quoteDetail.assigned_data) {
+        if (quoteDetail.assigned_data.name !== null) {
             return (
                 <div className={styles.assignedTo}>
                     <img src={quoteDetail.assigned_data.image ? quoteDetail.assigned_data.image :require('../../../../assets/img/profile.png')} alt="" height={30}/>
@@ -32,14 +32,14 @@ const LeadAssignedUser = () => {
             )
         }
         return (
-            <div className={styles.assignedTo}>
-                N/A
+            <div className={styles.notAssignedTo}>
+                Unassigned
             </div>
         )
     }, [quoteDetail]);
 
     return (
-        <div>
+        <div className={styles.caseFlex}>
             <div className={styles.cases}>
                 <div className={styles.assign}>Assigned to</div>
                 <ButtonBase className={styles.change} onClick={_handleClose}>Change</ButtonBase>

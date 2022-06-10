@@ -296,8 +296,7 @@ const dashboardRoutes = [
         component: QuoteList,
         is_sidebar: true,
         is_protect: true,
-        is_parent: false,
-        slug: '',
+        should_regex: true
     },
     {
         path: "/quotes/detail/:id",
@@ -307,7 +306,7 @@ const dashboardRoutes = [
         component: QuoteDetail,
         is_sidebar: false,
         is_protect: true,
-        should_regex: true
+        should_regex: false
     },
     // {
     //   path: "/notifications",
