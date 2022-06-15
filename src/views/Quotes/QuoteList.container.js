@@ -279,7 +279,7 @@ class QuotessList extends Component {
                 key: 'assigned_to',
                 label: 'Assigned To',
                 sortable: false,
-                render: (temp, all) => <div><div className={styles.weight}>{all.assigned_data.name !== null ? all.assigned_data.name : 'Unassigned'}</div><div>{all.assigned_date ? all.assigned_date : 'N/A'}</div></div>,
+                render: (temp, all) => <div><div className={all.assigned_data.name !== null ? styles.weight : styles.unassigned}>{all.assigned_data.name !== null ? all.assigned_data.name : 'Unassigned'}</div><div>{all.assigned_date ? all.assigned_date : 'N/A'}</div></div>,
             },
             {
                 key: 'status',
@@ -288,7 +288,7 @@ class QuotessList extends Component {
                 render: (temp, all) => <div>{this.renderStatus(all.status)}</div>,
             },
             {
-                key: 'updatedAt',
+                key: 'updatedAtText',
                 label: 'Last Updated',
                 sortable: true,
                 render: (temp, all) => <div className={styles.weight}>{all.updatedAtText}</div>,

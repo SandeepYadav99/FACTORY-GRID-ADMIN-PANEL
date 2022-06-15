@@ -91,6 +91,11 @@
     font-weight: 600;
 }
 
+.unassigned{
+    color: red;
+    font-weight: 500;
+}
+
 .filterButtons{
     margin-left: 7px;
 }

@@ -91,7 +91,7 @@ class CreateContainer extends Component {
         super(props);
         this.state = {
             type: 'INDIVIDUAL',
-            is_active:false,
+            is_active: true,
             is_general: false,
             show_confirm: false,
         };

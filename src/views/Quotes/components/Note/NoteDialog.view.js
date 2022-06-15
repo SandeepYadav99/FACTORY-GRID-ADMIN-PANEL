@@ -7,7 +7,7 @@ import {bindActionCreators} from 'redux';
 import {Button, ButtonBase, MenuItem} from '@material-ui/core';
 import Slide from '@material-ui/core/Slide';
 import Dialog from '@material-ui/core/Dialog';
-import {renderOutlinedSelectField,renderOutlinedTextField} from "../../../../libs/redux-material.utils";
+import {renderOutlinedSelectField,renderOutlinedTextField,renderOutlinedTextFieldWithLimit} from "../../../../libs/redux-material.utils";
 import {actionAddQuoteNote} from "../../../../actions/Quotes.action";
 
 const validate = (values) => {
@@ -24,6 +24,12 @@ const validate = (values) => {
 
 function Transition(props) {
     return <Slide direction="up" {...props} />;
+}
+
+const messageNormalize = (val, prevVal) => {
+    if (val.length > 500) {
+        return prevVal;
+    } return val;
 }
 
 class NoteDialog extends Component{
@@ -63,9 +69,11 @@ class NoteDialog extends Component{
                     <div>
                         <Field fullWidth={true}
                                name="note"
-                               component={renderOutlinedTextField}
+                               component={renderOutlinedTextFieldWithLimit}
                                label={"Note"}
                                multiline
+                               maxLimit={500}
+                               normalize={messageNormalize}
                                rows="5"
                                margin={'dense'}
                         />

@@ -66,6 +66,9 @@ export const renderOutlinedTextFieldWithLimit = ({input, label, maxLimit, meta: 
             {...input}
             {...custom}
             label={tempLabel}
+            onBlur={() => {  if(input.value && typeof input.value === 'string') {
+                input.onChange(input.value.trim())
+            }}}
             // helperText={touched && error}
             variant={'outlined'}
         />

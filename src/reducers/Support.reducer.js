@@ -16,9 +16,17 @@ import {
     SET_SERVER_PAGE,
     CREATE_DATA,
     UPDATE_DATA,
-    CLEAN_LIST, UPDATE_STATUS
+    CLEAN_LIST, UPDATE_STATUS,
+    SUPPORT_DETAIL_INIT,
+    SUPPORT_DETAIL_DONE,
+    SUPPORT_NOTES_GET_INIT,
+    SUPPORT_NOTES_GET_DONE,
+    CHANGE_SUPPORT_STATUS,
+    CHANGE_SUPPORT_PRIORITY, ASSIGN_SUPPORT, ADD_SUPPORT_NOTES,
+    SET_SUPPORT_REQUEST_TYPE,CHANGE_SUPPORT_CONCERN
 } from '../actions/Support.action';
 import Constants from '../config/constants';
+
 
 function mapPresetPRequest(all, pageId) {
     return all.filter((val, index) => {
@@ -37,7 +45,11 @@ const initialState = {
     query_data: null, // popover filter data change
     sorting_data: {row: null, order: null},
     is_fetching: false,
-    batch_id: null,
+    is_support_detail: false,
+    support_detail: null,
+    is_support_notes: false,
+    support_notes: [],
+    type: 'ALL'
 };
 
 export default function (state = JSON.parse(JSON.stringify(initialState)), action) {
@@ -64,6 +76,12 @@ export default function (state = JSON.parse(JSON.stringify(initialState)), actio
         }
         case SET_SORTING: {
             return {...state, sorting_data: action.payload};
+        }
+        case SET_SUPPORT_REQUEST_TYPE: {
+            return {
+                ...state,
+                type: action.payload
+            };
         }
         case UPDATE_STATUS: {
             if (action.payload) {
@@ -183,6 +201,89 @@ export default function (state = JSON.parse(JSON.stringify(initialState)), actio
             return state;
         }
 
+        case SUPPORT_DETAIL_INIT: {
+            return {
+                ...state,
+                is_support_detail: true
+            }
+        }
+        case SUPPORT_DETAIL_DONE: {
+            return {
+                ...state,
+                is_support_detail: false,
+                support_detail: action.payload
+            }
+        }
+        case SUPPORT_NOTES_GET_INIT: {
+            return {
+                ...state,
+                is_support_notes: true
+            }
+        }
+        case SUPPORT_NOTES_GET_DONE: {
+            return {
+                ...state,
+                is_support_notes: false,
+                support_notes: action.payload
+            }
+        }
+        case CHANGE_SUPPORT_STATUS: {
+            if (state.support_detail) {
+                const tempData = JSON.parse(JSON.stringify(state.support_detail));
+                tempData.status = action.payload;
+                return {
+                    ...state,
+                    support_detail: tempData,
+                };
+            }
+            return {
+                ...state,
+            };
+        }
+        case CHANGE_SUPPORT_PRIORITY: {
+            if (state.support_detail) {
+                const tempData = JSON.parse(JSON.stringify(state.support_detail));
+                tempData.priority = action.payload;
+                return {
+                    ...state,
+                    support_detail: tempData,
+                };
+            }
+            return {
+                ...state,
+            };
+        }
+        case CHANGE_SUPPORT_CONCERN: {
+            if (state.support_detail) {
+                const tempData = JSON.parse(JSON.stringify(state.support_detail));
+                tempData.concern = action.payload;
+                return {
+                    ...state,
+                    support_detail: tempData,
+                };
+            }
+            return {
+                ...state,
+            };
+        }
+        case ADD_SUPPORT_NOTES: {
+            const temp = JSON.parse(JSON.stringify(state.support_notes));
+            temp.unshift(action.payload);
+
+            return {
+                ...state,
+                support_notes: temp,
+            };
+        }
+        case ASSIGN_SUPPORT: {
+            return {
+                ...state,
+                support_detail: {
+                    ...state.support_detail,
+                    ...action.payload,
+                },
+            }
+        }
 
         default: {
             return state;

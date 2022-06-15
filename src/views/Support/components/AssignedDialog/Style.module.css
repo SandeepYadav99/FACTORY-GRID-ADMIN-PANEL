@@ -6,35 +6,29 @@
     box-shadow: 0 0 8px rgb(0 0 0 / 15%);
 }
 
-.name{
-    font-size: 1.1rem;
+.noteFlex{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.7rem;
+}
+
+.weight{
     font-weight: 600;
 }
 
-.mobileFlex{
+.recordFlex{
     display: flex;
-    align-items: center;
-    padding-bottom: 5px;
-    padding-top: 5px;
-}
-
-.mob{
-    font-size: 0.8rem;
-    margin-left: 10px;
-}
-
-.cases{
-    display: flex;
-    align-items: center;
     justify-content: space-between;
-    font-size: 0.7rem;
-    padding-top: 10px;
+    align-items: center;
 }
 
-.prev{
-    color: #0f49a0;
+.event{
     text-decoration: underline;
-    cursor: pointer;
+}
+
+.noteCard{
+    font-size: 0.8rem;
 }
 
 .assign{
@@ -51,4 +45,16 @@
 
 .assignee{
     margin-left: 10px;
+}
+
+.note{
+    padding-bottom: 10px;
+}
+
+.formContainer{
+    padding: 20px 50px;
+}
+
+.submitBtn{
+    text-align: center;
 }

@@ -281,7 +281,7 @@ class SupportList extends Component {
     }
 
     _handleViewSupport(data){
-        this.props.history.push('/support/detail')
+        this.props.history.push('/support/detail/' + data.support_id)
     }
 
     _handleSearchClick(type) {
@@ -299,7 +299,7 @@ class SupportList extends Component {
                 label: 'Case ID',
                 sortable: true,
                 style: { width: '10%'},
-                render: (temp, all) => <div><div className={styles.caseId}>{all.case}</div></div>,
+                render: (temp, all) => <div><div className={styles.weight}>{all.support_no}</div><div>{all.createdAtText}</div></div>,
             },
             {
                 key: 'customer',
@@ -313,14 +313,14 @@ class SupportList extends Component {
                 label: 'Concern',
                 sortable: false,
                 // style: { width: '20%'},
-                render: (temp, all) => <div><div className={styles.caseId}>{all.concern}</div><div>{all.message}</div></div>,
+                render: (temp, all) => <div><div className={styles.caseId}>{Constants.CONCERN_STATUS_TEXT[all.concern]}</div></div>,
             },
             {
                 key: 'assigned_to',
                 label: 'Assigned To',
                 sortable: false,
                 // style: { width: '20%'},
-                render: (temp, all) => <div><div className={styles.caseId}>{all.assigned}</div></div>,
+                render: (temp, all) => <div><div className={all.assigned_data.name !== null ? styles.weight : styles.unassigned}>{all.assigned_data.name !== null ? all.assigned_data.name : 'Unassigned'}</div><div>{all.assigned_date ? all.assigned_date : 'N/A'}</div></div>,
             },
             {
                 key: 'status',
@@ -329,10 +329,10 @@ class SupportList extends Component {
                 render: (temp, all) => <div>{this.renderStatus(all.status)}</div>,
             },
             {
-                key: 'updatedAt',
+                key: 'updatedAtText',
                 label: 'Last Updated',
                 sortable: true,
-                render: (temp, all) => <div className={styles.caseId}>{all.createdAt}</div>,
+                render: (temp, all) => <div className={styles.weight}>{all.updatedAtText}</div>,
             },
             {
                 key: 'priority',
@@ -374,22 +374,19 @@ class SupportList extends Component {
         };
         return (
             <div>
-                <div className={styles.filterButtons}>
-                    <ButtonBase onClick={this._handleSearchClick.bind(this, 'ALL')}  style={{borderTopLeftRadius:'15px'}}
-                                className={selection === 'ALL' ? styles.noColor : styles.color}>All (400)</ButtonBase>
-                    <ButtonBase onClick={this._handleSearchClick.bind(this, 'PENDING')}
-                                className={selection === 'PENDING' ? styles.noColor : styles.color}>Pending (200)</ButtonBase>
-                    <ButtonBase onClick={this._handleSearchClick.bind(this, 'ONGOING')}
-                                className={selection === 'ONGOING' ? styles.noColor : styles.color}>On-going (100)</ButtonBase>
-                    <ButtonBase onClick={this._handleSearchClick.bind(this, 'RESOLVED')} style={{borderTopRightRadius:'15px'}}
-                                className={selection === 'RESOLVED' ? styles.noColor : styles.color}>Resolved (100)</ButtonBase>
-                </div>
+                {/*<div className={styles.filterButtons}>*/}
+                {/*    <ButtonBase onClick={this._handleSearchClick.bind(this, 'ALL')}  style={{borderTopLeftRadius:'15px'}}*/}
+                {/*                className={selection === 'ALL' ? styles.noColor : styles.color}>All (400)</ButtonBase>*/}
+                {/*    <ButtonBase onClick={this._handleSearchClick.bind(this, 'PENDING')}*/}
+                {/*                className={selection === 'PENDING' ? styles.noColor : styles.color}>Pending (200)</ButtonBase>*/}
+                {/*    <ButtonBase onClick={this._handleSearchClick.bind(this, 'ONGOING')}*/}
+                {/*                className={selection === 'ONGOING' ? styles.noColor : styles.color}>On-going (100)</ButtonBase>*/}
+                {/*    <ButtonBase onClick={this._handleSearchClick.bind(this, 'RESOLVED')} style={{borderTopRightRadius:'15px'}}*/}
+                {/*                className={selection === 'RESOLVED' ? styles.noColor : styles.color}>Resolved (100)</ButtonBase>*/}
+                {/*</div>*/}
                 <PageBox>
                     <div className={styles.headerContainer}>
                         <span className={styles.title}>Customer Support List</span>
-                        {/*<Button onClick={this._handleSideToggle} variant={'contained'} color={'primary'} disabled={this.state.listData==null}>*/}
-                        {/*<Add></Add> Create*/}
-                        {/*</Button>*/}
                     </div>
 
                     <div>
@@ -413,7 +410,7 @@ class SupportList extends Component {
                 </PageBox>
                 <SidePanelComponent
                     handleToggle={this._handleSideToggle}
-                    title={'Order '} open={this.state.side_panel} side={'right'}>
+                    title={'Support'} open={this.state.side_panel} side={'right'}>
                     {this._renderCreateForm()}
                 </SidePanelComponent>
             </div>

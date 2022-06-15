@@ -91,6 +91,18 @@ export default {
         MEDIUM: 'MEDIUM',
         LOW: 'LOW'
     },
+    CONCERN_STATUS_TEXT: {
+        'REDUCED_DEMAND': 'Reduced Demand',
+        'TEST': 'Test'
+    },
+    SUPPORT_STATUS: {
+        PENDING: 'PENDING',
+        RESOLVED: 'RESOLVED'
+    },
+    SUPPORT_STATUS_TEXT: {
+        PENDING: 'Pending',
+        RESOLVED: 'Resolved'
+    },
     QUOTE_STATUS: {
         PENDING: 'PENDING',
         ON_GOING: 'ON_GOING',
@@ -111,5 +123,10 @@ export default {
         CONVERTED: 'converted',
         JUNK: 'junk',
         COMPLETED: 'completed'
+    },
+    INDUSTRY_STATUS_TEXT: {
+        'ACTIVE': 'ACTIVE',
+        'INACTIVE': 'INACTIVE',
+        'PENDING' : 'COMING SOON'
     }
 };

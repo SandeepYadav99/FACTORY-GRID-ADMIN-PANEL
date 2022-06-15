@@ -4,12 +4,13 @@ import {ButtonBase, FormControl, InputLabel, MenuItem} from "@material-ui/core";
 import Select from '@material-ui/core/Select';
 import {connect} from "react-redux";
 import {bindActionCreators} from "redux";
-import {actionChangeQuotePriority, actionChangeQuoteStatus} from "../../../../actions/Quotes.action";
+import {actionChangeSupportPriority, actionChangeSupportStatus} from "../../../../actions/Support.action";
 import {WaitingComponent} from "../../../../components/index.component";
 import constants from "../../../../config/constants";
 import AssignedDialog from '../AssignedDialog/AssignedDialog.view';
 import VerifiedUserIcon from '@material-ui/icons/VerifiedUser';
 import LeadAssignedUser from "../AssignedDialog/LeadAssignedUser.component";
+import Concern from '../ConcernDialog/Concern.component'
 
 class LeadDetailComponent extends Component {
     constructor(props) {
@@ -26,13 +27,13 @@ class LeadDetailComponent extends Component {
     }
 
     _handlePriorityChange(e) {
-        const {actionChangeQuotePriority, quote_detail: data} = this.props;
-        actionChangeQuotePriority(data.quote_id, e.target.value);
+        const {actionChangeSupportPriority, support_detail: data} = this.props;
+        actionChangeSupportPriority(data.support_id, e.target.value);
     }
 
     _handleStatusChange(e) {
-        const {actionChangeQuoteStatus, quote_detail: data} = this.props;
-        actionChangeQuoteStatus(data.quote_id, e.target.value);
+        const {actionChangeSupportStatus, support_detail: data} = this.props;
+        actionChangeSupportStatus(data.support_id, e.target.value);
 
     }
 
@@ -47,8 +48,8 @@ class LeadDetailComponent extends Component {
     }
 
     render() {
-        const {is_quote_detail, quote_detail: data} = this.props;
-        if (is_quote_detail || data === null) {
+        const {is_support_detail, support_detail: data} = this.props;
+        if (is_support_detail || data === null) {
             return (<WaitingComponent/>)
         }
         return (
@@ -56,17 +57,17 @@ class LeadDetailComponent extends Component {
                 <div className={styles.plain}>
                     <div className={styles.newFlex}>
                         <div>
-                            <img src={data.user.image ? data.user.image : require('../../../../assets/img/profile.png')} alt="" height={50}/>
+                            <img src={data.image ? data.image : require('../../../../assets/img/profile.png')} alt="" height={50}/>
                         </div>
                         <div className={styles.info}>
-                            <div className={styles.name}>{data.user.name}</div>
+                            <div className={styles.name}>{data.name}</div>
                             <div className={styles.mobileFlex}>
                                 {/*<img src={require('../../../../assets/img/varified_icon.png')} alt="" height={14}/>*/}
-                                <div className={styles.mob}>{data ? <span><VerifiedUserIcon className={styles.verified}/></span> : ''}{data.user.contact}</div>
+                                <div className={styles.mob}>{data.contact_verified ? <span><VerifiedUserIcon className={styles.verified}/></span> : ''}{data.contact}</div>
                             </div>
                             <div className={styles.mobileFlex}>
                                 {/*<img src={require('../../../../assets/img/varified_icon.png')} alt="" height={14}/>*/}
-                                <div className={styles.mob}>{data.is_email_verified == true ? <span><VerifiedUserIcon className={styles.verified}/></span> : ''}{data.user.email}</div>
+                                <div className={styles.mob}>{data.is_email_verified == true ? <span><VerifiedUserIcon className={styles.verified}/></span> : ''}{data.email}</div>
                             </div>
                         </div>
                     </div>
@@ -77,11 +78,14 @@ class LeadDetailComponent extends Component {
                     {/*</div>*/}
 
                     {/*<div className={styles.cases}>*/}
-                    {/*    <div className={styles.businessQuery}>Business Query</div>*/}
+                    {/*    <div className={styles.businessQuery}>{data.concern}</div>*/}
                     {/*    <ButtonBase className={styles.queryBtn}>Change</ButtonBase>*/}
                     {/*</div>*/}
 
-                    <LeadAssignedUser quoteId={data.quote_id}/>
+                    <Concern supportId={data.support_id}/>
+
+                    <LeadAssignedUser supportId={data.support_id}/>
+                    <br/>
 
                     <div className={'priority'}>
                         <FormControl variant={'outlined'} margin={'dense'} className={styles.selectWidth}>
@@ -102,9 +106,9 @@ class LeadDetailComponent extends Component {
                             <Select
                                  value={data.status}
                                 onChange={this._handleStatusChange}>
-                                {Object.keys(constants.QUOTE_STATUS).map(key => {
+                                {Object.keys(constants.SUPPORT_STATUS).map(key => {
                                     return (
-                                        <MenuItem key={key} value={key}>{constants.QUOTE_STATUS_TEXT[key]}</MenuItem>);
+                                        <MenuItem key={key} value={key}>{constants.SUPPORT_STATUS_TEXT[key]}</MenuItem>);
                                 })}
                             </Select>
                         </FormControl>
@@ -117,15 +121,15 @@ class LeadDetailComponent extends Component {
 
 function mapStateToProps(state) {
     return {
-        quote_detail: state.quotes.quote_detail,
-        is_quote_detail: state.quotes.is_quote_detail,
+        support_detail: state.support.support_detail,
+        is_support_detail: state.support.is_support_detail,
     };
 }
 
 function mapDispatchToProps(dispatch) {
     return bindActionCreators({
-        actionChangeQuoteStatus: actionChangeQuoteStatus,
-        actionChangeQuotePriority: actionChangeQuotePriority,
+        actionChangeSupportStatus: actionChangeSupportStatus,
+        actionChangeSupportPriority: actionChangeSupportPriority,
     }, dispatch);
 }
 

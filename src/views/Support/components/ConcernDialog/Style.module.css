@@ -6,26 +6,11 @@
     box-shadow: 0 0 8px rgb(0 0 0 / 15%);
 }
 
-.plainCont {
-    border-radius: 10px;
-    padding: 1.2rem 1.2rem;
-    margin-bottom: 20px;
-    background-color: white;
-    box-shadow: 0 0 8px rgb(0 0 0 / 15%);
-    max-height: calc(50vh);
-    overflow-y: scroll;
-
-}
-.actionBtn {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
 .noteFlex{
     display: flex;
     justify-content: space-between;
     align-items: center;
-    font-size: 0.8rem;
+    font-size: 0.7rem;
 }
 
 .weight{
@@ -51,7 +36,7 @@
 }
 
 .assignedTo{
-    font-size: 0.8rem;
+    font-size: 0.7rem;
     display: flex;
     align-items: center;
     padding-top: 5px;

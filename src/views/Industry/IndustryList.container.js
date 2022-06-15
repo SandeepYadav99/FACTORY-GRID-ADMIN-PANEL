@@ -49,9 +49,21 @@ class IndustryList extends Component {
             is_calling: true,
             listData: null,
         };
+        const temp = Object.keys(Constants.INDUSTRY_STATUS_TEXT).map((key) => {
+            return {
+                id: key,
+                name: Constants.INDUSTRY_STATUS_TEXT[key],
+            };
+        })
         this.configFilter = [
             // {label: 'Created On', name: 'createdAt', type: 'date'},
-            {label: 'Status', name: 'status', type: 'select', fields: ['INACTIVE', 'ACTIVE']},
+            {
+                label: 'Status',
+                name: 'status',
+                type: 'selectObject',
+                custom: {extract: {id: 'id', title: 'name'}},
+                fields: temp
+            },
             // {label: 'Categories', name: 'ref_id', type: 'selectObject', custom: { extract: { id: 'id', title: 'name' } } , fields: []},
             // {label: 'Tag', name: 'tag', type: 'select', fields: ['GENERAL', 'FEATURED', 'OFFER']},
             // {label: 'Type', name: 'type', type: 'select', fields: ['GENERAL', 'CATEGORY']},

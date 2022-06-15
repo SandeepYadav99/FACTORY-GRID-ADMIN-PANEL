@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import styles from './Style.module.css'
+import {WaitingComponent} from "../../../../components/index.component";
 
 class Concern extends Component{
     constructor(props) {
@@ -7,25 +8,24 @@ class Concern extends Component{
         this.state = {}
     }
     render() {
+        const {data,isfetching} = this.props;
+        if (isfetching || data === null) {
+            return (<WaitingComponent/>)
+        }
         return(
             <div>
                 <div className={styles.plain}>
                     <div>
-                        <div className={styles.heading}>Concern</div>
-                        <div className={styles.desc}>REQUEST FOR PARTNERSHIP</div>
+                        <div className={styles.heading}>Communication Preference</div>
+                        <div className={styles.desc}>{data.communication_preference}</div>
                     </div>
                     <div>
-                        <div className={styles.heading}>Description</div>
-                        <div className={styles.desc}>Show complete discription in full as provided by user in many lines required.<br/>
-                        Show complete discription in full as provided by user in many lines required</div>
+                        <div className={styles.heading}>Transaction Number</div>
+                        <div className={styles.desc}>{data.transaction_number ? data.transaction_number : 'N/A'}</div>
                     </div>
                     <div>
-                        <div className={styles.heading}>Order/Txn Id</div>
-                        <div className={styles.desc}>121/12/21/21/111</div>
-                    </div>
-                    <div>
-                        <div className={styles.heading}>Preferred Mode</div>
-                        <div className={styles.desc}>Any</div>
+                        <div className={styles.heading}>Issue</div>
+                        <div className={styles.desc}>{data.message}</div>
                     </div>
                 </div>
             </div>

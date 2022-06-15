@@ -238,7 +238,7 @@ const dashboardRoutes = [
         parent: 'masters',
     },
     {
-        path: "/support/messages",
+        path: "/support",
         sidebarName: "Customer Support",
         navbarName: "Customer Support",
         icon: ContactSupport,
@@ -250,7 +250,7 @@ const dashboardRoutes = [
         slug: ''
     },
     {
-        path: "/support/detail/",
+        path: "/support/detail/:id",
         sidebarName: "Support Detail",
         navbarName: "Support Detail",
         icon: SupervisedUserCircle,

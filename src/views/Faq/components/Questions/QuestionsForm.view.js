@@ -61,6 +61,12 @@ const descNormalize = (value, prevValue) => {
     return value;
 };
 
+const negativeNormalize = (value, prevValue) => {
+    if (!value || value >= 0 && value.length < 2) {
+        return value
+    } return prevValue;
+};
+
 const defaultTheme = createMuiTheme()
 
 Object.assign(defaultTheme, {
@@ -428,6 +434,7 @@ class QuestionsFormView extends Component {
                                 type={'number'}
                                 component={renderOutlinedTextField}
                                 margin={'dense'}
+                                normalize={negativeNormalize}
                                 label="Priority"/>
                         </div>
                     </div>

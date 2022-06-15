@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import styles from './Style.module.css'
 import {Add} from "@material-ui/icons";
 import {Button} from "@material-ui/core";
-import BottomBar from '../../../../components/BottomBar/BottomBar.component';
 import NoteDialog from '../Note/NoteDialog.view'
 
 class Note extends Component{
@@ -17,22 +16,23 @@ class Note extends Component{
     }
 
     _renderNoteCard(){
+        const {data} = this.props;
         return(
             <div>
                 <div className={styles.noteCard}>
                     <div className={styles.note}>
-                        Record of the call or email is added here in text.Record of the call or email is added here in text.Record of the call or email is added here in text.
+                        {data.note}
                     </div>
                     <div className={styles.recordFlex}>
                         <div className={styles.assignedTo}>
                             <img src={require('../../../../assets/img/profile.png')} alt="" height={30}/>
                             <div className={styles.assignee}>
-                                <div className={styles.assign}>Ashutosh Prasad</div>
-                                <div>12/11/2021 | 12:36 PM</div>
+                                <div className={styles.assign}>{data.user.name}</div>
+                                <div>{data.createdAt}</div>
                             </div>
                         </div>
                         <div className={styles.event}>
-                            Call Log
+                            {data.event_type}
                         </div>
                     </div>
                 </div>
@@ -54,28 +54,8 @@ class Note extends Component{
 
     render() {
         return(
-            <div>
-                <div className={styles.plain}>
-                    <div className={styles.noteFlex}>
-                        <div>
-                            <div>Last Updated On</div>
-                            <div className={styles.weight}>12/12/2021 | 1:00 PM</div>
-                        </div>
-                        <div>
-                            <Button onClick={this._handleNote} variant={'contained'} color={'primary'}>
-                                <Add></Add> Add Note
-                            </Button>
-                        </div>
-                    </div>
-                    <br/>
-                    <div className={styles.plain}>
-                        {this._renderNoteCard()}
-                    </div>
-                </div>
-                <NoteDialog open={this.state.note} handleClose={this._handleCancel}/>
-                {/*<BottomBar open={this.state.open}>*/}
-                {/*    Helllo*/}
-                {/*</BottomBar>*/}
+            <div className={styles.plain}>
+                {this._renderNoteCard()}
             </div>
         )
     }
