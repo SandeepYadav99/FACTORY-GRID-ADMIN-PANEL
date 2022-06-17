@@ -208,7 +208,7 @@ class QuotessList extends Component {
         return (
             <>
                 <span className={styles.weight}>{data.user.name}</span> <br/>
-                <span>{data.user.email}</span> <br/>
+                <span style={{textTransform:'lowercase'}}>{data.user.email}</span> <br/>
                 <span>{data.user.contact}</span>
             </>
         )

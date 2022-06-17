@@ -33,6 +33,7 @@ import {
 } from '../../actions/Support.action';
 import csx from "classnames";
 import MenuItem from "@material-ui/core/MenuItem";
+import {serviceGetQuoteUsers} from "../../services/Quotes.service";
 
 
 let CreateProvider = null;
@@ -56,14 +57,22 @@ class SupportList extends Component {
             driver_name: '',
             selection: 'ALL'
         };
+        const temp = Object.keys(Constants.SUPPORT_STATUS_TEXT).map((key) => {
+            return {
+                id: key,
+                name: Constants.SUPPORT_STATUS_TEXT[key],
+            };
+        })
         this.configFilter = [
-            // {label: 'City', name: 'city', type: 'text'},
-            // {label: 'Request Date', options: { maxDate: new Date() }, name: 'createdAt', type: 'date'},
-            {label: 'Concern',  name: 'concern_id', type: 'selectObject', custom: { extract: { id: 'id', title: 'name' } } , fields: []},
-            {label: 'Assigned To', name: 'assigned', type: 'text'},
-            {label: 'Status', name: 'status', type: 'select', fields: ['PENDING', 'COMPLETED', 'REJECTED', 'IN_PROCESS']},
-            {label: 'Priority', name: 'priority', type: 'select', fields: ['HIGH', 'MEDIUM', 'LOW']},
-            {label: 'Mode', name: 'mode', type: 'text'},
+            {
+                label: 'Status',
+                name: 'status',
+                type: 'selectObject',
+                custom: {extract: {id: 'id', title: 'name'}},
+                fields: temp
+            },
+            {label: 'Priority', name: 'priority', type: 'select', fields: ['HIGH','MEDIUM','LOW']},
+            {label: 'Assigned To', name: 'assigned_to', type: 'selectObject', custom: { extract: { id: 'id', title: 'title' } } , fields: []},
 
         ];
 
@@ -86,18 +95,16 @@ class SupportList extends Component {
         this.props.actionFetchData();
         // const request = serviceGetCustomList(['STORES']);
         //
-        // request.then((data) => {
-        //     if (!data.error) {
-        //         this.setState({
-        //             is_calling: false
-        //         });
-        //         this.configFilter[2].fields = data.data.stores;
-        //     } else {
-        //         this.setState({
-        //             is_calling: false,
-        //         })
-        //     }
-        // })
+        const req =  serviceGetQuoteUsers({});
+        req.then((data)=> {
+            if(!data.error){
+                // this.setState({
+                //     listData: data.data,
+                //     is_calling: false
+                // });
+                this.configFilter[2].fields = data.data;
+            }
+        });
     }
 
 

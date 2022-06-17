@@ -116,7 +116,10 @@ class NoteDialog extends Component{
                     keepMounted
                     fullWidth={true}
                     // maxWidth={'sm'}
-                    onClose={this.props.handleClose}
+                    onClose={() => {
+                        this.props.handleClose();
+                        this.props.reset();
+                    }}
                     aria-labelledby="alert-dialog-slide-title"
                     aria-describedby="alert-dialog-slide-description"
                 >

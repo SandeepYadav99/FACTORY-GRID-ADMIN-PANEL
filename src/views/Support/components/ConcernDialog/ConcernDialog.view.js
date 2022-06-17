@@ -12,7 +12,7 @@ import {serviceGetQuoteUsers} from "../../../../services/Quotes.service";
 
 const validate = (values) => {
     const errors = {};
-    const requiredFields = ['user_id'];
+    const requiredFields = ['concern'];
     requiredFields.forEach(field => {
         if (!values[field]) {
             errors[field] = 'Required'
@@ -57,7 +57,7 @@ class ConcernDialog extends Component{
                             name="concern"
                             component={renderOutlinedSelectField}
                             margin={"dense"}
-                            label={"Assigned To"}>
+                            label={"Change Concern"}>
                             {/*{users.map(val => {*/}
                                <MenuItem value={'REDUCED_DEMAND'}>Reduced Demand</MenuItem>
                             <MenuItem value={'TEST'}>Test</MenuItem>
