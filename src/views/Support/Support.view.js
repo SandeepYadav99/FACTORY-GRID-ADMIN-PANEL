@@ -59,7 +59,7 @@ class Support extends Component{
                     <ButtonBase onClick={() => (history.goBack())}>
                         <ArrowBackIosIcon fontSize={'small'} className={styles.backArrow}/>
                     </ButtonBase>
-                    <strong>Support List</strong>
+                    <strong>Support Detail</strong>
                 </div>
                 <div className={styles.upperFlex}>
                     <div className={styles.left}>

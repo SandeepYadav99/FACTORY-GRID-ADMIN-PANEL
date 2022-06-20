@@ -245,9 +245,7 @@ const dashboardRoutes = [
         component: SupportList,
         is_sidebar: true,
         is_protect: true,
-        is_parent: false,
-        // parent: 'queries',
-        slug: ''
+        should_regex: true
     },
     {
         path: "/support/detail/:id",
@@ -257,7 +255,7 @@ const dashboardRoutes = [
         component: Support,
         is_sidebar: false,
         is_protect: true,
-        should_regex: true
+        should_regex: false
     },
     {
         path: "/type",

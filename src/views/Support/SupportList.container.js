@@ -162,8 +162,8 @@ class SupportList extends Component {
 
     renderStatus(status) {
         let className = 'warning';
-        if (status in Constants.STATUS) {
-            className = Constants.STATUS[status];
+        if (status in Constants.SUPPORT_STATUS_TEXT) {
+            className = Constants.SUPPORT_STATUS_TEXT[status];
         }
         return (<span className={csx('status', className)}>{(status.replaceAll('_', ' '))}</span>);
     }
@@ -281,7 +281,7 @@ class SupportList extends Component {
                 </div>
                 <div className={styles.mobileFlex}>
                     {/*<img src={require('../../assets/img/varified_icon.png')} alt="" height={12}/>*/}
-                    <div className={styles.mob}>{user.email}</div>
+                    <div className={styles.mob} style={{textTransform:'lowercase'}}>{user.email}</div>
                 </div>
             </div>
         )
@@ -302,7 +302,7 @@ class SupportList extends Component {
         const {selection} = this.state;
         const tableStructure = [
             {
-                key: 'case',
+                key: 'support_no',
                 label: 'Case ID',
                 sortable: true,
                 style: { width: '10%'},
@@ -311,7 +311,7 @@ class SupportList extends Component {
             {
                 key: 'customer',
                 label: 'Customer Detail',
-                sortable: true,
+                sortable: false,
                 style: {width: '15%'},
                 render: (temp, all) => <div >{this._renderCell(all)}</div>,
             },
@@ -336,7 +336,7 @@ class SupportList extends Component {
                 render: (temp, all) => <div>{this.renderStatus(all.status)}</div>,
             },
             {
-                key: 'updatedAtText',
+                key: 'updatedAt',
                 label: 'Last Updated',
                 sortable: true,
                 render: (temp, all) => <div className={styles.weight}>{all.updatedAtText}</div>,

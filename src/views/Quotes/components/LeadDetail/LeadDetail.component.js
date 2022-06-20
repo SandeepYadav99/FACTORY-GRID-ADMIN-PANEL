@@ -62,7 +62,7 @@ class LeadDetailComponent extends Component {
                             <div className={styles.name}>{data.user.name}</div>
                             <div className={styles.mobileFlex}>
                                 {/*<img src={require('../../../../assets/img/varified_icon.png')} alt="" height={14}/>*/}
-                                <div className={styles.mob}>{data ? <span><VerifiedUserIcon className={styles.verified}/></span> : ''}{data.user.contact}</div>
+                                <div className={styles.mob}>{data.user.is_contact_verified == true ? <span><VerifiedUserIcon className={styles.verified}/></span> : ''}{data.user.contact}</div>
                             </div>
                             <div className={styles.mobileFlex}>
                                 {/*<img src={require('../../../../assets/img/varified_icon.png')} alt="" height={14}/>*/}

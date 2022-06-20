@@ -267,7 +267,7 @@ class CustomerList extends Component {
                 key: 'user_type',
                 label: 'User Type',
                 sortable: false,
-                render: (temp, all) => <div>{Constants.USER_TYPES[all.user_type]}</div>,
+                render: (temp, all) => <div>{all.user_type ? Constants.USER_TYPES[all.user_type] : 'N/A'}</div>,
             },
             {
                 key: 'orders',

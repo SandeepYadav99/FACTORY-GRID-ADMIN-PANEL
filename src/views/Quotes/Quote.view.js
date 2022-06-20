@@ -59,7 +59,7 @@ class Lead extends Component{
                     <ButtonBase onClick={() => (history.goBack())}>
                         <ArrowBackIosIcon fontSize={'small'} className={styles.backArrow}/>
                     </ButtonBase>
-                    <strong>Quote List</strong>
+                    <strong>Quote Detail</strong>
                 </div>
                 <div className={styles.upperFlex}>
                     <div className={styles.left}>

@@ -92,7 +92,7 @@ class CreateContainer extends Component {
         super(props);
         this.state = {
             type: 'INDIVIDUAL',
-            is_active:false,
+            is_active:true,
             show_confirm: false,
             subcategory: [],
             selectedIndustry: null
@@ -201,7 +201,7 @@ class CreateContainer extends Component {
 
     _renderStatus(){
         const {data} = this.props;
-        if (data) {
+        // if (data) {
             return (<FormControlLabel
                 control={
                     <Switch color={'primary'} checked={this.state.is_active} onChange={this._handleActive.bind(this)}
@@ -209,9 +209,9 @@ class CreateContainer extends Component {
                 }
                 label="Active ?"
             />);
-        } else {
-            return null;
-        }
+        // } else {
+        //     return null;
+        // }
     }
 
     _suspendItem() {

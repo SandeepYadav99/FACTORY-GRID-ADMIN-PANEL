@@ -205,6 +205,10 @@ input[type=radio] + label:hover {
     word-wrap: break-word;
 }
 
+.MuiInputLabel-outlined.MuiInputLabel-shrink{
+    background: white;
+}
+
 
 .pending {
     background-color: rgba(250,139,12,.06274509803921569);
@@ -240,4 +244,14 @@ input[type=radio] + label:hover {
 .HIGH{
     background-color: #f274744f;
     color: #f44336;
+}
+
+.Resolved{
+    background-color: rgba(32,201,151,.06274509803921569);
+    color: #20c997;
+}
+
+.Pending {
+    background-color: rgba(250,139,12,.06274509803921569);
+    color: #fa8b0c;
 }
