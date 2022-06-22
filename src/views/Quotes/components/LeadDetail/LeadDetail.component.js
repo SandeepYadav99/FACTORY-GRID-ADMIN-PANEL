@@ -66,7 +66,7 @@ class LeadDetailComponent extends Component {
                             </div>
                             <div className={styles.mobileFlex}>
                                 {/*<img src={require('../../../../assets/img/varified_icon.png')} alt="" height={14}/>*/}
-                                <div className={styles.mob}>{data.is_email_verified == true ? <span><VerifiedUserIcon className={styles.verified}/></span> : ''}{data.user.email}</div>
+                                <div className={styles.mob} style={{textTransform:'lowercase'}}>{data.is_email_verified == true ? <span><VerifiedUserIcon className={styles.verified}/></span> : ''}{data.user.email}</div>
                             </div>
                         </div>
                     </div>

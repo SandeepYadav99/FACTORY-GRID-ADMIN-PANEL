@@ -77,6 +77,7 @@ export function actionUpdateBlogs(data) {
     return (dispatch) => {
         request.then((data) => {
             if (!data.error) {
+                EventEmitter.dispatch(EventEmitter.THROW_ERROR, {error: 'Edited Successfully', type: 'success'});
                 dispatch({type: UPDATE_DATA, payload: data.data})
             } else {
                 EventEmitter.dispatch(EventEmitter.THROW_ERROR, {error: data.error, type: 'error'});
