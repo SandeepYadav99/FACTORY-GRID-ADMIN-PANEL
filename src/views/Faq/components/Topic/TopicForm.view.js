@@ -55,7 +55,7 @@ const descNormalize = (value, prevValue) => {
 };
 
 const negativeNormalize = (value, prevValue) => {
-    if (!value || value >= 0 && value.length < 2) {
+    if (!value || value >= 0 && value.length < 5) {
         return value
     } return prevValue;
 };

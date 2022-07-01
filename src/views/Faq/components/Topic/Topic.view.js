@@ -15,6 +15,21 @@ import {
     actionSetPageFaq, actionUpdateFaq
 } from "../../../../actions/Faq.action";
 import {connect} from "react-redux";
+import {SortableContainer, SortableElement,arrayMove} from 'react-sortable-hoc';
+import {serviceFetchFaq} from "../../../../services/Faq.service";
+import {WaitingComponent} from "../../../../components/index.component";
+
+const SortableItem = SortableElement(({value}) => <li>{value.title}</li>);
+
+const SortableList = SortableContainer(({items}) => {
+    return (
+        <ul>
+            {items.map((value, index) => (
+                <SortableItem key={`item-${value}`} index={index} value={value} />
+            ))}
+        </ul>
+    );
+});
 
 class TopicView extends Component{
     constructor(props) {
@@ -23,17 +38,27 @@ class TopicView extends Component{
             active: 0,
             side_panel: false,
             edit_data: null,
+            topics: [],
+            is_fetching: true
         };
-        //this.list = ['Topic Question 1 can be there in 2 lines at max after which it will be truncated','Topic Question 1 can be there in 2 lines at max after which it will be truncated']
         this._handleAddTopic = this._handleAddTopic.bind(this);
         this._handleSideToggle = this._handleSideToggle.bind(this);
         this._handleDataSave = this._handleDataSave.bind(this);
         this._handleDelete = this._handleDelete.bind(this);
+        this.onSortEnd = this.onSortEnd.bind(this);
     }
 
     componentDidMount() {
         // if (this.props.total_count <= 0) {
-        this.props.actionFetchData();
+         this.props.actionFetchData();
+        // serviceFetchFaq().then((res) => {
+        //     if (!res.error) {
+        //         this.setState({
+        //             topics: res.data,
+        //             is_fetching: false,
+        //         })
+        //     }
+        // })
         if (this.props.data.length > 0) {
             this.props.handleCategoryChange(this.props.data[0])
         }
@@ -60,10 +85,19 @@ class TopicView extends Component{
         this.props.handleCategoryChange(data)
     }
 
+    onSortEnd = ({oldIndex, newIndex}) => {
+        const {topics} = this.state;
+        //console.log(topics)
+        this.setState(() => ({
+            topics: arrayMove(topics, oldIndex, newIndex),
+        }));
+    };
+
     _renderList(){
-        const {active} = this.state;
+        const {active,topics} = this.state;
         const {data, selectedCategory} = this.props
         if(data.length > 0){
+            // return (<SortableList items={topics} onSortEnd={this.onSortEnd} />)
             return data.map((val,index) => {
                 return (
                     <ul className={styles.list}>
@@ -125,6 +159,10 @@ class TopicView extends Component{
     }
 
     render() {
+        const {is_fetching} = this.state;
+        // if(is_fetching){
+        //     return <WaitingComponent/>
+        // }
         return(
             <div>
                 <div className={styles.plainBg}>
