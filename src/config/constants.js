@@ -92,8 +92,14 @@ export default {
         LOW: 'LOW'
     },
     CONCERN_STATUS_TEXT: {
-        'REDUCED_DEMAND': 'Reduced Demand',
-        'TEST': 'Test'
+        TRANSACTION_FAILURE : 'Transaction Failure',
+        ORDER_DISPUTE: 'Order Dispute',
+        ACCOUNT_RELATED_ISSUE: 'Account Related Issue',
+        PARTNER_REQUEST : 'Partner Request',
+        MEDIA_QUERY: 'Media Query',
+        GENERAL_SUPPORT: 'General Support',
+        CAREER_OPPORTUNITY: 'Career Opportunity',
+        OTHER: 'Other'
     },
     SUPPORT_STATUS: {
         PENDING: 'PENDING',

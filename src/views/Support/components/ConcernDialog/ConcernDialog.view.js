@@ -8,6 +8,7 @@ import {Button, ButtonBase, MenuItem} from '@material-ui/core';
 import Slide from '@material-ui/core/Slide';
 import Dialog from '@material-ui/core/Dialog';
 import {renderOutlinedSelectField,renderOutlinedTextField} from "../../../../libs/redux-material.utils";
+import Constants from '../../../../config/constants'
 import {serviceGetQuoteUsers} from "../../../../services/Quotes.service";
 
 const validate = (values) => {
@@ -58,11 +59,9 @@ class ConcernDialog extends Component{
                             component={renderOutlinedSelectField}
                             margin={"dense"}
                             label={"Change Concern"}>
-                            {/*{users.map(val => {*/}
-                               <MenuItem value={'REDUCED_DEMAND'}>Reduced Demand</MenuItem>
-                            <MenuItem value={'TEST'}>Test</MenuItem>
-                            {/*})}*/}
-
+                            {Object.keys(Constants.CONCERN_STATUS_TEXT).map((key) => {
+                                return (<MenuItem key={key} value={key}>{Constants.CONCERN_STATUS_TEXT[key]}</MenuItem>)
+                            })}
                         </Field>
                     </div>
 
