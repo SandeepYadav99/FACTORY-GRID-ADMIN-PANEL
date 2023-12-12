@@ -437,6 +437,7 @@ class Faq extends Component {
                 </div>
                 <form onSubmit={handleSubmit(this._handleSubmit)}>
                     <div className={'formFlex'}>
+
                         <div className={'formGroup'}>
                             <Field
                                 fullWidth={true}
