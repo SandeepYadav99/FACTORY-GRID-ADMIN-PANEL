@@ -74,7 +74,7 @@ const useStyles = {
 
 };
 
-class LoginView extends Component {
+class LoginView extends Component { 
     constructor(props) {
         super(props);
         this.state = {
@@ -91,9 +91,11 @@ class LoginView extends Component {
     }
 
     _handleSubmit(data) {
+        console.log(data, "Data")
         // this.props.actionLoginUser(
         //     {token:'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZTE4NmU3Mjc2ZjAxZTI1YmM5MzExYTAiLCJ1bmlxdWVrZXkiOiJWTHhpYiIsImlhdCI6MTY0NDMzMTE4MywiZXhwIjoxNjc1ODY3MTgzfQ.VBZoNz6fAYXzp65crVZ2sNHm5D4L9T7GaZjw_enm8Bw',id:'5e186e7276f01e25bc9311a0'}
         //     )
+        delete data.logged_in;
         serviceLoginUser(data).then((val) => {
             if (!val.error) {
                 this.props.actionLoginUser(val.data);
