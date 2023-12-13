@@ -6,6 +6,8 @@ import Queries from "./components/Queries/Queries.view";
 import Messages from "./components/Messages/Messages.component";
 import MessageForm from "./components/Messages/MessageForm.view";
 import styles from "./Style.module.css";
+import AccountQuality from "./components/AccountQuality";
+import Activity from "./components/Activity";
 
 const ProfileView = ({ data, id, isFetching }) => {
   const [changingStatus, setChangingStatus] = useState(null);
@@ -85,37 +87,7 @@ const ProfileView = ({ data, id, isFetching }) => {
               <div className={styles.value}>98989898</div>
             </div>
           </div>
-
-          <div className={styles.plain}>
-            <div className={styles.accountFlex}>
-              <div className={styles.headings}>Account Quality</div>
-              <div>
-                <ButtonBase className={styles.view}>Manage</ButtonBase>
-              </div>
-            </div>
-
-            <div className={styles.blockFlex}>
-              <div className={styles.bottomProfile}>
-                <img
-                  src={require("../../../../assets/img/download.png")}
-                  className={styles.profileImg}
-                />
-                <div className={styles.info}>
-                  <div className={styles.profileName}>Pranav Bhasin</div>
-                  <div className={styles.designation}>Designation</div>
-                </div>
-              </div>
-              <div>
-                <ButtonBase className={styles.view}>View Profile</ButtonBase>
-              </div>
-            </div>
-            <br />
-            <div>
-              <div className={styles.key}>Contact Information</div>
-              <div className={styles.val}>+91 98958494545</div>
-              <div className={styles.val}>pranav@fg.com</div>
-            </div>
-          </div>
+          <AccountQuality />
         </div>
 
         <div className={styles.right}>
@@ -126,15 +98,7 @@ const ProfileView = ({ data, id, isFetching }) => {
             </div>
           </div>
 
-          <div className={styles.plain}>
-            <div className={styles.activityFlex}>
-              <div className={styles.headings}>Activity</div>
-              <div className={styles.latest}>
-                <strong>Latest Activity</strong> : 12/2/21 12:00:00
-              </div>
-            </div>
-            <Timeline />
-          </div>
+         <Activity/>
 
           <div className={styles.plain}>
             <div className={styles.headings}>Support Queries</div>
