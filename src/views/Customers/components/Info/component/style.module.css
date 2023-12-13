@@ -1,0 +1,83 @@
+.rightSection {
+    flex: 1;
+    margin-left: 20px;
+    margin-right: 10px;
+  }
+  
+  .upperFlex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .plain {
+    border-radius: 15px;
+    padding: 1.2rem;
+    margin-bottom: 10px;
+    background-color: white;
+  }
+  
+  /* ... other styles ... */
+  
+  .activityIcon {
+    background-color: rgba(95, 99, 242, 0.082);
+    color: rgb(95, 99, 242);
+    padding: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    margin-right: 15px;
+  }
+  
+  .activeIcon {
+    font-size: 16px !important;
+  }
+  
+  .activityContent {
+    flex: 1 1 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .activityInfo {
+    display: flex;
+    align-items: center;
+  }
+  
+  .icon {
+    max-width: 40px;
+    border-radius: 50%;
+    margin-right: 20px;
+  }
+  
+  .nameActivity {
+    color: #5f63f2;
+    font-weight: 600;
+  }
+  .activityList_single{
+    padding: 12px 25px;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+}
+  .information {
+    margin-bottom: 0;
+    margin-top: 0;
+    font-size: 14px;
+    color: rgb(90, 95, 125);
+  }
+  
+  .hours {
+    margin-top: 3px;
+    color: rgb(173, 180, 210);
+    font-size: 0.8rem;
+  }
+  
+  .horizontalDots {
+    color: rgb(173, 180, 210) !important;
+  }
+  
+  /* ... other styles ... */
+  
