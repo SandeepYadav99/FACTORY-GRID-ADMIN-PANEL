@@ -132,12 +132,14 @@ const useCustomerListHook = ({}) => {
   );
 
   const handleEdit = useCallback((type) => {
-    if (type == "MANUFACTURE") {
-      historyUtils.push("/customers/manufacturer");
-    } else if (type == "CUSTOMER") {
-      historyUtils.push("/customers/customer");
+    console.log(type, "Type")
+    if (type.user_type === "MANUFACTURE") {
+     return historyUtils.push(`/customers/manufacturer/?id=${type.id}`);// /${type.id}
+    } else if (type.user_type === "CUSTOMER") {
+    return  historyUtils.push(`/customers/customer/?id=${type.id}`); // /${type.id}
     }
   }, []);
+  
 
   const handleToggleSidePannel = useCallback(
     (data) => {

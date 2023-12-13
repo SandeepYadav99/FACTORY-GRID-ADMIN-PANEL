@@ -10,3 +10,7 @@ export async function serviceUpdateCustomers(params) {
 export async function serviceGetCustomers(params) {
     return await postRequest('customers', params);
 }
+
+export async function serviceGetCustomersProfile(params) {
+    return await postRequest('user/get/user/profile', params);
+}

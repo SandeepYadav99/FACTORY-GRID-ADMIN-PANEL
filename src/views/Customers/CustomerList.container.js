@@ -188,7 +188,7 @@ const CustomerList = (props) => {
               color="secondary"
               // disabled={all.status != 'ACTIVE'}
               onClick={() => {
-                handleEdit(all.user_type);
+                handleEdit(all);
               }}
             >
               <EditIcon fontSize={"small"} className={styles.black} />

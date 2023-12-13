@@ -21,5 +21,6 @@ export default {
     favourite: '/favourite',
     chats: '/chats',
     ticketView: '/ticketView',
-    user_profile: '/user/profile'
+    user_profile: '/user/profile',
+    APP_USERS:'/app/users'
 };
