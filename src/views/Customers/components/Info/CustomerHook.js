@@ -4,17 +4,18 @@ import { useParams } from "react-router-dom";
 
 const useCustomerHook = () => {
   const [userProfile, setUserProfile] = useState([]);
-  
+  const { id } = useParams();
 
-
-
-  
   useEffect(() => {
-    serviceGetCustomersProfile({ id: "6579aca8dd0cc9bd7fecbf04" }).then((res) => {
-    console.log(res)
+    serviceGetCustomersProfile({ id: id }).then((res) => {
+     
+      if (!res || !res.error) {
+        setUserProfile(res && res.data);
+      }
+      
     });
-  }, []);
-  
+  }, [id]);
+
   return {
     userProfile,
   };

@@ -199,8 +199,9 @@ const dashboardRoutes = [
     is_sidebar: true,
     is_protect: true,
   },
+
   {
-    path: "/customers/manufacturer",
+    path: `${RouteName.CUSTOMERS_MANUFACTURES}:id`,
     sidebarName: "Manufacturer",
     navbarName: "Manufacturer",
     icon: SupervisedUserCircle,
@@ -210,7 +211,7 @@ const dashboardRoutes = [
     should_regex: true,
   },
   {
-    path: "/customers/customer",
+    path: `${RouteName.CUSTOMERS_CUSTOMER}:id`,
     sidebarName: "Customers",
     navbarName: "Customers",
     icon: SupervisedUserCircle,

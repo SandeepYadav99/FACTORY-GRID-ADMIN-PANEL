@@ -11,7 +11,7 @@ import useCustomerHook from "./CustomerHook";
 
 const CustomerComponent = () => {
   const { userProfile } = useCustomerHook();
-console.log(userProfile)
+console.log(userProfile, "Profile Value")
   return (
     <div>
       <div className={styles.btn}></div>
