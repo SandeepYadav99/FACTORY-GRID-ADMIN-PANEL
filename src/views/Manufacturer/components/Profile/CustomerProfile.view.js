@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { ButtonBase } from "@material-ui/core";
 import VerifiedUserIcon from "@material-ui/icons/VerifiedUser";
 import Timeline from "./components/Timeline/Timeline.view";
@@ -8,28 +8,12 @@ import MessageForm from "./components/Messages/MessageForm.view";
 import styles from "./Style.module.css";
 import AccountQuality from "./components/AccountQuality";
 import Activity from "./components/Activity";
-import { useParams } from "react-router-dom";
-import { serviceGetCustomersProfile } from "../../../../services/CustomersRequest.service";
-const ProfileView = ({ data, isFetching }) => {
-  const [changingStatus, setChangingStatus] = useState(null);
-  const [bankDetails, setBankDetails] = useState(null);
 
-  // if (isFetching || data == null) {
-  //     return (<div>
-  //         <WaitingComponent/>
-  //     </div>);
-  // }
+import useCustomerProfileHook from "./CustomerProfileHook";
 
-  const [userProfile, setUserProfile] = useState([]);
-  const { id } = useParams();
+const ProfileView = () => {
+  const { userProfile, renderInterestArea } = useCustomerProfileHook();
 
-  useEffect(() => {
-    serviceGetCustomersProfile({ id: id }).then((res) => {
-      if (!res || !res.error) {
-        setUserProfile(res && res.data);
-      }
-    });
-  }, [id]);
   return (
     <div>
       <div className={styles.upperFlex}>
@@ -134,7 +118,9 @@ const ProfileView = ({ data, isFetching }) => {
           <div className={styles.plain}>
             <div className={styles.headings}>Interested Industries</div>
             <div className={styles.industries}>
-              Pharmaceuticals,Automotive, Manufacturing
+              {renderInterestArea(userProfile.interest_area)}
+              {/* {userProfile && userProfile.interest_area} */}
+              {/* Pharmaceuticals,Automotive, Manufacturing */}
             </div>
           </div>
 

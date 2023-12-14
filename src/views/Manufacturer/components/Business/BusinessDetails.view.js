@@ -1,36 +1,33 @@
-import React, { useState, useEffect } from 'react';
-import styles from './Style.module.css';
-import { Button, ButtonBase, capitalize } from '@material-ui/core';
-import VerifiedUserIcon from '@material-ui/icons/VerifiedUser';
-import Rating from '@material-ui/lab/Rating';
-import { WaitingComponent } from '../../../../components/index.component';
-import ImageGalleryComponent from './components/ImageGallery/ImageGallery.component';
+import React, { useCallback} from "react";
+import styles from "./Style.module.css";
+import { Button, ButtonBase, capitalize } from "@material-ui/core";
+import VerifiedUserIcon from "@material-ui/icons/VerifiedUser";
+import Rating from "@material-ui/lab/Rating";
+import { WaitingComponent } from "../../../../components/index.component";
+import ImageGalleryComponent from "./components/ImageGallery/ImageGallery.component";
+import useCustomerProfileHook from "../Profile/CustomerProfileHook";
+import CompanyProfile from "./components/CompanyProfile/CompanyProfile";
 
 const dummy = [
-  require('../../../../assets/img/cover.jpeg'),
-  require('../../../../assets/img/cover.jpeg'),
+  require("../../../../assets/img/cover.jpeg"),
+  require("../../../../assets/img/cover.jpeg"),
 ];
 
-const BusinessDetails = ({ data, id, isFetching }) => {
-  const [bankDetails, setBankDetails] = useState(null);
+const BusinessDetails = ({  id }) => {
+  const { userProfile, renderInterestArea } = useCustomerProfileHook();
 
-  useEffect(() => {
-    // Your async componentDidMount logic can go here
-    // Example: Fetching data
-    // const fetchData = async () => {
-    //   const result = await yourApiCall();
-    //   setBankDetails(result);
-    // };
-    // fetchData();
-  }, []);
+  const galleryImage = useCallback((images) => {
+    console.log(images);
+    if (images && Array.isArray(images)) {
+      const imagesList = images.map(element => element.gallery_image);
+  
+      return imagesList;
+    } else {
 
-  // if (isFetching || data == null) {
-  //   return (
-  //     <div>
-  //       <WaitingComponent />
-  //     </div>
-  //   );
-  // }
+      return [];
+    }
+
+  },[])
 
   return (
     <div>
@@ -39,18 +36,27 @@ const BusinessDetails = ({ data, id, isFetching }) => {
           <div className={styles.plain}>
             <div className={styles.profile}>
               <img
-                src={require('../../../../assets/img/download.png')}
+                src={userProfile.image}
                 className={styles.templateImg}
+                alt=""
               />
               <div>
                 <ButtonBase className={styles.removeBtn}> Remove x</ButtonBase>
               </div>
               <div className={styles.user}>Company Name</div>
-              <a className={styles.coord} href={'/'}>
-                FG Coordinates
+              <a className={styles.coord} href={"/"}>
+                {userProfile &&
+                  userProfile.business &&
+                  userProfile.business.company_name}
+                {/* FG Coordinates */}
               </a>
               <div className={styles.member}>
-                <Rating name="read-only" value={4} readOnly className={styles.rating} />
+                <Rating
+                  name="read-only"
+                  value={4}
+                  readOnly
+                  className={styles.rating}
+                />
                 <span className={styles.reviews}>(10 Reviews)</span>
               </div>
             </div>
@@ -58,9 +64,12 @@ const BusinessDetails = ({ data, id, isFetching }) => {
             <div>
               <div className={styles.key}>Address</div>
               <div className={styles.value}>
-                Address Line 1 & 2<br />
+                {userProfile &&
+                  userProfile.business &&
+                  userProfile.business.company_address}
+                {/* Address Line 1 & 2<br />
                 Pincode<br />
-                City,State
+                City,State */}
               </div>
             </div>
             <br />
@@ -68,8 +77,8 @@ const BusinessDetails = ({ data, id, isFetching }) => {
             <div className={styles.line}>
               <div className={styles.key}>Manufacture Hub</div>
               <div className={styles.value}>
-                {' '}
-                <a className={styles.coord} href={'/'}>
+                {" "}
+                <a className={styles.coord} href={"/"}>
                   Baddi Nalagarh
                 </a>
               </div>
@@ -88,14 +97,23 @@ const BusinessDetails = ({ data, id, isFetching }) => {
 
             <div className={styles.line}>
               <div className={styles.key}>No. Of Employees</div>
-              <div className={styles.value}>200</div>
+              <div className={styles.value}>
+                {userProfile &&
+                  userProfile.business &&
+                  userProfile.business.number_of_employee}
+              </div>
             </div>
 
             <h4 className={styles.contactHeading}>Contact</h4>
             <div className={styles.conContainer}>
               <div className={styles.head}>Website</div>
               {/*{data.is_email_verified == true ? <span><VerifiedUserIcon className={styles.verified}/></span> : ''}*/}
-              <div className={styles.website}>www.morepen.com</div>
+              {/* <div className={styles.website}>www.morepen.com</div> */}
+              <div className={styles.website}>
+                {userProfile &&
+                  userProfile.business &&
+                  userProfile.business.company_website}
+              </div>
             </div>
           </div>
 
@@ -107,7 +125,7 @@ const BusinessDetails = ({ data, id, isFetching }) => {
             <div className={styles.blockFlex}>
               <div className={styles.bottomProfile}>
                 <img
-                  src={require('../../../../assets/img/download.png')}
+                  src={require("../../../../assets/img/download.png")}
                   className={styles.profileImg}
                 />
                 <div className={styles.info}>
@@ -119,7 +137,7 @@ const BusinessDetails = ({ data, id, isFetching }) => {
                 <div className={styles.kyc}>
                   <span>
                     <VerifiedUserIcon className={styles.verified} />
-                  </span>{' '}
+                  </span>{" "}
                   KYC Verified
                 </div>
               </div>
@@ -134,31 +152,14 @@ const BusinessDetails = ({ data, id, isFetching }) => {
         </div>
 
         <div className={styles.right}>
-          <div className={styles.plain}>
-            <div className={styles.accountFlex}>
-              <div className={styles.headings}>Company Profile</div>
-              <div>
-                <span className={styles.brochure}>Brochure</span>
-                <ButtonBase className={styles.view}>(View File)</ButtonBase>
-              </div>
-            </div>
-            <div className={styles.key}>Specialization</div>
-            <div className={styles.val}>
-              About the company all information will come here
-            </div>
-            <br />
-            <div className={styles.key}>About Company</div>
-            <div className={styles.val}>
-              About the company all information will come here
-            </div>
-          </div>
+          <CompanyProfile userProfile={userProfile && userProfile.business} />
 
           <div className={styles.plain}>
             <div className={styles.headings}>Image Gallery</div>
             <ImageGalleryComponent
-              title={'GALLERY'}
-              image_type={'GALLERY'}
-              images={dummy}
+              title={"GALLERY"}
+              image_type={"GALLERY"}
+              images={galleryImage(userProfile &&  userProfile.galleries)}
               thumbnail={0}
               userId={id}
             />
@@ -167,8 +168,8 @@ const BusinessDetails = ({ data, id, isFetching }) => {
           <div className={styles.plain}>
             <div className={styles.headings}>Certificates</div>
             <ImageGalleryComponent
-              title={'GALLERY'}
-              image_type={'CERTIFICATES'}
+              title={"GALLERY"}
+              image_type={"CERTIFICATES"}
               images={dummy}
               thumbnail={0}
               userId={id}
@@ -200,7 +201,7 @@ const BusinessDetails = ({ data, id, isFetching }) => {
             <br />
             <div className={styles.key}>Bank Name & Branch</div>
             <div className={styles.val}>Bank Name & Branch</div>
-            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -208,4 +209,3 @@ const BusinessDetails = ({ data, id, isFetching }) => {
 };
 
 export default BusinessDetails;
-

@@ -1,6 +1,5 @@
 const path = require('path');
 
-
 module.exports = {
   // the entry file for the bundle
   entry: path.join(__dirname, '/client/src/app.jsx'),
@@ -25,15 +24,6 @@ module.exports = {
         }
       }
     ],
-    // apply loaders to files that meet given conditions
-    loaders: [{
-      test: /\.jsx?$/,
-      include: path.join(__dirname, '/client/src'),
-      loader: 'babel-loader',
-      query: {
-        presets: ["react", "es2015", "stage-1"]
-      }
-    }],
   },
 
   // start Webpack in a watch mode, so Webpack will rebuild the bundle on changes

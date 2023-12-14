@@ -222,6 +222,7 @@
     color: #072ead;
     text-decoration: underline;
     font-size: 0.8rem;
+    cursor: pointer;
 }
 
 .designation{
