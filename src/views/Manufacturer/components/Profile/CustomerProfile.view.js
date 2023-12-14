@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ButtonBase } from "@material-ui/core";
 import VerifiedUserIcon from "@material-ui/icons/VerifiedUser";
 import Timeline from "./components/Timeline/Timeline.view";
@@ -8,8 +8,9 @@ import MessageForm from "./components/Messages/MessageForm.view";
 import styles from "./Style.module.css";
 import AccountQuality from "./components/AccountQuality";
 import Activity from "./components/Activity";
-
-const ProfileView = ({ data, id, isFetching }) => {
+import { useParams } from "react-router-dom";
+import { serviceGetCustomersProfile } from "../../../../services/CustomersRequest.service";
+const ProfileView = ({ data,  isFetching }) => {
   const [changingStatus, setChangingStatus] = useState(null);
   const [bankDetails, setBankDetails] = useState(null);
 
@@ -19,6 +20,18 @@ const ProfileView = ({ data, id, isFetching }) => {
   //     </div>);
   // }
 
+  const [userProfile, setUserProfile] = useState([]);
+  const { id } = useParams();
+
+  useEffect(() => {
+    serviceGetCustomersProfile({ id: id }).then((res) => {
+     
+      if (!res || !res.error) {
+        setUserProfile(res && res.data);
+      }
+      
+    });
+  }, [id]);
   return (
     <div>
       <div className={styles.upperFlex}>
@@ -26,26 +39,28 @@ const ProfileView = ({ data, id, isFetching }) => {
           <div className={styles.plain}>
             <div className={styles.profile}>
               <img
-                src={require("../../../../assets/img/download.png")}
+                src={userProfile.image}
                 className={styles.templateImg}
+                alt=""
               />
               <div>
                 <ButtonBase className={styles.removeBtn}>Remove x</ButtonBase>
               </div>
-              <div className={styles.user}>Full Name</div>
-              <div className={styles.name}>Company Name</div>
+              <div className={styles.user}> {`${userProfile.first_name || " "} ${userProfile.last_name || " "}`}</div>
+              <div className={styles.name}> {userProfile && userProfile.business && userProfile.business.company_name}</div>
               <div className={styles.member}>Member Since: 11/02/2022</div>
             </div>
 
             <div>
-              <div className={styles.key}>Industry</div>
-              <div className={styles.value}>Pharmaceuticals</div>
+              <div className={styles.key}>Industry </div>
+              <div className={styles.value}>{userProfile.industry && userProfile.industry.name}</div>
             </div>
             <br />
 
             <div className={styles.line}>
               <div className={styles.key}>Role</div>
-              <div className={styles.value}>Owner/Primary Contact</div>
+              <div className={styles.value}>{userProfile && userProfile.role}</div> 
+               {/* Owner/Primary Contact  */}
             </div>
 
             <div className={styles.ageFlex}>
@@ -71,20 +86,22 @@ const ProfileView = ({ data, id, isFetching }) => {
               <div className={styles.head}>
                 Email{" "}
                 <span>
-                  <VerifiedUserIcon className={styles.verified} />
+                  {userProfile.is_email_verified === true ?   <VerifiedUserIcon className={styles.verified} /> :   <div className={styles.notverified}> NOT VERIFIED </div> }
+                
                 </span>
               </div>
               {/*{data.is_email_verified == true ? <span><VerifiedUserIcon className={styles.verified}/></span> : ''}*/}
-              <div className={styles.val}>fabpranav@gmail.com</div>
+              <div className={styles.val}>{ userProfile &&  userProfile.email}</div>
             </div>
             <div className={styles.conContainer}>
               <div className={styles.head}>
                 Phone{" "}
                 <span>
-                  <VerifiedUserIcon className={styles.verified} />
+                  {userProfile.is_contact_verified === true ?   <VerifiedUserIcon className={styles.verified} /> : <div className={styles.notverified}> NOT VERIFIED </div> }
+                 
                 </span>
               </div>
-              <div className={styles.value}>98989898</div>
+              <div className={styles.value}>{userProfile && userProfile.contact_string}</div>
             </div>
           </div>
           <AccountQuality />

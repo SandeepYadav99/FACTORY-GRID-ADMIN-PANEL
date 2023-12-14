@@ -24,5 +24,5 @@ export default {
     user_profile: '/user/profile',
     APP_USERS:'/app/users',
     CUSTOMERS_CUSTOMER:"/customers/customer/",
-    CUSTOMERS_MANUFACTURES:"/customers/manufacturer"
+    CUSTOMERS_MANUFACTURES:"/customers/manufacturer/"
 };

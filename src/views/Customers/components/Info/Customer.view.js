@@ -11,7 +11,7 @@ import useCustomerHook from "./CustomerHook";
 
 const CustomerComponent = () => {
   const { userProfile } = useCustomerHook();
-console.log(userProfile, "Profile Value")
+  console.log(userProfile, "Profile Value");
   return (
     <div>
       <div className={styles.btn}></div>
@@ -19,11 +19,10 @@ console.log(userProfile, "Profile Value")
         <div className={styles.leftSection}>
           <div className={styles.plain}>
             <div className={styles.profileContainer}>
-              <img
-                src={require("../../../../assets/img/download.png")}
-                alt=""
-              />
-              <div className={styles.name}>Duran Clyton</div>
+              <img src={userProfile.image} alt="" />
+              <div className={styles.name}>
+                {userProfile.first_name} {userProfile.last_name}{" "}
+              </div>
               <div className={styles.position}>Designation</div>
               <div className={styles.designation}>Business Name</div>
               <div className={styles.status}>PAID</div>
@@ -35,17 +34,27 @@ console.log(userProfile, "Profile Value")
               <div className={styles.outerFlex}>
                 <div className={styles.contactFlex}>
                   <EmailIcon className={styles.contactIcons} />
-                  <span className={styles.email}>Clayton@example.com</span>
+                  <span className={styles.email}>{userProfile.email}</span>
                 </div>
-                <div className={styles.verified}>VERIFIED</div>
+                <div className={styles.verified}>
+                  {" "}
+                  {userProfile.is_email_verified ? "VERIFIED" : "NOT VERIFIED"}
+                </div>
               </div>
 
               <div className={styles.outerFlex}>
                 <div className={styles.contactFlex}>
                   <CallIcon className={styles.contactIcons} />
-                  <span className={styles.email}>+132 23242 3434</span>
+                  <span className={styles.email}>
+                    {userProfile.contact_string}
+                  </span>
                 </div>
-                <div className={styles.notverified}>NOT VERIFIED</div>
+                <div className={styles.notverified}>
+                  {" "}
+                  {userProfile.is_contact_verified
+                    ? "VERIFIED"
+                    : "NOT VERIFIED"}
+                </div>
               </div>
             </div>
 
