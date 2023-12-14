@@ -10,7 +10,7 @@ import AccountQuality from "./components/AccountQuality";
 import Activity from "./components/Activity";
 import { useParams } from "react-router-dom";
 import { serviceGetCustomersProfile } from "../../../../services/CustomersRequest.service";
-const ProfileView = ({ data,  isFetching }) => {
+const ProfileView = ({ data, isFetching }) => {
   const [changingStatus, setChangingStatus] = useState(null);
   const [bankDetails, setBankDetails] = useState(null);
 
@@ -25,11 +25,9 @@ const ProfileView = ({ data,  isFetching }) => {
 
   useEffect(() => {
     serviceGetCustomersProfile({ id: id }).then((res) => {
-     
       if (!res || !res.error) {
         setUserProfile(res && res.data);
       }
-      
     });
   }, [id]);
   return (
@@ -46,31 +44,46 @@ const ProfileView = ({ data,  isFetching }) => {
               <div>
                 <ButtonBase className={styles.removeBtn}>Remove x</ButtonBase>
               </div>
-              <div className={styles.user}> {`${userProfile.first_name || " "} ${userProfile.last_name || " "}`}</div>
-              <div className={styles.name}> {userProfile && userProfile.business && userProfile.business.company_name}</div>
-              <div className={styles.member}>Member Since: 11/02/2022</div>
+              <div className={styles.user}>
+                {" "}
+                {`${userProfile.first_name || " "} ${userProfile.last_name ||
+                  " "}`}
+              </div>
+              <div className={styles.name}>
+                {" "}
+                {userProfile &&
+                  userProfile.business &&
+                  userProfile.business.company_name}
+              </div>
+              <div className={styles.member}>
+                Member Since: {userProfile.membership_start_date}
+              </div>
             </div>
 
             <div>
               <div className={styles.key}>Industry </div>
-              <div className={styles.value}>{userProfile.industry && userProfile.industry.name}</div>
+              <div className={styles.value}>
+                {userProfile.industry && userProfile.industry.name}
+              </div>
             </div>
             <br />
 
             <div className={styles.line}>
               <div className={styles.key}>Role</div>
-              <div className={styles.value}>{userProfile && userProfile.role}</div> 
-               {/* Owner/Primary Contact  */}
+              <div className={styles.value}>
+                {userProfile && userProfile.role}
+              </div>
+              {/* Owner/Primary Contact  */}
             </div>
 
             <div className={styles.ageFlex}>
               <div className={styles.gender}>
                 <div className={styles.key}>Membership Type</div>
-                <div>Free</div>
+                <div>{userProfile.membership_plan}</div>
               </div>
               <div className={styles.gender}>
                 <div className={styles.key}>Validity</div>
-                <div>10/10/2022</div>
+                <div> {userProfile.membership_end_date}</div>
               </div>
             </div>
 
@@ -86,25 +99,35 @@ const ProfileView = ({ data,  isFetching }) => {
               <div className={styles.head}>
                 Email{" "}
                 <span>
-                  {userProfile.is_email_verified === true ?   <VerifiedUserIcon className={styles.verified} /> :   <div className={styles.notverified}> NOT VERIFIED </div> }
-                
+                  {userProfile.is_email_verified === true ? (
+                    <VerifiedUserIcon className={styles.verified} />
+                  ) : (
+                    <div className={styles.notverified}> NOT VERIFIED </div>
+                  )}
                 </span>
               </div>
               {/*{data.is_email_verified == true ? <span><VerifiedUserIcon className={styles.verified}/></span> : ''}*/}
-              <div className={styles.val}>{ userProfile &&  userProfile.email}</div>
+              <div className={styles.val}>
+                {userProfile && userProfile.email}
+              </div>
             </div>
             <div className={styles.conContainer}>
               <div className={styles.head}>
                 Phone{" "}
                 <span>
-                  {userProfile.is_contact_verified === true ?   <VerifiedUserIcon className={styles.verified} /> : <div className={styles.notverified}> NOT VERIFIED </div> }
-                 
+                  {userProfile.is_contact_verified === true ? (
+                    <VerifiedUserIcon className={styles.verified} />
+                  ) : (
+                    <div className={styles.notverified}> NOT VERIFIED </div>
+                  )}
                 </span>
               </div>
-              <div className={styles.value}>{userProfile && userProfile.contact_string}</div>
+              <div className={styles.value}>
+                {userProfile && userProfile.contact_string}
+              </div>
             </div>
           </div>
-          <AccountQuality />
+          <AccountQuality userProfileAccountQuality={userProfile} />
         </div>
 
         <div className={styles.right}>
@@ -115,7 +138,7 @@ const ProfileView = ({ data,  isFetching }) => {
             </div>
           </div>
 
-         <Activity/>
+          <Activity />
 
           <div className={styles.plain}>
             <div className={styles.headings}>Support Queries</div>
@@ -129,7 +152,10 @@ const ProfileView = ({ data,  isFetching }) => {
               <div className={styles.headings}>Messages</div>
               <div className={styles.latest}>
                 <div>Last Message</div>{" "}
-                <div className={styles.msgDate}>12/12/2021 | 1:00 PM</div>
+                <div className={styles.msgDate}>
+                  {userProfile.last_active_at}
+                </div>
+                {/* 12/12/2021 | 1:00 PM */}
               </div>
             </div>
             <div>

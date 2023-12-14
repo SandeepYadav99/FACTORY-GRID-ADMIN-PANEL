@@ -64,11 +64,13 @@ const CustomerComponent = () => {
             <div>
               <div className={styles.activityFlex}>
                 <span className={styles.member}>Member Since:</span>
-                <span>11/11/2021</span>
+                <span>{userProfile.membership_start_date}</span>
+                {/* 11/11/2021 */}
               </div>
               <div className={styles.activityFlex}>
                 <span className={styles.member}>Last Activity:</span>
-                <span>11/11/2021 1:00:00 P.M</span>
+                <span>{userProfile.last_active_at}</span>
+                {/* 11/11/2021 1:00:00 P.M */}
               </div>
             </div>
 
@@ -76,13 +78,13 @@ const CustomerComponent = () => {
             <div>
               <div className={styles.activityFlex}>
                 <span className={styles.member}>Industry:</span>
-                <span></span>
+                <span>{userProfile.industry && userProfile.industry.name}</span>
               </div>
             </div>
           </div>
         </div>
 
-        <ActivityInfo />
+        <ActivityInfo userProfileActivity={userProfile}/>
       </div>
     </div>
   );

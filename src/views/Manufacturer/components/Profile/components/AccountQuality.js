@@ -1,7 +1,7 @@
 import React from 'react'
 import styles from './AccountQuality.module.css'
 import { ButtonBase } from '@material-ui/core'
-const AccountQuality = () => {
+const AccountQuality = ({userProfileAccountQuality}) => {
   return (
     <div className={styles.plain}>
     <div className={styles.accountFlex}>
@@ -14,8 +14,9 @@ const AccountQuality = () => {
     <div className={styles.blockFlex}>
       <div className={styles.bottomProfile}>
         <img
-          src={require("../../../../../assets/img/download.png")}
+          src={userProfileAccountQuality.image}
           className={styles.profileImg}
+          alt=''
         />
         <div className={styles.info}>
           <div className={styles.profileName}>Pranav Bhasin</div>
