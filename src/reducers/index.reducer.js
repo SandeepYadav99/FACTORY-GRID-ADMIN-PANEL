@@ -4,9 +4,8 @@
  */
 import { combineReducers } from 'redux';
 import { reducer as formReducer } from 'redux-form';
-// import UserReducer from './users.reducers';
-import AuthReducer from './Auth.reducer';
 import User from './User.reducer';
+
 import Customers from './Customers.reducer';
 import Industry from './Industry.reducer';
 import Category from './Category.reducer'
@@ -24,6 +23,7 @@ import Subcategory from './SubCategory.reducer'
 import AppSettingReducer from './AppSettings.reducer';
 import QuotesReducer from './Quotes.reducer';
 import ProviderUser from './ProviderUser.reducer';
+import AuthReducer from './Auth.reducer';
 
 const rootReducer = combineReducers({
     state: (state = {}) => state,

@@ -17,7 +17,7 @@ import {
     CHANGE_STATUS,
     SET_SERVER_PAGE,
     CREATE_DATA,
-    UDPATE_DATA, UPDATE_DATA,
+     UPDATE_DATA,
     DELETE_ITEM
 } from '../actions/User.action';
 import Constants from '../config/constants';

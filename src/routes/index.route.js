@@ -9,12 +9,14 @@ import ForgotPassword from '../views/ForgotPassword/ForgotPassword.view';
 import ResetPassword from '../views/ForgotPassword/ResetPassword.view';
 import { Route, Switch } from 'react-router-dom';
 
-const indexRoutes = [{ path: "/", component: Dashboard }];
 
+const App = () => {
+    return <div> hi</div>;
+}
 const RouteComponent =  () => (
     <Switch>
         <Route path={'/login'} component={Login} />
-        {/*<Route path={'/signup'} component={Signup} />*/}
+        {/*/!*<Route path={'/signup'} component={Signup} />*!/*/}
         <Route path={'/forgot/password'} component={ForgotPassword} />
         <Route path={'/reset/password'} component={ResetPassword} />
         <Route path={'/'} component={Dashboard} />

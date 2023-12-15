@@ -129,7 +129,7 @@ export function actionResetFilterUserRequests() {
 }
 
 export function actionSetPageUserRequests(page) {
-    const stateData = store.getState().provider_user;
+    const stateData = store?.getState()?.provider_user;
     const currentPage = stateData.currentPage;
     const totalLength = stateData.all.length;
     const sortingData = stateData.sorting_data;
@@ -138,7 +138,7 @@ export function actionSetPageUserRequests(page) {
     const serverPage = stateData.serverPage;
 
     if (totalLength <= ((page + 1) * Constants.DEFAULT_PAGE_VALUE)) {
-        store.dispatch(actionFetchUser(serverPage + 1, sortingData, {query, query_data: queryData}));
+        store?.dispatch(actionFetchUser(serverPage + 1, sortingData, {query, query_data: queryData}));
         // this.props.fetchNextUsers(this.props.serverPage + 1, this.props.sorting_data.row, this.props.sorting_data.order, { query: this.props.query, query_data: this.props.query_data });
     }
 

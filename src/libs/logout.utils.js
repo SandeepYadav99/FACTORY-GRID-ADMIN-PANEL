@@ -7,7 +7,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { actionLogoutUser } from '../actions/auth_index.action';
+import { actionLogoutUser } from '../actions/Auth.action';
 
 class LogoutUtils extends React.Component {
     constructor(props) {

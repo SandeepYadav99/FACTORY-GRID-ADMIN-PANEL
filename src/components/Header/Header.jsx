@@ -17,7 +17,7 @@ import {
 import cx from "classnames";
 
 import headerStyle from "../../assets/jss/material-dashboard-react/headerStyle.jsx";
-import {actionLogoutUser} from "../../actions/auth_index.action";
+import {actionLogoutUser} from "../../actions/Auth.action";
 import { actionChangeTheme } from '../../actions/AppSettings.action';
 
 import Badge from '@material-ui/core/Badge';
