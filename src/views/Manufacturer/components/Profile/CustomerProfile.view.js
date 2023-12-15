@@ -8,8 +8,9 @@ import MessageForm from "./components/Messages/MessageForm.view";
 import styles from "./Style.module.css";
 import AccountQuality from "./components/AccountQuality";
 import Activity from "./components/Activity";
+import useCustomerProfileHook from "../../../../helper/CustomerProfileHook";
 
-import useCustomerProfileHook from "./CustomerProfileHook";
+
 
 const ProfileView = () => {
   const { userProfile, renderInterestArea } = useCustomerProfileHook();

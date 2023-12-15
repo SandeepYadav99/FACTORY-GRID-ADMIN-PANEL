@@ -5,7 +5,7 @@
 import { browserHistory } from 'react-router';
 import { setAuthorizationToken } from '../libs/set_auth_token.utils';
 import history from '../libs/history.utils';
-import {serviceGetProfile} from "../services/index.services";
+ import {serviceGetProfile} from "../services/index.services";
 
 
 export const AUTH_USER = 'AUTH_USER';

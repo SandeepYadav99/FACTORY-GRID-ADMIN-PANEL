@@ -1,7 +1,7 @@
 import React from "react";
-import styles from "../../Style.module.css"
+import styles from "../../Style.module.css";
 import { ButtonBase } from "@material-ui/core";
-const CompanyProfile = ({userProfile}) => {
+const CompanyProfile = ({ userProfile }) => {
   return (
     <div className={styles.plain}>
       <div className={styles.accountFlex}>
@@ -19,7 +19,7 @@ const CompanyProfile = ({userProfile}) => {
       <br />
       <div className={styles.key}>About Company</div>
       <div className={styles.val}>
-      {userProfile && userProfile.about_company}
+        {userProfile && userProfile.about_company}
         {/* About the company all information will come here */}
       </div>
     </div>

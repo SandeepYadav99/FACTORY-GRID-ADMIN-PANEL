@@ -7,11 +7,12 @@ import InboxIcon from "@material-ui/icons/Inbox";
 import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
 import styles from "./style.module.css";
 import ActivityInfo from "./component/ActivityInfo";
-import useCustomerHook from "./CustomerHook";
+import useCustomerProfileHook from "../../../../helper/CustomerProfileHook";
+
 
 const CustomerComponent = () => {
-  const { userProfile } = useCustomerHook();
-  console.log(userProfile, "Profile Value");
+  const { userProfile } = useCustomerProfileHook();
+
   return (
     <div>
       <div className={styles.btn}></div>

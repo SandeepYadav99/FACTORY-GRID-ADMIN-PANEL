@@ -5,8 +5,9 @@ import VerifiedUserIcon from "@material-ui/icons/VerifiedUser";
 import Rating from "@material-ui/lab/Rating";
 import { WaitingComponent } from "../../../../components/index.component";
 import ImageGalleryComponent from "./components/ImageGallery/ImageGallery.component";
-import useCustomerProfileHook from "../Profile/CustomerProfileHook";
+
 import CompanyProfile from "./components/CompanyProfile/CompanyProfile";
+import useCustomerProfileHook from "../../../../helper/CustomerProfileHook";
 
 const dummy = [
   require("../../../../assets/img/cover.jpeg"),
