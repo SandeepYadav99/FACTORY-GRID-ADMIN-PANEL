@@ -1,0 +1,83 @@
+/* Layout styles */
+.headings{
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+  
+  .rightSection {
+    flex: 1;
+    margin-left: 20px;
+    margin-right: 10px;
+  }
+  
+  .plain{
+    border-radius: 10px;
+    padding: 1.2rem 1.2rem;
+    margin-bottom: 20px;
+    background-color: white;
+    box-shadow: 0 0 8px rgb(0 0 0 / 15%);
+}
+  
+  .inputCity {
+    width: calc(100%);
+    padding-left: 20px;
+    height: 40px;
+    box-sizing: border-box;
+    border: none;
+    background: rgb(244, 245, 247);
+    border-radius: 30px;
+    font-size: 14px;
+    position: relative;
+    padding-right: 40px;
+  }
+  
+  .view{
+    color: #1593ff !important;
+    text-decoration: underline !important;
+    font-size: 0.7rem !important;
+}
+  .accountFlex{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+  
+.blockFlex{
+  display: flex;
+  font-size: 0.8rem;
+  justify-content: space-between;
+}
+  
+.bottomProfile{
+  display: flex;
+  /*align-items: center;*/
+}
+  
+.profileImg{
+  height: 35px;
+}
+
+.info{
+  margin-left: 10px;
+}
+.key{
+  font-weight: 600;
+  font-size: 0.8rem;
+  margin-bottom: 7px;
+}
+
+.val{
+  font-size: 0.8rem;
+  margin-left: 10px;
+}
+.latest{
+  font-size: 0.8rem;
+}
+
+.activityFlex{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
