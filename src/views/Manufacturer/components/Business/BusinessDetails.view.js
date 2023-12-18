@@ -1,4 +1,4 @@
-import React, { useCallback} from "react";
+import React, { useCallback } from "react";
 import styles from "./Style.module.css";
 import { Button, ButtonBase, capitalize } from "@material-ui/core";
 import VerifiedUserIcon from "@material-ui/icons/VerifiedUser";
@@ -8,28 +8,29 @@ import ImageGalleryComponent from "./components/ImageGallery/ImageGallery.compon
 
 import CompanyProfile from "./components/CompanyProfile/CompanyProfile";
 import useCustomerProfileHook from "../../../../helper/CustomerProfileHook";
+import BankDetail from "./components/BankDetail/BankDetail";
 
 const dummy = [
   require("../../../../assets/img/cover.jpeg"),
   require("../../../../assets/img/cover.jpeg"),
 ];
-
-const BusinessDetails = ({  id }) => {
+console.log(dummy, "D")
+const BusinessDetails = ({ id }) => {
   const { userProfile, renderInterestArea } = useCustomerProfileHook();
 
   const galleryImage = useCallback((images) => {
     console.log(images);
     if (images && Array.isArray(images)) {
-      const imagesList = images.map(element => element.gallery_image);
-  
+      const imagesList = images.map((element) => element.gallery_image);
+
       return imagesList;
     } else {
-
       return [];
     }
-
-  },[])
-
+  }, []);
+  const CERTIFICATES = userProfile?.certificate || [];
+  const certificateImages = CERTIFICATES.map((certificate) => certificate.certificate_file);
+ 
   return (
     <div>
       <div className={styles.upperFlex}>
@@ -126,12 +127,18 @@ const BusinessDetails = ({  id }) => {
             <div className={styles.blockFlex}>
               <div className={styles.bottomProfile}>
                 <img
-                  src={require("../../../../assets/img/download.png")}
+                  src={userProfile?.representatives?.profile_image}
                   className={styles.profileImg}
+                  alt=""
                 />
                 <div className={styles.info}>
-                  <div className={styles.profileName}>Pranav Bhasin</div>
-                  <div className={styles.designation}>Designation</div>
+                  <div className={styles.profileName}>
+                    {
+                      userProfile?.representatives?.first_name}{" "}
+                    {
+                      userProfile?.representatives?.last_name}
+                  </div>
+                  <div className={styles.designation}>{userProfile?.representatives?.designation}</div>
                 </div>
               </div>
               <div>
@@ -146,8 +153,8 @@ const BusinessDetails = ({  id }) => {
             <br />
             <div>
               <div className={styles.key}>Contact Information</div>
-              <div className={styles.val}>+91 98958494545</div>
-              <div className={styles.val}>pranav@fg.com</div>
+              <div className={styles.val}>{ userProfile?.representatives?.contact}</div>
+              <div className={styles.val}>{ userProfile?.representatives?.email}</div>
             </div>
           </div>
         </div>
@@ -160,7 +167,14 @@ const BusinessDetails = ({  id }) => {
             <ImageGalleryComponent
               title={"GALLERY"}
               image_type={"GALLERY"}
-              images={galleryImage(userProfile &&  userProfile.galleries)}
+              images={
+                (userProfile &&
+                  userProfile.galleries &&
+                  userProfile.galleries.map(
+                    (element) => element.gallery_image
+                  )) ||
+                []
+              }
               thumbnail={0}
               userId={id}
             />
@@ -168,41 +182,17 @@ const BusinessDetails = ({  id }) => {
 
           <div className={styles.plain}>
             <div className={styles.headings}>Certificates</div>
+            
             <ImageGalleryComponent
               title={"GALLERY"}
               image_type={"CERTIFICATES"}
-              images={dummy}
+              images={certificateImages || []}
               thumbnail={0}
               userId={id}
             />
           </div>
 
-          <div className={styles.plain}>
-            <div className={styles.accountFlex}>
-              <div className={styles.headings}>Banking Details</div>
-              <div>
-                <span className={styles.brochure}>Cancelled Cheque</span>
-                <ButtonBase className={styles.view}>(View File)</ButtonBase>
-              </div>
-            </div>
-            <div className={styles.key}>Account Holder Name</div>
-            <div className={styles.val}>Electrovese Solutions</div>
-            <br />
-            <div className={styles.bankingFlex}>
-              <div className={styles.accountInfo}>
-                <div className={styles.key}>Account No.</div>
-                <div className={styles.val}>324324234</div>
-              </div>
-
-              <div className={styles.accountInfo}>
-                <div className={styles.key}>IFSC Code</div>
-                <div className={styles.val}>as342423</div>
-              </div>
-            </div>
-            <br />
-            <div className={styles.key}>Bank Name & Branch</div>
-            <div className={styles.val}>Bank Name & Branch</div>
-          </div>
+         <BankDetail bankdetail={userProfile && userProfile.bankdetail}/>
         </div>
       </div>
     </div>
