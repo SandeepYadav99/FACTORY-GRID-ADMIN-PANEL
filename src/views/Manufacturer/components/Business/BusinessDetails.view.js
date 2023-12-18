@@ -28,9 +28,10 @@ const BusinessDetails = ({ id }) => {
       return [];
     }
   }, []);
-  const CERTIFICATES = userProfile?.certificate || [];
+  const CERTIFICATES = userProfile.certificate || [];
   const certificateImages = CERTIFICATES.map((certificate) => certificate.certificate_file);
  
+console.log(certificateImages)
   return (
     <div>
       <div className={styles.upperFlex}>
@@ -177,6 +178,7 @@ const BusinessDetails = ({ id }) => {
               }
               thumbnail={0}
               userId={id}
+              imageList={userProfile?.galleries}
             />
           </div>
 
@@ -189,6 +191,7 @@ const BusinessDetails = ({ id }) => {
               images={certificateImages || []}
               thumbnail={0}
               userId={id}
+              imageList={userProfile.certificate}
             />
           </div>
 
