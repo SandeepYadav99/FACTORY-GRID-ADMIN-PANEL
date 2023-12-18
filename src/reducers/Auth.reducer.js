@@ -1,7 +1,6 @@
 /**
  * Created by charnjeetelectrovese@gmail.com on 9/20/2017.
  */
-import {AUTH_USER, LOGOUT_USER, SET_PROFILE, GET_PROFILE_INIT} from "../actions/auth_index.action";
 
 import {browserHistory} from 'react-router';
 
@@ -35,9 +34,6 @@ export default function (state = JSON.parse(JSON.stringify(initialState)), actio
         case 'LOGOUT_USER': {
             return {...state, ...(JSON.parse(JSON.stringify(initialState)))};
         }
-        
-  
-       
         case 'GET_PROFILE_INIT': {
             const tempProfile = state.user_profile;
             tempProfile.is_fetching = true;
@@ -55,5 +51,4 @@ export default function (state = JSON.parse(JSON.stringify(initialState)), actio
             return state;
         }
     }
-    // return state;
 }

@@ -147,7 +147,7 @@ class CustomerTabs extends React.Component {
             index={2}
             dir={theme.direction}
           >
-            <KYCContainer/>
+            {/* <KYCContainer/> */}
           </TabPanel>
         </div>
       </div>

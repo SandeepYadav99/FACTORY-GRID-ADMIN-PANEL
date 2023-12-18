@@ -21,9 +21,7 @@ const useCustomerListHook = ({}) => {
     all
   } = useSelector((state) => state.customers);
 
-  useEffect(() => {
-    // dispatch(actionFetchAdminUser());
-  }, []);
+
 
   useEffect(() => {
     dispatch(
@@ -37,8 +35,9 @@ const useCustomerListHook = ({}) => {
       )
     );
     isMountRef.current = true;
+    console.log("Action1")
   }, []);
-
+  console.log("Action2")
   const handlePageChange = useCallback((type) => {
     console.log("_handlePageChange", type);
      dispatch(actionSetPageCustomers(type));
