@@ -1,14 +1,10 @@
 /**
  * Created by charnjeetelectrovese@gmail.com on 9/20/2017.
  */
-<<<<<<< HEAD
-import {AUTH_USER, LOGOUT_USER, SET_PROFILE, GET_PROFILE_INIT} from "../actions/auth_index.action";
 
 import {browserHistory} from 'react-router';
-=======
 
 // import { AUTH_USER } from "../actions/Auth.action";
->>>>>>> 38e58e5540a84ffb9735cc44390aed89c04b7d25
 
 const initialState = {
     error: false,
@@ -38,12 +34,7 @@ export default function (state = JSON.parse(JSON.stringify(initialState)), actio
         case 'LOGOUT_USER': {
             return {...state, ...(JSON.parse(JSON.stringify(initialState)))};
         }
-<<<<<<< HEAD
-        
-        case GET_PROFILE_INIT: {
-=======
         case 'GET_PROFILE_INIT': {
->>>>>>> 38e58e5540a84ffb9735cc44390aed89c04b7d25
             const tempProfile = state.user_profile;
             tempProfile.is_fetching = true;
             return {
@@ -60,8 +51,4 @@ export default function (state = JSON.parse(JSON.stringify(initialState)), actio
             return state;
         }
     }
-<<<<<<< HEAD
-    // return state;
-=======
->>>>>>> 38e58e5540a84ffb9735cc44390aed89c04b7d25
 }
