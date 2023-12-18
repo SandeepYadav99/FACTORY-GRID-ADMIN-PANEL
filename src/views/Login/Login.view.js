@@ -9,7 +9,7 @@ import styles from './Login.module.css';
 import {renderTextField, renderCheckbox, renderPasswordField} from '../../libs/redux-material.utils';
 import {Button,withStyles, ButtonBase} from '@material-ui/core';
 import {serviceLoginUser} from "../../services/index.services";
-import { actionLoginUser } from '../../actions/auth_index.action';
+import { actionLoginUser } from '../../actions/Auth.action';
 import DashboardSnackbar from "../../components/Snackbar.component";
 import { Link } from 'react-router-dom';
 import classNames from 'classnames'

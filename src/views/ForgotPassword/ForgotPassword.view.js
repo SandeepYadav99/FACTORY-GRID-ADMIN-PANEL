@@ -237,10 +237,5 @@ ForgotPasswordView = reduxForm({
     }
 })(ForgotPasswordView);
 
-function mapDispatchToProps(dispatch){
-    return bindActionCreators({
-    }, dispatch);
-}
 
-
-export  default  connect(null, mapDispatchToProps)(withStyles(useStyles)(ForgotPasswordView));
+export  default  connect(null, null)(withStyles(useStyles)(ForgotPasswordView));

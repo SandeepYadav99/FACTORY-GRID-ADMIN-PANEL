@@ -5,7 +5,7 @@
 import axios from 'axios';
 import Constants from '../config/constants';
 import store from '../store'
-import {actionLogoutUser} from "../actions/auth_index.action";
+import {actionLogoutUser} from "../actions/Auth.action";
 
 
 export async function postRequest(url, params) {

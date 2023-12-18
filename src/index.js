@@ -1,20 +1,16 @@
 /* eslint-disable indent */
 import React from 'react';
-import ReactDOM from 'react-dom';
+import ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux';
 // import { createStore, applyMiddleware, compose } from 'redux';
 // import thunk from 'redux-thunk';
 // // import { logger } from 'redux-logger';
 import './index.css';
-// import reducer from './reducers/index.reducer';
 import App from './App';
-import One from './views/One.view';
 import * as serviceWorker from './serviceWorker';
 import {setAuthorizationToken, setAxiosTimezone} from './libs/set_auth_token.utils';
 import store from './store';
-import {AUTH_USER} from "./actions/auth_index.action";
-import { actionGetDashboard } from './actions/Dashboard.action';
-import {connectToSocket} from "./libs/socket.utils";
+import {AUTH_USER} from "./actions/Auth.action";
 import {actionChangeTheme, actionGetAppSettings} from "./actions/AppSettings.action";
 
 setAxiosTimezone();
@@ -31,15 +27,19 @@ if (localStorage.jwt_token) {
     });
     // store.dispatch(actionGetDashboard());
     store.dispatch(actionGetAppSettings());
-    connectToSocket(localStorage.jwt_token);
+    // connectToSocket(localStorage.jwt_token);
 } else {
-    connectToSocket();
+    // connectToSocket();
 }
-ReactDOM.render(
-  <Provider store={store}>
-    <App />
-  </Provider>,
-    document.getElementById('root'),
+
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(
+    <React.StrictMode>
+        <Provider store={store}>
+                <App/>
+        </Provider>
+    </React.StrictMode>
 );
 
 // If you want your app to work offline and load faster, you can change

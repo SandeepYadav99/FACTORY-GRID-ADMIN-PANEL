@@ -228,10 +228,5 @@ ResetPasswordView = reduxForm({
     }
 })(ResetPasswordView);
 
-function mapDispatchToProps(dispatch){
-    return bindActionCreators({
-    }, dispatch);
-}
 
-
-export  default  connect(null, mapDispatchToProps)(withStyles(useStyles)(ResetPasswordView));
+export  default  connect(null, null)(withStyles(useStyles)(ResetPasswordView));

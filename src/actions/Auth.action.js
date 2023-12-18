@@ -2,7 +2,7 @@
 /**
  * Created by charnjeetelectrovese@gmail.com on 9/20/2017.
  */
-import { browserHistory } from 'react-router';
+// import { browserHistory } from 'react-router';
 import { setAuthorizationToken } from '../libs/set_auth_token.utils';
 import history from '../libs/history.utils';
 import {serviceGetProfile} from "../services/index.services";
