@@ -36,8 +36,9 @@ export default function (state = JSON.parse(JSON.stringify(initialState)), actio
             return {...state, ...(JSON.parse(JSON.stringify(initialState)))};
         }
         
-        case GET_PROFILE_INIT: {
+  
        
+        case 'GET_PROFILE_INIT': {
             const tempProfile = state.user_profile;
             tempProfile.is_fetching = true;
             return {
