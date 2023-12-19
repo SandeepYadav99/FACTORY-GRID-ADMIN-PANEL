@@ -23,6 +23,18 @@ export async function serviceDeleteGallery (params) { // /delete/gallery
     return await postRequest('delete/gallery', params);
 }
 
-export async function serviceDeleteCertificates (params) { // /delete/gallery
+export async function serviceDeleteCertificates (params) { // badges/create
     return await postRequest('delete/certificate', params);
+}
+
+export async function serviceBadgeCreate (params) { // badges/create
+    return await formDataRequest('badges/create', params);
+}
+
+export async function serviceBadgeUpdate(params) { // badges/create
+    return await formDataRequest('badges/update', params);
+}
+
+export async function serviceBadgeDetail(params) { // badges/create
+    return await formDataRequest('badges/details', params);
 }

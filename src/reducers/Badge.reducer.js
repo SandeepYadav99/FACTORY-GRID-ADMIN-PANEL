@@ -29,7 +29,7 @@ function mapPresetPRequest(all, pageId) {
 
 const initialState = {
     all: [],
-    present: [{name:'SS',image:require('../assets/img/logo_new.png'),status: 'ACTIVE'}],
+    present: [], // {name:'SS',image:require('../assets/img/logo_new.png'),status: 'ACTIVE'}
     currentPage: 0,
     serverPage: 0,
     query: null, // search text data

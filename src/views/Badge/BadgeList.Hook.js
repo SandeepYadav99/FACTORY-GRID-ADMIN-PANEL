@@ -2,31 +2,33 @@
 /* eslint-disable no-unused-vars */
 import { useDispatch, useSelector } from "react-redux";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { actionCreateCustomers, actionFetchCustomers, actionSetPageCustomers, actionUpdateCustomers } from "../../actions/Customers.action";
-import historyUtils from "../../libs/history.utils";
-import RouteName from "../../routes/Route.name";
-import { actionCreateBadge, actionFetchBadge, actionSetPageBadgeRequests, actionUpdateBadge } from "../../actions/Badge.action";
+
+import {
+
+  actionFetchBadge,
+  actionSetPageBadgeRequests,
+
+} from "../../actions/Badge.action";
 
 const useBadgeListHook = ({}) => {
   const [isSidePanel, setSidePanel] = useState(false);
   const [isCalling, setIsCalling] = useState(false);
   const [editData, setEditData] = useState(null);
-
+  const [editId, setEditId] = useState("");
   const dispatch = useDispatch();
   const isMountRef = useRef(false);
+
   const {
     sorting_data: sortingData,
     is_fetching: isFetching,
     query,
     query_data: queryData,
-    all
+    all,
   } = useSelector((state) => state.badge);
-
-
 
   useEffect(() => {
     dispatch(
-        actionFetchBadge(
+      actionFetchBadge(
         1,
         {},
         {
@@ -36,35 +38,20 @@ const useBadgeListHook = ({}) => {
       )
     );
     isMountRef.current = true;
-    console.log("Action1")
+
   }, []);
-  console.log("Action2")
+  
   const handlePageChange = useCallback((type) => {
     console.log("_handlePageChange", type);
-     dispatch(actionSetPageBadgeRequests(type)); // actionSetPageBadgeRequests
+    dispatch(actionSetPageBadgeRequests(type)); // actionSetPageBadgeRequests
   }, []);
-
-  const handleDataSave = useCallback(
-    (data, type) => {
-      console.log(type, data);
-      // this.props.actionChangeStatus({...data, type: type});
-      if (type == "CREATE") {
-        dispatch(actionCreateBadge(data)); // actionCreateBadge
-      } else {
-        dispatch(actionUpdateBadge(data));
-      }
-      setSidePanel((e) => !e);
-      setEditData(null);
-    },
-    [setSidePanel, setEditData]
-  );
 
   const queryFilter = useCallback(
     (key, value) => {
       console.log("_queryFilter", key, value);
       // dispatch(actionSetPageAdminUserRequests(1));
       dispatch(
-        actionFetchCustomers(1, sortingData, {
+        actionFetchBadge(1, sortingData, {
           query: key == "SEARCH_TEXT" ? value : query,
           query_data: key == "FILTER_DATA" ? value : queryData,
         })
@@ -93,7 +80,7 @@ const useBadgeListHook = ({}) => {
   const handleSortOrderChange = useCallback(
     (row, order) => {
       console.log(`handleSortOrderChange key:${row} order: ${order}`);
-      dispatch(actionSetPageCustomers(1));
+      dispatch(actionSetPageBadgeRequests(1));
       dispatch(
         actionFetchBadge(
           1,
@@ -108,17 +95,6 @@ const useBadgeListHook = ({}) => {
     [query, queryData]
   );
 
-//   _handleSortOrderChange(row, order) {
-//     console.log(`handleSortOrderChange key:${row} order: ${order}`);
-//     // this.props.actionSetPage(1);
-//     this.props.actionFetchData(1,
-//         {row, order}, {
-//             query: this.props.query,
-//             query_data: this.props.query_data,
-//         }, row);
-//     // this.props.fetchUsers(1, row, order, { query: this.props.query, query_data: this.props.query_data });
-// }
-
   const handleRowSize = (page) => {
     console.log(page);
   };
@@ -132,15 +108,12 @@ const useBadgeListHook = ({}) => {
     [setEditData, setSidePanel]
   );
 
-  const handleEdit = useCallback((type) => {
-    console.log(type, "Type")
-    if (type.user_type === "MANUFACTURE") {
-     return historyUtils.push(`${RouteName.CUSTOMERS_MANUFACTURES}${type.id}`);// /${type.id}
-    } else if (type.user_type === "CUSTOMER") {
-    return  historyUtils.push(`${RouteName.CUSTOMERS_CUSTOMER}${type.id}`); // /${type.id}
-    }
+  const handleEdit = useCallback((all) => {
+    console.log(all, "All");
+    setSidePanel((e) => !e);
+    setEditData(all);
+    setEditId(all?.id);
   }, []);
-  
 
   const handleToggleSidePannel = useCallback(
     (data) => {
@@ -153,7 +126,8 @@ const useBadgeListHook = ({}) => {
   const handleSideToggle = useCallback(
     (data) => {
       setSidePanel((e) => !e);
-      // historyUtils.push(RouteName.LOCATIONS_UPDATE + data?.id);
+      //  historyUtils.push("/badge");
+      // historyUtils.goBack();
     },
     [setEditData, setSidePanel]
   );
@@ -169,17 +143,22 @@ const useBadgeListHook = ({}) => {
   const handleFileView = useCallback((data) => {
     // window.open(data?.document, "_blank");
   }, []);
-  
+
   const configFilter = useMemo(() => {
     return [
-      {label: 'Request Date', name: 'createdAt', type: 'date', options:{maxDate: new Date()}},
-      {label: 'Status', name: 'status', type: 'select', fields: ['PENDING', 'ACTIVE']}
+      { label: "Created On", name: "createdAt", type: "date" },
+      {
+        label: "Status",
+        name: "status",
+        type: "select",
+        fields: ["INACTIVE", "ACTIVE"],
+      },
     ];
   }, []);
 
   return {
     handlePageChange,
-    handleDataSave,
+
     handleFilterDataChange,
     handleSearchValueChange,
     handleRowSize,
@@ -195,7 +174,7 @@ const useBadgeListHook = ({}) => {
     handleCreate,
     handleToggleSidePannel,
     handleFileView,
- 
+    editId,
   };
 };
 

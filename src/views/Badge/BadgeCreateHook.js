@@ -4,23 +4,23 @@ import { useCallback, useEffect, useRef, useState } from "react";
 // import useDebounce from "../../../hooks/DebounceHook";
 // import SnackbarUtils from "../../libs/SnackbarUtils";
 import Constants from "../../config/constants";
+import {
+  serviceBadgeCreate,
+  serviceBadgeDetail,
+  serviceBadgeUpdate,
+} from "../../services/Badge.service";
+import SnackbarUtils from "../../libs/SnackbarUtils";
 
 // import { serviceGetList } from "../../../services/Common.service";
 
 const initialForm = {
   name: "",
-  effective_date: "",
-  chapter_id: "",
-  document: "",
-  // type: "",
-  status: true,
+  logo: "",
+  apply_to: "",
+  logic: "",
 };
 
-const useBadgeCreateHook = ({
-  handleToggleSidePannel,
-  isSidePanel,
-  empId,
-}) => {
+const useBadgeCreateHook = ({ handleToggleSidePannel, isSidePanel, empId }) => {
   const [isLoading] = useState(false);
   const [showPasswordCurrent, setShowPasswordCurrent] = useState(false);
   const [errorData, setErrorData] = useState({});
@@ -28,39 +28,37 @@ const useBadgeCreateHook = ({
   const [form, setForm] = useState({ ...initialForm });
   const [isEdit] = useState(false);
   const includeRef = useRef(null);
-  // const codeDebouncer = useDebounce(form?.code, 500);
-  
-const [document, setDocument]=useState(null)
+  const [logos, setLogos] = useState(null);
+
   const [listData, setListData] = useState({
     ADMIN: [],
     CHAPTERS: [],
     EVENTS: [],
   });
 
-  useEffect(() => {
-    "serviceGetList"(["ADMIN", "CHAPTERS", "EVENTS"]).then((res) => {
-      if (!res.error) {
-        setListData(res.data);
-      }
-    });
-  }, []);
+  // useEffect(() => {
+  //   "serviceGetList"(["ADMIN", "CHAPTERS", "EVENTS"]).then((res) => {
+  //     if (!res.error) {
+  //       setListData(res.data);
+  //     }
+  //   });
+  // }, []);
 
   useEffect(() => {
     if (empId) {
-      "serviceGetPolicyDetails"({ id: empId }).then((res) => {
+      serviceBadgeDetail({ id: empId }).then((res) => {
         if (!res.error) {
-          const data = res?.data?.details;
+          const data = res.data;
           console.log(data);
           setForm({
             ...form,
             // id:data._id,
             name: data?.name,
-            effective_date: data?.effective_date,
-            chapter_id: data?.chapter_id,
-            // document: data.document,
-            status: data?.status === Constants.GENERAL_STATUS.ACTIVE,
+            apply_to: data?.apply_to,
+            logic: data?.logic,
+            // status: data?.status === Constants.GENERAL_STATUS.ACTIVE,
           });
-          setDocument(data?.document)
+          setLogos(data?.logo);
         } else {
           // SnackbarUtils.error(res?.message);
         }
@@ -76,18 +74,10 @@ const [document, setDocument]=useState(null)
 
   const checkFormValidation = useCallback(() => {
     const errors = { ...errorData };
-    let required = [
-      "name",
-      "effective_date",
-      "chapter_id",
-      // "document",
-      // "status",
-    ];
-
+    let required = ["name"];
     if (!empId) {
-      required.push("document");
+      required.push("logo");
     }
-
     required.forEach((val) => {
       if (
         !form?.[val] ||
@@ -111,34 +101,27 @@ const [document, setDocument]=useState(null)
     if (isSubmitting) {
       return;
     }
-  
+
     setIsSubmitting(true);
-  
+
     try {
       const formData = new FormData();
-  
-      Object.keys(form).forEach((key) => {
-        if (key !== "document") {
-          formData.append(key, key === "status" ? (form[key] ? "ACTIVE" : "INACTIVE") : form[key]);
-        }
-      });
-  
-      if (form.document) {
-        formData.append("document", form?.document);
-      }
-  
-      if (empId) {
-        formData.append("id", empId);
-      }
-  
-      const req = empId ? "serviceUpdatePolicyList"(formData) : "serviceCreatePolicyList"(formData);
+      formData.append("name", form.name);
+      formData.append("logo", form.logo || logos);
+      formData.append("apply_to", form?.apply_to);
+      formData.append("logic", form?.logic);
+
+      const req = empId
+        ? serviceBadgeUpdate(formData, formData.append("id", empId))
+        : serviceBadgeCreate(formData); //
       const res = await req;
-  
+
       if (!res.error) {
         handleToggleSidePannel();
         window.location.reload();
       } else {
-        // SnackbarUtils.error(res.message);
+         SnackbarUtils.error(res.response_message
+          );
       }
     } catch (error) {
       console.error("Error submitting data:", error);
@@ -146,17 +129,17 @@ const [document, setDocument]=useState(null)
       setIsSubmitting(false);
     }
   }, [form, isSubmitting, setIsSubmitting, empId, handleToggleSidePannel]);
-  
+
   const handleSubmit = useCallback(async () => {
     const errors = checkFormValidation();
-  
+
     if (Object.keys(errors).length > 0) {
       setErrorData(errors);
     } else {
       await submitToServer();
     }
-  }, [checkFormValidation, setErrorData, form, submitToServer]);
-  
+  }, [checkFormValidation, setErrorData, form, submitToServer, empId]);
+
   const removeError = useCallback(
     (title) => {
       const temp = JSON.parse(JSON.stringify(errorData));
@@ -170,21 +153,15 @@ const [document, setDocument]=useState(null)
     (text, fieldName) => {
       let shouldRemoveError = true;
       const t = { ...form };
-      if (fieldName === "policy_title") {
-      //   if (!text || (isAlphaNumChars(text) && text.toString().length <= 30)) {
-      //     t[fieldName] = text;
-      //   }
-      // } else if (fieldName === "code") {
-      //   if (!text || (!isSpace(text) && isAlphaNumChars(text))) {
-      //     t[fieldName] = text.toUpperCase();
-      //   }
-        shouldRemoveError = false;
+      if (fieldName === "name") {
+        t[fieldName] = text;
+      } else if (fieldName === "logo") {
+        t[fieldName] = text;
       } else {
         t[fieldName] = text;
       }
-
+      
       setForm(t);
-
       shouldRemoveError && removeError(fieldName);
     },
     [removeError, form, setForm]
@@ -196,7 +173,6 @@ const [document, setDocument]=useState(null)
         changeTextData(form?.[type].trim(), type);
       }
     },
-    //checkCodeValidation as dependescy
     [changeTextData]
   );
 
@@ -223,7 +199,7 @@ const [document, setDocument]=useState(null)
     empId,
     showPasswordCurrent,
     setShowPasswordCurrent,
-    document
+    logos,
   };
 };
 
