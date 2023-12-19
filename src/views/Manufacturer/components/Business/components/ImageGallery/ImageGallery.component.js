@@ -18,7 +18,11 @@ import {
   Videocam,
 } from "@material-ui/icons";
 import { WaitingComponent } from "../../../../../../components/index.component";
-// import { serviceDeleteWorkImage } from "../../../../services/CustomersRequest.service";
+import {
+  serviceDeleteCertificates,
+  serviceDeleteGallery,
+} from "../../../../../../services/Badge.service";
+import SnackbarUtils from "../../../../../../libs/SnackbarUtils";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -103,6 +107,10 @@ const ImageGalleryComponent = ({
   const [isDeleteCalling, setIsDeleteCalling] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
 
+  const [confirmData, setConfirmData] = useState({
+    index: null,
+    imageIdToDelete: null,
+  });
   useEffect(() => {
     console.log("Images:", images);
     console.log("Thumbnail Index:", thumbnailIndex);
@@ -119,6 +127,21 @@ const ImageGalleryComponent = ({
     setRemoteImages(updatedRemoteImages);
     setIsDeleteCalling(false);
     setShowConfirm(false);
+
+    const imageIdToDelete = confirmData.imageIdToDelete;
+    if (image_type === "GALLERY") {
+      serviceDeleteGallery({ id: imageIdToDelete }).then((res) => {
+        if (!res.error) {
+          SnackbarUtils.success("Succesfull delete ");
+        }
+      });
+    } else {
+      serviceDeleteCertificates({ id: imageIdToDelete }).then((res) => {
+        if (!res.error) {
+          SnackbarUtils.success("Succesfull delete ");
+        }
+      });
+    }
   };
 
   const handleDialogClose = () => {
@@ -132,6 +155,8 @@ const ImageGalleryComponent = ({
   const handleDeleteImage = (type, index, uniIndex) => {
     setShowConfirm(true);
     setThumbnailIndex(index);
+    const imageIdToDelete = imageList[uniIndex].id;
+    setConfirmData({ index, imageIdToDelete });
   };
 
   const handleImageChange = (data) => {

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Router, Route, Switch} from "react-router-dom";
-import {MuiThemeProvider, createMuiTheme} from '@material-ui/core/styles';
+import {MuiThemeProvider, createMuiTheme, createTheme} from '@material-ui/core/styles';
 import RouteComponent from './routes/index.route';
 import './App.css';
 import themes, {overrides} from './themes';
@@ -17,7 +17,7 @@ class App extends Component {
         const { themeType } = this.props;
         const themeDefault = themeType == 'dark' ? themes.dark : themes.default;
 // themeDefault['palette']['type'] = 'dark';
-        const theme = createMuiTheme({...themeDefault, ...overrides});
+        const theme = createTheme({...themeDefault, ...overrides});
         return (
             <MuiThemeProvider theme={theme}>
                 <Router history={history}>

@@ -384,6 +384,8 @@ const BadgeListContainer = (props) => {
     configFilter,
     handleSideToggle,
     isSidePanel,
+    editData
+    // handleToggleSidePannel
   } = useBadgeListHook({});
 
   const {
@@ -400,17 +402,16 @@ const BadgeListContainer = (props) => {
 
     return (
       <div className={styles.firstCellFlex}>
-        {/* <div>
+        <div>
           <img src={user?.image} alt="" />
         </div>
-        <div className={classNames(styles.firstCellInfo, 'openSans')}>
+        <div className={classNames(styles.firstCellInfo, "openSans")}>
           <span>
             <strong>{`${user?.name}`}</strong>
-          </span>{' '}
+          </span>{" "}
           <br />
           {tempEmailRender}
-        </div> */}
-        Hi
+        </div>
       </div>
     );
   }, []);
@@ -436,8 +437,8 @@ const BadgeListContainer = (props) => {
 
     return (
       <span style={status === "ACTIVE" ? activeStyle : inactiveStyle}>
-        {/* {status} */}
-        Hi
+        {status}
+        {/* Hi */}
       </span>
     );
   }, []);
@@ -538,7 +539,11 @@ const BadgeListContainer = (props) => {
         open={isSidePanel}
         side={"right"}
       >
-        <BadgeView />
+        <BadgeView
+          handleToggleSidePannel={handleSideToggle}
+          isSidePanel={isSidePanel}
+          empId={editData}
+        />
       </SidePanelComponent>
     </div>
   );
