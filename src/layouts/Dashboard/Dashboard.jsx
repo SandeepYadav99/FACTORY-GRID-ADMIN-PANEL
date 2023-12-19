@@ -140,7 +140,7 @@ App.propTypes = {
 
 function mapStateToProps(state) {
   return {
-    user_profile: state.auth.user_profile,
+    user_profile: state?.auth.user_profile,
   };
 }
 

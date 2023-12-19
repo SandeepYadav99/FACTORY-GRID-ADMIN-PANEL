@@ -2,9 +2,6 @@
  * Created by charnjeetelectrovese@gmail.com on 9/20/2017.
  */
 
-import {browserHistory} from 'react-router';
-
-// import { AUTH_USER } from "../actions/Auth.action";
 
 const initialState = {
     error: false,

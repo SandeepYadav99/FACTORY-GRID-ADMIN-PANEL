@@ -66,4 +66,4 @@ const CustomRouter = (props) => {
   );
 };
 
-export default CustomRouter;
+export default React.memo(CustomRouter);
