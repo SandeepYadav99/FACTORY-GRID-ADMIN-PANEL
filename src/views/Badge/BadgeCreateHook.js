@@ -29,7 +29,8 @@ const useBadgeCreateHook = ({ handleToggleSidePannel, isSidePanel, empId }) => {
   const [isEdit] = useState(false);
   const includeRef = useRef(null);
   const [logos, setLogos] = useState(null);
-
+  const [selectedValues, setSelectedValues] = useState("");
+ 
   const [listData, setListData] = useState({
     ADMIN: [],
     CHAPTERS: [],
@@ -74,10 +75,8 @@ const useBadgeCreateHook = ({ handleToggleSidePannel, isSidePanel, empId }) => {
 
   const checkFormValidation = useCallback(() => {
     const errors = { ...errorData };
-    let required = ["name"];
-    if (!empId) {
-      required.push("logo");
-    }
+    let required = ["name", ...(empId ? [] : ["logo"] )];
+   
     required.forEach((val) => {
       if (
         !form?.[val] ||
@@ -107,7 +106,7 @@ const useBadgeCreateHook = ({ handleToggleSidePannel, isSidePanel, empId }) => {
     try {
       const formData = new FormData();
       formData.append("name", form.name);
-      formData.append("logo", form.logo || logos);
+      formData.append("logo", form.logo );
       formData.append("apply_to", form?.apply_to);
       formData.append("logic", form?.logic);
 
@@ -120,8 +119,7 @@ const useBadgeCreateHook = ({ handleToggleSidePannel, isSidePanel, empId }) => {
         handleToggleSidePannel();
         window.location.reload();
       } else {
-         SnackbarUtils.error(res.response_message
-          );
+        SnackbarUtils.error(res.response_message);
       }
     } catch (error) {
       console.error("Error submitting data:", error);
@@ -151,6 +149,11 @@ const useBadgeCreateHook = ({ handleToggleSidePannel, isSidePanel, empId }) => {
 
   const changeTextData = useCallback(
     (text, fieldName) => {
+      if (fieldName === "Industry_Specific") {
+       
+          setSelectedValues(text);
+        
+      }
       let shouldRemoveError = true;
       const t = { ...form };
       if (fieldName === "name") {
@@ -160,7 +163,7 @@ const useBadgeCreateHook = ({ handleToggleSidePannel, isSidePanel, empId }) => {
       } else {
         t[fieldName] = text;
       }
-      
+
       setForm(t);
       shouldRemoveError && removeError(fieldName);
     },
@@ -200,6 +203,7 @@ const useBadgeCreateHook = ({ handleToggleSidePannel, isSidePanel, empId }) => {
     showPasswordCurrent,
     setShowPasswordCurrent,
     logos,
+    selectedValues
   };
 };
 
