@@ -235,7 +235,7 @@ class UserList extends Component {
     _renderCreateForm() {
         if (CreateProvider == null) {
             // import CreateProvider from './Create.container';
-            CreateProvider = require('../User.view').default;
+            CreateProvider = require('../Create/User.view').default;
         }
         if (this.state.side_panel) {
             return (<CreateProvider

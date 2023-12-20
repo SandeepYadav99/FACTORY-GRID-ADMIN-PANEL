@@ -1,8 +1,7 @@
 import React, {Component} from 'react';
-import PageBox from '../../components/PageBox/PageBox.component';
-import startsWith from 'lodash.startswith';
-import {Button, MenuItem, withStyles, FormControlLabel, Switch, IconButton, Paper} from '@material-ui/core';
-import { Delete as DeleteIcon } from '@material-ui/icons';
+
+import {Button, MenuItem, withStyles, FormControlLabel, Switch} from '@material-ui/core';
+
 import {Field, reduxForm} from 'redux-form'
 import {connect} from 'react-redux';
 import {
@@ -12,8 +11,8 @@ import {
     renderOutlinedSelectField,
     renderFileField,
     renderOutlinedMultipleSelectField, renderCountryContact
-} from '../../libs/redux-material.utils';
-import EventEmitter from "../../libs/Events.utils";
+} from '../../../libs/redux-material.utils';
+// import EventEmitter from "../../libs/Events.utils";
 
 import Dialog from "@material-ui/core/Dialog";
 import DialogTitle from "@material-ui/core/DialogTitle";
@@ -21,8 +20,9 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogActions from "@material-ui/core/DialogActions";
 import Slide from "@material-ui/core/Slide";
-import styles from './Style.module.css';
+import styles from '../Style.module.css';
 import {bindActionCreators} from "redux";
+import EventEmitter from '../../../libs/Events.utils';
 // import {serviceProviderUserCheck} from "../../services/User.service";
 
 let requiredFields = [];

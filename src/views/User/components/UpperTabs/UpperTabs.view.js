@@ -6,7 +6,7 @@ import {makeStyles, useTheme, withStyles, withTheme} from '@material-ui/core/sty
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
-import UserView from '../../User.view';
+import UserView from '../../Create/User.view';
 import WorkProfile from '../../components/Work/WorkProfile.view'
 import PersonOutlineIcon from '@material-ui/icons/PersonOutline';
 import WorkOutlineIcon from '@material-ui/icons/WorkOutline';
