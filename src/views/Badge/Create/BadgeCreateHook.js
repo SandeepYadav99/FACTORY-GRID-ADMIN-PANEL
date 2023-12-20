@@ -3,13 +3,13 @@ import { useCallback, useEffect, useRef, useState } from "react";
 // import { isAlphaNumChars, isSpace } from "../libs/RegexUtils";
 // import useDebounce from "../../../hooks/DebounceHook";
 // import SnackbarUtils from "../../libs/SnackbarUtils";
-import Constants from "../../config/constants";
+import Constants from "../../../config/constants";
 import {
   serviceBadgeCreate,
   serviceBadgeDetail,
   serviceBadgeUpdate,
-} from "../../services/Badge.service";
-import SnackbarUtils from "../../libs/SnackbarUtils";
+} from "../../../services/Badge.service";
+import SnackbarUtils from "../../../libs/SnackbarUtils";
 
 // import { serviceGetList } from "../../../services/Common.service";
 

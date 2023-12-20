@@ -7,11 +7,11 @@ import {  IconButton } from "@material-ui/core";
 import classNames from "classnames";
 import { useSelector } from "react-redux";
 import {  Info as EditIcon } from "@material-ui/icons";
-import PageBox from "../../components/PageBox/PageBox.component";
-import styles from "./styles.module.css";
-import DataTables from "../../Datatables/Datatable.table";
-import Constants from "../../config/constants";
-import FilterComponent from "../../components/Filter/Filter.component";
+import PageBox from "../../../components/PageBox/PageBox.component";
+import styles from "../styles.module.css";
+import DataTables from "../../../Datatables/Datatable.table";
+import Constants from "../../../config/constants";
+import FilterComponent from "../../../components/Filter/Filter.component";
 import useCustomerListHook from "./CustomerListHook";
 
 const CustomerList = (props) => {

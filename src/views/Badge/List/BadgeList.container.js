@@ -3,17 +3,17 @@ import React, { useCallback, useMemo } from "react";
 import { Button, IconButton } from "@material-ui/core";
 import classNames from "classnames";
 import { useSelector } from "react-redux";
-import SidePanelComponent from "../../components/SidePanel/SidePanel.component";
-import styles from "./Style.module.css";
-import PageBox from "../../components/PageBox/PageBox.component";
+import SidePanelComponent from "../../../components/SidePanel/SidePanel.component";
+import styles from "../Style.module.css";
+import PageBox from "../../../components/PageBox/PageBox.component";
 
-import DataTables from "../../Datatables/Datatable.table";
-import Constants from "../../config/constants";
-import FilterComponent from "../../components/Filter/Filter.component";
+import DataTables from "../../../Datatables/Datatable.table";
+import Constants from "../../../config/constants";
+import FilterComponent from "../../../components/Filter/Filter.component";
 
 import useBadgeListHook from "./BadgeList.Hook";
 import { Add } from "@material-ui/icons";
-import BadgeView from "./Badge.view";
+import BadgeView from "../Create/BadgeCreate.view";
 
 const BadgeListContainer = (props) => {
   const {

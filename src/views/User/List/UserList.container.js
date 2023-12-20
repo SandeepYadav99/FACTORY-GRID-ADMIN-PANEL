@@ -11,14 +11,14 @@ import {
     red as redColor,
 } from '@material-ui/core/colors';
 import {Add} from '@material-ui/icons';
-import PageBox from '../../components/PageBox/PageBox.component';
-import SidePanelComponent from '../../components/SidePanel/SidePanel.component';
+import PageBox from '../../../components/PageBox/PageBox.component';
+import SidePanelComponent from '../../../components/SidePanel/SidePanel.component';
 // import CreateProvider from './Create.container';
-import styles from './Style.module.css';
+import styles from '../Style.module.css';
 // import DataTables from '../../Datatables/DataTableSrc/DataTables';
-import DataTables from '../../Datatables/Datatable.table';
-import Constants from '../../config/constants';
-import FilterComponent from '../../components/Filter/Filter.component';
+import DataTables from '../../../Datatables/Datatable.table';
+import Constants from '../../../config/constants';
+import FilterComponent from '../../../components/Filter/Filter.component';
 import {
     actionFetchProviderUser,
     actionChangePageProviderUserRequests,
@@ -29,9 +29,9 @@ import {
     actionCreateProviderUser,
     actionUpdateProviderUser,
     actionDeleteProviderUser
-} from '../../actions/ProviderUser.action';
+} from '../../../actions/ProviderUser.action';
 import OpenInNewIcon from '@material-ui/icons/OpenInNew';
-import {serviceGetListData} from "../../services/index.services";
+import {serviceGetListData} from "../../../services/index.services";
 
 let CreateProvider = null;
 
@@ -235,7 +235,7 @@ class UserList extends Component {
     _renderCreateForm() {
         if (CreateProvider == null) {
             // import CreateProvider from './Create.container';
-            CreateProvider = require('./User.view').default;
+            CreateProvider = require('../User.view').default;
         }
         if (this.state.side_panel) {
             return (<CreateProvider

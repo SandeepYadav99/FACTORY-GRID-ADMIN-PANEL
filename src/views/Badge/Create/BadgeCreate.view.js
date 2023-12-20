@@ -7,19 +7,19 @@ import { ArrowRight, Delete as DeleteIcon, ExpandMore } from "@material-ui/icons
 // import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 // import { TreeView } from '@mui/x-tree-view/TreeView';
 // import { TreeItem } from '@mui/x-tree-view/TreeItem';
-import styles from "./Style.module.css";
+import styles from "../Style.module.css";
 
-import CustomRadioLabel from "../../components/CustomRadioLabel/CustomRadioLabel.component";
+import CustomRadioLabel from "../../../components/CustomRadioLabel/CustomRadioLabel.component";
 import Tooltip from "@material-ui/core/Tooltip";
 import InfoIcon from "@material-ui/icons/Info";
 
 import { makeStyles } from "@material-ui/styles";
 
 import useBadgeCreateHook from "./BadgeCreateHook";
-import File from "../../components/FileComponent/FileComponent.component";
-import CustomTextField from "../../FormFields/TextField.component";
+import File from "../../../components/FileComponent/FileComponent.component";
+import CustomTextField from "../../../FormFields/TextField.component";
 import { TreeItem, TreeView } from "@material-ui/lab";
-import CustomSelectField from "../../FormFields/SelectField/SelectField.component";
+import CustomSelectField from "../../../FormFields/SelectField/SelectField.component";
 
 const useStyles = makeStyles((theme) => ({
   iconBtnError: {
