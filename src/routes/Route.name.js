@@ -26,5 +26,7 @@ export default {
     APP_USERS:'/app/users',
 
     CUSTOMERS_CUSTOMER:"/customers/customer/",
-    CUSTOMERS_MANUFACTURES:"/customers/manufacturer/"
+    CUSTOMERS_MANUFACTURES:"/customers/manufacturer/",
+
+    USER_PROFILE : "/users/edit"
 };
