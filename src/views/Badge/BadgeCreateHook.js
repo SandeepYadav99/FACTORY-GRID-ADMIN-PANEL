@@ -117,7 +117,7 @@ const useBadgeCreateHook = ({ handleToggleSidePannel, isSidePanel, empId }) => {
 
       if (!res.error) {
         handleToggleSidePannel();
-        window.location.reload();
+         window.location.reload();
       } else {
         SnackbarUtils.error(res.response_message);
       }
@@ -183,7 +183,7 @@ const useBadgeCreateHook = ({ handleToggleSidePannel, isSidePanel, empId }) => {
 
   const handleReset = useCallback(() => {
     setForm({ ...initialForm });
-  }, [form]);
+  }, [form, setForm]);
 
   return {
     form,

@@ -7,17 +7,18 @@ const CustomRadioLabel = ({
   thirdValue,
   name,
   handleChange,
+  defaultValue,
 }) => {
   const [selectedOption, setSelectedOption] = useState(false);
 
   const onValueChange = (event) => {
     const data = event.target.value;
-    console.log(data);
-    // props.handleChange(data);
+
     setSelectedOption(data);
     handleChange(data, name);
   };
 
+  console.log(defaultValue, "DefaultValue");
   return (
     <form style={{ display: "inline-block" }}>
       <div className="radio-group">
@@ -27,7 +28,7 @@ const CustomRadioLabel = ({
             name={name}
             id={name + "options-one"}
             value={firstValue}
-            // checked={!selectedOption}
+            checked={defaultValue === firstValue}
             onChange={onValueChange}
           />
           <label htmlFor={name + "options-one"} className={"badge"}>
@@ -40,8 +41,7 @@ const CustomRadioLabel = ({
             name={name}
             id={name + "options-two"}
             value={secondValue}
-            //  checked={!selectedOption}
-            // checked={selectedOption === secondValue}
+            checked={defaultValue === secondValue}
             onChange={onValueChange}
           />
           <label htmlFor={name + "options-two"} className={"badge"}>
@@ -55,8 +55,7 @@ const CustomRadioLabel = ({
               name={name}
               id={name + "option-three"}
               value={thirdValue}
-              //  checked={!selectedOption}
-              // checked={selectedOption === secondValue}
+              checked={defaultValue === thirdValue}
               onChange={onValueChange}
             />
             <label htmlFor={name + "option-three"} className={"badge"}>

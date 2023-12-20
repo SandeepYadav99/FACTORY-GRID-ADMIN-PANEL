@@ -41,6 +41,10 @@ const useBadgeListHook = ({}) => {
 
   }, []);
   
+  useEffect(()=>{
+
+  },[setEditId]);
+  
   const handlePageChange = useCallback((type) => {
     console.log("_handlePageChange", type);
     dispatch(actionSetPageBadgeRequests(type)); // actionSetPageBadgeRequests
@@ -109,7 +113,7 @@ const useBadgeListHook = ({}) => {
   );
 
   const handleEdit = useCallback((all) => {
-    console.log(all, "All");
+   
     setSidePanel((e) => !e);
     setEditData(all);
     setEditId(all?.id);
@@ -123,11 +127,34 @@ const useBadgeListHook = ({}) => {
     [setSidePanel, setEditData]
   );
 
+  
+ 
+
   const handleSideToggle = useCallback(
     (data) => {
       setSidePanel((e) => !e);
       //  historyUtils.push("/badge");
       // historyUtils.goBack();
+      setEditData(null)
+    },
+    [setEditData, setSidePanel]
+  );
+
+  
+  const handleSideOpenSide = useCallback(
+    (data) => {
+      setSidePanel((e) => !e);
+      //  historyUtils.push("/badge");
+      // historyUtils.goBack();
+      setEditId("");
+    },
+    [setEditData, setSidePanel]
+  );
+
+  const handleCloseSideToggle = useCallback(
+    (data) => {
+      setSidePanel((e) => !e);
+ 
     },
     [setEditData, setSidePanel]
   );
@@ -175,6 +202,8 @@ const useBadgeListHook = ({}) => {
     handleToggleSidePannel,
     handleFileView,
     editId,
+    handleSideOpenSide,
+    handleCloseSideToggle
   };
 };
 

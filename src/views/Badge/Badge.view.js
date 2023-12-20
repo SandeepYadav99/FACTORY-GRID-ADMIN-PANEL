@@ -44,7 +44,7 @@ const BadgeView = ({ handleToggleSidePannel, isSidePanel, empId }) => {
     handleDelete,
   } = useBadgeCreateHook({ handleToggleSidePannel, isSidePanel, empId });
   const classes = useStyles();
-
+console.log(form, "Form detail")
   return (
     <div>
       <div className={styles.headerFlex}>
@@ -116,6 +116,7 @@ const BadgeView = ({ handleToggleSidePannel, isSidePanel, empId }) => {
               secondValue="Vendor"
               thirdValue={"Both"}
               handleChange={changeTextData}
+              defaultValue ={form?.apply_to}
             />
           </div>
         </div>
@@ -128,10 +129,11 @@ const BadgeView = ({ handleToggleSidePannel, isSidePanel, empId }) => {
               firstValue="Automatic"
               secondValue="Manual"
               handleChange={changeTextData}
+              defaultValue ={form?.logic}
             />
           </div>
         </div>
-        {/* <div>
+         <div>
           <label>Industry Specific :</label>
           <div>
             <CustomRadioLabel
@@ -141,8 +143,10 @@ const BadgeView = ({ handleToggleSidePannel, isSidePanel, empId }) => {
               handleChange={changeTextData}
             />
           </div>
-        </div> */}
-        {/* {selectedValues === "Yes" ? (
+        </div> 
+        
+         {selectedValues === "Yes" ? (
+         
           <div className={"formGroup"}>
            
               <Box sx={{ minHeight: 180, flexGrow: 1, maxWidth: 300 }}>
@@ -164,7 +168,7 @@ const BadgeView = ({ handleToggleSidePannel, isSidePanel, empId }) => {
               </Box>
           
           </div>
-        ) : null} */}
+        ) : null} 
 
         <div style={{ float: "right" }}>
           <Button

@@ -30,7 +30,8 @@ const BadgeListContainer = (props) => {
     isSidePanel,
     editData,
     editId,
-    // handleToggleSidePannel
+    handleSideOpenSide,
+     handleToggleSidePannel
   } = useBadgeListHook({});
 
   const {
@@ -120,6 +121,7 @@ const BadgeListContainer = (props) => {
     // renderContact,
     renderFirstCell,
     renderStatus,
+    handleEdit
   ]);
 
   const tableData = useMemo(() => {
@@ -153,7 +155,7 @@ const BadgeListContainer = (props) => {
         <div className={styles.headerContainer}>
           <span className={styles.title}>Badges List</span>
           <Button
-            onClick={handleSideToggle}
+            onClick={handleSideOpenSide}
             variant={"contained"}
             color={"primary"}
           >
