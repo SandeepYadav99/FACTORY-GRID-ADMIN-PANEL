@@ -78,9 +78,9 @@ class File extends Component {
         let tempPlaceHolder = this.props.placeholder;
         if (value != '') {
             if (value instanceof Object && !Array.isArray(value)) {
-                tempPlaceHolder = value.name.length > 20 ? value.name.substr(0, 20) : value.name;
+                tempPlaceHolder = value?.name.length > 20 ? value?.name.substr(0, 20) : value.name;
             } else {
-                tempPlaceHolder = value.length + ' Selected';
+                tempPlaceHolder = value?.length + ' Selected';
             }
         }
         if (show_image && !multiple) {
