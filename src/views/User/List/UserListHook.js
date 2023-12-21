@@ -2,7 +2,7 @@
 /* eslint-disable no-unused-vars */
 import { useDispatch, useSelector } from "react-redux";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { actionCreateCustomers, actionFetchCustomers, actionSetPageCustomers, actionUpdateCustomers } from "../../../actions/Customers.action";
+import { actionCreateCustomers, actionUpdateCustomers } from "../../../actions/Customers.action";
 import historyUtils from "../../../libs/history.utils";
 import RouteName from "../../../routes/Route.name";
 import { actionFetchProviderUser, actionSetPageProviderUserRequests } from "../../../actions/ProviderUser.action";
@@ -123,12 +123,7 @@ const useUserListHook = ({}) => {
   );
 
   const handleEdit = useCallback((type) => {
-    console.log(type, "Type")
-    if (type.user_type === "MANUFACTURE") {
-     return historyUtils.push(`${RouteName.CUSTOMERS_MANUFACTURES}${type.id}`);// /${type.id}
-    } else if (type.user_type === "CUSTOMER") {
-    return  historyUtils.push(`${RouteName.CUSTOMERS_CUSTOMER}${type.id}`); // /${type.id}
-    }
+    historyUtils.push(`${RouteName.USER_PROFILE}?id=${type?.id}`);
   }, []);
   
 

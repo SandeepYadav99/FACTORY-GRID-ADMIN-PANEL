@@ -23,5 +23,13 @@ export async function serviceGetProviderUserDetail(params) {
 }
 
 export async function serviceProviderUserCheck(params) {
-    return await postRequest('provider/users/check', params);
+    return await postRequest('provider/users/check', params); //profile/user/lookup
+}
+
+export async function serviceProviderUserManager(params) {
+    return await postRequest('profile/user/lookup', params); //profile/isexist
+}
+
+export async function serviceProviderIsExist(params) {
+    return await postRequest('profile/isexist', params); //profile/isexist
 }

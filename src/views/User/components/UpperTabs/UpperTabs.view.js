@@ -6,12 +6,15 @@ import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
-import UserView from "../../Create/User.view";
+import UserView from "../User/User.view";
 import WorkProfile from "../../components/Work/WorkProfile.view";
 import PersonOutlineIcon from "@material-ui/icons/PersonOutline";
 import WorkOutlineIcon from "@material-ui/icons/WorkOutline";
 import ShareIcon from "@material-ui/icons/Share";
 import { Paper } from "@material-ui/core";
+import { serviceCreateProviderUser } from "../../../../services/ProviderUser.service";
+import historyUtils from "../../../../libs/history.utils";
+import useUpperTabsHook from "./UpperTabsHook";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -53,17 +56,76 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const ProfileView = () => {
+  const {
+    form,
+    errorData,
+    isSubmitting,
+    listData,
+    handleSubmit,
+    onBlurHandler,
+    changeTextData,
+    document,
+    value,
+    setValue,
+    handleSubmitWorkTab,
+    image,
+    setTypeOf
+    
+  } = useUpperTabsHook({});
+
   const classes = useStyles();
-  const [value, setValue] = useState(0);
-const [profileData, setProfileData]=useState(null)
+  // const [value, setValue] = useState(0);
+
+  const [allData, setAllData] = useState({
+    personalInfo: null,
+    workInfo: null,
+  });
+
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
 
-  const openWorkProfileTab = (form) => {
-    setValue(1);
-    setProfileData(form)
+
+  const openWorkData = (form) => {
+    setAllData((prevData) => ({
+      ...prevData,
+      workInfo: form,
+    }));
   };
+
+  // useEffect(() => {
+  //   const formData = new FormData();
+   
+  //   if (allData?.personalInfo?.name)
+  //     formData.append("name", allData?.personalInfo?.name);
+  //   if (allData?.personalInfo?.image)
+  //     formData.append("image", allData?.personalInfo?.image);
+  //   if (allData?.personalInfo?.contact)
+  //     formData.append("contact", allData?.personalInfo?.contact);
+  //   if (allData?.personalInfo?.email)
+  //     formData.append("email", allData?.personalInfo?.email);
+  //   if (allData?.personalInfo?.role)
+  //     formData.append("role", allData?.personalInfo?.role);
+  //   //  formData.append('type',  allData?.personalInfo?.type);
+  //   if (allData?.personalInfo?.password)
+  //     formData.append("password", allData?.personalInfo?.password); //
+  //   if (allData?.personalInfo?.employee_id)
+  //     formData.append("employee_id", allData?.personalInfo?.employee_id);
+  //   if (allData?.workInfo?.joining_date)
+  //     formData.append("joining_date", allData?.workInfo?.joining_date);
+  //   if (allData?.workInfo?.department)
+  //     formData.append("department", allData?.workInfo?.department);
+  //   if (allData?.workInfo?.designation)
+  //     formData.append("designation", allData?.workInfo?.designation);
+  //   if (allData?.workInfo?.manager)
+  //     formData.append("manager", allData?.workInfo?.manager);
+
+  //   serviceCreateProviderUser(formData).then((res) => {
+  //     if (!res.error) {
+  //       historyUtils.push("/users");
+  //     }
+  //   });
+  // }, [allData]);
 
   return (
     <div>
@@ -97,10 +159,24 @@ const [profileData, setProfileData]=useState(null)
 
       <div className={styles.paperBackground}>
         <TabPanel value={value} index={0}>
-          <UserView openWorkProfileTab={openWorkProfileTab} />
+          <UserView
+            form={form}
+            errorData={errorData}
+            changeTextData={changeTextData}
+            onBlurHandler={onBlurHandler}
+            // handleSubmit={handleSubmit}
+            handleSubmit={handleSubmit}
+            image={image}
+          />
         </TabPanel>
         <TabPanel value={value} index={1}>
-          <WorkProfile />
+          <WorkProfile  form={form}
+            errorData={errorData}
+            changeTextData={changeTextData}
+            onBlurHandler={onBlurHandler}
+            handleSubmitWorkTab={handleSubmitWorkTab}
+            listData={listData}
+            setTypeOf={setTypeOf}/>
         </TabPanel>
         {/* <TabPanel value={value} index={2}></TabPanel> */}
       </div>
