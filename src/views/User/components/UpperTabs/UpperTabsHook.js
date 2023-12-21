@@ -14,6 +14,7 @@ import { useLocation } from "react-router-dom";
 import { serviceProviderUserManager } from "../../../../services/ProviderUser.service";
 import SnackbarUtils from "../../../../libs/SnackbarUtils";
 import historyUtils from "../../../../libs/history.utils";
+import { isEmail } from "../../../../libs/RegexUtils";
 
 const initialForm = {
   name: "",
@@ -45,7 +46,7 @@ const useUpperTabsHook = ({
   const [form, setForm] = useState({ ...initialForm });
   const [isEdit] = useState(false);
   const includeRef = useRef(null);
-  const codeDebouncer = useDebounce(form?.name, 500);
+  const codeDebouncer = useDebounce(form?.email, 500);
   const [image, setImage] = useState(null);
   const [typeOf, setTypeOf] = useState("");
   const [listData, setListData] = useState(null);
@@ -91,19 +92,19 @@ const useUpperTabsHook = ({
   }, [id]);
 
   const checkCodeValidation = useCallback(() => {
-    serviceProviderIsExist({ employee_id: form?.name }).then((res) => {
+    serviceProviderIsExist({ employee_id: form?.email }).then((res) => {
       if (!res.error) {
         const errors = JSON.parse(JSON.stringify(errorData));
         if (res.data.is_exists) {
-          errors["name"] = "Admin User Name Exists";
+          errors["email"] = "Admin User Email Exists";
           setErrorData(errors);
         } else {
-          delete errors.name;
+          delete errors.email;
           setErrorData(errors);
         }
       }
     });
-  }, [errorData, setErrorData, form?.name]);
+  }, [errorData, setErrorData, form?.email]);
 
   useEffect(() => {
     if (codeDebouncer) {
@@ -134,6 +135,10 @@ const useUpperTabsHook = ({
         errors[val] = true;
       } else if (["code"].indexOf(val) < 0) {
         delete errors[val];
+      }
+      if (form?.email && !isEmail(form?.email)) {
+        // errors["email"] = true;
+        errors.email = "Invalid email address";
       }
     });
 
@@ -187,7 +192,7 @@ const useUpperTabsHook = ({
     empId,
     handleToggleSidePannel,
     setImage,
-    setTypeOf
+    setTypeOf,
   ]);
 
   const handleSubmit = useCallback(async () => {
@@ -224,7 +229,7 @@ const useUpperTabsHook = ({
     // submitToServer,
     image,
     setValue,
-    setTypeOf
+    setTypeOf,
   ]);
   const removeError = useCallback(
     (title) => {
@@ -245,6 +250,10 @@ const useUpperTabsHook = ({
         //   t[fieldName] = text.toUpperCase();
         // }
         shouldRemoveError = false;
+      } else if (fieldName === "contact") {
+        if (text.length <= 10) {
+          t[fieldName] = text;
+        }
       } else {
         t[fieldName] = text;
       }

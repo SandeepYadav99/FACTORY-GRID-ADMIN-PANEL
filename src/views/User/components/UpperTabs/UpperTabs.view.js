@@ -74,58 +74,14 @@ const ProfileView = () => {
   } = useUpperTabsHook({});
 
   const classes = useStyles();
-  // const [value, setValue] = useState(0);
 
-  const [allData, setAllData] = useState({
-    personalInfo: null,
-    workInfo: null,
-  });
+
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
 
 
-  const openWorkData = (form) => {
-    setAllData((prevData) => ({
-      ...prevData,
-      workInfo: form,
-    }));
-  };
-
-  // useEffect(() => {
-  //   const formData = new FormData();
-   
-  //   if (allData?.personalInfo?.name)
-  //     formData.append("name", allData?.personalInfo?.name);
-  //   if (allData?.personalInfo?.image)
-  //     formData.append("image", allData?.personalInfo?.image);
-  //   if (allData?.personalInfo?.contact)
-  //     formData.append("contact", allData?.personalInfo?.contact);
-  //   if (allData?.personalInfo?.email)
-  //     formData.append("email", allData?.personalInfo?.email);
-  //   if (allData?.personalInfo?.role)
-  //     formData.append("role", allData?.personalInfo?.role);
-  //   //  formData.append('type',  allData?.personalInfo?.type);
-  //   if (allData?.personalInfo?.password)
-  //     formData.append("password", allData?.personalInfo?.password); //
-  //   if (allData?.personalInfo?.employee_id)
-  //     formData.append("employee_id", allData?.personalInfo?.employee_id);
-  //   if (allData?.workInfo?.joining_date)
-  //     formData.append("joining_date", allData?.workInfo?.joining_date);
-  //   if (allData?.workInfo?.department)
-  //     formData.append("department", allData?.workInfo?.department);
-  //   if (allData?.workInfo?.designation)
-  //     formData.append("designation", allData?.workInfo?.designation);
-  //   if (allData?.workInfo?.manager)
-  //     formData.append("manager", allData?.workInfo?.manager);
-
-  //   serviceCreateProviderUser(formData).then((res) => {
-  //     if (!res.error) {
-  //       historyUtils.push("/users");
-  //     }
-  //   });
-  // }, [allData]);
 
   return (
     <div>
