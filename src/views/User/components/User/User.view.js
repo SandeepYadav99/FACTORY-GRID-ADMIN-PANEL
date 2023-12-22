@@ -396,6 +396,8 @@ import { makeStyles } from "@material-ui/styles";
 import File from "../../../../components/FileComponent/FileComponent.component";
 import CustomTextField from "../../../../FormFields/TextField.component";
 import CustomSelectField from "../../../../FormFields/SelectField/SelectField.component";
+import { CountryPhone } from "../../../../components/index.component";
+import ReduxCountryContact from "../../../../components/country/ReduxCountryContact.component";
 
 const useStyles = makeStyles((theme) => ({
   iconBtnError: {
@@ -419,13 +421,11 @@ const User = ({
   const classes = useStyles();
 
   return (
-    <div >
-    
+    <div>
       <div>
-        <div className={"formFlex"} style={{justifyContent:"center"}}>
+        <div className={"formFlex"} style={{ justifyContent: "center" }}>
           <div className={styles.profileImage}>
             <File
-             
               bannerLabel="Profile"
               max_size={2 * 1024 * 1024}
               type={["jpg", "png", "pdf"]}
@@ -436,7 +436,6 @@ const User = ({
               show_image={true}
               error={errorData?.image}
               value={form?.image}
-              
               default_image={image ? image : ""}
               onChange={(file) => {
                 if (file) {
@@ -487,6 +486,7 @@ const User = ({
           </div>
 
           <div className={"formFlex"}>
+            {/* <CountryPhone /> */}
             <div className={"formGroup"}>
               <CustomTextField
                 isError={errorData?.contact}
@@ -502,6 +502,8 @@ const User = ({
                   onBlurHandler("contact");
                 }}
               />
+              
+           
             </div>
           </div>
           <div className={"formFlex"}>
