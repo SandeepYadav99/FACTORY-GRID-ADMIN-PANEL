@@ -23,9 +23,11 @@
     display: block;
     padding: 10px 5px;
     color: #fff;
-    background: #4B80EA;
+    background-image: linear-gradient(265deg , #AB183D,#E56056 );
+    /*background: #4B80EA;*/
     transition: background 0.3s;
     /*max-width: 90px;*/
+    border-radius: 50px;
 }
 .imgFileLabel {
     display: block;
@@ -37,7 +39,6 @@
 }
 .imgLowerContainer {
     text-align: center;
-   
 }
 
 .fileInput {
@@ -49,7 +50,6 @@
     bottom: 0;
     width: 100%;
     cursor: pointer;
-   
 }
 
 .image {
@@ -59,9 +59,14 @@
     border: 1px solid #c2c2c2;
     border-radius: 50%;
     background-color: lightgrey;
+
 }
 .imageBtnContainer {
     width: 100px;
+    position: relative;
+}
+.imageBtnContainerShow{
+    width: 250px;
     position: relative;
 }
 
@@ -177,6 +182,17 @@
     border: 1px solid #c2c2c275;
     background-color: #f6f7ff;
 }
+.imagePlusShow{
+    width: 100px;
+    height: 100px;
+    display: inline-block;
+    border: 1px solid #c2c2c275;
+    background-color: #f6f7ff;
+    border-radius: 100px;
+    margin-left: 50px;
+    margin-top: 25px;
+
+}
 
 .imagePlusNew{
     width: 100%;
@@ -188,6 +204,15 @@
     background-color: #f6f7ff;
 }
 
+.imgFileLabelPlusShow{
+    position: absolute;
+    top: 75px;
+    left: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-left: 50px;
+}
 .imgFileLabelPlus{
     position: absolute;
     top: 30px;
@@ -195,9 +220,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-  
 }
-
 .plus{
     color: #9699b0;
     font-size: 24px;

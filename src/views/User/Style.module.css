@@ -50,7 +50,12 @@
 }
 
 .profileImage{
-    margin-top: 2%;
-    border-radius: 50%;
+   
+    
 }
 
+.formContainer{
+  max-width: 40%;
+  min-width: 30rem;
+  margin: auto;
+}

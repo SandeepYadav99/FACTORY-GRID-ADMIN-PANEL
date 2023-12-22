@@ -294,18 +294,18 @@ import EventEmitter from "../../../../libs/Events.utils";
 //         </div>
 //       </div>
 
-      // <div className={"formFlex"}>
-      //   <div className={"formGroup"}>
-      //     <Field
-      //       fullWidth={true}
-      //       name="contact"
-      //       type={"number"}
-      //       component={renderCountryContact}
-      //       margin={"dense"}
-      //       label="Phone No"
-      //     />
-      //   </div>
-      // </div>
+// <div className={"formFlex"}>
+//   <div className={"formGroup"}>
+//     <Field
+//       fullWidth={true}
+//       name="contact"
+//       type={"number"}
+//       component={renderCountryContact}
+//       margin={"dense"}
+//       label="Phone No"
+//     />
+//   </div>
+// </div>
 
 //       <div className={"formFlex"}>
 //         <div className={"formGroup"}>
@@ -393,7 +393,6 @@ import EventEmitter from "../../../../libs/Events.utils";
 
 import { makeStyles } from "@material-ui/styles";
 
-
 import File from "../../../../components/FileComponent/FileComponent.component";
 import CustomTextField from "../../../../FormFields/TextField.component";
 import CustomSelectField from "../../../../FormFields/SelectField/SelectField.component";
@@ -408,43 +407,47 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const User = ({ handleToggleSidePannel,  errorData , changeTextData, form, onBlurHandler, handleSubmit, image}) => {
-
+const User = ({
+  handleToggleSidePannel,
+  errorData,
+  changeTextData,
+  form,
+  onBlurHandler,
+  handleSubmit,
+  image,
+}) => {
   const classes = useStyles();
 
   return (
-    <div>
-      <div className={styles.headerFlex}></div>
+    <div >
+    
       <div>
-        <div className={"formFlex"} style={{ justifyContent: "center" }}>
-          <div  className={styles.profileImage} >
+        <div className={"formFlex"} style={{justifyContent:"center"}}>
+          <div className={styles.profileImage}>
             <File
-              // imageClass={styles.inputFileUploader}
-              // className={styles.profileImage1}
+             
+              bannerLabel="Profile"
               max_size={2 * 1024 * 1024}
               type={["jpg", "png", "pdf"]}
               fullWidth={true}
               name="image"
               accept={"image/*"}
-              label="Please Upload Image"
+              label="Profile"
               show_image={true}
               error={errorData?.image}
               value={form?.image}
-             
-              link={""}
-                 default_image={image ? image : ""}
+              
+              default_image={image ? image : ""}
               onChange={(file) => {
                 if (file) {
                   changeTextData(file, "image");
                 }
               }}
             />
-            
           </div>
         </div>
-       
 
-        <div style={{ width: "50%", margin: "auto" }}>
+        <div className={styles.formContainer}>
           <div>
             <div className={"formFlex"}>
               <div className={"formGroup"}>
@@ -463,7 +466,7 @@ const User = ({ handleToggleSidePannel,  errorData , changeTextData, form, onBlu
               </div>
             </div>
           </div>
-         
+
           <div>
             <div className={"formFlex"}>
               <div className={"formGroup"}>
@@ -547,7 +550,12 @@ const User = ({ handleToggleSidePannel,  errorData , changeTextData, form, onBlu
             </div>
           </div>
           <div className={styles.saveButton}>
-            <Button variant={"contained"} color={"primary"} type={"submit"} onClick={handleSubmit}>
+            <Button
+              variant={"contained"}
+              color={"primary"}
+              type={"submit"}
+              onClick={handleSubmit}
+            >
               Save and Next
             </Button>
           </div>

@@ -40,20 +40,22 @@ const useUpperTabsHook = ({
   values,
 }) => {
   const [isLoading] = useState(false);
-  const [showPasswordCurrent, setShowPasswordCurrent] = useState(false);
+ 
   const [errorData, setErrorData] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [form, setForm] = useState({ ...initialForm });
-  const [isEdit] = useState(false);
+
   const includeRef = useRef(null);
   const codeDebouncer = useDebounce(form?.email, 500);
   const [image, setImage] = useState(null);
-  const [typeOf, setTypeOf] = useState("");
+  const [typeOf, setTypeOf] = useState("");// TypeOfTabs
   const [listData, setListData] = useState(null);
   const [value, setValue] = useState(0);
+  // access query params id in url
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const id = queryParams.get("id");
+
   useEffect(() => {
     serviceProviderUserManager().then((res) => {
       if (!res.error) {
@@ -61,22 +63,20 @@ const useUpperTabsHook = ({
       }
     });
   }, []);
-  console.log(id, "ID");
+
   useEffect(() => {
     if (id) {
       serviceGetProviderUserDetail({ id: id }).then((res) => {
         if (!res.error) {
           const data = res?.data;
-          console.log(data, "DATA");
+         
           setForm({
             ...form,
             name: data?.name,
-            // image: "",
-            contact: data?.contact,
+             contact: data?.contact,
             email: data?.email,
             role: data?.role,
-            // type: data?.type,
-            employee_id: data?.employee_id,
+             employee_id: data?.employee_id,
             password: data?.password,
             joining_date: data?.joining_date,
             department: data?.department,
@@ -91,26 +91,30 @@ const useUpperTabsHook = ({
     }
   }, [id]);
 
-  const checkCodeValidation = useCallback(() => {
-    serviceProviderIsExist({ employee_id: form?.email }).then((res) => {
-      if (!res.error) {
-        const errors = JSON.parse(JSON.stringify(errorData));
-        if (res.data.is_exists) {
-          errors["email"] = "Admin User Email Exists";
-          setErrorData(errors);
-        } else {
-          delete errors.email;
-          setErrorData(errors);
-        }
-      }
-    });
-  }, [errorData, setErrorData, form?.email]);
-
   useEffect(() => {
-    if (codeDebouncer) {
-      checkCodeValidation();
-    }
-  }, [codeDebouncer]);
+    console.log("first");
+  }, [typeOf]);
+
+  // const checkCodeValidation = useCallback(() => {
+  //   serviceProviderIsExist({ employee_id: form?.email }).then((res) => {
+  //     if (!res.error) {
+  //       const errors = JSON.parse(JSON.stringify(errorData));
+  //       if (res.data.is_exists) {
+  //         errors["email"] = "Admin User Email Exists";
+  //         setErrorData(errors);
+  //       } else {
+  //         delete errors.email;
+  //         setErrorData(errors);
+  //       }
+  //     }
+  //   });
+  // }, [errorData, setErrorData, form?.email]);
+
+  // useEffect(() => {
+  //   if (codeDebouncer) {
+  //     checkCodeValidation();
+  //   }
+  // }, [codeDebouncer]);
 
   useEffect(() => {
     if (!isSidePanel) {
@@ -148,7 +152,7 @@ const useUpperTabsHook = ({
       }
     });
     return errors;
-  }, [form, errorData, setImage, setTypeOf]);
+  }, [form, errorData, setImage, setTypeOf, typeOf]);
 
   const submitToServer = useCallback(async () => {
     if (isSubmitting) {
@@ -211,6 +215,7 @@ const useUpperTabsHook = ({
     // submitToServer,
     setImage,
     setValue,
+    setTypeOf,
   ]);
 
   const handleSubmitWorkTab = useCallback(async () => {
@@ -231,6 +236,7 @@ const useUpperTabsHook = ({
     setValue,
     setTypeOf,
   ]);
+
   const removeError = useCallback(
     (title) => {
       const temp = JSON.parse(JSON.stringify(errorData));
@@ -244,7 +250,18 @@ const useUpperTabsHook = ({
     (text, fieldName) => {
       let shouldRemoveError = true;
       const t = { ...form };
-
+      serviceProviderIsExist({ employee_id: form?.email }).then((res) => {
+        if (!res.error) {
+          const errors = JSON.parse(JSON.stringify(errorData));
+          if (res.data.is_exists) {
+            errors["email"] = "Admin User Email Exists";
+            setErrorData(errors);
+          } else {
+            delete errors.email;
+            setErrorData(errors);
+          }
+        }
+      });
       if (fieldName === "code") {
         // if (!text || (!isSpace(text) && isAlphaNumChars(text))) {
         //   t[fieldName] = text.toUpperCase();
@@ -252,7 +269,7 @@ const useUpperTabsHook = ({
         shouldRemoveError = false;
       } else if (fieldName === "contact") {
         if (text.length <= 10) {
-          t[fieldName] = text;
+          t[fieldName] = text; // '+91'+
         }
       } else {
         t[fieldName] = text;
@@ -262,7 +279,7 @@ const useUpperTabsHook = ({
 
       shouldRemoveError && removeError(fieldName);
     },
-    [removeError, form, setForm, errorData]
+    [removeError, form, setForm, errorData, handleSubmitWorkTab, setTypeOf]
   );
 
   const onBlurHandler = useCallback(
@@ -291,13 +308,12 @@ const useUpperTabsHook = ({
     isSubmitting,
     listData,
     errorData,
-    isEdit,
+   
     handleDelete,
     includeRef,
     handleReset,
     empId,
-    showPasswordCurrent,
-    setShowPasswordCurrent,
+ 
     document,
     setTypeOf,
     value,
