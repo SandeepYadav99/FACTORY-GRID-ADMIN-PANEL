@@ -15,7 +15,9 @@ export function actionGetDashboard(data) {
         dispatch({ type: DASHBOARD_INIT, payload: {} });
         req.then((data) => {
             if (!data.error) {
+                
                 const tempData = data.data;
+                console.log(tempData, "TempData ")
                 dispatch({ type: DASHBOARD_DONE, payload: tempData });
             }
         });

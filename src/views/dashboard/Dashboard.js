@@ -8,6 +8,8 @@ import {
   withStyles,
   Typography,
   Paper,
+  Card,
+  CardContent,
 } from "@material-ui/core";
 import {
   VerifiedUser,
@@ -29,6 +31,8 @@ import { WaitingComponent } from "../../components/index.component";
 import StatCard from "./components/StatCard/StatCard.component";
 import { actionFetchProviderUser } from "../../actions/ProviderUser.action";
 import { actionGetDashboard } from "../../actions/Dashboard.action";
+import BarChartExample from "./components/BigStat/DashboardBarChart";
+import DashboardBarChart from "./components/BigStat/DashboardBarChart";
 
 const getRandomData = (length, min, max, multiplier = 10, maxDiff = 10) => {
   const array = new Array(length).fill();
@@ -82,12 +86,8 @@ const Dashboard = () => {
   //     return (<WaitingComponent/>);
   // }
   const isMountRef = useRef(false);
-const dispatch=useDispatch()
+  const dispatch = useDispatch();
   const {
-    sorting_data: sortingData,
-    is_fetching: isFetching,
-    query,
-    query_data: queryData,
     all,
     dashboard,
     weekly_data,
@@ -99,59 +99,82 @@ const dispatch=useDispatch()
   } = useSelector((state) => state?.dashboard);
 
   useEffect(() => {
-    dispatch(
-      actionGetDashboard(
-        1,
-        {},
-        {
-          query: isMountRef.current ? query : null,
-          query_data: isMountRef.current ? queryData : null,
-        }
-      )
-    );
+    dispatch(actionGetDashboard());
     // isMountRef.current = true;
     // console.log("Action1")
   }, []);
 
-  console.log(dashboard, total_customers)
   return (
     <React.Fragment>
-      <PageTitle title="Dashboard" />
-      <Grid container spacing={3}>
-        <Grid item lg={4.5} md={4} sm={6} xs={12}>
-          <StatCard
-            title1={"Total Manufactureres"}
-            value={total_customers}
-            icon={VerifiedUser}
-            title2={"New "}
-          ></StatCard>
+      {/* <PageTitle title="Dashboard" /> */}
+
+      <Grid item style={{ display: "flex", justifyContent: "space-between" }}>
+        <Grid container spacing={3}>
+          <Grid item lg={5} md={8} sm={12} xs={12}>
+            <Card>
+              <CardContent
+                style={{ display: "flex", justifyContent: "space-between" }}
+              >
+                <Typography>Total Manufactureres</Typography>
+                <Typography>3</Typography>
+              </CardContent>
+              <CardContent
+                style={{ display: "flex", justifyContent: "space-between" }}
+              >
+                <Typography>New</Typography>
+                <Typography>3</Typography>
+              </CardContent>
+            </Card>
+          </Grid>
+
+          <Grid item lg={5} md={8} sm={12} xs={12}>
+            <Card>
+              <CardContent
+                style={{ display: "flex", justifyContent: "space-between" }}
+              >
+                <Typography>Total Customers</Typography>
+                <Typography>0</Typography>
+              </CardContent>
+              <CardContent
+                style={{ display: "flex", justifyContent: "space-between" }}
+              >
+                <Typography>New</Typography>
+                <Typography>0</Typography>
+              </CardContent>
+            </Card>
+          </Grid>
+
+          <Grid item lg={12} md={8} sm={12} xs={12}>
+            <DashboardBarChart
+              data={dashboard?.quoteRequestDaily}
+            ></DashboardBarChart>
+          </Grid>
         </Grid>
 
-        <Grid item lg={4.5} md={4} sm={6} xs={12}>
-          <StatCard
-            title1={"Total Customers"}
-            value={total_orders}
-            icon={ShopIcon}
-            title2={"New "}
-          />
-        </Grid>
-
-       
-      
-        <Grid item xs={12}>
-          <LineStat data={weekly_data}></LineStat>
-        </Grid>
-        <Grid item xs={4}>
-          <DriversList data={drivers}></DriversList>
-        </Grid>
-        <Grid item xs={8}>
-          <Widget
-            title="Support Requests"
-            upperTitle
-            noBodyPadding
-            // bodyClass={classes.tableWidget}
-          >
+        <Grid item lg={4} md={4} sm={12} xs={12}>
+          {/* <Widget title="Total Quote Requests">
             <Table data={mock.table} />
+          </Widget> */}
+          <Widget>
+            {/* <Table data={mock.table} /> */}
+            <div style={{ display: "flex", justifyContent: "space-between" }}>
+              <h4>Total Quote Requests</h4>
+              <h3>70</h3>
+            </div>
+            {dashboard?.quoteRequest?.map((quote) => {
+              return (
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    marginTop: "10px",
+                  }}
+                >
+                  <div>{quote?._id}</div>
+                  <div>{quote?.count}</div>
+                </div>
+              );
+            })}
           </Widget>
         </Grid>
       </Grid>

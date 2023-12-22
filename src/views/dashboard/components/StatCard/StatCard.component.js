@@ -57,7 +57,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const Budget = props => {
-    const { className, title1, title2,value, icon, ...rest } = props;
+    const { className, manufacturestitle, newTitle,value, icon, ...rest } = props;
 
     const classes = useStyles();
     const TempIcon = icon;
@@ -78,7 +78,7 @@ const Budget = props => {
                             gutterBottom
                             variant="body2"
                         >
-                            {title1}
+                            {manufacturestitle}
                         </Typography>
 
                         <Typography
@@ -87,7 +87,7 @@ const Budget = props => {
                             gutterBottom
                             variant="body2"
                         >
-                            {title2}
+                            {newTitle}
                         </Typography>
                         {/* <Typography variant="h3">{value}</Typography> */}
                         
