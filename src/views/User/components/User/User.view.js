@@ -426,14 +426,16 @@ const User = ({
         <div className={"formFlex"} style={{ justifyContent: "center" }}>
           <div className={styles.profileImage}>
             <File
-              bannerLabel="Profile"
+              // bannerLabel="Profile"
               max_size={2 * 1024 * 1024}
               type={["jpg", "png", "pdf"]}
               fullWidth={true}
               name="image"
               accept={"image/*"}
               label="Profile"
-              show_image={true}
+              // show_image={true}
+              link={""}
+              user_image
               error={errorData?.image}
               value={form?.image}
               default_image={image ? image : ""}
@@ -443,6 +445,7 @@ const User = ({
                 }
               }}
             />
+
           </div>
         </div>
 
@@ -502,8 +505,15 @@ const User = ({
                   onBlurHandler("contact");
                 }}
               />
-              
-           
+                  {/* <Field
+      fullWidth={true}
+      name="contact"
+      type={"number"}
+      component={renderCountryContact}
+      margin={"dense"}
+      label="Phone No"
+    /> */}
+
             </div>
           </div>
           <div className={"formFlex"}>
@@ -566,5 +576,18 @@ const User = ({
     </div>
   );
 };
+
+// const ReduxForm = reduxForm({
+//   form: "user", // a unique identifier for this form
+//   // validate,
+//   // asyncValidate,
+//   enableReinitialize: true,
+//   onSubmitFail: (errors) => {
+//     EventEmitter.dispatch(EventEmitter.THROW_ERROR, {
+//       error: "Please enter values",
+//       type: "error",
+//     });
+//   },
+// })(withStyles( { withTheme: true })(User));
 
 export default User;

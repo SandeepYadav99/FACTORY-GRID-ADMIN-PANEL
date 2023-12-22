@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import {
   Grid,
   LinearProgress,
@@ -19,7 +19,7 @@ import LineStat from "./components/LineStat/LineStat.component";
 import mock from "./mock";
 import Widget from "../../components/Widget/WidgetView";
 import PageTitle from "../../components/PageTitle";
-import { connect, useSelector } from "react-redux";
+import { connect, useDispatch, useSelector } from "react-redux";
 import { bindActionCreators } from "redux";
 // import { Typography } from "../../components/Wrappers/Wrappers";
 import DriversList from "./components/Drivers/Drivers.component";
@@ -27,6 +27,8 @@ import Table from "./components/Table/Table";
 import BigStat from "./components/BigStat/BigStat";
 import { WaitingComponent } from "../../components/index.component";
 import StatCard from "./components/StatCard/StatCard.component";
+import { actionFetchProviderUser } from "../../actions/ProviderUser.action";
+import { actionGetDashboard } from "../../actions/Dashboard.action";
 
 const getRandomData = (length, min, max, multiplier = 10, maxDiff = 10) => {
   const array = new Array(length).fill();
@@ -79,7 +81,8 @@ const Dashboard = () => {
   // if(is_calling) {
   //     return (<WaitingComponent/>);
   // }
-
+  const isMountRef = useRef(false);
+const dispatch=useDispatch()
   const {
     sorting_data: sortingData,
     is_fetching: isFetching,
@@ -95,40 +98,46 @@ const Dashboard = () => {
     total_products,
   } = useSelector((state) => state?.dashboard);
 
+  useEffect(() => {
+    dispatch(
+      actionGetDashboard(
+        1,
+        {},
+        {
+          query: isMountRef.current ? query : null,
+          query_data: isMountRef.current ? queryData : null,
+        }
+      )
+    );
+    // isMountRef.current = true;
+    // console.log("Action1")
+  }, []);
+
+  console.log(dashboard, total_customers)
   return (
     <React.Fragment>
       <PageTitle title="Dashboard" />
       <Grid container spacing={3}>
-        <Grid item lg={3} md={4} sm={6} xs={12}>
+        <Grid item lg={4.5} md={4} sm={6} xs={12}>
           <StatCard
-            title={"Total Customers"}
+            title1={"Total Manufactureres"}
             value={total_customers}
             icon={VerifiedUser}
+            title2={"New "}
           ></StatCard>
         </Grid>
 
-        <Grid item lg={3} md={4} sm={6} xs={12}>
+        <Grid item lg={4.5} md={4} sm={6} xs={12}>
           <StatCard
-            title={"Total Orders"}
+            title1={"Total Customers"}
             value={total_orders}
             icon={ShopIcon}
+            title2={"New "}
           />
         </Grid>
 
-        <Grid item lg={3} md={4} sm={6} xs={12}>
-          <StatCard
-            title={"Total Revenue"}
-            value={total_revenue}
-            icon={MoneyIcon}
-          />
-        </Grid>
-        <Grid item lg={3} md={4} sm={6} xs={12}>
-          <StatCard
-            title={"Total Products"}
-            value={total_products}
-            icon={ProductIcon}
-          />
-        </Grid>
+       
+      
         <Grid item xs={12}>
           <LineStat data={weekly_data}></LineStat>
         </Grid>

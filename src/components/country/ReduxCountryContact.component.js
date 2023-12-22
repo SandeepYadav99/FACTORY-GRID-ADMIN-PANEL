@@ -31,14 +31,14 @@ class ReduxCountryContact extends Component {
             }}>
                 <CountryPhone
                     {...input}
-                    inputProps={{
-                        name: input.name,
-                        onBlur: input.onBlur,
-                        onChange: input.onChange,
-                        onDragStart: input.onDragStart,
-                        onDrop: input.onDrop,
-                        onFocus: input.onFocus
-                    }}
+                    // inputProps={{
+                    //     name: input.name,
+                    //     onBlur: input.onBlur,
+                    //     onChange: input.onChange,
+                    //     onDragStart: input.onDragStart,
+                    //     onDrop: input.onDrop,
+                    //     onFocus: input.onFocus
+                    // }}
                     placeholder={label}
                     inputStyle={error ? {borderColor: 'red'} : {}}
                     country={country_code ? country_code.toLowerCase() : 'us'}

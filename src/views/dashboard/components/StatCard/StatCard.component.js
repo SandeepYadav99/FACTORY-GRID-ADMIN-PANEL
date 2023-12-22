@@ -18,9 +18,20 @@ const useStyles = makeStyles(theme => ({
         alignItems: 'center',
         display: 'flex'
     },
-    title: {
+    gridTitle:{
+        display:"flex",
+        flexDirection:"column",
+       
+    },
+    title1: {
         fontWeight: 500,
         fontSize: '14px'
+    },
+    title2: {
+        fontWeight: 500,
+        fontSize: '14px',
+        padding:"10px"
+       
     },
     avatar: {
         backgroundColor: 'black',
@@ -46,7 +57,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const Budget = props => {
-    const { className, title, value, icon, ...rest } = props;
+    const { className, title1, title2,value, icon, ...rest } = props;
 
     const classes = useStyles();
     const TempIcon = icon;
@@ -60,22 +71,35 @@ const Budget = props => {
                     container
                     justify="space-between"
                 >
-                    <Grid item>
+                    <Grid item  className={classes.gridTitle}>
                         <Typography
-                            className={classes.title}
+                            className={classes.title1}
                             color="textSecondary"
                             gutterBottom
                             variant="body2"
                         >
-                            {title}
+                            {title1}
                         </Typography>
-                        <Typography variant="h3">{value}</Typography>
+
+                        <Typography
+                            className={classes.title2}
+                            color="textSecondary"
+                            gutterBottom
+                            variant="body2"
+                        >
+                            {title2}
+                        </Typography>
+                        {/* <Typography variant="h3">{value}</Typography> */}
+                        
                     </Grid>
                     <Grid item>
-                        <Avatar className={classes.avatar}>
+                        {/* <Avatar className={classes.avatar}>
                             <TempIcon className={classes.icon} />
-                        </Avatar>
+                        </Avatar> */}
+                        <Typography variant="h3">{value}</Typography>
+                        <Typography variant="h3">{value}</Typography>
                     </Grid>
+                   
                 </Grid>
                 {/*<div className={classes.difference}>*/}
                 {/*    <ArrowDownwardIcon className={classes.differenceIcon} />*/}
