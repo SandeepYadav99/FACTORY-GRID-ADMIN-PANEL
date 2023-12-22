@@ -110,7 +110,7 @@ const styles = theme => ({
     margin: -theme.spacing.unit,
     padding: 0,
     width: 40,
-    height: 40,
+    height: "auto",
     color: theme.palette.text.hint,
     "&:hover": {
       backgroundColor: theme.palette.primary.main,

@@ -88,14 +88,8 @@ const Dashboard = () => {
   const isMountRef = useRef(false);
   const dispatch = useDispatch();
   const {
-    all,
+   
     dashboard,
-    weekly_data,
-    drivers,
-    total_customers,
-    total_revenue,
-    total_orders,
-    total_products,
   } = useSelector((state) => state?.dashboard);
 
   useEffect(() => {
@@ -103,20 +97,25 @@ const Dashboard = () => {
     // isMountRef.current = true;
     // console.log("Action1")
   }, []);
-
+  // const manuf = dashboard?.user?.map((user) => {
+  //   if (user?._id === "MANUFACTURE") {
+  //     return user?.count;
+  //   }
+  // });
+ 
   return (
     <React.Fragment>
       {/* <PageTitle title="Dashboard" /> */}
 
-      <Grid item style={{ display: "flex", justifyContent: "space-between" }}>
-        <Grid container spacing={3}>
-          <Grid item lg={5} md={8} sm={12} xs={12}>
+      <Grid item style={{ display: "flex" }}>
+        <Grid container spacing={1} style={{marginTop:"20px"}}>
+          <Grid item lg={4} md={12} sm={12} xs={12}>
             <Card>
               <CardContent
                 style={{ display: "flex", justifyContent: "space-between" }}
               >
                 <Typography>Total Manufactureres</Typography>
-                <Typography>3</Typography>
+                <Typography>{3}</Typography>
               </CardContent>
               <CardContent
                 style={{ display: "flex", justifyContent: "space-between" }}
@@ -127,7 +126,7 @@ const Dashboard = () => {
             </Card>
           </Grid>
 
-          <Grid item lg={5} md={8} sm={12} xs={12}>
+          <Grid item lg={4} md={12} sm={12} xs={12}>
             <Card>
               <CardContent
                 style={{ display: "flex", justifyContent: "space-between" }}
@@ -143,40 +142,41 @@ const Dashboard = () => {
               </CardContent>
             </Card>
           </Grid>
-
-          <Grid item lg={12} md={8} sm={12} xs={12}>
+          <Grid item lg={4} md={12} sm={12} xs={12} >
+         
+         <Widget>
+         
+           <div style={{ display: "flex", justifyContent: "space-between" , alignItems:"center"}}>
+             <h4>Total Quote Requests</h4>
+             <h3>{dashboard?.totatlQuotes}</h3>
+           </div>
+           {dashboard?.quoteRequest?.map((quote) => {
+             return (
+               <div
+                 style={{
+                   display: "flex",
+                   justifyContent: "space-between",
+                   marginTop: "1px",
+                 }}
+               >
+                 <div>{quote?._id}</div>
+                 <div>{quote?.count}</div>
+               </div>
+             );
+           })}
+         </Widget>
+       </Grid>
+          <Grid item lg={8} md={12} sm={12} xs={12}>
+          <Widget>
             <DashboardBarChart
               data={dashboard?.quoteRequestDaily}
             ></DashboardBarChart>
+            </Widget>
           </Grid>
+       
         </Grid>
 
-        <Grid item lg={4} md={4} sm={12} xs={12}>
-          {/* <Widget title="Total Quote Requests">
-            <Table data={mock.table} />
-          </Widget> */}
-          <Widget>
-            {/* <Table data={mock.table} /> */}
-            <div style={{ display: "flex", justifyContent: "space-between" }}>
-              <h4>Total Quote Requests</h4>
-              <h3>70</h3>
-            </div>
-            {dashboard?.quoteRequest?.map((quote) => {
-              return (
-                <div
-                  style={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    marginTop: "10px",
-                  }}
-                >
-                  <div>{quote?._id}</div>
-                  <div>{quote?.count}</div>
-                </div>
-              );
-            })}
-          </Widget>
-        </Grid>
+      
       </Grid>
     </React.Fragment>
   );
