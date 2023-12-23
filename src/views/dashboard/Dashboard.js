@@ -146,7 +146,7 @@ const Dashboard = () => {
          
          <Widget>
          
-           <div style={{ display: "flex", justifyContent: "space-between" , alignItems:"center"}}>
+           <div style={{ display: "flex", justifyContent: "space-between" , alignItems:"center", }}>
              <h4>Total Quote Requests</h4>
              <h3>{dashboard?.totatlQuotes}</h3>
            </div>
@@ -156,7 +156,7 @@ const Dashboard = () => {
                  style={{
                    display: "flex",
                    justifyContent: "space-between",
-                   marginTop: "1px",
+                   marginTop: "20px",
                  }}
                >
                  <div>{quote?._id}</div>

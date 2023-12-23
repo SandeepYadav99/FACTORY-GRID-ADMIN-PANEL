@@ -69,7 +69,8 @@ const ProfileView = () => {
     setValue,
     handleSubmitWorkTab,
     image,
-    setTypeOf
+    setTypeOf,
+    setPhoneContact
     
   } = useUpperTabsHook({});
 
@@ -123,6 +124,7 @@ const ProfileView = () => {
             // handleSubmit={handleSubmit}
             handleSubmit={handleSubmit}
             image={image}
+            setPhoneContact={setPhoneContact}
           />
         </TabPanel>
         <TabPanel value={value} index={1}>
@@ -132,7 +134,8 @@ const ProfileView = () => {
             onBlurHandler={onBlurHandler}
             handleSubmitWorkTab={handleSubmitWorkTab}
             listData={listData}
-            setTypeOf={setTypeOf}/>
+            setTypeOf={setTypeOf}
+            setPhoneContact={setPhoneContact}/>
         </TabPanel>
         {/* <TabPanel value={value} index={2}></TabPanel> */}
       </div>

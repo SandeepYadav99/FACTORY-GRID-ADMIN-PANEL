@@ -7,7 +7,8 @@ import {
   FormControlLabel,
   Switch,
 } from "@material-ui/core";
-
+import PhoneInput from "react-phone-input-2";
+import "react-phone-input-2/lib/style.css";
 import { Field, reduxForm } from "redux-form";
 import { connect } from "react-redux";
 import {
@@ -417,6 +418,7 @@ const User = ({
   onBlurHandler,
   handleSubmit,
   image,
+  setPhoneContact
 }) => {
   const classes = useStyles();
 
@@ -445,7 +447,6 @@ const User = ({
                 }
               }}
             />
-
           </div>
         </div>
 
@@ -491,7 +492,7 @@ const User = ({
           <div className={"formFlex"}>
             {/* <CountryPhone /> */}
             <div className={"formGroup"}>
-              <CustomTextField
+              {/* <CustomTextField
                 isError={errorData?.contact}
                 errorText={errorData?.contact}
                 label={"Phone No"}
@@ -504,16 +505,30 @@ const User = ({
                 onBlur={() => {
                   onBlurHandler("contact");
                 }}
+              /> */}
+              <PhoneInput
+                isError={errorData?.contact}
+                errorText={errorData?.contact}
+                inputProps={{
+                  name: "Phone No",
+                  required: true,
+                 
+                }}
+                country={"in"}
+               
+                value={form?.contact}
+                onChange={(text) => {
+                 
+                  changeTextData(text, "contact");
+                  
+                }}
+                onBlur={() => {
+                  onBlurHandler("contact");
+                }}
+                inputStyle={{width:"100%"}}
+               
               />
-                  {/* <Field
-      fullWidth={true}
-      name="contact"
-      type={"number"}
-      component={renderCountryContact}
-      margin={"dense"}
-      label="Phone No"
-    /> */}
-
+      
             </div>
           </div>
           <div className={"formFlex"}>

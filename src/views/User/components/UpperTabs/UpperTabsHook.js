@@ -51,6 +51,7 @@ const useUpperTabsHook = ({
   const [typeOf, setTypeOf] = useState("");// TypeOfTabs
   const [listData, setListData] = useState(null);
   const [value, setValue] = useState(0);
+  
   // access query params id in url
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
@@ -126,7 +127,7 @@ const useUpperTabsHook = ({
     const errors = { ...errorData };
     let required;
     if (typeOf === "Work") {
-      required = ["designation"];
+      required = ["designation", "joining_date", "department", "manager"];
     } else {
       required = ["name", "email", "contact", "role", ...(id ? [] : ["image"])];
     }
@@ -248,6 +249,7 @@ const useUpperTabsHook = ({
 
   const changeTextData = useCallback(
     (text, fieldName) => {
+      console.log(text, fieldName, "Form")
       let shouldRemoveError = true;
       const t = { ...form };
       serviceProviderIsExist({ employee_id: form?.email }).then((res) => {
