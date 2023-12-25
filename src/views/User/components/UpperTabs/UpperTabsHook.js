@@ -165,6 +165,7 @@ const useUpperTabsHook = ({
     return errors;
   }, [form, errorData, setImage, setTypeOf, typeOf]);
 
+  console.log(form, "Form")
   const submitToServer = useCallback(async () => {
     if (isSubmitting) {
       return;
@@ -216,14 +217,6 @@ const useUpperTabsHook = ({
     if (Object.keys(errors).length > 0) {
       setErrorData(errors);
       SnackbarUtils.error("Somthing went worng!")
-    }else if(typeOf === "work"){
-      if(Object.keys(errors).length > 0){
-        setErrorData(errors);
-        // setValue(0)
-      }else {
-        await submitToServer();
-
-      }
     } else {
       setValue(1);
     }
@@ -238,6 +231,28 @@ const useUpperTabsHook = ({
     setTypeOf,
   ]);
 
+  const handleSubmitToSave = useCallback(async () => {
+    const errors = checkFormValidation();
+
+    if (Object.keys(errors).length > 0) {
+      setErrorData(errors);
+      SnackbarUtils.error("Somthing went worng!")
+    }else {
+      // if(Object.keys(errors).length > 0){
+      //   setErrorData(errors);
+      // }
+     await submitToServer();
+    }
+
+  }, [
+    checkFormValidation,
+    setErrorData,
+    form,
+     submitToServer,
+    setImage,
+    setValue,
+    setTypeOf,
+  ]);
 
 
   const removeError = useCallback(
@@ -309,9 +324,7 @@ const useUpperTabsHook = ({
       }
 
       if (fieldName === "code") {
-        // if (!text || (!isSpace(text) && isAlphaNumChars(text))) {
-        //   t[fieldName] = text.toUpperCase();
-        // }
+       
         shouldRemoveError = false;
       } else if (fieldName === "contact") {
         if (text >= 0) {
@@ -367,6 +380,7 @@ const useUpperTabsHook = ({
     setValue,
   
     image,
+    handleSubmitToSave
   };
 };
 

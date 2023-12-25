@@ -122,7 +122,7 @@ const User = ({
                 inputProps={{
                   name: "Phone No",
                   required: true,
-                  autoFocus: true
+                  // autoFocus: true
                  
                 }}
                 isValid={(value, country) => {

@@ -70,7 +70,8 @@ const ProfileView = () => {
     setValidateContact,
     image,
     setTypeOf,
-    setPhoneContact
+    setPhoneContact,
+    handleSubmitToSave
     
   } = useUpperTabsHook({});
 
@@ -133,7 +134,7 @@ const ProfileView = () => {
             errorData={errorData}
             changeTextData={changeTextData}
             onBlurHandler={onBlurHandler}
-            handleSubmit={handleSubmit}
+            handleSubmit={handleSubmitToSave}
             listData={listData}
             setTypeOf={setTypeOf}
             setPhoneContact={setPhoneContact}/>
