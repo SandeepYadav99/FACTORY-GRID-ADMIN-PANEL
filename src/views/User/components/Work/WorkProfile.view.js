@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const WorkProfile = ({
-  errorData , changeTextData, form, onBlurHandler, handleSubmitWorkTab,
+  errorData , changeTextData, form, onBlurHandler, handleSubmit,
   listData, setTypeOf
 }) => {
 
@@ -57,8 +57,8 @@ const WorkProfile = ({
                   changeTextData(value, "department");
                 }}
               >
-                <MenuItem value={"A"}>A</MenuItem>
-                <MenuItem value={"B"}>B</MenuItem>
+                <MenuItem value={"a"}>A</MenuItem>
+                <MenuItem value={"b"}>B</MenuItem>
               </CustomSelectField>
             </div>
           </div>
@@ -73,8 +73,8 @@ const WorkProfile = ({
                   changeTextData(value, "designation");
                 }}
               >
-                <MenuItem value={"A"}>A</MenuItem>
-                <MenuItem value={"B"}>B</MenuItem>
+                <MenuItem value={"a"}>A</MenuItem>
+                <MenuItem value={"b"}>B</MenuItem>
               </CustomSelectField>
             </div>
           </div>
@@ -102,9 +102,9 @@ const WorkProfile = ({
               variant={"contained"}
               color={"primary"}
               type={"submit"}
-              onClick={()=>{handleSubmitWorkTab(); setTypeOf("Work")}}
+              onClick={()=>{handleSubmit(); setTypeOf("Work")}}
             >
-              Save and Next
+              Save
             </Button>
           </div>
         </div>

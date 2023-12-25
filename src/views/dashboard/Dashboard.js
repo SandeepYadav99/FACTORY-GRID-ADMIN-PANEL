@@ -64,7 +64,7 @@ const Dashboard = () => {
           <Grid item lg={12} md={12} sm={12} xs={12}>
             <div className={style.barChart}>
               <DashboardBarChart
-                data={dashboard?.quoteRequestDaily}
+                data={dashboard?.filledData}
               ></DashboardBarChart>
             </div>
           </Grid>

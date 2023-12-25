@@ -13,8 +13,8 @@ import {
 
 const DashboardBarChart = ({ data }) => {
   const transformedData = data?.map((item) => ({
-    name: item._id,
-    Date: item.count,
+    name: item?.date,
+    Date: item?.count,
   }));
   return (
     <ResponsiveContainer width="100%" height={250}>

@@ -126,7 +126,9 @@ const useUserListHook = ({}) => {
     historyUtils.push(`${RouteName.USER_PROFILE}?id=${type?.id}`);
   }, []);
   
-
+  const handleProfile = useCallback((type) => {
+    historyUtils.push(`${"/profile/"}?id=${type?.id}`);
+  }, []);
   const handleToggleSidePannel = useCallback(
     (data) => {
       setSidePanel((e) => !e);
@@ -179,6 +181,7 @@ const useUserListHook = ({}) => {
     handleCreate,
     handleToggleSidePannel,
     handleFileView,
+    handleProfile
   };
 };
 

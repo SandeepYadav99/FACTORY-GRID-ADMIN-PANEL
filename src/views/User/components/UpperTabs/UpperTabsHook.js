@@ -40,7 +40,7 @@ const useUpperTabsHook = ({
   values,
 }) => {
   const [isLoading] = useState(false);
- 
+
   const [errorData, setErrorData] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [form, setForm] = useState({ ...initialForm });
@@ -48,10 +48,10 @@ const useUpperTabsHook = ({
   const includeRef = useRef(null);
   const codeDebouncer = useDebounce(form?.email, 500);
   const [image, setImage] = useState(null);
-  const [typeOf, setTypeOf] = useState("");// TypeOfTabs
+  const [typeOf, setTypeOf] = useState(""); // TypeOfTabs
   const [listData, setListData] = useState(null);
   const [value, setValue] = useState(0);
-  
+
   // access query params id in url
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
@@ -70,14 +70,14 @@ const useUpperTabsHook = ({
       serviceGetProviderUserDetail({ id: id }).then((res) => {
         if (!res.error) {
           const data = res?.data;
-         
+
           setForm({
             ...form,
             name: data?.name,
-             contact: data?.contact,
+            contact: data?.contact,
             email: data?.email,
             role: data?.role,
-             employee_id: data?.employee_id,
+            employee_id: data?.employee_id,
             password: data?.password,
             joining_date: data?.joining_date,
             department: data?.department,
@@ -97,7 +97,8 @@ const useUpperTabsHook = ({
   }, [typeOf]);
 
   // const checkCodeValidation = useCallback(() => {
-  //   serviceProviderIsExist({ employee_id: form?.email }).then((res) => {
+  //   if(!form?.email) return;
+  //   serviceProviderIsExist({ email: form?.email, id: id }).then((res) => {
   //     if (!res.error) {
   //       const errors = JSON.parse(JSON.stringify(errorData));
   //       if (res.data.is_exists) {
@@ -123,13 +124,22 @@ const useUpperTabsHook = ({
     }
   }, [isSidePanel]);
 
+ 
+  
   const checkFormValidation = useCallback(() => {
     const errors = { ...errorData };
     let required;
     if (typeOf === "Work") {
       required = ["designation", "joining_date", "department", "manager"];
     } else {
-      required = ["name", "email", "contact", "role", ...(id ? [] : ["image"])];
+      required = [
+        "name",
+        "email",
+        "contact",
+        "role",
+        "employee_id",
+        ...(id ? [] : ["image"]),
+      ];
     }
 
     required.forEach((val) => {
@@ -141,10 +151,10 @@ const useUpperTabsHook = ({
       } else if (["code"].indexOf(val) < 0) {
         delete errors[val];
       }
-      if (form?.email && !isEmail(form?.email)) {
-        // errors["email"] = true;
+      if (val === "email" && form?.email && !isEmail(form?.email)) {
         errors.email = "Invalid email address";
       }
+    
     });
 
     Object.keys(errors).forEach((key) => {
@@ -205,10 +215,19 @@ const useUpperTabsHook = ({
 
     if (Object.keys(errors).length > 0) {
       setErrorData(errors);
+      SnackbarUtils.error("Somthing went worng!")
+    }else if(typeOf === "work"){
+      if(Object.keys(errors).length > 0){
+        setErrorData(errors);
+        // setValue(0)
+      }else {
+        await submitToServer();
+
+      }
     } else {
       setValue(1);
     }
-    console.log(form, "Form");
+
   }, [
     checkFormValidation,
     setErrorData,
@@ -219,24 +238,7 @@ const useUpperTabsHook = ({
     setTypeOf,
   ]);
 
-  const handleSubmitWorkTab = useCallback(async () => {
-    const errors = checkFormValidation();
 
-    if (Object.keys(errors).length > 0) {
-      setErrorData(errors);
-      // SnackbarUtils.error("Somthing went worng")
-    } else {
-      submitToServer();
-    }
-  }, [
-    checkFormValidation,
-    setErrorData,
-    form,
-    // submitToServer,
-    image,
-    setValue,
-    setTypeOf,
-  ]);
 
   const removeError = useCallback(
     (title) => {
@@ -249,30 +251,73 @@ const useUpperTabsHook = ({
 
   const changeTextData = useCallback(
     (text, fieldName) => {
-      console.log(text, fieldName, "Form")
+      console.log(text, fieldName, "Form");
       let shouldRemoveError = true;
       const t = { ...form };
-      serviceProviderIsExist({ employee_id: form?.email }).then((res) => {
-        if (!res.error) {
-          const errors = JSON.parse(JSON.stringify(errorData));
-          if (res.data.is_exists) {
-            errors["email"] = "Admin User Email Exists";
-            setErrorData(errors);
-          } else {
-            delete errors.email;
-            setErrorData(errors);
+      console.log(text)
+      if (fieldName === "email") {
+ 
+        serviceProviderIsExist({
+          email: form?.email ? form?.email : null,
+        }).then((res) => {
+          if (!res.error) {
+            const errors = JSON.parse(JSON.stringify(errorData));
+            if (res.data.is_exists) {
+              errors["email"] = "Admin User Email Exists";
+
+              setErrorData(errors);
+            } else {
+              delete errors.email;
+              setErrorData(errors);
+            }
           }
-        }
-      });
+        });
+      } else if (fieldName === "contact") {
+      
+        serviceProviderIsExist({
+          contact: form?.contact ? form?.contact : null,
+        }).then((res) => {
+          if (!res.error) {
+            const errors = JSON.parse(JSON.stringify(errorData));
+            if (res.data.is_exists) {
+              errors["contact"] = "Admin User Contact Exists";
+
+              setErrorData(errors);
+            } else {
+              delete errors.contact;
+              setErrorData(errors);
+            }
+          }
+        });
+      } else if (fieldName === "employee_id") {
+       
+        serviceProviderIsExist({
+          employee_id: form?.employee_id ? form?.employee_id : null,
+        }).then((res) => {
+          if (!res.error) {
+            const errors = JSON.parse(JSON.stringify(errorData));
+            if (res.data.is_exists) {
+              errors["employee_id"] = "Admin User Employee Id Exists";
+
+              setErrorData(errors);
+            } else {
+              delete errors.employee_id;
+              setErrorData(errors);
+            }
+          }
+        });
+      }
+
       if (fieldName === "code") {
         // if (!text || (!isSpace(text) && isAlphaNumChars(text))) {
         //   t[fieldName] = text.toUpperCase();
         // }
         shouldRemoveError = false;
       } else if (fieldName === "contact") {
-        if (text.length <= 10) {
-          t[fieldName] = text; // '+91'+
+        if (text >= 0) {
+          t[fieldName] = text;
         }
+        // '+91'+
       } else {
         t[fieldName] = text;
       }
@@ -281,7 +326,7 @@ const useUpperTabsHook = ({
 
       shouldRemoveError && removeError(fieldName);
     },
-    [removeError, form, setForm, errorData, handleSubmitWorkTab, setTypeOf]
+    [removeError, form, setForm, errorData, setTypeOf]
   );
 
   const onBlurHandler = useCallback(
@@ -310,17 +355,17 @@ const useUpperTabsHook = ({
     isSubmitting,
     listData,
     errorData,
-   
+
     handleDelete,
     includeRef,
     handleReset,
     empId,
- 
+
     document,
     setTypeOf,
     value,
     setValue,
-    handleSubmitWorkTab,
+  
     image,
   };
 };

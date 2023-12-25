@@ -7,7 +7,7 @@ import React, { useCallback, useMemo } from "react";
 import { Button, IconButton } from "@material-ui/core";
 import classNames from "classnames";
 import { useSelector } from "react-redux";
-import { Add, Info as EditIcon } from "@material-ui/icons";
+import { Add, Info as EditIcon, Info, Person } from "@material-ui/icons";
 import PageBox from "../../../components/PageBox/PageBox.component";
 import SidePanelComponent from "../../../components/SidePanel/SidePanel.component";
 import OpenInNewIcon from "@material-ui/icons/OpenInNew";
@@ -25,7 +25,7 @@ const UserList = (props) => {
     handleEdit,
     handleFilterDataChange,
     handleSearchValueChange,
-   
+    handleProfile,
     configFilter,
     isSidePanel,
     handleSideToggle,
@@ -159,6 +159,14 @@ const UserList = (props) => {
         label: "Action",
         render: (temp, all) => (
           <div>
+             <IconButton
+              className={"tableActionBtn"}
+              color="secondary"
+              // disabled={is_calling}
+              onClick={()=>handleProfile(all)}
+            >
+              <Person fontSize={"small"} />
+            </IconButton>
             <IconButton
               className={"tableActionBtn"}
               color="secondary"

@@ -67,7 +67,7 @@ const ProfileView = () => {
     document,
     value,
     setValue,
-    handleSubmitWorkTab,
+    setValidateContact,
     image,
     setTypeOf,
     setPhoneContact
@@ -125,6 +125,7 @@ const ProfileView = () => {
             handleSubmit={handleSubmit}
             image={image}
             setPhoneContact={setPhoneContact}
+            setValidateContact={setValidateContact}
           />
         </TabPanel>
         <TabPanel value={value} index={1}>
@@ -132,7 +133,7 @@ const ProfileView = () => {
             errorData={errorData}
             changeTextData={changeTextData}
             onBlurHandler={onBlurHandler}
-            handleSubmitWorkTab={handleSubmitWorkTab}
+            handleSubmit={handleSubmit}
             listData={listData}
             setTypeOf={setTypeOf}
             setPhoneContact={setPhoneContact}/>
