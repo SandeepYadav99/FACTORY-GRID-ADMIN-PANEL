@@ -1,0 +1,35 @@
+.title {
+    font-size: 26px;
+    color: #000000;
+}
+.quoteRequest{
+    background-color: #FFFFFF;
+    /* margin:4px; */
+    padding: 12px;
+    border-radius: 8px;
+}
+
+.barChart{
+    background-color: #FFFFFF;
+    overflow: hidden;
+    border-radius: 8px;
+    margin: 4px;
+    padding: 5px;
+}
+.totalQuoteTitle{
+    font-size: 14px;
+}
+.totalQuote{
+    font-size: 60px;
+    color: #000000;
+}
+.container{
+    display: flex;
+}
+
+@media (max-width: 1296px) {
+    .container {
+        flex-wrap: wrap;
+        width: 100%;
+    }
+}
