@@ -125,6 +125,7 @@ const ProfileView = () => {
             // handleSubmit={handleSubmit}
             handleSubmit={handleSubmit}
             image={image}
+            setTypeOf={setTypeOf}
             setPhoneContact={setPhoneContact}
             setValidateContact={setValidateContact}
           />
@@ -134,7 +135,7 @@ const ProfileView = () => {
             errorData={errorData}
             changeTextData={changeTextData}
             onBlurHandler={onBlurHandler}
-            handleSubmit={handleSubmitToSave}
+            handleSubmitToSave={handleSubmitToSave}
             listData={listData}
             setTypeOf={setTypeOf}
             setPhoneContact={setPhoneContact}/>

@@ -51,7 +51,7 @@ const useUpperTabsHook = ({
   const [typeOf, setTypeOf] = useState(""); // TypeOfTabs
   const [listData, setListData] = useState(null);
   const [value, setValue] = useState(0);
-
+  console.log(typeOf, "Type OF");
   // access query params id in url
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
@@ -124,23 +124,22 @@ const useUpperTabsHook = ({
     }
   }, [isSidePanel]);
 
- 
-  
   const checkFormValidation = useCallback(() => {
     const errors = { ...errorData };
     let required;
-    if (typeOf === "Work") {
-      required = ["designation", "joining_date", "department", "manager"];
-    } else {
-      required = [
-        "name",
-        "email",
-        "contact",
-        "role",
-        "employee_id",
-        ...(id ? [] : ["image"]),
-      ];
-    }
+
+    required = [
+      "name",
+      "email",
+      "contact",
+      "role",
+      "employee_id",
+      
+      ...(id ? [] : ["image"]),
+      ...(typeOf === "Work"
+        ? ["designation", "joining_date", "department", "manager"]
+        : []),
+    ];
 
     required.forEach((val) => {
       if (
@@ -154,7 +153,6 @@ const useUpperTabsHook = ({
       if (val === "email" && form?.email && !isEmail(form?.email)) {
         errors.email = "Invalid email address";
       }
-    
     });
 
     Object.keys(errors).forEach((key) => {
@@ -165,7 +163,7 @@ const useUpperTabsHook = ({
     return errors;
   }, [form, errorData, setImage, setTypeOf, typeOf]);
 
-  console.log(form, "Form")
+  console.log(form, "Form");
   const submitToServer = useCallback(async () => {
     if (isSubmitting) {
       return;
@@ -216,11 +214,10 @@ const useUpperTabsHook = ({
 
     if (Object.keys(errors).length > 0) {
       setErrorData(errors);
-      SnackbarUtils.error("Somthing went worng!")
+      SnackbarUtils.error("Somthing went worng!");
     } else {
       setValue(1);
     }
-
   }, [
     checkFormValidation,
     setErrorData,
@@ -236,24 +233,22 @@ const useUpperTabsHook = ({
 
     if (Object.keys(errors).length > 0) {
       setErrorData(errors);
-      SnackbarUtils.error("Somthing went worng!")
-    }else {
+      SnackbarUtils.error("Somthing went worng!");
+    } else {
       // if(Object.keys(errors).length > 0){
       //   setErrorData(errors);
       // }
-     await submitToServer();
+      await submitToServer();
     }
-
   }, [
     checkFormValidation,
     setErrorData,
     form,
-     submitToServer,
+    submitToServer,
     setImage,
     setValue,
     setTypeOf,
   ]);
-
 
   const removeError = useCallback(
     (title) => {
@@ -269,9 +264,8 @@ const useUpperTabsHook = ({
       console.log(text, fieldName, "Form");
       let shouldRemoveError = true;
       const t = { ...form };
-      console.log(text)
+      console.log(text);
       if (fieldName === "email") {
- 
         serviceProviderIsExist({
           email: form?.email ? form?.email : null,
         }).then((res) => {
@@ -288,7 +282,6 @@ const useUpperTabsHook = ({
           }
         });
       } else if (fieldName === "contact") {
-      
         serviceProviderIsExist({
           contact: form?.contact ? form?.contact : null,
         }).then((res) => {
@@ -305,7 +298,6 @@ const useUpperTabsHook = ({
           }
         });
       } else if (fieldName === "employee_id") {
-       
         serviceProviderIsExist({
           employee_id: form?.employee_id ? form?.employee_id : null,
         }).then((res) => {
@@ -324,7 +316,6 @@ const useUpperTabsHook = ({
       }
 
       if (fieldName === "code") {
-       
         shouldRemoveError = false;
       } else if (fieldName === "contact") {
         if (text >= 0) {
@@ -378,9 +369,9 @@ const useUpperTabsHook = ({
     setTypeOf,
     value,
     setValue,
-  
+
     image,
-    handleSubmitToSave
+    handleSubmitToSave,
   };
 };
 

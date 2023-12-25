@@ -10,18 +10,15 @@ import {
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 
-
 import styles from "../../Style.module.css";
 
 // import {serviceProviderUserCheck} from "../../services/User.service";
-
 
 import { makeStyles } from "@material-ui/styles";
 
 import File from "../../../../components/FileComponent/FileComponent.component";
 import CustomTextField from "../../../../FormFields/TextField.component";
 import CustomSelectField from "../../../../FormFields/SelectField/SelectField.component";
-
 
 const useStyles = makeStyles((theme) => ({
   iconBtnError: {
@@ -41,7 +38,8 @@ const User = ({
   onBlurHandler,
   handleSubmit,
   image,
-  setPhoneContact
+  setPhoneContact,
+  setTypeOf
 }) => {
   const classes = useStyles();
 
@@ -113,22 +111,19 @@ const User = ({
           </div>
 
           <div className={"formFlex"}>
-          
             <div className={"formGroup"}>
-             
               <PhoneInput
+          
                 isError={errorData?.contact}
                 errorText={errorData?.contact}
                 inputProps={{
                   name: "Phone No",
                   required: true,
                   // autoFocus: true
-                 
                 }}
                 isValid={(value, country) => {
-                
                   if (value.match(/12345/)) {
-                  return 'Invalid value: '+value+', '+country.name;
+                    return "Invalid value: " + value + ", " + country.name;
                   } else if (value.match(/1234/)) {
                     return false;
                   } else {
@@ -136,21 +131,22 @@ const User = ({
                   }
                 }}
                 country={"in"}
-                dropdownStyle={{}}
+              
             
                 value={form?.contact}
                 onChange={(text) => {
-                 
                   changeTextData(text, "contact");
-                  
                 }}
                 onBlur={() => {
                   onBlurHandler("contact");
                 }}
-                inputStyle={{width:"100%",   border: errorData?.contact ? '1px solid red' : '1px solid #ccc'}}
-               
+                inputStyle={{
+                  width: "100%",
+                  border: errorData?.contact
+                    ? "1px solid red"
+                    : "1px solid #ccc",
+                }}
               />
-      
             </div>
           </div>
           <div className={"formFlex"}>
@@ -203,7 +199,7 @@ const User = ({
               variant={"contained"}
               color={"primary"}
               type={"submit"}
-              onClick={handleSubmit}
+              onClick={()=>{handleSubmit(); setTypeOf("PersonalInfo")}}
             >
               Save and Next
             </Button>

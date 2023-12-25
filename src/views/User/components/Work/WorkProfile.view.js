@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const WorkProfile = ({
-  errorData , changeTextData, form, onBlurHandler, handleSubmit,
+  errorData , changeTextData, form, onBlurHandler, handleSubmitToSave,
   listData, setTypeOf
 }) => {
 
@@ -102,7 +102,7 @@ const WorkProfile = ({
               variant={"contained"}
               color={"primary"}
               type={"submit"}
-              onClick={()=>{handleSubmit(); setTypeOf("Work")}}
+              onClick={()=>{handleSubmitToSave(); setTypeOf("Work")}}
             >
               Save
             </Button>
