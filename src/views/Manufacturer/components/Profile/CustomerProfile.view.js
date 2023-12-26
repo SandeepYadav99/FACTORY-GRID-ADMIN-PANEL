@@ -10,8 +10,6 @@ import AccountQuality from "./components/AccountQuality";
 import Activity from "./components/Activity";
 import useCustomerProfileHook from "../../../../helper/CustomerProfileHook";
 
-
-
 const ProfileView = () => {
   const { userProfile, renderInterestArea } = useCustomerProfileHook();
 
@@ -27,12 +25,13 @@ const ProfileView = () => {
                 alt=""
               />
               <div>
-                <ButtonBase className={styles.removeBtn}>Remove x</ButtonBase>
+                {/* <ButtonBase className={styles.removeBtn}>Remove x</ButtonBase> */}
               </div>
               <div className={styles.user}>
                 {" "}
-                {`${userProfile.first_name || " "} ${userProfile.last_name ||
-                  " "}`}
+                {`${userProfile.first_name || " "} ${
+                  userProfile.last_name || " "
+                }`}
               </div>
               <div className={styles.name}>
                 {" "}
@@ -73,10 +72,16 @@ const ProfileView = () => {
             </div>
 
             <div className={styles.categoryFlex}>
-              <div className={styles.category} style={{ marginRight: "10px" }}>
-                Manufacturer
-              </div>
-              <div className={styles.category}>Customer</div>
+              {userProfile?.user_type === "MANUFACTURE" ? (
+                <div
+                  className={styles.category}
+                  style={{ marginRight: "10px" }}
+                >
+                  Manufacturer
+                </div>
+              ) : (
+                <div className={styles.category}>Customer</div>
+              )}
             </div>
 
             <h4 className={styles.contactHeading}>Contact</h4>

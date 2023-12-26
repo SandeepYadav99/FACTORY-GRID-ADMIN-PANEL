@@ -2,6 +2,7 @@ import React from 'react'
 import styles from './AccountQuality.module.css'
 import { ButtonBase } from '@material-ui/core'
 const AccountQuality = ({userProfileAccountQuality}) => {
+  
   return (
     <div className={styles.plain}>
     <div className={styles.accountFlex}>

@@ -92,6 +92,8 @@ const Dashboard = () => {
                     display: "flex",
                     justifyContent: "space-between",
                     marginTop: "10px",
+                    fontSize:"14px",
+                    color:"#000000"
                   }}
                 >
                   <div>{quote?._id}</div>

@@ -145,7 +145,7 @@ const CustomerList = (props) => {
         key: "orders",
         label: "Orders",
         sortable: false,
-        render: (temp, all) => <div>{all.orders}</div>,
+        render: (temp, all) => <div>{all.orders || "N/A"}</div>,
       },
       {
         key: "is_email_verified",
