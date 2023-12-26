@@ -165,7 +165,7 @@ import useMyProfileHook from "./MyProfileHook";
 const Profile = () => {
   const [open, setOpen] = useState(false);
   const { profileDetails, handleEdit } = useMyProfileHook();
-  console.log(profileDetails, "Profile DETAIL")
+  console.log(profileDetails, "Profile DETAIL");
   const handleResetPassword = () => {
     // Your logic for handling reset password
   };
@@ -198,17 +198,28 @@ const Profile = () => {
       <div className={styles.profileFlex}>
         <div className={styles.leftSection}>
           <div className={styles.plain}>
-            <ButtonBase className={styles.edit} onClick={()=>handleEdit(profileDetails)}>Edit</ButtonBase>
+            <ButtonBase
+              className={styles.edit}
+              onClick={() => handleEdit(profileDetails)}
+            >
+              Edit
+            </ButtonBase>
             <div className={styles.profileContainer}>
-              <img src={profileDetails?.image} alt=""/>
+              <img src={profileDetails?.image} alt="" />
               {/*<div>NO PHOTO THEN SHOW INITIALS</div>*/}
 
               <div className={styles.name}>{profileDetails?.name}</div>
-              <div className={styles.position}>Emp. ID : {profileDetails?.employee_id}</div>
+              <div className={styles.position}>
+                Emp. ID : {profileDetails?.employee_id || "N/A"}
+              </div>
 
               {/* <div className={styles.designation}>Administrator</div> */}
-              <div className={styles.designation}>{profileDetails?.role}</div>
-              <div className={styles.status}>{profileDetails?.status}</div>
+              <div className={styles.designation}>
+                {profileDetails?.role || "N/A"}
+              </div>
+              <div className={styles.status}>
+                {profileDetails?.status || "N/A"}
+              </div>
             </div>
 
             <hr />
@@ -216,11 +227,17 @@ const Profile = () => {
             <div>
               <div className={styles.contactFlex}>
                 <EmailIcon className={styles.contactIcons} />
-                <span className={styles.email}> {profileDetails?.email}</span>
+                <span className={styles.email}>
+                  {" "}
+                  {profileDetails?.email || "N/A"}
+                </span>
               </div>
               <div className={styles.contactFlex}>
                 <CallIcon className={styles.contactIcons} />{" "}
-                <span className={styles.email}> {profileDetails?.contact}</span>
+                <span className={styles.email}>
+                  {" "}
+                  {profileDetails?.contact || "N/A"}
+                </span>
               </div>
             </div>
 
@@ -229,19 +246,23 @@ const Profile = () => {
               <div className={styles.activityFlex}>
                 <Description className={styles.contactIcons} />
                 {/* <span className={styles.activity}>Department</span> */}
-                <span className={styles.activity}>{profileDetails?.department}</span>
+                <span className={styles.activity}>
+                  {profileDetails?.department}
+                </span>
               </div>
               <div className={styles.activityFlex}>
                 <Details className={styles.contactIcons} />
                 {/* <span className={styles.activity}>Designation</span> */}
-                <span className={styles.activity}>{profileDetails?.designation
-}</span>
+                <span className={styles.activity}>
+                  {profileDetails?.designation}
+                </span>
               </div>
               <div className={styles.activityFlex}>
                 <CalendarToday className={styles.contactIcons} />
                 {/* <span className={styles.activity}>Date Of Joining</span> */}
-                <span className={styles.activity}>{profileDetails?.joiningDateText || "N/A"
-}</span>
+                <span className={styles.activity}>
+                  {profileDetails?.joiningDateText || "N/A"}
+                </span>
               </div>
               <div className={styles.activityFlex}>
                 <Assignment className={styles.contactIcons} />
@@ -255,11 +276,17 @@ const Profile = () => {
               <div className={styles.activityFlex}>
                 <EmailIcon className={styles.contactIcons} />
                 {/* <span className={styles.activity}>12/02/2021 12:12:00</span> */}
-                <span className={styles.activity}>{profileDetails?.lastLoginText !== "Invalid date" ? profileDetails?.lastLoginText :   "N/A"}</span>
+                <span className={styles.activity}>
+                  {profileDetails?.lastLoginText !== "Invalid date"
+                    ? profileDetails?.lastLoginText
+                    : "N/A"}
+                </span>
               </div>
               <div className={styles.activityFlex}>
                 <CallIcon className={styles.contactIcons} />
-                <span className={styles.activity}>{profileDetails?.current_ip || "N/A"}</span>
+                <span className={styles.activity}>
+                  {profileDetails?.current_ip || "N/A"}
+                </span>
               </div>
             </div>
           </div>
