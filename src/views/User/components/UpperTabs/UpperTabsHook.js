@@ -246,16 +246,16 @@ const useUpperTabsHook = ({
       setErrorData(errors);
        SnackbarUtils.error("Add Required Filed!");
     } else {
-      const hasExistingData = await Promise.all([
-        checkIfExists("email", form.email, "Admin User Email Exists"),
-        checkIfExists("contact", form.contact, "Admin User Contact Exists"),
-        checkIfExists("employee_id", form.employee_id, "Admin User Employee Id Exists"),
-      ]);
+      // const hasExistingData = await Promise.all([
+      //   checkIfExists("email", form.email, "Admin User Email Exists"),
+      //   checkIfExists("contact", form.contact, "Admin User Contact Exists"),
+      //   checkIfExists("employee_id", form.employee_id, "Admin User Employee Id Exists"),
+      // ]);
 
-      if (hasExistingData.some(exists => exists)) {
-        // If any of the fields already exist, do not submit the form
-        return;
-      }
+      // if (hasExistingData.some(exists => exists)) {
+      //   // If any of the fields already exist, do not submit the form
+      //   return;
+      // }
       await submitToServer();
     }
   }, [
