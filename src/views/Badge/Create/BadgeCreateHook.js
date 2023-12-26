@@ -30,7 +30,7 @@ const useBadgeCreateHook = ({ handleToggleSidePannel, isSidePanel, empId }) => {
   const includeRef = useRef(null);
   const [logos, setLogos] = useState(null);
   const [selectedValues, setSelectedValues] = useState("");
- 
+
   const [listData, setListData] = useState({
     ADMIN: [],
     CHAPTERS: [],
@@ -75,8 +75,8 @@ const useBadgeCreateHook = ({ handleToggleSidePannel, isSidePanel, empId }) => {
 
   const checkFormValidation = useCallback(() => {
     const errors = { ...errorData };
-    let required = ["name", ...(empId ? [] : ["logo"] )];
-   
+    let required = ["name", ...(empId ? [] : ["logo"])];
+
     required.forEach((val) => {
       if (
         !form?.[val] ||
@@ -106,7 +106,7 @@ const useBadgeCreateHook = ({ handleToggleSidePannel, isSidePanel, empId }) => {
     try {
       const formData = new FormData();
       formData.append("name", form.name);
-      formData.append("logo", form.logo );
+      formData.append("logo", form.logo);
       formData.append("apply_to", form?.apply_to);
       formData.append("logic", form?.logic);
 
@@ -117,7 +117,7 @@ const useBadgeCreateHook = ({ handleToggleSidePannel, isSidePanel, empId }) => {
 
       if (!res.error) {
         handleToggleSidePannel();
-         window.location.reload();
+        window.location.reload();
       } else {
         SnackbarUtils.error(res.response_message);
       }
@@ -150,15 +150,15 @@ const useBadgeCreateHook = ({ handleToggleSidePannel, isSidePanel, empId }) => {
   const changeTextData = useCallback(
     (text, fieldName) => {
       if (fieldName === "Industry_Specific") {
-       
-          setSelectedValues(text);
-        
+        setSelectedValues(text);
       }
       let shouldRemoveError = true;
       const t = { ...form };
       if (fieldName === "name") {
         t[fieldName] = text;
       } else if (fieldName === "logo") {
+        t[fieldName] = text;
+      } else if (fieldName === "category") {
         t[fieldName] = text;
       } else {
         t[fieldName] = text;
@@ -203,7 +203,7 @@ const useBadgeCreateHook = ({ handleToggleSidePannel, isSidePanel, empId }) => {
     showPasswordCurrent,
     setShowPasswordCurrent,
     logos,
-    selectedValues
+    selectedValues,
   };
 };
 

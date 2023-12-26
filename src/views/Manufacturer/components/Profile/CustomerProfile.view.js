@@ -135,7 +135,7 @@ const ProfileView = () => {
           <div className={styles.plain}>
             <div className={styles.headings}>Support Queries</div>
             <div>
-              <Queries />
+              <Queries queryLists={userProfile?.supportBYEmail}/>
             </div>
           </div>
 

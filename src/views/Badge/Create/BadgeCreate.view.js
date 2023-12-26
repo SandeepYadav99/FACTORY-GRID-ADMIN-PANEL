@@ -1,7 +1,11 @@
 import React from "react";
 
 import { Box, Button, IconButton } from "@material-ui/core";
-import { ArrowRight, Delete as DeleteIcon, ExpandMore } from "@material-ui/icons";
+import {
+  ArrowRight,
+  Delete as DeleteIcon,
+  ExpandMore,
+} from "@material-ui/icons";
 
 // import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 // import ChevronRightIcon from '@mui/icons-material/ChevronRight';
@@ -20,6 +24,7 @@ import File from "../../../components/FileComponent/FileComponent.component";
 import CustomTextField from "../../../FormFields/TextField.component";
 import { TreeItem, TreeView } from "@material-ui/lab";
 import CustomSelectField from "../../../FormFields/SelectField/SelectField.component";
+import Cascader from "../../../components/FormFields/Cascader/Cascader";
 
 const useStyles = makeStyles((theme) => ({
   iconBtnError: {
@@ -44,7 +49,7 @@ const BadgeView = ({ handleToggleSidePannel, isSidePanel, empId }) => {
     handleDelete,
   } = useBadgeCreateHook({ handleToggleSidePannel, isSidePanel, empId });
   const classes = useStyles();
-console.log(form, "Form detail")
+  console.log(form, "Form detail");
   return (
     <div>
       <div className={styles.headerFlex}>
@@ -116,7 +121,7 @@ console.log(form, "Form detail")
               secondValue="Vendor"
               thirdValue={"Both"}
               handleChange={changeTextData}
-              defaultValue ={form?.apply_to}
+              defaultValue={form?.apply_to}
             />
           </div>
         </div>
@@ -129,11 +134,11 @@ console.log(form, "Form detail")
               firstValue="Automatic"
               secondValue="Manual"
               handleChange={changeTextData}
-              defaultValue ={form?.logic}
+              defaultValue={form?.logic}
             />
           </div>
         </div>
-         <div>
+        <div>
           <label>Industry Specific :</label>
           <div>
             <CustomRadioLabel
@@ -143,13 +148,11 @@ console.log(form, "Form detail")
               handleChange={changeTextData}
             />
           </div>
-        </div> 
-        
-         {selectedValues === "Yes" ? (
-         
+        </div>
+
+        {selectedValues === "Yes" ? (
           <div className={"formGroup"}>
-           
-              <Box sx={{ minHeight: 180, flexGrow: 1, maxWidth: 300 }}>
+            {/* <Box sx={{ minHeight: 180, flexGrow: 1, maxWidth: 300 }}>
                 <TreeView
                   aria-label="file system navigator"
                   defaultCollapseIcon={<ExpandMore />}
@@ -165,10 +168,21 @@ console.log(form, "Form detail")
                     </TreeItem>
                   </TreeItem>
                 </TreeView>
-              </Box>
-          
+              </Box> */}
+            <Cascader
+              value={["defaultCategory"]} 
+              isError={errorData.category}
+              label={"Industry"}
+              options={[
+                { value: "defaultCategory", label: "Default Category" },
+                // Add other default options as needed
+              ]}
+              handleChange={(value) => {
+                changeTextData(value, "category");
+              }}
+            />
           </div>
-        ) : null} 
+        ) : null}
 
         <div style={{ float: "right" }}>
           <Button
