@@ -199,7 +199,7 @@ const useUpperTabsHook = ({
 
     if (Object.keys(errors).length > 0) {
       setErrorData(errors);
-      SnackbarUtils.error("Add Required Filed!");
+      SnackbarUtils.error("Please enter values");
     } else {
       setValue((prevValue) => {
         if (prevValue === 0) {
@@ -224,7 +224,7 @@ const useUpperTabsHook = ({
 
     if (Object.keys(errors).length > 0) {
       setErrorData(errors);
-       SnackbarUtils.error("Add Required Filed!");
+       SnackbarUtils.error("Please enter values");
     } else {
       // const hasExistingData = await Promise.all([
       //   checkIfExists("email", form.email, "Admin User Email Exists"),
