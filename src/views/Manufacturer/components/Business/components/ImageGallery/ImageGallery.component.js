@@ -39,7 +39,7 @@ const ImageContainer = ({
   localIndex,
   image_type,
 }) => {
-  console.log(image_type);
+
   return (
     <div className={styles.imgContainer}>
       <div className={styles.imgBtn}>

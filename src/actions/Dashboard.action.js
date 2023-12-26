@@ -17,7 +17,7 @@ export function actionGetDashboard(data) {
             if (!data.error) {
                 
                 const tempData = data.data;
-                console.log(tempData, "TempData ")
+              
                 dispatch({ type: DASHBOARD_DONE, payload: tempData });
             }
         });

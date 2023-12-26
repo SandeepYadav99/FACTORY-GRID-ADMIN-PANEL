@@ -96,6 +96,10 @@ const useUpperTabsHook = ({
     console.log("first");
   }, [typeOf]);
 
+  useEffect(() => {
+    setErrorData({});
+  }, [value]);
+
   // const checkCodeValidation = useCallback(() => {
   //   if(!form?.email) return;
   //   serviceProviderIsExist({ email: form?.email, id: id }).then((res) => {
@@ -128,18 +132,24 @@ const useUpperTabsHook = ({
     const errors = { ...errorData };
     let required;
 
-    required = [
-      "name",
-      "email",
-      "contact",
-      "role",
-      "employee_id",
-      
-      ...(id ? [] : ["image"]),
-      ...(typeOf === "Work"
-        ? ["designation", "joining_date", "department", "manager"]
-        : []),
-    ];
+    if (value === 0) {
+      required = [
+        "name",
+        "email",
+        "contact",
+        "role",
+        "employee_id",
+        ...(id ? [] : ["image"]),
+      ];
+    } else if (value === 1) {
+      required = [
+        "name",
+        "designation",
+        "joining_date",
+        "department",
+        "manager",
+      ];
+    }
 
     required.forEach((val) => {
       if (
@@ -161,7 +171,7 @@ const useUpperTabsHook = ({
       }
     });
     return errors;
-  }, [form, errorData, setImage, setTypeOf, typeOf]);
+  }, [form, errorData, setImage, setTypeOf, typeOf, value]);
 
   console.log(form, "Form");
   const submitToServer = useCallback(async () => {
@@ -216,7 +226,13 @@ const useUpperTabsHook = ({
       setErrorData(errors);
       SnackbarUtils.error("Somthing went worng!");
     } else {
-      setValue(1);
+      setValue((prevValue) => {
+        if (prevValue === 0) {
+          // Only switch to the second tab if currently on the first tab
+          return 1;
+        }
+        return prevValue;
+      });
     }
   }, [
     checkFormValidation,

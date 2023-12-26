@@ -201,7 +201,7 @@ const User = ({
             <Button
               variant={"contained"}
               color={"primary"}
-              type={"submit"}
+              type={"button"}
               onClick={()=>{handleSubmit(); setTypeOf("PersonalInfo")}}
             >
               Save and Next

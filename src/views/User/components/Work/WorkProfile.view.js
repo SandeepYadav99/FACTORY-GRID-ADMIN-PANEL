@@ -23,6 +23,11 @@ const WorkProfile = ({
 
   const classes = useStyles();
 
+  const handleSaveClick = () => {
+    console.log("Save button clicked");
+    handleSubmitToSave();
+    setTypeOf("Work");
+  };
   return (
     <div>
       <div className={styles.headerFlex}></div>
@@ -101,8 +106,8 @@ const WorkProfile = ({
             <Button
               variant={"contained"}
               color={"primary"}
-              type={"submit"}
-              onClick={()=>{handleSubmitToSave(); setTypeOf("Work")}}
+             type="button"
+              onClick={handleSaveClick}
             >
               Save
             </Button>
