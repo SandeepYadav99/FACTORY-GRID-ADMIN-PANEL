@@ -35,9 +35,9 @@ const useCustomerListHook = ({}) => {
       )
     );
     isMountRef.current = true;
-    console.log("Action1")
+ 
   }, []);
-  console.log("Action2")
+
   const handlePageChange = useCallback((type) => {
     console.log("_handlePageChange", type);
      dispatch(actionSetPageCustomers(type));
@@ -45,7 +45,7 @@ const useCustomerListHook = ({}) => {
 
   const handleDataSave = useCallback(
     (data, type) => {
-      console.log(type, data);
+    
       // this.props.actionChangeStatus({...data, type: type});
       if (type == "CREATE") {
         dispatch(actionCreateCustomers(data));

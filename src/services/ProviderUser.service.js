@@ -31,5 +31,9 @@ export async function serviceProviderUserManager(params) {
 }
 
 export async function serviceProviderIsExist(params) {
-    return await postRequest('profile/isexist', params); //profile/isexist
+    return await postRequest('profile/isexist', params); 
+}
+
+export async function serviceProfileDetail(params) {
+    return await postRequest('profile/details', params); 
 }

@@ -96,27 +96,7 @@ const useUpperTabsHook = ({
     setErrorData({});
   }, [value]);
 
-  // const checkCodeValidation = useCallback(() => {
-  //   if(!form?.email) return;
-  //   serviceProviderIsExist({ email: form?.email, id: id }).then((res) => {
-  //     if (!res.error) {
-  //       const errors = JSON.parse(JSON.stringify(errorData));
-  //       if (res.data.is_exists) {
-  //         errors["email"] = "Admin User Email Exists";
-  //         setErrorData(errors);
-  //       } else {
-  //         delete errors.email;
-  //         setErrorData(errors);
-  //       }
-  //     }
-  //   });
-  // }, [errorData, setErrorData, form?.email]);
 
-  // useEffect(() => {
-  //   if (codeDebouncer) {
-  //     checkCodeValidation();
-  //   }
-  // }, [codeDebouncer]);
 
   useEffect(() => {
     if (!isSidePanel) {
