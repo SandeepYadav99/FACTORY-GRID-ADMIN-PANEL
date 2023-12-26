@@ -119,11 +119,11 @@ class DashboardSnackbar extends Component {
         //     // eslint-disable-next-line
         //     // const ps = new PerfectScrollbar(this.refs.mainPanel);
         // }
-        EventEmitter.subscribe(EventEmitter.THROW_ERROR, this._handleError);
+        EventEmitter.subscribe(EventEmitter.SHOW_SNACKBAR, this._handleError);
     }
 
     componentWillUnmount() {
-        EventEmitter.unsubscribe(EventEmitter.THROW_ERROR);
+        EventEmitter.unsubscribe(EventEmitter.SHOW_SNACKBAR);
     }
 
     render() {

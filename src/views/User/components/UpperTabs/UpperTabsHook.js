@@ -51,7 +51,7 @@ const useUpperTabsHook = ({
   const [typeOf, setTypeOf] = useState(""); // TypeOfTabs
   const [listData, setListData] = useState(null);
   const [value, setValue] = useState(0);
-  console.log(typeOf, "Type OF");
+
   // access query params id in url
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
@@ -91,10 +91,6 @@ const useUpperTabsHook = ({
       });
     }
   }, [id]);
-
-  useEffect(() => {
-    console.log("first");
-  }, [typeOf]);
 
   useEffect(() => {
     setErrorData({});
@@ -173,7 +169,6 @@ const useUpperTabsHook = ({
     return errors;
   }, [form, errorData, setImage, setTypeOf, typeOf, value]);
 
-  console.log(form, "Form");
   const submitToServer = useCallback(async () => {
     if (isSubmitting) {
       return;
@@ -224,7 +219,7 @@ const useUpperTabsHook = ({
 
     if (Object.keys(errors).length > 0) {
       setErrorData(errors);
-      SnackbarUtils.error("Somthing went worng!");
+      SnackbarUtils.error("Add Required Filed!");
     } else {
       setValue((prevValue) => {
         if (prevValue === 0) {
@@ -249,7 +244,7 @@ const useUpperTabsHook = ({
 
     if (Object.keys(errors).length > 0) {
       setErrorData(errors);
-      SnackbarUtils.error("Somthing went worng!");
+      SnackbarUtils.error("Add Required Filed!");
     } else {
       // if(Object.keys(errors).length > 0){
       //   setErrorData(errors);
@@ -277,10 +272,9 @@ const useUpperTabsHook = ({
 
   const changeTextData = useCallback(
     (text, fieldName) => {
-      console.log(text, fieldName, "Form");
       let shouldRemoveError = true;
       const t = { ...form };
-      console.log(text);
+
       if (fieldName === "email") {
         serviceProviderIsExist({
           email: form?.email ? form?.email : null,
@@ -305,7 +299,7 @@ const useUpperTabsHook = ({
             const errors = JSON.parse(JSON.stringify(errorData));
             if (res.data.is_exists) {
               errors["contact"] = "Admin User Contact Exists";
-
+              SnackbarUtils.error("Admin User Contact Already Exists");
               setErrorData(errors);
             } else {
               delete errors.contact;

@@ -4,6 +4,8 @@
 const EventEmitter = {
     events: {},
     THROW_ERROR: 'THROW_ERROR',
+    SHOW_SNACKBAR: 'SHOW_SNACKBAR',
+    MOVE_TO_TOP: 'MOVE_TO_TOP',
     dispatch: function (event, data) {
         if (!this.events[event]) return;
         this.events[event].forEach(callback => callback(data));
