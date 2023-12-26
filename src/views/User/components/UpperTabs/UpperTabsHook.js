@@ -200,7 +200,7 @@ const useUpperTabsHook = ({
         SnackbarUtils.error(res.message);
       }
     } catch (error) {
-      console.error("Error submitting data:", error);
+     
     } finally {
       setIsSubmitting(false);
     }
@@ -244,11 +244,18 @@ const useUpperTabsHook = ({
 
     if (Object.keys(errors).length > 0) {
       setErrorData(errors);
-      SnackbarUtils.error("Add Required Filed!");
+       SnackbarUtils.error("Add Required Filed!");
     } else {
-      // if(Object.keys(errors).length > 0){
-      //   setErrorData(errors);
-      // }
+      const hasExistingData = await Promise.all([
+        checkIfExists("email", form.email, "Admin User Email Exists"),
+        checkIfExists("contact", form.contact, "Admin User Contact Exists"),
+        checkIfExists("employee_id", form.employee_id, "Admin User Employee Id Exists"),
+      ]);
+
+      if (hasExistingData.some(exists => exists)) {
+        // If any of the fields already exist, do not submit the form
+        return;
+      }
       await submitToServer();
     }
   }, [
@@ -269,60 +276,42 @@ const useUpperTabsHook = ({
     },
     [setErrorData, errorData]
   );
+//  Check input filed is Exit or not 
+  const checkIfExists = useCallback(async (field, value, errorMessage) => {
+    const { data, error } = await serviceProviderIsExist({
+      [field]: value ? value : null,
+    });
+
+    if (!error) {
+      setForm((prevForm) => {
+        const errors = { ...errorData };
+        if (data.is_exists) {
+          errors[field] = errorMessage;
+           SnackbarUtils.error(errorMessage);
+        } else {
+          delete errors[field];
+        }
+        setErrorData(errors);
+
+        return {
+          ...prevForm,
+          [field]: value,
+        };
+      });
+    }
+  }, [setForm, errorData, setErrorData, SnackbarUtils]);
+
 
   const changeTextData = useCallback(
     (text, fieldName) => {
       let shouldRemoveError = true;
       const t = { ...form };
-
-      if (fieldName === "email") {
-        serviceProviderIsExist({
-          email: form?.email ? form?.email : null,
-        }).then((res) => {
-          if (!res.error) {
-            const errors = JSON.parse(JSON.stringify(errorData));
-            if (res.data.is_exists) {
-              errors["email"] = "Admin User Email Exists";
-
-              setErrorData(errors);
-            } else {
-              delete errors.email;
-              setErrorData(errors);
-            }
-          }
-        });
-      } else if (fieldName === "contact") {
-        serviceProviderIsExist({
-          contact: form?.contact ? form?.contact : null,
-        }).then((res) => {
-          if (!res.error) {
-            const errors = JSON.parse(JSON.stringify(errorData));
-            if (res.data.is_exists) {
-              errors["contact"] = "Admin User Contact Exists";
-              SnackbarUtils.error("Admin User Contact Already Exists");
-              setErrorData(errors);
-            } else {
-              delete errors.contact;
-              setErrorData(errors);
-            }
-          }
-        });
-      } else if (fieldName === "employee_id") {
-        serviceProviderIsExist({
-          employee_id: form?.employee_id ? form?.employee_id : null,
-        }).then((res) => {
-          if (!res.error) {
-            const errors = JSON.parse(JSON.stringify(errorData));
-            if (res.data.is_exists) {
-              errors["employee_id"] = "Admin User Employee Id Exists";
-
-              setErrorData(errors);
-            } else {
-              delete errors.employee_id;
-              setErrorData(errors);
-            }
-          }
-        });
+      if (
+        fieldName === "email" ||
+        fieldName === "contact" ||
+        fieldName === "employee_id"
+      ) {
+        checkIfExists(fieldName, text, `Admin User ${fieldName} Exists`);
       }
 
       if (fieldName === "code") {
