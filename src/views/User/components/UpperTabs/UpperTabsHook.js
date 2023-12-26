@@ -82,7 +82,7 @@ const useUpperTabsHook = ({
             joining_date: data?.joining_date,
             department: data?.department,
             designation: data?.designation,
-            manager: data?.manager,
+            manager: data?.manager?.id,
           });
           setImage(data?.image);
         } else {
