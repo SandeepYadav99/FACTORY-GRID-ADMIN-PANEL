@@ -17,7 +17,7 @@ const DashboardBarChart = ({ data }) => {
     Date: item?.count,
   }));
   return (
-    <ResponsiveContainer width="100%" height={250}>
+    <ResponsiveContainer width="120%" height={250}>
       <BarChart
         data={transformedData}
         margin={{ top: 10, right: 10, left: 0, bottom: 5 }}
