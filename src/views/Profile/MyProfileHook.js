@@ -12,21 +12,23 @@ const useMyProfileHook = () => {
   const queryParams = new URLSearchParams(location.search);
   const id = queryParams.get("id");
 
+  const userData = localStorage.getItem("user");
+  const userObject = JSON.parse(userData);
+
   useEffect(() => {
-    serviceProfileDetail({ id: id }).then((res) => {
-   
+    serviceProfileDetail({ id: id ? id : userObject?.user?.id }).then((res) => {
       if (!res?.error) {
         setProfileDetails(res?.data);
       }
     });
   }, [id]);
 
-  const handleEdit =useCallback((profile)=>{
+  const handleEdit = useCallback((profile) => {
     historyUtils.push(`${RouteName.USER_PROFILE}?id=${profile?.id}`);
-  })
+  });
   return {
     profileDetails,
-    handleEdit
+    handleEdit,
   };
 };
 
