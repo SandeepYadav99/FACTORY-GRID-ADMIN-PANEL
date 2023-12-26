@@ -8,7 +8,6 @@ import {
   Switch,
 } from "@material-ui/core";
 import PhoneInput from "react-phone-input-2";
-import "react-phone-input-2/lib/style.css";
 
 import styles from "../../Style.module.css";
 
@@ -39,7 +38,7 @@ const User = ({
   handleSubmit,
   image,
   setPhoneContact,
-  setTypeOf
+  setTypeOf,
 }) => {
   const classes = useStyles();
 
@@ -113,16 +112,13 @@ const User = ({
           <div className={"formFlex"}>
             <div className={"formGroup"}>
               <PhoneInput
-          
-                isError={errorData?.contact}
-                errorText={errorData?.contact}
+                // isError={errorData?.contact}
+                // errorText={errorData?.contact}
                 inputProps={{
-                  name: "Phone No",
+                  name:"Phone No",
                   required: true,
-                  // autoFocus: true
+                  autoFocus: true,
                 }}
-              
-         
                 isValid={(value, country) => {
                   if (value.match(/12345/)) {
                     return "Invalid value: " + value + ", " + country.name;
@@ -133,8 +129,6 @@ const User = ({
                   }
                 }}
                 country={"in"}
-              
-            
                 value={form?.contact}
                 onChange={(text) => {
                   changeTextData(text, "contact");
@@ -142,13 +136,14 @@ const User = ({
                 onBlur={() => {
                   onBlurHandler("contact");
                 }}
+                buttonStyle={{}}
                 inputStyle={{
                   width: "100%",
                   border: errorData?.contact
                     ? "1px solid red"
                     : "1px solid #ccc",
-                   
                 }}
+                specialLabel=""
               />
             </div>
           </div>
@@ -202,7 +197,10 @@ const User = ({
               variant={"contained"}
               color={"primary"}
               type={"button"}
-              onClick={()=>{handleSubmit(); setTypeOf("PersonalInfo")}}
+              onClick={() => {
+                handleSubmit();
+                setTypeOf("PersonalInfo");
+              }}
             >
               Save and Next
             </Button>
