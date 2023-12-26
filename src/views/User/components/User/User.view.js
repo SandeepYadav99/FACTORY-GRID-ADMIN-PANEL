@@ -121,6 +121,8 @@ const User = ({
                   required: true,
                   // autoFocus: true
                 }}
+              
+         
                 isValid={(value, country) => {
                   if (value.match(/12345/)) {
                     return "Invalid value: " + value + ", " + country.name;
@@ -145,6 +147,7 @@ const User = ({
                   border: errorData?.contact
                     ? "1px solid red"
                     : "1px solid #ccc",
+                   
                 }}
               />
             </div>

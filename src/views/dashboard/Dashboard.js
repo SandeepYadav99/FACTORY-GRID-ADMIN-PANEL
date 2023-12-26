@@ -85,7 +85,7 @@ const Dashboard = () => {
                 {dashboard?.totatlQuotes}
               </Typography>
             </div>
-            {dashboard?.quoteRequest?.map((quote) => {
+            {dashboard?.quoteRequestCount?.map((quote) => {
               return (
                 <div
                   style={{
