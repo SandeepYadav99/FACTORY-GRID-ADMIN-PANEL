@@ -1,10 +1,11 @@
-
 import styles from "./Style.module.css";
 import { makeStyles } from "@material-ui/styles";
 import CustomSelectField from "../../../../FormFields/SelectField/SelectField.component";
 import { Button, MenuItem } from "@material-ui/core";
 import CustomDatePicker from "../../../../FormFields/DatePicker/CustomDatePicker";
 import CustomTextField from "../../../../FormFields/TextField.component";
+import { formattedOptions } from "../../../../helper/Department";
+
 
 
 const useStyles = makeStyles((theme) => ({
@@ -18,10 +19,14 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const WorkProfile = ({
-  errorData , changeTextData, form, onBlurHandler, handleSubmitToSave,
-  listData, setTypeOf
+  errorData,
+  changeTextData,
+  form,
+  onBlurHandler,
+  handleSubmitToSave,
+  listData,
+  setTypeOf,
 }) => {
-
   const classes = useStyles();
 
   const handleSaveClick = () => {
@@ -63,40 +68,35 @@ const WorkProfile = ({
                   changeTextData(value, "department");
                 }}
               >
-                <MenuItem value={"human_resource"}>Human Resources</MenuItem>
-                <MenuItem value={"finance"}>Finance</MenuItem>
-                <MenuItem value={"information_technology"}>Information Technology</MenuItem>
-                <MenuItem value={"marketing"}>Marketing</MenuItem>
-                <MenuItem value={"sales"}>Sales</MenuItem>
-                <MenuItem value={"customer_relations"}>Customer Relations</MenuItem>
-                <MenuItem value={"operations_production"}>Operations/Production</MenuItem>
-                <MenuItem value={"content_management"}>Content Management</MenuItem>
-                <MenuItem value={"legal"}>Legal</MenuItem>
-                <MenuItem value={"customer_support"}>Customer Support</MenuItem>
-                <MenuItem value={"quality_assurance"}>Quality Assurance</MenuItem>
-                <MenuItem value={"administration"}>Administration</MenuItem>
-
+                {formattedOptions?.map((option, index) => (
+                  <MenuItem
+                  
+                    value={option?.id}
+                  >
+                    {option?.name}
+                  </MenuItem>
+                ))}
               </CustomSelectField>
             </div>
           </div>
-        
+
           <div className={"formFlex"}>
-              <div className={"formGroup"}>
-                <CustomTextField
-                  isError={errorData?.designation}
-                  errorText={errorData?.designation}
-                  label={"Designation"}
-                  value={form?.designation}
-                  onTextChange={(text) => {
-                    changeTextData(text, "designation");
-                  }}
-                  onBlur={() => {
-                    onBlurHandler("designation");
-                  }}
-                />
-              </div>
+            <div className={"formGroup"}>
+              <CustomTextField
+                isError={errorData?.designation}
+                errorText={errorData?.designation}
+                label={"Designation"}
+                value={form?.designation}
+                onTextChange={(text) => {
+                  changeTextData(text, "designation");
+                }}
+                onBlur={() => {
+                  onBlurHandler("designation");
+                }}
+              />
             </div>
-          
+          </div>
+
           <div className={"formFlex"}>
             <div className={"formGroup"}>
               <CustomSelectField
@@ -120,7 +120,7 @@ const WorkProfile = ({
             <Button
               variant={"contained"}
               color={"primary"}
-             type="button"
+              type="button"
               onClick={handleSaveClick}
             >
               Save
