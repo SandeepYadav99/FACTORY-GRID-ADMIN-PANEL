@@ -31,7 +31,7 @@ const BusinessDetails = ({ id }) => {
   const CERTIFICATES = userProfile.certificate || [];
   const certificateImages = CERTIFICATES.map((certificate) => certificate.certificate_file);
  
-console.log(certificateImages)
+
   return (
     <div>
       <div className={styles.upperFlex}>
@@ -186,7 +186,7 @@ console.log(certificateImages)
             <div className={styles.headings}>Certificates</div>
             
             <ImageGalleryComponent
-              title={"GALLERY"}
+              title={"CERTIFICATES"}
               image_type={"CERTIFICATES"}
               images={certificateImages || []}
               thumbnail={0}

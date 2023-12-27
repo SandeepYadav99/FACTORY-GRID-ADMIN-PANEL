@@ -40,14 +40,14 @@ const ProfileView = () => {
                   userProfile.business.company_name}
               </div>
               <div className={styles.member}>
-                Member Since: {userProfile.membership_start_date}
+                Member Since: {userProfile?.membershipStartText || "N/A"}
               </div>
             </div>
 
             <div>
               <div className={styles.key}>Industry </div>
               <div className={styles.value}>
-                {userProfile.industry && userProfile.industry.name}
+                {userProfile?.industry && userProfile?.industry.name}
               </div>
             </div>
             <br />
@@ -55,7 +55,7 @@ const ProfileView = () => {
             <div className={styles.line}>
               <div className={styles.key}>Role</div>
               <div className={styles.value}>
-                {userProfile && userProfile.role}
+                {userProfile && userProfile?.role || "N/A"}
               </div>
               {/* Owner/Primary Contact  */}
             </div>
@@ -63,11 +63,11 @@ const ProfileView = () => {
             <div className={styles.ageFlex}>
               <div className={styles.gender}>
                 <div className={styles.key}>Membership Type</div>
-                <div>{userProfile.membership_plan}</div>
+                <div>{userProfile?.membership_type || "N/A"}</div>
               </div>
               <div className={styles.gender}>
                 <div className={styles.key}>Validity</div>
-                <div> {userProfile.membership_end_date}</div>
+                <div> {userProfile?.membershipEndText || "N/A"}</div>
               </div>
             </div>
 

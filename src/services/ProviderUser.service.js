@@ -27,9 +27,12 @@ export async function serviceProviderUserCheck(params) {
 }
 
 export async function serviceProviderUserManager(params) {
-    return await postRequest('profile/user/lookup', params); //profile/isexist
+    return await postRequest('profile/user/lookup', params); //user/assign/manager
 }
 
+export async function serviceProviderAssignManager(params) {
+    return await postRequest('user/assign/manager', params); //user/assign/manager
+}
 export async function serviceProviderIsExist(params) {
     return await postRequest('profile/isexist', params); 
 }

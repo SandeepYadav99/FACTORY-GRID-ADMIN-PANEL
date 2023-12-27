@@ -23,7 +23,8 @@ import {
     SUPPORT_NOTES_GET_DONE,
     CHANGE_SUPPORT_STATUS,
     CHANGE_SUPPORT_PRIORITY, ASSIGN_SUPPORT, ADD_SUPPORT_NOTES,
-    SET_SUPPORT_REQUEST_TYPE,CHANGE_SUPPORT_CONCERN
+    SET_SUPPORT_REQUEST_TYPE,CHANGE_SUPPORT_CONCERN,
+    USER_MANAGER
 } from '../actions/Support.action';
 import Constants from '../config/constants';
 
@@ -49,7 +50,9 @@ const initialState = {
     support_detail: null,
     is_support_notes: false,
     support_notes: [],
-    type: 'ALL'
+    type: 'ALL',
+    user_manager_detail:null,
+    is_user_manager_detail:false
 };
 
 export default function (state = JSON.parse(JSON.stringify(initialState)), action) {
@@ -284,7 +287,15 @@ export default function (state = JSON.parse(JSON.stringify(initialState)), actio
                 },
             }
         }
-
+        case USER_MANAGER: {
+            return {
+                ...state,
+                user_manager_detail: {
+                    ...state.user_manager_detail,
+                    ...action.payload,
+                },
+            }
+        }
         default: {
             return state;
         }

@@ -38,8 +38,9 @@ const ImageContainer = ({
   index,
   localIndex,
   image_type,
+  imageList,
 }) => {
-
+  console.log(imageList, image_type);
   return (
     <div className={styles.imgContainer}>
       <div className={styles.imgBtn}>
@@ -71,7 +72,8 @@ const ImageContainer = ({
             ""
           )}
         </div>
-        {image_type == "GALLERY" ? (
+
+        {image_type === "GALLERY" ? (
           <div className={styles.imgInfo}>
             <div className={styles.updated}>Image Title / Image Label</div>
             <div className={styles.updated}>Updated On 22/10/2022 11:00 PM</div>
@@ -155,6 +157,7 @@ const ImageGalleryComponent = ({
   const handleDeleteImage = (type, index, uniIndex) => {
     setShowConfirm(true);
     setThumbnailIndex(index);
+
     const imageIdToDelete = imageList[uniIndex].id;
     setConfirmData({ index, imageIdToDelete });
   };
