@@ -17,14 +17,15 @@ const DashboardBarChart = ({ data }) => {
     Date: item?.count,
   }));
   return (
-    <ResponsiveContainer width="120%" height={250}>
+    <ResponsiveContainer  width="100%"  height={250}>
       <BarChart
+     
         data={transformedData}
-        margin={{ top: 10, right: 10, left: 0, bottom: 5 }}
+        margin={{ top: 10, right: 1, left: 0, bottom: 5 }}
       >
         <CartesianGrid strokeDasharray="3 3" />
         <XAxis dataKey="name" />
-        <YAxis>
+        <YAxis >
           <Label value="No. of Quotes" angle={-90} position="center" />
         </YAxis>
         {/* <Tooltip /> */}

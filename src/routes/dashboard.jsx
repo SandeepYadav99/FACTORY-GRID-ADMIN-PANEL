@@ -48,7 +48,7 @@ const dashboardRoutes = [
   {
     path: "/",
     sidebarName: "Dashboard",
-    navbarName: "Material Dashboard",
+    navbarName: "FactoryGird Dashboard",
     icon: Dashboard,
     component: DashboardPage,
     is_sidebar: true,

@@ -4,6 +4,7 @@ import { makeStyles } from "@material-ui/styles";
 import CustomSelectField from "../../../../FormFields/SelectField/SelectField.component";
 import { Button, MenuItem } from "@material-ui/core";
 import CustomDatePicker from "../../../../FormFields/DatePicker/CustomDatePicker";
+import CustomTextField from "../../../../FormFields/TextField.component";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -43,7 +44,7 @@ const WorkProfile = ({
                   changeTextData(value, "joining_date");
                 }}
                 // views={["month","dd","year"]}
-                format={"MM-dd-yyyy"}
+                format={"dd-MM-yyyy"}
                 value={form?.joining_date}
                 isError={errorData?.joining_date}
                 errorText={errorData?.joining_date}
@@ -78,22 +79,24 @@ const WorkProfile = ({
               </CustomSelectField>
             </div>
           </div>
+        
           <div className={"formFlex"}>
-            <div className={"formGroup"}>
-              <CustomSelectField
-                isError={errorData?.designation}
-                errorText={errorData?.designation}
-                label={"Designation"}
-                value={form?.designation}
-                handleChange={(value) => {
-                  changeTextData(value, "designation");
-                }}
-              >
-                <MenuItem value={"a"}>A</MenuItem>
-                <MenuItem value={"b"}>B</MenuItem>
-              </CustomSelectField>
+              <div className={"formGroup"}>
+                <CustomTextField
+                  isError={errorData?.designation}
+                  errorText={errorData?.designation}
+                  label={"Designation"}
+                  value={form?.designation}
+                  onTextChange={(text) => {
+                    changeTextData(text, "designation");
+                  }}
+                  onBlur={() => {
+                    onBlurHandler("designation");
+                  }}
+                />
+              </div>
             </div>
-          </div>
+          
           <div className={"formFlex"}>
             <div className={"formGroup"}>
               <CustomSelectField

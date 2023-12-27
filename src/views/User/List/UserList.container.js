@@ -152,7 +152,7 @@ const UserList = (props) => {
         label: "Last Login",
         sortable: true,
         render: (temp, all) => (
-          <div>{all.updatedAtText ? all.updatedAtText : "N/A"}</div>
+          <div>{all?.lastLoginText ? all?.lastLoginText : "N/A"}</div>
         ),
       },
       {

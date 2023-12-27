@@ -283,7 +283,7 @@ const useUpperTabsHook = ({
       }else  if(
         fieldName === "contact" ){
           checkIfExists(fieldName, text, `Admin User ${fieldName} Exists`);
-        } else if( fieldName === "employee_id"){
+        } else if( fieldName === "contact"){
           checkIfExists(fieldName, text, `Admin User ${fieldName} Exists`);
         }
 

@@ -56,9 +56,9 @@ const Queries = ({queryLists}) => {
   return (
     <div className={styles.activityContainer}>
       <div className={styles.upperFlex}>
-        <div className={styles.total}>Total:</div>
-        <div className={styles.total}>Unresolved:</div>
-        <div className={styles.total}>Resolved:</div>
+        <div className={styles.total}>Total: 0</div>
+        <div className={styles.total}>Unresolved: 0</div>
+        <div className={styles.total}>Resolved: 0</div>
       </div>
       <div>{renderTimeline()}</div>
       <div className={styles.viewBtn}>
