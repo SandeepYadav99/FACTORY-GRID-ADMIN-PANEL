@@ -109,7 +109,7 @@ const WorkProfile = ({
                 }}
               >
                 {listData?.map((item) => {
-                  return <MenuItem value={item?.id}>{item?.name}</MenuItem>;
+                  return <MenuItem value={item?.id}>{item?.employee_id}</MenuItem>;
                 })}
               </CustomSelectField>
             </div>

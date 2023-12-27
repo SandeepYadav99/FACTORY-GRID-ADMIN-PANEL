@@ -18,6 +18,7 @@ import { makeStyles } from "@material-ui/styles";
 import File from "../../../../components/FileComponent/FileComponent.component";
 import CustomTextField from "../../../../FormFields/TextField.component";
 import CustomSelectField from "../../../../FormFields/SelectField/SelectField.component";
+import CustomPhoneContactField from "../../../../FormFields/CustomPhoneContact.componet";
 
 const useStyles = makeStyles((theme) => ({
   iconBtnError: {
@@ -111,34 +112,20 @@ const User = ({
 
           <div className={"formFlex"}>
             <div className={"formGroup"}>
-              <PhoneInput
-                defaultErrorMessage={errorData?.contact}
-                // defaultErrorMessage={"Valid"}
-                
-                inputProps={{
-                  name:"Phone No",
-                  required: true,
-                
-                }}
-               
-                country={"in"}
-                value={form?.contact}
-                onChange={(text) => {
-                  changeTextData(text, "contact");
-                }}
-                onBlur={() => {
-                  onBlurHandler("contact");
-                }}
-                buttonStyle={{}}
-                inputStyle={{
-                  width: "100%",
-                  border: errorData?.contact
-                    ? "1px solid red"
-                    : "1px solid #ccc",
-                }}
-                specialLabel=""
+              <CustomPhoneContactField 
+              errorText={errorData.contact}
+              value={form?.contact}
+              onTextChange={(text) => {
+                changeTextData(text, "contact");
+              }}
+              onBlur={() => {
+                onBlurHandler("contact");
+              }}
+           
               />
+            
             </div>
+          
           </div>
           <div className={"formFlex"}>
             <div className={"formGroup"}>

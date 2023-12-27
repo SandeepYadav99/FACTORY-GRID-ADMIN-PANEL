@@ -44,7 +44,9 @@ const useUpperTabsHook = ({
   const [form, setForm] = useState({ ...initialForm });
 
   const includeRef = useRef(null);
-  const codeDebouncer = useDebounce(form?.email, 500);
+  const emailDebouncer = useDebounce(form?.email, 600);
+  const empIdDebouncer = useDebounce(form?.employee_id, 500);
+  const contactDebouncer = useDebounce(form?.contact, 600);
   const [image, setImage] = useState(null);
   const [typeOf, setTypeOf] = useState(""); // TypeOfTabs
   const [listData, setListData] = useState(null);
@@ -94,6 +96,71 @@ const useUpperTabsHook = ({
     setErrorData({});
   }, [value]);
 
+  const checkCodeValidation = useCallback(() => {
+    serviceProviderIsExist({email:form?.email}).then((res) => {
+        if (!res.error) {
+            const errors = JSON.parse(JSON.stringify(errorData));
+            if (res.data.is_exists) {
+                errors['email'] = 'Admin User Email Exists'
+                setErrorData(errors)
+            } else {
+                delete errors.email;
+                setErrorData(errors);
+            }
+        }
+    });
+}, [errorData, setErrorData, form?.email]);
+
+
+useEffect(() => {
+    if (emailDebouncer) {
+        checkCodeValidation();
+    }
+}, [emailDebouncer])
+
+const checkEmpIdValidation = useCallback(() => {
+  serviceProviderIsExist({employee_id:form?.employee_id}).then((res) => {
+      if (!res.error) {
+          const errors = JSON.parse(JSON.stringify(errorData));
+          if (res.data.is_exists) {
+              errors['employee_id'] = 'Admin User Employee Id Exists'
+              setErrorData(errors)
+          } else {
+              delete errors.employee_id;
+              setErrorData(errors);
+          }
+      }
+  });
+}, [errorData, setErrorData, form?.employee_id]);
+
+
+useEffect(() => {
+  if (empIdDebouncer) {
+    checkEmpIdValidation();
+  }
+}, [empIdDebouncer])
+
+const checkContactValidation = useCallback(() => {
+  serviceProviderIsExist({contact:form?.contact}).then((res) => {
+      if (!res.error) {
+          const errors = JSON.parse(JSON.stringify(errorData));
+          if (res.data.is_exists) {
+              // errors['contact'] = 'Admin User Contact Exists'
+              setErrorData(errors)
+          } else {
+              delete errors.contact;
+              setErrorData(errors);
+          }
+      }
+  });
+}, [errorData, setErrorData, form?.contact]);
+
+
+useEffect(() => {
+  if (contactDebouncer) {
+    checkContactValidation();
+  }
+}, [contactDebouncer])
 
 
   useEffect(() => {
@@ -113,7 +180,7 @@ const useUpperTabsHook = ({
         "contact",
         "role",
         "employee_id",
-        ...(id ? [] : ["image"]),
+        // ...(id ? [] : ["image"]),
       ];
     } else if (value === 1) {
       required = [
@@ -247,52 +314,18 @@ const useUpperTabsHook = ({
     [setErrorData, errorData]
   );
 //  Check input filed is Exit or not 
-  const checkIfExists = useCallback(async (field, value, errorMessage) => {
-    const { data, error } = await serviceProviderIsExist({
-      [field]: value ? value : null,
-    });
-
-    if (!error) {
-      setForm((prevForm) => {
-        const errors = { ...errorData };
-        if (data.is_exists) {
-          errors[field] = errorMessage;
-           SnackbarUtils.error(errorMessage);
-        } else {
-          delete errors[field];
-        }
-        setErrorData(errors);
-
-        return {
-          ...prevForm,
-          [field]: value,
-        };
-      });
-    }
-  }, [setForm, errorData, setErrorData, SnackbarUtils]);
-
+ 
 
   const changeTextData = useCallback(
     (text, fieldName) => {
       let shouldRemoveError = true;
       const t = { ...form };
-      if (
-        fieldName === "email" 
-      ) {
-        checkIfExists(fieldName, text, `Admin User ${fieldName} Exists`);
-      }else  if(
-        fieldName === "contact" ){
-          checkIfExists(fieldName, text, `Admin User ${fieldName} Exists`);
-        } else if( fieldName === "contact"){
-          checkIfExists(fieldName, text, `Admin User ${fieldName} Exists`);
-        }
+     
 
       if (fieldName === "code") {
         shouldRemoveError = false;
       } else if (fieldName === "contact") {
-        if (text >= 0) {
-          t[fieldName] = text;
-        }
+       console.log(text, "Contact")
         // '+91'+
       } else {
         t[fieldName] = text;
