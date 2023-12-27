@@ -16,6 +16,7 @@ import DataTables from "../../../Datatables/Datatable.table";
 import Constants from "../../../config/constants";
 import FilterComponent from "../../../components/Filter/Filter.component";
 import useUserListHook from "./UserListHook";
+import capitalizeFirstLetter from "../../../hooks/CapsFirstLetter";
 
 const UserList = (props) => {
   const {
@@ -50,7 +51,7 @@ const UserList = (props) => {
         </div>
         <div className={classNames(styles.firstCellInfo, "openSans")}>
           <span>
-            <div>{`${user?.name}`}</div>
+            <div>{`${capitalizeFirstLetter(user?.name)}`}</div>
           </span>
           {/*<br/>*/}
           {/*{tempEmailRender}*/}

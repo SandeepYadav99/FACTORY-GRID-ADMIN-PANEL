@@ -1,8 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useCallback, useEffect, useRef, useState } from "react";
 
-import Constants from "../../../../config/constants";
-
 import {
   serviceCreateProviderUser,
   serviceGetProviderUserDetail,
@@ -139,6 +137,7 @@ const useUpperTabsHook = ({
       if (val === "email" && form?.email && !isEmail(form?.email)) {
         errors.email = "Invalid email address";
       }
+    
     });
 
     Object.keys(errors).forEach((key) => {
@@ -226,16 +225,7 @@ const useUpperTabsHook = ({
       setErrorData(errors);
        SnackbarUtils.error("Please enter values");
     } else {
-      // const hasExistingData = await Promise.all([
-      //   checkIfExists("email", form.email, "Admin User Email Exists"),
-      //   checkIfExists("contact", form.contact, "Admin User Contact Exists"),
-      //   checkIfExists("employee_id", form.employee_id, "Admin User Employee Id Exists"),
-      // ]);
-
-      // if (hasExistingData.some(exists => exists)) {
-      //   // If any of the fields already exist, do not submit the form
-      //   return;
-      // }
+     
       await submitToServer();
     }
   }, [
@@ -287,12 +277,15 @@ const useUpperTabsHook = ({
       let shouldRemoveError = true;
       const t = { ...form };
       if (
-        fieldName === "email" ||
-        fieldName === "contact" ||
-        fieldName === "employee_id"
+        fieldName === "email" 
       ) {
         checkIfExists(fieldName, text, `Admin User ${fieldName} Exists`);
-      }
+      }else  if(
+        fieldName === "contact" ){
+          checkIfExists(fieldName, text, `Admin User ${fieldName} Exists`);
+        } else if( fieldName === "employee_id"){
+          checkIfExists(fieldName, text, `Admin User ${fieldName} Exists`);
+        }
 
       if (fieldName === "code") {
         shouldRemoveError = false;

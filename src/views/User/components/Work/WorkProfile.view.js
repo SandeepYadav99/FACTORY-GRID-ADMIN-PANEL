@@ -62,8 +62,19 @@ const WorkProfile = ({
                   changeTextData(value, "department");
                 }}
               >
-                <MenuItem value={"a"}>A</MenuItem>
-                <MenuItem value={"b"}>B</MenuItem>
+                <MenuItem value={"human_resource"}>Human Resources</MenuItem>
+                <MenuItem value={"finance"}>Finance</MenuItem>
+                <MenuItem value={"information_technology"}>Information Technology</MenuItem>
+                <MenuItem value={"marketing"}>Marketing</MenuItem>
+                <MenuItem value={"sales"}>Sales</MenuItem>
+                <MenuItem value={"customer_relations"}>Customer Relations</MenuItem>
+                <MenuItem value={"operations_production"}>Operations/Production</MenuItem>
+                <MenuItem value={"content_management"}>Content Management</MenuItem>
+                <MenuItem value={"legal"}>Legal</MenuItem>
+                <MenuItem value={"customer_support"}>Customer Support</MenuItem>
+                <MenuItem value={"quality_assurance"}>Quality Assurance</MenuItem>
+                <MenuItem value={"administration"}>Administration</MenuItem>
+
               </CustomSelectField>
             </div>
           </div>

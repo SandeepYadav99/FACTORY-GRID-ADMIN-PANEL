@@ -112,22 +112,15 @@ const User = ({
           <div className={"formFlex"}>
             <div className={"formGroup"}>
               <PhoneInput
-                // isError={errorData?.contact}
-                // errorText={errorData?.contact}
+                defaultErrorMessage={errorData?.contact}
+                // defaultErrorMessage={"Valid"}
+                
                 inputProps={{
                   name:"Phone No",
                   required: true,
-                  autoFocus: true,
+                
                 }}
-                isValid={(value, country) => {
-                  if (value.match(/12345/)) {
-                    return "Invalid value: " + value + ", " + country.name;
-                  } else if (value.match(/1234/)) {
-                    return false;
-                  } else {
-                    return true;
-                  }
-                }}
+               
                 country={"in"}
                 value={form?.contact}
                 onChange={(text) => {
