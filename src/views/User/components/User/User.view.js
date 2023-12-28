@@ -119,9 +119,9 @@ const User = ({
                 onTextChange={(text) => {
                   changeTextData(text, "contact");
                 }}
-                // onBlur={() => {
-                //   onBlurHandler("contact");
-                // }}
+                onBlur={() => {
+                  onBlurHandler("contact");
+                }}
                 isValid={(value, country) => {
                   if (value.match(/12345/)) {
                     return "";

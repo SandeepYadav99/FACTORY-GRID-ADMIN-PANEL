@@ -51,6 +51,9 @@ const useUpperTabsHook = ({
   const [typeOf, setTypeOf] = useState(""); // TypeOfTabs
   const [listData, setListData] = useState(null);
   const [value, setValue] = useState(0);
+  const [isCodeValidated, setIsCodeValidated] = useState(false);
+  const [isEmpIdValidated, setIsEmpIdValidated] = useState(false);
+  const [isContactValidated, setIsContactValidated] = useState(false);
 
   // access query params id in url
   const location = useLocation();
@@ -97,19 +100,21 @@ const useUpperTabsHook = ({
   }, [value]);
 
   const checkCodeValidation = useCallback(() => {
-    serviceProviderIsExist({ email: form?.email }).then((res) => {
-      if (!res.error) {
-        const errors = JSON.parse(JSON.stringify(errorData));
-        if (res.data.is_exists) {
-          errors["email"] = "Admin User Email Exists";
-          setErrorData(errors);
-        } else {
-          delete errors.email;
-          setErrorData(errors);
+    serviceProviderIsExist({ email: form?.email, id: id ? id : null }).then(
+      (res) => {
+        if (!res.error) {
+          const errors = JSON.parse(JSON.stringify(errorData));
+          if (res.data.is_exists) {
+            errors["email"] = "Admin User Email Exists";
+            setErrorData(errors);
+          } else {
+            delete errors.email;
+            setErrorData(errors);
+          }
         }
       }
-    });
-  }, [errorData, setErrorData, form?.email]);
+    );
+  }, [errorData, setErrorData, form?.email, isCodeValidated, id]);
 
   useEffect(() => {
     if (emailDebouncer) {
@@ -118,7 +123,10 @@ const useUpperTabsHook = ({
   }, [emailDebouncer]);
 
   const checkEmpIdValidation = useCallback(() => {
-    serviceProviderIsExist({ employee_id: form?.employee_id }).then((res) => {
+    serviceProviderIsExist({
+      employee_id: form?.employee_id,
+      id: id ? id : null,
+    }).then((res) => {
       if (!res.error) {
         const errors = JSON.parse(JSON.stringify(errorData));
         if (res.data.is_exists) {
@@ -130,7 +138,7 @@ const useUpperTabsHook = ({
         }
       }
     });
-  }, [errorData, setErrorData, form?.employee_id]);
+  }, [errorData, setErrorData, form?.employee_id, isEmpIdValidated, id]);
 
   useEffect(() => {
     if (empIdDebouncer) {
@@ -139,19 +147,21 @@ const useUpperTabsHook = ({
   }, [empIdDebouncer]);
 
   const checkContactValidation = useCallback(() => {
-    serviceProviderIsExist({ contact: form?.contact }).then((res) => {
-      if (!res.error) {
-        const errors = JSON.parse(JSON.stringify(errorData));
-        if (res.data.is_exists) {
-          errors["contact"] = "Admin User Contact Exists";
-          setErrorData(errors);
-        } else {
-          delete errors.contact;
-          setErrorData(errors);
+    serviceProviderIsExist({ contact: form?.contact, id: id ? id : null }).then(
+      (res) => {
+        if (!res.error) {
+          const errors = JSON.parse(JSON.stringify(errorData));
+          if (res.data.is_exists) {
+            errors["contact"] = "Admin User Contact Exists";
+            setErrorData(errors);
+          } else {
+            delete errors.contact;
+            setErrorData(errors);
+          }
         }
       }
-    });
-  }, [errorData, setErrorData, form?.contact]);
+    );
+  }, [errorData, setErrorData, form?.contact, isContactValidated, id]);
 
   useEffect(() => {
     if (contactDebouncer) {
@@ -169,11 +179,26 @@ const useUpperTabsHook = ({
     const errors = { ...errorData };
     let required;
 
-    if (value === 0) {
-      required = ["name", "email", "contact", "role", "employee_id"];
-    } else if (value === 1) {
-      required = ["designation", "joining_date", "department", "manager"];
-    }
+    required = [
+      "name",
+      "email",
+      "contact",
+      "role",
+      "employee_id",
+      ...(value === 1
+        ? [
+            "name",
+            "email",
+            "contact",
+            "role",
+            "employee_id",
+            "designation",
+            "joining_date",
+            "department",
+            "manager",
+          ]
+        : []),
+    ];
 
     required.forEach((val) => {
       if (
@@ -228,9 +253,6 @@ const useUpperTabsHook = ({
         SnackbarUtils.error(res.message);
       }
     } catch (error) {
-      setErrorData(error.error)
-      // SnackbarUtils.error(res.message);
-      console.log(error, "Error")
     } finally {
       setIsSubmitting(false);
     }
@@ -243,15 +265,23 @@ const useUpperTabsHook = ({
     setImage,
     setTypeOf,
   ]);
-
+  console.log(errorData.contact, "ErrorData");
   const handleSubmit = useCallback(async () => {
     const errors = checkFormValidation();
-
+    console.log(errors, "Errors");
     if (Object.keys(errors).length > 0) {
       setErrorData(errors);
       SnackbarUtils.error("Please enter values");
     } else {
-      setValue(1);
+      if (
+        errorData.contact !== "Admin User Contact Exists" &&
+        errorData?.email !== "Admin User Email Exists" &&
+        errorData.employee_id !== "Admin User Employee Id Exists"
+      ) {
+        setValue(1);
+      } else {
+        SnackbarUtils.error("Please enter valid values");
+      }
     }
   }, [
     checkFormValidation,
@@ -333,7 +363,7 @@ const useUpperTabsHook = ({
   const handleReset = useCallback(() => {
     setForm({ ...initialForm });
   }, [form]);
-console.log(errorData, "De")
+  console.log(errorData, "De");
   return {
     form,
     changeTextData,
