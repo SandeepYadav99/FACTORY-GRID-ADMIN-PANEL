@@ -228,6 +228,9 @@ const useUpperTabsHook = ({
         SnackbarUtils.error(res.message);
       }
     } catch (error) {
+      setErrorData(error.error)
+      // SnackbarUtils.error(res.message);
+      console.log(error, "Error")
     } finally {
       setIsSubmitting(false);
     }
@@ -330,7 +333,7 @@ const useUpperTabsHook = ({
   const handleReset = useCallback(() => {
     setForm({ ...initialForm });
   }, [form]);
-
+console.log(errorData, "De")
   return {
     form,
     changeTextData,
