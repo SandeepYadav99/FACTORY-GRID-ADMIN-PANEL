@@ -12,6 +12,7 @@ const CustomPhoneContactField = ({
   inputProps,
   value,
   inputStyle,
+  isValid,
   ...rest
 }) => {
   const handleChange = useCallback(
@@ -23,27 +24,28 @@ const CustomPhoneContactField = ({
   );
 
   return (
-    <div style={{display:"flex", flexDirection:"column"}}>
+    <div style={{ display: "flex", flexDirection: "column" }}>
       <PhoneInput
         inputProps={{
           name: "Phone No",
-        
         }}
         country={"in"}
-         value={value}
+        value={value}
         onChange={handleChange}
-       
         inputStyle={{
           width: "100%",
-          border: errorText
-            ? "1px solid red"
-            : "1px solid #ccc",
+          border: errorText ? "1px solid red" : "1px solid #ccc",
         }}
         specialLabel=""
-      
+        isValid={isValid}
       />
-      {errorText && <span style={{color:"red", textAlign:"right", fontSize:"12px"}}>Admin User Contact Exists</span>}
-
+      {errorText ? (
+        <span style={{ color: "red", textAlign: "right", fontSize: "12px" }}>
+          Admin User Contact Exists
+        </span>
+      ) : (
+        <span></span>
+      )}
     </div>
   );
 };
