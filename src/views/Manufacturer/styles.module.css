@@ -71,5 +71,12 @@
 }
 
 .buttonFlex{
-    display: flex;
+  display: flex;
+   
+  
+   
 }
+
+.whiteButton {
+   background-color: white;
+  }

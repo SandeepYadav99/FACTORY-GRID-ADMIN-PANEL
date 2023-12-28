@@ -11,8 +11,8 @@ import Activity from "./components/Activity";
 import useCustomerProfileHook from "../../../../helper/CustomerProfileHook";
 import { ReportProblem } from "@material-ui/icons";
 
-const ProfileView = () => {
-  const { userProfile, renderInterestArea } = useCustomerProfileHook();
+const ProfileView = ({userProfile, renderInterestArea}) => {
+ 
 
   return (
     <div>
