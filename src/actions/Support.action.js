@@ -11,6 +11,7 @@ import {
     serviceGetSupportNotes
 } from "../services/Support.service";
 import { serviceProviderUserManager } from '../services/ProviderUser.service';
+import { serviceGetCustomersProfile } from '../services/CustomersRequest.service';
 
 export const FETCH_INIT = 'FETCH_INIT_SUPPORT';
 export const FETCHED = 'FETCHED_SUPPORT';
@@ -44,7 +45,7 @@ export const SUPPORT_NOTES_GET_DONE = 'SUPPORT_NOTES_GET_DONE';
 export const ADD_SUPPORT_NOTES = 'ADD_SUPPORT_NOTES';
 export const ASSIGN_SUPPORT = 'ASSIGN_SUPPORT';
 export const USER_MANAGER = 'USER_MANAGER';
-
+export const USER_PROFILE ="USER_PROFILE"
 export function actionFetchSupport(index = 1, sorting = {}, filter = {}, shouldReset = false, status) {
     const request = serviceGetSupport({index, row: sorting.row, order: sorting.order, ...filter}); // GetOrder
     return (dispatch) => {
@@ -250,6 +251,18 @@ export function actionManageAccountQuelity(supportId, userId) {
             if (!res.error) {
               
                 dispatch({ type: USER_MANAGER, payload: res.data });
+            }
+        });
+    }
+}
+
+export function actionUserProfile(id) {
+    const req = serviceGetCustomersProfile({ id: id});
+    return dispatch => {
+        req.then(res => {
+            if (!res.error) {
+              
+                dispatch({ type: USER_PROFILE, payload: res.data });
             }
         });
     }

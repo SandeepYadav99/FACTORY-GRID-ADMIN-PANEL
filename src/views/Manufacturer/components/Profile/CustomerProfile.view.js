@@ -120,7 +120,7 @@ const ProfileView = () => {
               </div>
             </div>
           </div>
-          <AccountQuality userProfileAccountQuality={userProfile} />
+          <AccountQuality userProfileAccountQuality={userProfile?.accountQualityManager} />
         </div>
 
         <div className={styles.right}>
