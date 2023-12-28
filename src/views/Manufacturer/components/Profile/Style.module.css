@@ -46,7 +46,7 @@
 }
 
 .notverified{
-    color: red;
+    color: yellow;
     font-size: 0.8rem;
     margin-bottom: 20px;
 }
@@ -248,11 +248,11 @@
     color: #1593ff;
 }
 
-.verified{
+/* .verified{
     color: #F76A6D;
     font-size: 0.9rem !important;
     margin-left: 4px;
-}
+} */
 
 .priceFlex{
     display: flex;

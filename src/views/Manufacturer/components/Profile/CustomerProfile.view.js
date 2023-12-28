@@ -1,5 +1,5 @@
 import React from "react";
-import { ButtonBase } from "@material-ui/core";
+import { ButtonBase, Tooltip } from "@material-ui/core";
 import VerifiedUserIcon from "@material-ui/icons/VerifiedUser";
 import Timeline from "./components/Timeline/Timeline.view";
 import Queries from "./components/Queries/Queries.view";
@@ -9,6 +9,7 @@ import styles from "./Style.module.css";
 import AccountQuality from "./components/AccountQuality";
 import Activity from "./components/Activity";
 import useCustomerProfileHook from "../../../../helper/CustomerProfileHook";
+import { ReportProblem } from "@material-ui/icons";
 
 const ProfileView = () => {
   const { userProfile, renderInterestArea } = useCustomerProfileHook();
@@ -55,7 +56,7 @@ const ProfileView = () => {
             <div className={styles.line}>
               <div className={styles.key}>Role</div>
               <div className={styles.value}>
-                {userProfile && userProfile?.role || "N/A"}
+                {(userProfile && userProfile?.role) || "N/A"}
               </div>
               {/* Owner/Primary Contact  */}
             </div>
@@ -89,10 +90,12 @@ const ProfileView = () => {
               <div className={styles.head}>
                 Email{" "}
                 <span>
-                  {userProfile.is_email_verified === true ? (
+                  {userProfile.is_email_verified ? (
                     <VerifiedUserIcon className={styles.verified} />
                   ) : (
-                    <div className={styles.notverified}> NOT VERIFIED </div>
+                    <Tooltip title="Tooltip" placement="top-start"  >
+                      <ReportProblem className={styles.notverified} />
+                    </Tooltip>
                   )}
                 </span>
               </div>
@@ -105,10 +108,10 @@ const ProfileView = () => {
               <div className={styles.head}>
                 Phone{" "}
                 <span>
-                  {userProfile.is_contact_verified === true ? (
+                  {userProfile.is_contact_verified ? (
                     <VerifiedUserIcon className={styles.verified} />
                   ) : (
-                    <div className={styles.notverified}> NOT VERIFIED </div>
+                    <ReportProblem className={styles.notverified} />
                   )}
                 </span>
               </div>
@@ -135,7 +138,7 @@ const ProfileView = () => {
           <div className={styles.plain}>
             <div className={styles.headings}>Support Queries</div>
             <div>
-              <Queries queryLists={userProfile?.supportBYEmail}/>
+              <Queries queryLists={userProfile?.supportBYEmail} />
             </div>
           </div>
 

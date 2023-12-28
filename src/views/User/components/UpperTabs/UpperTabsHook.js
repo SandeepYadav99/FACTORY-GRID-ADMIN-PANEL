@@ -97,71 +97,67 @@ const useUpperTabsHook = ({
   }, [value]);
 
   const checkCodeValidation = useCallback(() => {
-    serviceProviderIsExist({email:form?.email}).then((res) => {
-        if (!res.error) {
-            const errors = JSON.parse(JSON.stringify(errorData));
-            if (res.data.is_exists) {
-                errors['email'] = 'Admin User Email Exists'
-                setErrorData(errors)
-            } else {
-                delete errors.email;
-                setErrorData(errors);
-            }
+    serviceProviderIsExist({ email: form?.email }).then((res) => {
+      if (!res.error) {
+        const errors = JSON.parse(JSON.stringify(errorData));
+        if (res.data.is_exists) {
+          errors["email"] = "Admin User Email Exists";
+          setErrorData(errors);
+        } else {
+          delete errors.email;
+          setErrorData(errors);
         }
+      }
     });
-}, [errorData, setErrorData, form?.email]);
+  }, [errorData, setErrorData, form?.email]);
 
-
-useEffect(() => {
+  useEffect(() => {
     if (emailDebouncer) {
-        checkCodeValidation();
+      checkCodeValidation();
     }
-}, [emailDebouncer])
+  }, [emailDebouncer]);
 
-const checkEmpIdValidation = useCallback(() => {
-  serviceProviderIsExist({employee_id:form?.employee_id}).then((res) => {
+  const checkEmpIdValidation = useCallback(() => {
+    serviceProviderIsExist({ employee_id: form?.employee_id }).then((res) => {
       if (!res.error) {
-          const errors = JSON.parse(JSON.stringify(errorData));
-          if (res.data.is_exists) {
-              errors['employee_id'] = 'Admin User Employee Id Exists'
-              setErrorData(errors)
-          } else {
-              delete errors.employee_id;
-              setErrorData(errors);
-          }
+        const errors = JSON.parse(JSON.stringify(errorData));
+        if (res.data.is_exists) {
+          errors["employee_id"] = "Admin User Employee Id Exists";
+          setErrorData(errors);
+        } else {
+          delete errors.employee_id;
+          setErrorData(errors);
+        }
       }
-  });
-}, [errorData, setErrorData, form?.employee_id]);
+    });
+  }, [errorData, setErrorData, form?.employee_id]);
 
+  useEffect(() => {
+    if (empIdDebouncer) {
+      checkEmpIdValidation();
+    }
+  }, [empIdDebouncer]);
 
-useEffect(() => {
-  if (empIdDebouncer) {
-    checkEmpIdValidation();
-  }
-}, [empIdDebouncer])
-
-const checkContactValidation = useCallback(() => {
-  serviceProviderIsExist({contact:form?.contact}).then((res) => {
+  const checkContactValidation = useCallback(() => {
+    serviceProviderIsExist({ contact: form?.contact }).then((res) => {
       if (!res.error) {
-          const errors = JSON.parse(JSON.stringify(errorData));
-          if (res.data.is_exists) {
-              // errors['contact'] = 'Admin User Contact Exists'
-              setErrorData(errors)
-          } else {
-              delete errors.contact;
-              setErrorData(errors);
-          }
+        const errors = JSON.parse(JSON.stringify(errorData));
+        if (res.data.is_exists) {
+          errors["contact"] = "Admin User Contact Exists";
+          setErrorData(errors);
+        } else {
+          delete errors.contact;
+          setErrorData(errors);
+        }
       }
-  });
-}, [errorData, setErrorData, form?.contact]);
+    });
+  }, [errorData, setErrorData, form?.contact]);
 
-
-useEffect(() => {
-  if (contactDebouncer) {
-    checkContactValidation();
-  }
-}, [contactDebouncer])
-
+  useEffect(() => {
+    if (contactDebouncer) {
+      checkContactValidation();
+    }
+  }, [contactDebouncer]);
 
   useEffect(() => {
     if (!isSidePanel) {
@@ -174,22 +170,9 @@ useEffect(() => {
     let required;
 
     if (value === 0) {
-      required = [
-        "name",
-        "email",
-        "contact",
-        "role",
-        "employee_id",
-        // ...(id ? [] : ["image"]),
-      ];
+      required = ["name", "email", "contact", "role", "employee_id"];
     } else if (value === 1) {
-      required = [
-        "name",
-        "designation",
-        "joining_date",
-        "department",
-        "manager",
-      ];
+      required = ["designation", "joining_date", "department", "manager"];
     }
 
     required.forEach((val) => {
@@ -204,7 +187,6 @@ useEffect(() => {
       if (val === "email" && form?.email && !isEmail(form?.email)) {
         errors.email = "Invalid email address";
       }
-    
     });
 
     Object.keys(errors).forEach((key) => {
@@ -246,7 +228,6 @@ useEffect(() => {
         SnackbarUtils.error(res.message);
       }
     } catch (error) {
-     
     } finally {
       setIsSubmitting(false);
     }
@@ -267,19 +248,13 @@ useEffect(() => {
       setErrorData(errors);
       SnackbarUtils.error("Please enter values");
     } else {
-      setValue((prevValue) => {
-        if (prevValue === 0) {
-          // Only switch to the second tab if currently on the first tab
-          return 1;
-        }
-        return prevValue;
-      });
+      setValue(1);
     }
   }, [
     checkFormValidation,
     setErrorData,
     form,
-    // submitToServer,
+    submitToServer,
     setImage,
     setValue,
     setTypeOf,
@@ -290,9 +265,8 @@ useEffect(() => {
 
     if (Object.keys(errors).length > 0) {
       setErrorData(errors);
-       SnackbarUtils.error("Please enter values");
+      SnackbarUtils.error("Please enter values");
     } else {
-     
       await submitToServer();
     }
   }, [
@@ -313,20 +287,23 @@ useEffect(() => {
     },
     [setErrorData, errorData]
   );
-//  Check input filed is Exit or not 
- 
+  //  Check input filed is Exit or not
 
   const changeTextData = useCallback(
     (text, fieldName) => {
       let shouldRemoveError = true;
       const t = { ...form };
-     
 
       if (fieldName === "code") {
         shouldRemoveError = false;
       } else if (fieldName === "contact") {
-       console.log(text, "Contact")
+        console.log(text, "Contact");
         // '+91'+
+        t[fieldName] = text;
+      } else if (fieldName === "email") {
+        console.log(text, "Contact");
+        // '+91'+
+        t[fieldName] = text;
       } else {
         t[fieldName] = text;
       }

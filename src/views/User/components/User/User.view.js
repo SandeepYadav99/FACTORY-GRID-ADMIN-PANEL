@@ -8,7 +8,7 @@ import {
   Switch,
 } from "@material-ui/core";
 import PhoneInput from "react-phone-input-2";
-
+import startsWith from "lodash.startswith";
 import styles from "../../Style.module.css";
 
 // import {serviceProviderUserCheck} from "../../services/User.service";
@@ -112,20 +112,27 @@ const User = ({
 
           <div className={"formFlex"}>
             <div className={"formGroup"}>
-              <CustomPhoneContactField 
-              errorText={errorData.contact}
-              value={form?.contact}
-              onTextChange={(text) => {
-                changeTextData(text, "contact");
-              }}
-              onBlur={() => {
-                onBlurHandler("contact");
-              }}
-           
+              <CustomPhoneContactField
+                isError={errorData?.contact}
+                errorText={errorData?.contact}
+                value={form?.contact}
+                onTextChange={(text) => {
+                  changeTextData(text, "contact");
+                }}
+                // onBlur={() => {
+                //   onBlurHandler("contact");
+                // }}
+                isValid={(value, country) => {
+                  if (value.match(/12345/)) {
+                    return "";
+                  } else if (value.match(/1234/)) {
+                    return false;
+                  } else {
+                    return true;
+                  }
+                }}
               />
-            
             </div>
-          
           </div>
           <div className={"formFlex"}>
             <div className={"formGroup"}>

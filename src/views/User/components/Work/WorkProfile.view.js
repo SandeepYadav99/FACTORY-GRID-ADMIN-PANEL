@@ -23,14 +23,15 @@ const WorkProfile = ({
   changeTextData,
   form,
   onBlurHandler,
-  handleSubmitToSave,
+  handleSubmit,
   listData,
   setTypeOf,
+  handleSubmitToSave
 }) => {
   const classes = useStyles();
 
   const handleSaveClick = () => {
-    console.log("Save button clicked");
+
     handleSubmitToSave();
     setTypeOf("Work");
   };
@@ -90,9 +91,9 @@ const WorkProfile = ({
                 onTextChange={(text) => {
                   changeTextData(text, "designation");
                 }}
-                onBlur={() => {
-                  onBlurHandler("designation");
-                }}
+                // onBlur={() => {
+                //   onBlurHandler("designation");
+                // }}
               />
             </div>
           </div>
