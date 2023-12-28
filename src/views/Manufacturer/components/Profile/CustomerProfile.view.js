@@ -10,10 +10,9 @@ import AccountQuality from "./components/AccountQuality";
 import Activity from "./components/Activity";
 import useCustomerProfileHook from "../../../../helper/CustomerProfileHook";
 import { ReportProblem } from "@material-ui/icons";
+import SimplePopover from "../../../../components/FormFields/SimplePopover/SimplePopover";
 
-const ProfileView = ({userProfile, renderInterestArea}) => {
- 
-
+const ProfileView = ({ userProfile, renderInterestArea }) => {
   return (
     <div>
       <div className={styles.upperFlex}>
@@ -89,15 +88,13 @@ const ProfileView = ({userProfile, renderInterestArea}) => {
             <div className={styles.conContainer}>
               <div className={styles.head}>
                 Email{" "}
-                <span>
+                <div>
                   {userProfile.is_email_verified ? (
                     <VerifiedUserIcon className={styles.verified} />
                   ) : (
-                    <Tooltip title="Tooltip" placement="top-start"  >
-                      <ReportProblem className={styles.notverified} />
-                    </Tooltip>
+                    <SimplePopover />
                   )}
-                </span>
+                </div>
               </div>
               {/*{data.is_email_verified == true ? <span><VerifiedUserIcon className={styles.verified}/></span> : ''}*/}
               <div className={styles.val}>
@@ -108,10 +105,10 @@ const ProfileView = ({userProfile, renderInterestArea}) => {
               <div className={styles.head}>
                 Phone{" "}
                 <span>
-                  {userProfile.is_contact_verified ? (
+                  {userProfile?.is_contact_verified ? (
                     <VerifiedUserIcon className={styles.verified} />
                   ) : (
-                    <ReportProblem className={styles.notverified} />
+                    <SimplePopover />
                   )}
                 </span>
               </div>
@@ -120,7 +117,9 @@ const ProfileView = ({userProfile, renderInterestArea}) => {
               </div>
             </div>
           </div>
-          <AccountQuality userProfileAccountQuality={userProfile?.accountQualityManager} />
+          <AccountQuality
+            userProfileAccountQuality={userProfile?.accountQualityManager}
+          />
         </div>
 
         <div className={styles.right}>

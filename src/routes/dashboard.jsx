@@ -53,6 +53,15 @@ const dashboardRoutes = [
     component: DashboardPage,
     is_sidebar: true,
   },
+  {
+    path: "/profile",
+    sidebarName: "My Profile",
+    navbarName: "My Profile",
+    icon: Person,
+    component: Profile,
+    is_sidebar: true,
+    is_protect: true,
+  },
 
   // {
   //     path: "/categories",
@@ -181,15 +190,7 @@ const dashboardRoutes = [
     is_sidebar: false,
     is_protect: true,
   },
-  {
-    path: "/profile",
-    sidebarName: "Profile",
-    navbarName: "Profile",
-    icon: Person,
-    component: Profile,
-    is_sidebar: true,
-    is_protect: true,
-  },
+
   {
     path: `${RouteName.APP_USERS}`,
     sidebarName: "App Users",

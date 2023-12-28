@@ -26,6 +26,7 @@ import MuiStyle from "../../libs/MuiStyle";
 import CustomerProfile from "./components/Profile/CustomerProfile.view";
 import BusinessDetails from "./components/Business/BusinessDetails.view";
 import useCustomerProfileHook from "../../helper/CustomerProfileHook";
+import SimplePopover from "../../components/FormFields/SimplePopover/SimplePopover";
 
 
 
