@@ -218,7 +218,7 @@ const ManufacturerTabs = ({ classes, theme }) => {
           />
         </TabPanel>
         <TabPanel value={value} index={1} dir={theme.direction}>
-          <BusinessDetails />
+          <BusinessDetails  userProfile={userProfile}/>
         </TabPanel>
         <TabPanel value={value} index={2} dir={theme.direction}></TabPanel>
         <TabPanel value={value} index={3} dir={theme.direction}></TabPanel>

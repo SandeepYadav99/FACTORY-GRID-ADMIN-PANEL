@@ -265,13 +265,7 @@
 }
 
 .rating{
-    font-size: 1.6rem !important;
-    color: orange;
-    margin-bottom: 4px;
-}
-.rating1{
-    font-size: 1rem !important;
-    color: orange;
+    font-size: 0.8rem !important;
 }
 
 .reviews{
@@ -332,11 +326,10 @@
 }
 
 .member{
-    margin-top: 6px;
+    margin-top: 7px;
     display: flex;
     justify-content: center;
-    font-size: 0.9rem;
-    align-items: center;
+    font-size: 0.7rem;
 }
 
 .bottomProfile{
@@ -389,8 +382,4 @@
     color: #072ead;
     text-decoration: underline;
     font-size: 0.8rem;
-}
-
-.notfound{
-    text-align: center;
 }

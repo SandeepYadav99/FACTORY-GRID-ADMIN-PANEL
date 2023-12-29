@@ -1,6 +1,6 @@
 import React, { useCallback } from "react";
 import styles from "./Style.module.css";
-import {  ButtonBase } from "@material-ui/core";
+import { ButtonBase } from "@material-ui/core";
 import VerifiedUserIcon from "@material-ui/icons/VerifiedUser";
 import Rating from "@material-ui/lab/Rating";
 
@@ -9,14 +9,15 @@ import ImageGalleryComponent from "./components/ImageGallery/ImageGallery.compon
 import CompanyProfile from "./components/CompanyProfile/CompanyProfile";
 import useCustomerProfileHook from "../../../../helper/CustomerProfileHook";
 import BankDetail from "./components/BankDetail/BankDetail";
+import CompanyRepresentative from "./components/CompanyRepresentative/CompanyRepresentative";
 
 const dummy = [
   require("../../../../assets/img/cover.jpeg"),
   require("../../../../assets/img/cover.jpeg"),
 ];
-console.log(dummy, "D")
-const BusinessDetails = ({ id }) => {
-  const { userProfile, renderInterestArea } = useCustomerProfileHook();
+
+const BusinessDetails = ({ id, userProfile }) => {
+  // const { userProfile, renderInterestArea } = useCustomerProfileHook();
 
   const galleryImage = useCallback((images) => {
     console.log(images);
@@ -29,8 +30,9 @@ const BusinessDetails = ({ id }) => {
     }
   }, []);
   const CERTIFICATES = userProfile.certificate || [];
-  const certificateImages = CERTIFICATES.map((certificate) => certificate.certificate_file);
- 
+  const certificateImages = CERTIFICATES.map(
+    (certificate) => certificate.certificate_file
+  );
 
   return (
     <div>
@@ -39,27 +41,30 @@ const BusinessDetails = ({ id }) => {
           <div className={styles.plain}>
             <div className={styles.profile}>
               <img
-                src={userProfile.image}
+                src={userProfile?.business?.company_logo}
                 className={styles.templateImg}
                 alt=""
               />
-              <div>
+              {/* <div>
                 <ButtonBase className={styles.removeBtn}> Remove x</ButtonBase>
+              </div> */}
+              <div className={styles.user}>
+                <b>Company Name</b>{" "}
               </div>
-              <div className={styles.user}>Company Name</div>
               <a className={styles.coord} href={"/"}>
-                {userProfile &&
-                  userProfile.business &&
-                  userProfile.business.company_name}
+                {userProfile?.business?.company_name || "N/A"}
                 {/* FG Coordinates */}
               </a>
               <div className={styles.member}>
-                <Rating
+                {/* <Rating
                   name="read-only"
-                  value={4}
+                  value={1}
                   readOnly
                   className={styles.rating}
-                />
+                /> */}
+                <span className={styles.rating}>&#9733;</span>
+                <span className={styles.rating1}>{userProfile?.business?.rating || "0.0"}</span>
+
                 <span className={styles.reviews}>(10 Reviews)</span>
               </div>
             </div>
@@ -67,12 +72,11 @@ const BusinessDetails = ({ id }) => {
             <div>
               <div className={styles.key}>Address</div>
               <div className={styles.value}>
-                {userProfile &&
-                  userProfile.business &&
-                  userProfile.business.company_address}
-                {/* Address Line 1 & 2<br />
-                Pincode<br />
-                City,State */}
+                {userProfile?.business?.company_address || "N/A"} <br />
+                Pincode: {userProfile?.business?.company_pincode || "N/A"}
+                <br />
+                {userProfile?.business?.company_city},{" "}
+                {userProfile?.business?.company_state}
               </div>
             </div>
             <br />
@@ -124,39 +128,11 @@ const BusinessDetails = ({ id }) => {
             <div className={styles.accountFlex}>
               <div className={styles.headings}>Company Representative</div>
             </div>
-
-            <div className={styles.blockFlex}>
-              <div className={styles.bottomProfile}>
-                <img
-                  src={userProfile?.representatives?.profile_image}
-                  className={styles.profileImg}
-                  alt=""
-                />
-                <div className={styles.info}>
-                  <div className={styles.profileName}>
-                    {
-                      userProfile?.representatives?.first_name}{" "}
-                    {
-                      userProfile?.representatives?.last_name}
-                  </div>
-                  <div className={styles.designation}>{userProfile?.representatives?.designation}</div>
-                </div>
-              </div>
-              <div>
-                <div className={styles.kyc}>
-                  <span>
-                    <VerifiedUserIcon className={styles.verified} />
-                  </span>{" "}
-                  KYC Verified
-                </div>
-              </div>
-            </div>
-            <br />
-            <div>
-              <div className={styles.key}>Contact Information</div>
-              <div className={styles.val}>{ userProfile?.representatives?.contact}</div>
-              <div className={styles.val}>{ userProfile?.representatives?.email}</div>
-            </div>
+            {userProfile?.representatives ? (
+              <CompanyRepresentative userProfile={userProfile} />
+            ) : (
+              <div className={styles.notfound}>Not Avalilable </div>
+            )}
           </div>
         </div>
 
@@ -184,7 +160,7 @@ const BusinessDetails = ({ id }) => {
 
           <div className={styles.plain}>
             <div className={styles.headings}>Certificates</div>
-            
+
             <ImageGalleryComponent
               title={"CERTIFICATES"}
               image_type={"CERTIFICATES"}
@@ -195,7 +171,7 @@ const BusinessDetails = ({ id }) => {
             />
           </div>
 
-         <BankDetail bankdetail={userProfile && userProfile.bankdetail}/>
+          <BankDetail bankdetail={ userProfile?.bankdetail} />
         </div>
       </div>
     </div>
