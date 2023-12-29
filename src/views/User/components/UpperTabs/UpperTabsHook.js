@@ -51,7 +51,7 @@ const useUpperTabsHook = ({
   const [typeOf, setTypeOf] = useState(""); // TypeOfTabs
   const [listData, setListData] = useState(null);
   const [value, setValue] = useState(0);
- 
+
   // access query params id in url
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
@@ -92,24 +92,26 @@ const useUpperTabsHook = ({
     }
   }, [id]);
 
-  useEffect(() => {
-    setErrorData({});
-  }, [value]);
+  // useEffect(() => {
+  //   setErrorData({});
+  // }, []);
 
   const validateField = useCallback(
-    (field, value, errorKey, existsMessage) => {
-      if(value ===1) return 
-      serviceProviderIsExist({ [field]: value, id: id || null }).then((res) => {
-        if (!res.error) {
-          const errors = { ...errorData };
-          if (res.data.is_exists) {
-            errors[errorKey] = existsMessage;
-          } else {
-            delete errors[errorKey];
+    (field, values, errorKey, existsMessage) => {
+      if (value === 1) return;
+      serviceProviderIsExist({ [field]: values, id: id || null }).then(
+        (res) => {
+          if (!res.error) {
+            const errors = { ...errorData };
+            if (res.data.is_exists) {
+              errors[errorKey] = existsMessage;
+            } else {
+              delete errors[errorKey];
+            }
+            setErrorData(errors);
           }
-          setErrorData(errors);
         }
-      });
+      );
     },
     [errorData, setErrorData, id, value]
   );
@@ -131,30 +133,29 @@ const useUpperTabsHook = ({
     validateField("contact", form.contact, "contact", true);
   }, [form.contact, id]);
 
- 
-useEffect(() => {
-  if (value === 0) {
-    if (emailDebouncer) checkCodeValidation();
-  }
-}, [emailDebouncer, checkCodeValidation, value]);
-
-useEffect(() => {
-  if (value === 0) {
-    if (empIdDebouncer) checkEmpIdValidation();
-  }
-}, [empIdDebouncer, checkEmpIdValidation, value]);
-
-useEffect(() => {
-  if (value === 0) {
-    if (contactDebouncer) checkContactValidation();
-  }
-}, [contactDebouncer, checkContactValidation, value]);
+  useEffect(() => {
+    if (value === 0) {
+      if (emailDebouncer) checkCodeValidation();
+    }
+  }, [emailDebouncer, value]);
 
   useEffect(() => {
-    if (!isSidePanel) {
-      handleReset();
+    if (value === 0) {
+      if (empIdDebouncer) checkEmpIdValidation();
     }
-  }, [isSidePanel]);
+  }, [empIdDebouncer, value]);
+
+  useEffect(() => {
+    if (value === 0) {
+      if (contactDebouncer) checkContactValidation();
+    }
+  }, [contactDebouncer, value]);
+
+  // useEffect(() => {
+  //   if (!isSidePanel) {
+  //     handleReset();
+  //   }
+  // }, [isSidePanel]);
 
   const checkFormValidation = useCallback(() => {
     const errors = { ...errorData };
@@ -167,14 +168,8 @@ useEffect(() => {
       "role",
       "employee_id",
 
-      ...(typeOf === "Work"
-        ? [
-          
-            "designation",
-            "joining_date",
-            "department",
-            "manager",
-          ]
+      ...(value === 1
+        ? ["designation", "joining_date", "department", "manager"]
         : []),
     ];
 
@@ -187,12 +182,12 @@ useEffect(() => {
       } else if (["email"].indexOf(val) < 0) {
         delete errors[val];
       }
-      else if (["contact"].indexOf(val) < 0) {
-        delete errors[val];
-      }
-      else if (["employee_id"].indexOf(val) < 0) {
-        delete errors[val];
-      }
+      //  if (["contact"].indexOf(val) < 0) {
+      //     delete errors[val];
+      //   }
+      //   if (["employee_id"].indexOf(val) < 0) {
+      //     delete errors[val];
+      //   }
       if (val === "email" && form?.email && !isEmail(form?.email)) {
         errors.email = "Invalid email address";
       }
@@ -204,7 +199,7 @@ useEffect(() => {
       }
     });
     return errors;
-  }, [form, errorData, setImage, setTypeOf, typeOf, value]);
+  }, [form, errorData, setImage, setTypeOf, value, setErrorData]);
 
   const submitToServer = useCallback(async () => {
     if (isSubmitting) {
@@ -252,15 +247,7 @@ useEffect(() => {
     } finally {
       setIsSubmitting(false);
     }
-  }, [
-    form,
-    isSubmitting,
-    setIsSubmitting,
-    id,
-  
- 
-  ]);
-
+  }, [form, isSubmitting, setIsSubmitting, id, errorData]);
 
   const handleSubmit = useCallback(async () => {
     const errors = checkFormValidation();
@@ -285,7 +272,7 @@ useEffect(() => {
     form,
     // submitToServer,
     setImage,
-value
+    errorData,
   ]);
 
   const handleSubmitToSave = useCallback(async () => {
@@ -297,14 +284,7 @@ value
     } else {
       await submitToServer();
     }
-  }, [
-    checkFormValidation,
-    setErrorData,
-    form,
-    submitToServer,
-    setImage,
-   value
-  ]);
+  }, [checkFormValidation, setErrorData, form, submitToServer, setImage]);
 
   const removeError = useCallback(
     (title) => {

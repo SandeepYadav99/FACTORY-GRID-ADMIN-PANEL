@@ -258,7 +258,14 @@ const ImageGalleryComponent = ({
         </div>
       );
     } else {
-      return <div className={styles.noImg}>No Images Added</div>;
+      return (
+        <div className={styles.noImg}>
+          {" "}
+          {image_type === "CERTIFICATES"
+            ? "No Certificates Uploaded"
+            : "No Images Added"}
+        </div>
+      );
     }
   };
 

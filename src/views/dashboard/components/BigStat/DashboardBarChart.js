@@ -16,6 +16,7 @@ const DashboardBarChart = ({ data }) => {
     name: item?.date,
     Date: item?.count,
   }));
+  
   return (
     <ResponsiveContainer  width="120%"  height={250}>
       <BarChart
@@ -24,7 +25,7 @@ const DashboardBarChart = ({ data }) => {
         margin={{ top: 10, right: 0, left: 0, bottom: 5 }}
       >
         <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="name" tick={{ fontSize: 8 }} interval={0}/>
+        <XAxis dataKey="name" tick={{ fontSize: 8 }} interval={0} fill="#000000"/>
         <YAxis tick={{ fontSize: 10 }}>
           <Label value="No. of Quotes"  angle={-90} position="center" />
         </YAxis>
