@@ -29,10 +29,26 @@ const BusinessDetails = ({ id, userProfile }) => {
       return [];
     }
   }, []);
+
+  const viewFile = () => {
+    const fileUrl = userProfile?.bankdetail?.bank_canceled_cheque;
+
+    if (fileUrl) {
+      window.open(fileUrl, "_blank");
+    } else {
+    }
+  };
+
   const CERTIFICATES = userProfile.certificate || [];
   const certificateImages = CERTIFICATES.map(
     (certificate) => certificate.certificate_file
   );
+
+  const openGoogleMaps = useCallback((company_lat, company_fg_long) => {
+    const url = `https://www.google.com/maps/place?q=${company_lat},${company_fg_long}`;
+
+    window.open(url, "_blank");
+  }, []);
 
   return (
     <div>
@@ -45,13 +61,13 @@ const BusinessDetails = ({ id, userProfile }) => {
                 className={styles.templateImg}
                 alt=""
               />
-              {/* <div>
-                <ButtonBase className={styles.removeBtn}> Remove x</ButtonBase>
-              </div> */}
+              <div>
+                <ButtonBase className={styles.removeBtn}> Remove it</ButtonBase>
+              </div>
               <div className={styles.user}>
                 <b>Company Name</b>{" "}
               </div>
-              <a className={styles.coord} href={"/"}>
+              <a className={styles.coord} href={"#"} onClick={()=>openGoogleMaps(userProfile?.business?.company_lat, userProfile?.business?.company_fg_long)}>
                 {userProfile?.business?.company_name || "N/A"}
                 {/* FG Coordinates */}
               </a>
@@ -63,9 +79,11 @@ const BusinessDetails = ({ id, userProfile }) => {
                   className={styles.rating}
                 /> */}
                 <span className={styles.rating}>&#9733;</span>
-                <span className={styles.rating1}>{userProfile?.business?.rating || "0.0"}</span>
+                <span className={styles.rating1}>
+                  {userProfile?.business?.rating || "0.0"}
+                </span>
 
-                <span className={styles.reviews}>(10 Reviews)</span>
+                <span className={styles.reviews}>(0 Reviews)</span>
               </div>
             </div>
 
@@ -170,8 +188,23 @@ const BusinessDetails = ({ id, userProfile }) => {
               imageList={userProfile.certificate}
             />
           </div>
+          <div className={styles.plain}>
+            <div className={styles.accountFlex}>
+              <div className={styles.headings}>Banking Details</div>
 
-          <BankDetail bankdetail={ userProfile?.bankdetail} />
+              <div>
+                <span className={styles.brochure}>Cancelled Cheque</span>
+                <ButtonBase className={styles.view} onClick={() => viewFile()}>
+                  (View File)
+                </ButtonBase>
+              </div>
+            </div>
+            {userProfile?.bankdetail  ? (
+              <BankDetail bankdetail={userProfile?.bankdetail} />
+            ) : (
+              <div>Not Available</div>
+            )}
+          </div>
         </div>
       </div>
     </div>

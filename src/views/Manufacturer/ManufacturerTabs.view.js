@@ -27,6 +27,7 @@ import CustomerProfile from "./components/Profile/CustomerProfile.view";
 import BusinessDetails from "./components/Business/BusinessDetails.view";
 import useCustomerProfileHook from "../../helper/CustomerProfileHook";
 import SimplePopover from "../../components/FormFields/SimplePopover/SimplePopover";
+import SuspendPopup from "./components/SuspendPopup/SuspendPopup";
 
 
 
@@ -72,6 +73,19 @@ const useStyles = makeStyles((theme) => ({
 const ManufacturerTabs = ({ classes, theme }) => {
   const [value, setValue] = useState(0);
   const { userProfile, renderInterestArea } = useCustomerProfileHook();
+  
+  
+  const [isOpenDialog, setIsOpenDialog] = useState(false);
+
+  const toggleIsOpenDialog = useCallback(
+    (data) => {
+      setIsOpenDialog((e) => !e);
+      // setExpireLetter(data?.id)
+    },
+    [isOpenDialog]
+  );
+
+
   useEffect(() => {
     // ComponentDidMount logic can go here
   }, []);
@@ -146,7 +160,7 @@ const ManufacturerTabs = ({ classes, theme }) => {
             <Button
               variant="contained"
               className={classes.btnError}
-              onClick={handleSuspendBtn}
+              onClick={toggleIsOpenDialog}
               type="button"
             >
               <Report />
@@ -223,6 +237,11 @@ const ManufacturerTabs = ({ classes, theme }) => {
         <TabPanel value={value} index={2} dir={theme.direction}></TabPanel>
         <TabPanel value={value} index={3} dir={theme.direction}></TabPanel>
       </div>
+      <SuspendPopup 
+        candidateId={""}
+        isOpen={isOpenDialog}
+        handleToggle={toggleIsOpenDialog}
+      />
     </div>
   );
 };

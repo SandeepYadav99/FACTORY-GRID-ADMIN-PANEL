@@ -44,9 +44,9 @@ const useUpperTabsHook = ({
   const [form, setForm] = useState({ ...initialForm });
 
   const includeRef = useRef(null);
-  const emailDebouncer = useDebounce(form.email, 1000);
+  const emailDebouncer = useDebounce(form.email, 500);
   const empIdDebouncer = useDebounce(form.employee_id, 500);
-  const contactDebouncer = useDebounce(form.contact, 700);
+  const contactDebouncer = useDebounce(form.contact, 500);
   const [image, setImage] = useState(null);
   const [typeOf, setTypeOf] = useState(""); // TypeOfTabs
   const [listData, setListData] = useState(null);
@@ -182,12 +182,12 @@ const useUpperTabsHook = ({
       } else if (["email"].indexOf(val) < 0) {
         delete errors[val];
       }
-      //  if (["contact"].indexOf(val) < 0) {
-      //     delete errors[val];
-      //   }
-      //   if (["employee_id"].indexOf(val) < 0) {
-      //     delete errors[val];
-      //   }
+      else if (["contact"].indexOf(val) < 0) {
+          delete errors[val];
+        }
+       else if (["employee_id"].indexOf(val) < 0) {
+          delete errors[val];
+        }
       if (val === "email" && form?.email && !isEmail(form?.email)) {
         errors.email = "Invalid email address";
       }
@@ -199,7 +199,7 @@ const useUpperTabsHook = ({
       }
     });
     return errors;
-  }, [form, errorData, setImage, setTypeOf, value, setErrorData]);
+  }, [form, errorData, setImage,  value, setErrorData]);
 
   const submitToServer = useCallback(async () => {
     if (isSubmitting) {
@@ -247,7 +247,7 @@ const useUpperTabsHook = ({
     } finally {
       setIsSubmitting(false);
     }
-  }, [form, isSubmitting, setIsSubmitting, id, errorData]);
+  }, [form, isSubmitting, setIsSubmitting, id]);
 
   const handleSubmit = useCallback(async () => {
     const errors = checkFormValidation();
@@ -339,7 +339,7 @@ const useUpperTabsHook = ({
   const handleReset = useCallback(() => {
     setForm({ ...initialForm });
   }, [form]);
-
+console.log(errorData, "ErrorData")
   return {
     form,
     changeTextData,

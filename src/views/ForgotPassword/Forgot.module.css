@@ -5,6 +5,7 @@
     display: flex;
     width: 100vw;
     height: 100vh;
+   
     /*background-image: url('../../assets/img/background.jpg');*/
     /*background-size: cover;*/
     /*background-repeat: no-repeat;*/
@@ -36,6 +37,7 @@
     box-sizing: border-box;
     flex-direction: column;
     justify-content: space-between;
+    padding: 20px;
 }
 
 /*.loginFlex1:after {*/

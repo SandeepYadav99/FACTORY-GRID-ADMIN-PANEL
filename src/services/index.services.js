@@ -23,6 +23,9 @@ export async function serviceResetPassword(params) {
     return await postRequest('reset/password', params);
 }
 
+export async function serviceResetProfilePassword(params) {
+    return await postRequest('profile/reset/password', params);
+}
 
 export async function updateTemplates(data) {
     try {
