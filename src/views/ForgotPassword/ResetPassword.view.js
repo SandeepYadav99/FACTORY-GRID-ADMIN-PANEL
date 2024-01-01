@@ -23,6 +23,7 @@ import Slide from "@material-ui/core/Slide";
 import EventEmitter from "../../libs/Events.utils";
 import { updateTitle } from "../../libs/general.utils";
 import SnackbarUtils from "../../libs/SnackbarUtils";
+import historyUtils from "../../libs/history.utils";
 
 function Transition(props) {
   return <Slide direction="up" {...props} />;
@@ -96,9 +97,9 @@ class ResetPasswordView extends Component {
 
   async componentDidMount() {
     // updateTitle('Reset Password');
-     const search = window.location.search;
-     const params = new URLSearchParams(search);
-    const token = params.get('token');
+    //  const search = window.location.search;
+    //  const params = new URLSearchParams(search);
+    // const token = params.get('token');
     // if (token) {
     //     this.setState({
     //         token: token,
@@ -109,7 +110,8 @@ class ResetPasswordView extends Component {
   }
 
   _handleLoginClick() {
-    this.props.history.push("/login");
+  
+    historyUtils.push("/login")
   }
 
   _handleSubmit(data) {
@@ -130,10 +132,11 @@ class ResetPasswordView extends Component {
             success: true,
           });
           SnackbarUtils.success("Password Changed Successfully")
-        //   EventEmitter.dispatch(EventEmitter.THROW_ERROR, {
-        //     error: "Password Changed Successfully",
-        //     type: "success",
-        //   });
+          // EventEmitter.dispatch(EventEmitter.THROW_ERROR, {
+          //   error: "Password Changed Successfully",
+          //   type: "success",
+          // });
+      window.location.reload()
           setTimeout(() => {
             this.props.history.push("/login");
           }, 1500);
