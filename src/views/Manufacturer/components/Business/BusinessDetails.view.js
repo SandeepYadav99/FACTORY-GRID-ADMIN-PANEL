@@ -20,7 +20,7 @@ const BusinessDetails = ({ id, userProfile }) => {
   // const { userProfile, renderInterestArea } = useCustomerProfileHook();
 
   const galleryImage = useCallback((images) => {
-    console.log(images);
+   
     if (images && Array.isArray(images)) {
       const imagesList = images.map((element) => element.gallery_image);
 
@@ -44,8 +44,8 @@ const BusinessDetails = ({ id, userProfile }) => {
     (certificate) => certificate.certificate_file
   );
 
-  const openGoogleMaps = useCallback((company_lat, company_fg_long) => {
-    const url = `https://www.google.com/maps/place?q=${company_lat},${company_fg_long}`;
+  const openGoogleMaps = useCallback((company_lat) => {
+    const url = `https://www.google.com/maps/place?q=${company_lat[0]},${company_lat[1] || 0}`;
 
     window.open(url, "_blank");
   }, []);
@@ -61,13 +61,13 @@ const BusinessDetails = ({ id, userProfile }) => {
                 className={styles.templateImg}
                 alt=""
               />
-              <div>
+              {/* <div>
                 <ButtonBase className={styles.removeBtn}> Remove it</ButtonBase>
-              </div>
+              </div> */}
               <div className={styles.user}>
                 <b>Company Name</b>{" "}
               </div>
-              <a className={styles.coord} href={"#"} onClick={()=>openGoogleMaps(userProfile?.business?.company_lat, userProfile?.business?.company_fg_long)}>
+              <a className={styles.coord} href={"#"} onClick={()=>openGoogleMaps(userProfile?.business?.company_fg_lat)}>
                 {userProfile?.business?.company_name || "N/A"}
                 {/* FG Coordinates */}
               </a>

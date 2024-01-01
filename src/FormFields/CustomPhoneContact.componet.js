@@ -22,11 +22,11 @@ const CustomPhoneContactField = ({
     },
     [onChange, onTextChange]
   );
-
+  console.log(value, "Error Text");
   return (
     <div style={{ display: "flex", flexDirection: "column" }}>
       <PhoneInput
-      defaultErrorMessage={isError }
+        defaultErrorMessage={isError}
         inputProps={{
           name: "Phone No",
         }}
@@ -40,7 +40,7 @@ const CustomPhoneContactField = ({
         specialLabel=""
         isValid={isValid}
       />
-      {errorText ? (
+      {errorText === true  ? (
         <span style={{ color: "red", textAlign: "right", fontSize: "12px" }}>
           Admin User Contact Exists
         </span>

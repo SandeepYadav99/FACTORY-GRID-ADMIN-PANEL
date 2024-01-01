@@ -93,108 +93,65 @@ const useUpperTabsHook = ({
     }
   }, [id]);
 
-  // useEffect(() => {
-  //   setErrorData({});
-  // }, []);
 
-  // const validateField = useCallback(
-  //   (field, values, errorKey, existsMessage) => {
-  //     if (value === 1) return;
-  //     serviceProviderIsExist({ [field]: values, id: id || null }).then(
-  //       (res) => {
-  //         if (!res.error) {
-  //           const errors = { ...errorData };
-  //           if (res.data.is_exists) {
-  //             errors[errorKey] = existsMessage;
-  //           } else {
-  //             delete errors[errorKey];
-  //           }
-  //           setErrorData(errors);
-  //         }
-  //       }
-  //     );
-  //   },
-  //   [errorData, setErrorData, id, value]
-  // );
-
-  const checkCodeValidation = useCallback(() => {
-    serviceProviderIsExist({ email: form?.email, id: id ? id : null }).then(
-      (res) => {
-        if (!res.error) {
-          const errors = JSON.parse(JSON.stringify(errorData));
-          if (res.data.is_exists) {
-            errors["email"] = "Email Already  Exists";
-            setErrorData(errors);
-          } else {
-            delete errors.email;
+  const validateField = useCallback(
+    (field, values, errorKey, existsMessage) => {
+      if (value === 1) return;
+      serviceProviderIsExist({ [field]: values, id: id || null }).then(
+        (res) => {
+          if (!res.error) {
+            const errors = { ...errorData };
+            if (res.data.is_exists) {
+              errors[errorKey] = existsMessage;
+            } else {
+              delete errors[errorKey];
+            }
             setErrorData(errors);
           }
         }
-      }
+      );
+    },
+    [errorData, setErrorData, id, value]
+  );
+
+
+
+ 
+
+  const checkCodeValidation = useCallback(() => {
+    validateField("email", form.email, "email", "Admin User Email Exists");
+  }, [form.email, id]);
+
+  const checkEmpIdValidation = useCallback(() => {
+    validateField(
+      "employee_id",
+      form.employee_id,
+      "employee_id",
+      "Admin User Employee Id Exists"
     );
-  }, [errorData, setErrorData, form?.email, id]);
+  }, [form.employee_id, id]);
+
+  const checkContactValidation = useCallback(() => {
+    validateField("contact", form.contact, "contact", true);
+  }, [form.contact, id]);
 
   useEffect(() => {
-    if (emailDebouncer) {
-      checkCodeValidation();
+    if (value === 0) {
+      if (emailDebouncer) checkCodeValidation();
     }
-  }, [emailDebouncer]);
+  }, [emailDebouncer, value]);
 
-  // const checkContactValidation = useCallback(() => {
-  //   serviceProviderIsExist({contact: form.contact, id: id ? id : null }).then((res) => {
-  //       if (!res.error) {
-  //           const errors = JSON.parse(JSON.stringify(errorData));
-  //           if (res.data.is_exists) {
-  //               errors['contact'] = 'Contact Exists'
-  //               setErrorData(errors)
-  //           } else {
-  //               delete errors.contact;
-  //               setErrorData(errors);
-  //           }
-  //       }
-  //   });
-  // }, [errorData, setErrorData, form.contact, id]);
+  useEffect(() => {
+    if (value === 0) {
+      if (empIdDebouncer) checkEmpIdValidation();
+    }
+  }, [empIdDebouncer, value]);
 
-  // useEffect(() => {
-  // if (contactDebouncer) {
-  //   checkContactValidation();
-  // }
-  // }, [contactDebouncer])
-
-  // const checkCodeValidation = useCallback(() => {
-  //   validateField("email", form.email, "email", "Admin User Email Exists");
-  // }, [form.email, id]);
-
-  // const checkEmpIdValidation = useCallback(() => {
-  //   validateField(
-  //     "employee_id",
-  //     form.employee_id,
-  //     "employee_id",
-  //     "Admin User Employee Id Exists"
-  //   );
-  // }, [form.employee_id, id]);
-
-  // const checkContactValidation = useCallback(() => {
-  //   validateField("contact", form.contact, "contact", true);
-  // }, [form.contact, id]);
-
-  // useEffect(() => {
-  //   if (value === 0) {
-  //     if (emailDebouncer) checkCodeValidation();
-  //   }
-  // }, [emailDebouncer, value]);
-
-  // useEffect(() => {
-  //   if (value === 0) {
-  //     if (empIdDebouncer) checkEmpIdValidation();
-  //   }
-  // }, [empIdDebouncer, value]);
-
-  // useEffect(() => {
-  //   if (value === 0) {
-  //     if (contactDebouncer) checkContactValidation();
-  //   }
-  // }, [contactDebouncer, value]);
+  useEffect(() => {
+    if (value === 0) {
+      if (contactDebouncer) checkContactValidation();
+    }
+  }, [contactDebouncer, value]);
 
   // useEffect(() => {
   //   if (!isSidePanel) {
@@ -224,20 +181,11 @@ const useUpperTabsHook = ({
         (Array.isArray(form?.[val]) && form?.[val].length === 0)
       ) {
         errors[val] = true;
-      } else if (["code"].indexOf(val) < 0) {
-        delete errors[val];
-      } else if (["email"].indexOf(val) < 0) {
-        delete errors[val];
-      } else if (["contact"].indexOf(val) < 0) {
-        delete errors[val];
-      } else if (["employee_id"].indexOf(val) < 0) {
-        delete errors[val];
       }
       if (val === "email" && form?.email && !isEmail(form?.email)) {
         errors.email = "Invalid email address";
       }
-
-      console.log(form, "Contact");
+ 
     });
 
     Object.keys(errors).forEach((key) => {
@@ -299,14 +247,13 @@ const useUpperTabsHook = ({
   const handleSubmit = useCallback(async () => {
     const errors = checkFormValidation();
     console.log(errors, "Errors");
-  
-      if (Object.keys(errors).length > 0) {
-        setErrorData(errors);
-        SnackbarUtils.error("Please enter values");
-      } else {
-        setValue(1);
-      }
-    
+
+    if (Object.keys(errors).length > 0) {
+      setErrorData(errors);
+      SnackbarUtils.error("Please enter valid values");
+    } else {
+      setValue(1);
+    }
   }, [
     checkFormValidation,
     setErrorData,
@@ -321,7 +268,7 @@ const useUpperTabsHook = ({
 
     if (Object.keys(errors).length > 0) {
       setErrorData(errors);
-      SnackbarUtils.error("Please enter values");
+      SnackbarUtils.error("Please enter valid  values");
     } else {
       await submitToServer();
     }
@@ -333,7 +280,7 @@ const useUpperTabsHook = ({
       temp[title] = false;
       setErrorData(temp);
     },
-    [setErrorData, errorData]
+    [setErrorData, errorData, emailDebouncer, checkCodeValidation]
   );
   //  Check input filed is Exit or not
 
@@ -347,9 +294,7 @@ const useUpperTabsHook = ({
       } else if (fieldName === "contact") {
         console.log(text, "Contact");
         // '+91'+
-        if (text.length > 3) {
-          t[fieldName] = text;
-        }
+        t[fieldName] = text;
       } else if (fieldName === "email") {
         console.log(text, "Contact");
         // '+91'+
@@ -367,12 +312,12 @@ const useUpperTabsHook = ({
 
   const onBlurHandler = useCallback(
     (type) => {
-      if (form?.[type]) {
-        changeTextData(form?.[type].trim(), type);
-      }
+      // if (form?.[type]) {
+      //   changeTextData(form?.[type].trim(), type);
+      // }
     },
     //checkCodeValidation as dependescy
-    [changeTextData]
+    [changeTextData, emailDebouncer, checkCodeValidation]
   );
 
   const handleDelete = useCallback(() => {}, []);
