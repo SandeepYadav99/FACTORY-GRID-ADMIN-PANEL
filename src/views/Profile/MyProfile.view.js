@@ -171,6 +171,7 @@ const Profile = () => {
   };
 
   const handleClose = () => {
+    
     setOpen(!open);
   };
 
@@ -335,7 +336,7 @@ const Profile = () => {
         </div>
       </div>
 
-      <ResetPasswordDialog open={open} handleClose={handleClose} />
+      <ResetPasswordDialog open={open} handleClose={handleClose}/>
     </div>
   );
 };

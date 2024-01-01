@@ -16,7 +16,10 @@ import {
   DialogTitle,
 } from "@material-ui/core";
 import { Button, withStyles } from "@material-ui/core";
-import { serviceResetPassword, serviceResetProfilePassword } from "../../services/index.services";
+import {
+  serviceResetPassword,
+  serviceResetProfilePassword,
+} from "../../services/index.services";
 import DashboardSnackbar from "../../components/Snackbar.component";
 import { Link } from "react-router-dom";
 import Slide from "@material-ui/core/Slide";
@@ -113,17 +116,15 @@ class ResetPasswordView extends Component {
   }
 
   _handleLoginClick() {
-  
-    historyUtils.push("/login")
+    historyUtils.push('/login');
   }
 
   _handleSubmit(data) {
-
     this.setState({
       is_calling: true,
     });
     if (!this.state.is_calling) {
-        serviceResetProfilePassword({
+      serviceResetProfilePassword({
         ...data,
         // token: this.state.token,
       }).then((val) => {
@@ -134,21 +135,21 @@ class ResetPasswordView extends Component {
           this.setState({
             success: true,
           });
-          SnackbarUtils.success("Password Changed Successfully")
+          SnackbarUtils.success("Password Changed Successfully");
           // EventEmitter.dispatch(EventEmitter.THROW_ERROR, {
           //   error: "Password Changed Successfully",
           //   type: "success",
           // });
-      window.location.reload()
-          setTimeout(() => {
-            this.props.history.push("/login");
-          }, 1500);
+          this.props.handleClose();
+          // setTimeout(() => {
+          //   historyUtils.push("/login");
+          // }, 1500);
         } else {
-            SnackbarUtils.error("Invalid Token")
-        //   EventEmitter.dispatch(EventEmitter.THROW_ERROR, {
-        //     error: "Invalid Token",
-        //     type: "error",
-        //   });
+          SnackbarUtils.error("Invalid Token");
+          //   EventEmitter.dispatch(EventEmitter.THROW_ERROR, {
+          //     error: "Invalid Token",
+          //     type: "error",
+          //   });
         }
       });
     }
@@ -186,7 +187,6 @@ class ResetPasswordView extends Component {
               name="password"
               component={renderTextField}
               label="Password*"
-             
             />
           </div>
           <br />
@@ -197,7 +197,6 @@ class ResetPasswordView extends Component {
               name="confirm_password"
               component={renderTextField}
               label="Confirm Password*"
-             
             />
           </div>
           <br />
