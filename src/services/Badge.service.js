@@ -38,3 +38,7 @@ export async function serviceBadgeUpdate(params) { // badges/create
 export async function serviceBadgeDetail(params) { // badges/create
     return await formDataRequest('badges/details', params);
 }
+
+export async function serviceBadgeIndustry(params) { // badges/industry
+    return await postRequest('badges/industry', params);
+}

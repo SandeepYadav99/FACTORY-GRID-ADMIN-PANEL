@@ -7,6 +7,7 @@ import Constants from "../../../config/constants";
 import {
   serviceBadgeCreate,
   serviceBadgeDetail,
+  serviceBadgeIndustry,
   serviceBadgeUpdate,
 } from "../../../services/Badge.service";
 import SnackbarUtils from "../../../libs/SnackbarUtils";
@@ -18,6 +19,7 @@ const initialForm = {
   logo: "",
   apply_to: "",
   logic: "",
+  industry_id:"",
 };
 
 const useBadgeCreateHook = ({ handleToggleSidePannel, isSidePanel, empId }) => {
@@ -31,20 +33,16 @@ const useBadgeCreateHook = ({ handleToggleSidePannel, isSidePanel, empId }) => {
   const [logos, setLogos] = useState(null);
   const [selectedValues, setSelectedValues] = useState("");
 
-  const [listData, setListData] = useState({
-    ADMIN: [],
-    CHAPTERS: [],
-    EVENTS: [],
-  });
+  const [listData, setListData] = useState(null);
 
-  // useEffect(() => {
-  //   "serviceGetList"(["ADMIN", "CHAPTERS", "EVENTS"]).then((res) => {
-  //     if (!res.error) {
-  //       setListData(res.data);
-  //     }
-  //   });
-  // }, []);
-
+  useEffect(() => {
+    serviceBadgeIndustry({id:empId}).then((res) => {
+      if (!res.error) {
+        setListData(res.data);
+      }
+    });
+  }, []);
+console.log(listData, "Data")
   useEffect(() => {
     if (empId) {
       serviceBadgeDetail({ id: empId }).then((res) => {
@@ -57,6 +55,7 @@ const useBadgeCreateHook = ({ handleToggleSidePannel, isSidePanel, empId }) => {
             name: data?.name,
             apply_to: data?.apply_to,
             logic: data?.logic,
+            industry_id:data?.industries?._id
             // status: data?.status === Constants.GENERAL_STATUS.ACTIVE,
           });
           setLogos(data?.logo);
@@ -109,6 +108,7 @@ const useBadgeCreateHook = ({ handleToggleSidePannel, isSidePanel, empId }) => {
       formData.append("logo", form.logo);
       formData.append("apply_to", form?.apply_to);
       formData.append("logic", form?.logic);
+      formData.append("industry_id", form?.industry_id);
 
       const req = empId
         ? serviceBadgeUpdate(formData, formData.append("id", empId))
@@ -117,7 +117,7 @@ const useBadgeCreateHook = ({ handleToggleSidePannel, isSidePanel, empId }) => {
 
       if (!res.error) {
         handleToggleSidePannel();
-        window.location.reload();
+         window.location.reload();
       } else {
         SnackbarUtils.error(res.response_message);
       }
@@ -160,7 +160,9 @@ const useBadgeCreateHook = ({ handleToggleSidePannel, isSidePanel, empId }) => {
         t[fieldName] = text;
       } else if (fieldName === "category") {
         t[fieldName] = text;
-      } else {
+      } else if (fieldName === "industry_id") {
+        t[fieldName] = text;
+      }else {
         t[fieldName] = text;
       }
 

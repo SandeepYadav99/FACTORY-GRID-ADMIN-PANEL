@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Box, Button, IconButton } from "@material-ui/core";
+import { Box, Button, IconButton, MenuItem } from "@material-ui/core";
 import {
   ArrowRight,
   Delete as DeleteIcon,
@@ -47,9 +47,10 @@ const BadgeView = ({ handleToggleSidePannel, isSidePanel, empId }) => {
     logos,
     data,
     handleDelete,
+    listData
   } = useBadgeCreateHook({ handleToggleSidePannel, isSidePanel, empId });
   const classes = useStyles();
-  console.log(form, "Form detail");
+
   return (
     <div>
       <div className={styles.headerFlex}>
@@ -151,37 +152,24 @@ const BadgeView = ({ handleToggleSidePannel, isSidePanel, empId }) => {
         </div>
 
         {selectedValues === "Yes" ? (
+          <div className={"formFlex"}>
           <div className={"formGroup"}>
-            {/* <Box sx={{ minHeight: 180, flexGrow: 1, maxWidth: 300 }}>
-                <TreeView
-                  aria-label="file system navigator"
-                  defaultCollapseIcon={<ExpandMore />}
-                  defaultExpandIcon={<ArrowRight />}
-                >
-                  <TreeItem nodeId="1" label="Applications">
-                    <TreeItem nodeId="2" label="Calendar" />
-                  </TreeItem>
-                  <TreeItem nodeId="5" label="Documents">
-                    <TreeItem nodeId="10" label="OSS" />
-                    <TreeItem nodeId="6" label="MUI">
-                      <TreeItem nodeId="8" label="index.js" />
-                    </TreeItem>
-                  </TreeItem>
-                </TreeView>
-              </Box> */}
-            <Cascader
-              value={["defaultCategory"]} 
-              isError={errorData.category}
-              label={"Industry"}
-              options={[
-                { value: "defaultCategory", label: "Default Category" },
-                // Add other default options as needed
-              ]}
+            <CustomSelectField
+              isError={errorData?.industry_id}
+              errorText={errorData?.industry_id}
+              label={"Manager"}
+              value={form?.industry_id}
               handleChange={(value) => {
-                changeTextData(value, "category");
+                changeTextData(value, "industry_id");
               }}
-            />
+            >
+              {listData?.map((item) => {
+                return <MenuItem value={item?.id}>{item?.name}</MenuItem>;
+              })}
+            </CustomSelectField>
           </div>
+        </div>
+       
         ) : null}
 
         <div style={{ float: "right" }}>

@@ -10,6 +10,7 @@ import CompanyProfile from "./components/CompanyProfile/CompanyProfile";
 import useCustomerProfileHook from "../../../../helper/CustomerProfileHook";
 import BankDetail from "./components/BankDetail/BankDetail";
 import CompanyRepresentative from "./components/CompanyRepresentative/CompanyRepresentative";
+import SimplePopover from "../../../../components/FormFields/SimplePopover/SimplePopover";
 
 const dummy = [
   require("../../../../assets/img/cover.jpeg"),
@@ -197,6 +198,12 @@ const BusinessDetails = ({ id, userProfile }) => {
                 <ButtonBase className={styles.view} onClick={() => viewFile()}>
                   (View File)
                 </ButtonBase>
+                <div style={{ marginLeft: "10px" }}>
+              <SimplePopover
+                type={"BANKS"}
+                statusType={userProfile?.bankdetail?.cancelled_check_status}
+              />
+            </div>
               </div>
             </div>
             {userProfile?.bankdetail  ? (
