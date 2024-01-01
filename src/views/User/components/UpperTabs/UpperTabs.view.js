@@ -125,6 +125,7 @@ const ProfileView = () => {
             setTypeOf={setTypeOf}
             setPhoneContact={setPhoneContact}
             setValidateContact={setValidateContact}
+            
           />
         </TabPanel>
         <TabPanel value={value} index={1}>

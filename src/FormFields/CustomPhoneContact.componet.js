@@ -40,9 +40,9 @@ const CustomPhoneContactField = ({
         specialLabel=""
         isValid={isValid}
       />
-      {errorText === true  ? (
+      {errorText  ? (
         <span style={{ color: "red", textAlign: "right", fontSize: "12px" }}>
-          Admin User Contact Exists
+        {errorText}
         </span>
       ) : (
         <span></span>

@@ -93,7 +93,6 @@ const useUpperTabsHook = ({
     }
   }, [id]);
 
-
   const validateField = useCallback(
     (field, values, errorKey, existsMessage) => {
       if (value === 1) return;
@@ -114,10 +113,6 @@ const useUpperTabsHook = ({
     [errorData, setErrorData, id, value]
   );
 
-
-
- 
-
   const checkCodeValidation = useCallback(() => {
     validateField("email", form.email, "email", "Admin User Email Exists");
   }, [form.email, id]);
@@ -132,7 +127,12 @@ const useUpperTabsHook = ({
   }, [form.employee_id, id]);
 
   const checkContactValidation = useCallback(() => {
-    validateField("contact", form.contact, "contact", true);
+    validateField(
+      "contact",
+      form.contact,
+      "contact",
+      "Admin User Contact Exists"
+    );
   }, [form.contact, id]);
 
   useEffect(() => {
@@ -185,7 +185,6 @@ const useUpperTabsHook = ({
       if (val === "email" && form?.email && !isEmail(form?.email)) {
         errors.email = "Invalid email address";
       }
- 
     });
 
     Object.keys(errors).forEach((key) => {
