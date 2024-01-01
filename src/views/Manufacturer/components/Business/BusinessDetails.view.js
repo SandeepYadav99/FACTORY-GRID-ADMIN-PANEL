@@ -1,6 +1,6 @@
 import React, { useCallback } from "react";
 import styles from "./Style.module.css";
-import { ButtonBase } from "@material-ui/core";
+import { ButtonBase, Tooltip, withStyles } from "@material-ui/core";
 import VerifiedUserIcon from "@material-ui/icons/VerifiedUser";
 import Rating from "@material-ui/lab/Rating";
 
@@ -10,8 +10,7 @@ import CompanyProfile from "./components/CompanyProfile/CompanyProfile";
 import useCustomerProfileHook from "../../../../helper/CustomerProfileHook";
 import BankDetail from "./components/BankDetail/BankDetail";
 import CompanyRepresentative from "./components/CompanyRepresentative/CompanyRepresentative";
-import SimplePopover from "../../../../components/FormFields/SimplePopover/SimplePopover";
-
+import bankImage from "../../../../assets/img/sent_blue.svg";
 const dummy = [
   require("../../../../assets/img/cover.jpeg"),
   require("../../../../assets/img/cover.jpeg"),
@@ -51,6 +50,13 @@ const BusinessDetails = ({ id, userProfile }) => {
     window.open(url, "_blank");
   }, []);
 
+  const CustomTooltip = withStyles((theme) => ({
+    tooltip: {
+      backgroundColor: "#e3f2fd", 
+      color: "black", 
+      fontSize: theme.typography.fontSize,
+    },
+  }))(Tooltip);
   return (
     <div>
       <div className={styles.upperFlex}>
@@ -198,10 +204,10 @@ const BusinessDetails = ({ id, userProfile }) => {
                   (View File)
                 </ButtonBase>
                 <div style={{ marginLeft: "10px" }}>
-              <SimplePopover
-                type={"BANKS"}
-                statusType={userProfile?.bankdetail?.cancelled_check_status}
-              />
+                  <CustomTooltip title={userProfile?.bankdetail?.cancelled_check_status}>
+                  <img src={bankImage} alt="" height={15} width={15} />
+                  </CustomTooltip>
+            
             </div>
               </div>
             </div>
