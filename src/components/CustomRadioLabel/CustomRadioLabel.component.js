@@ -18,7 +18,9 @@ const CustomRadioLabel = ({
     handleChange(data, name);
   };
 
-  console.log(defaultValue, "DefaultValue");
+  console.log( firstValue,
+    secondValue,
+    thirdValue, "DefaultValue");
   return (
     <form style={{ display: "inline-block" }}>
       <div className="radio-group">

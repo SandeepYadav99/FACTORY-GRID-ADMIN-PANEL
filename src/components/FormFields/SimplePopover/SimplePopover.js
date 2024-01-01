@@ -42,27 +42,23 @@ export default function SimplePopover({
 }) {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
-
+ 
 
 
   const handleMouseEnter = (event) => {
     setAnchorEl(event.currentTarget);
   };
 
-  const handleMouseLeave = () => {
+  const handleMouseLeave = (event) => {
+    event.preventDefault();
     setAnchorEl(null);
   };
-  useEffect(() => {
-    if (isClose) {
-      setAnchorEl(null);
-    }
-  }, [isClose, statusType, anchorEl]);
 
   const open = Boolean(anchorEl);
   const id = open ? "simple-popover" : undefined;
 
   return (
-    <div onMouseLeave={handleMouseLeave}>
+    <div >
       <ButtonBase
         aria-describedby={id}
         // onClick={handleClick}
@@ -80,7 +76,7 @@ export default function SimplePopover({
         id={id}
         open={open}
         anchorEl={anchorEl}
-        onMouseLeave={handleMouseLeave}
+        onMouseOut={handleMouseLeave}
         anchorOrigin={{
           vertical: "right",
           horizontal: "top",

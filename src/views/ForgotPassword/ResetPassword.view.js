@@ -141,9 +141,9 @@ class ResetPasswordView extends Component {
           //   type: "success",
           // });
           this.props.handleClose();
-          // setTimeout(() => {
-          //   historyUtils.push("/login");
-          // }, 1500);
+          setTimeout(() => {
+            historyUtils.push("/login");
+          }, 1500);
         } else {
           SnackbarUtils.error("Invalid Token");
           //   EventEmitter.dispatch(EventEmitter.THROW_ERROR, {

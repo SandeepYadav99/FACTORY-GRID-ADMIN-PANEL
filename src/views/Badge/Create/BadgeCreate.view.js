@@ -47,7 +47,7 @@ const BadgeView = ({ handleToggleSidePannel, isSidePanel, empId }) => {
     logos,
     data,
     handleDelete,
-    listData
+    listData,
   } = useBadgeCreateHook({ handleToggleSidePannel, isSidePanel, empId });
   const classes = useStyles();
 
@@ -153,23 +153,22 @@ const BadgeView = ({ handleToggleSidePannel, isSidePanel, empId }) => {
 
         {selectedValues === "Yes" ? (
           <div className={"formFlex"}>
-          <div className={"formGroup"}>
-            <CustomSelectField
-              isError={errorData?.industry_id}
-              errorText={errorData?.industry_id}
-              label={"Manager"}
-              value={form?.industry_id}
-              handleChange={(value) => {
-                changeTextData(value, "industry_id");
-              }}
-            >
-              {listData?.map((item) => {
-                return <MenuItem value={item?.id}>{item?.name}</MenuItem>;
-              })}
-            </CustomSelectField>
+            <div className={"formGroup"}>
+              <CustomSelectField
+                isError={errorData?.industry_id}
+                errorText={errorData?.industry_id}
+                label={"Manager"}
+                value={form?.industry_id}
+                handleChange={(value) => {
+                  changeTextData(value, "industry_id");
+                }}
+              >
+                {listData?.map((item) => {
+                  return <MenuItem value={item?.id}>{item?.name}</MenuItem>;
+                })}
+              </CustomSelectField>
+            </div>
           </div>
-        </div>
-       
         ) : null}
 
         <div style={{ float: "right" }}>

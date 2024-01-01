@@ -314,6 +314,8 @@ class BlogsList extends Component {
 
   render() {
     const { anchorEl, open } = this.state;
+    const aspectRatio = 16 / 9;
+    const desiredHeight = 40;
     const tableStructure = [
       // {
       //     key: 'category_name',
@@ -326,9 +328,14 @@ class BlogsList extends Component {
         label: "Title",
         sortable: false,
         render: (temp, all) => (
-          <div style={{display:"flex", alignItems:"center"}}>
-            <img src={all?.cover_image} alt="" height={40} width={40}/>
-            <div style={{marginLeft:"10px"}}>{all.title}</div>
+          <div style={{ display: "flex", alignItems: "center" }}>
+            <img
+              src={all?.cover_image}
+              alt=""
+              height={desiredHeight}
+              width={desiredHeight * aspectRatio}
+            />
+            <div style={{ marginLeft: "10px" }}>{all.title}</div>
           </div>
         ),
       },
