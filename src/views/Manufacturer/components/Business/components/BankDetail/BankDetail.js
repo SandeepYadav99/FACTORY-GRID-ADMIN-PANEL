@@ -4,6 +4,7 @@ import { ButtonBase, Tooltip, withStyles } from "@material-ui/core";
 import SimplePopover from "../../../../../../components/FormFields/SimplePopover/SimplePopover";
 import bankImage from "../../../../../../assets/img/sent_blue.svg";
 const BankDetail = ({ bankdetail }) => {
+
   const CustomTooltip = withStyles((theme) => ({
     tooltip: {
       backgroundColor: "#e3f2fd", 
@@ -11,6 +12,7 @@ const BankDetail = ({ bankdetail }) => {
       fontSize: theme.typography.fontSize,
     },
   }))(Tooltip);
+  
   return (
     <div>
       <div>

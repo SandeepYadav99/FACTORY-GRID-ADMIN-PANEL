@@ -1,9 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useCallback, useEffect, useRef, useState } from "react";
-// import { isAlphaNumChars, isSpace } from "../libs/RegexUtils";
-// import useDebounce from "../../../hooks/DebounceHook";
-// import SnackbarUtils from "../../libs/SnackbarUtils";
-import Constants from "../../../config/constants";
+
 import {
   serviceBadgeCreate,
   serviceBadgeDetail,
@@ -12,14 +9,12 @@ import {
 } from "../../../services/Badge.service";
 import SnackbarUtils from "../../../libs/SnackbarUtils";
 
-// import { serviceGetList } from "../../../services/Common.service";
-
 const initialForm = {
   name: "",
   logo: "",
   apply_to: "",
   logic: "",
-  industry_id:"",
+  industry_id: "",
 };
 
 const useBadgeCreateHook = ({ handleToggleSidePannel, isSidePanel, empId }) => {
@@ -36,26 +31,26 @@ const useBadgeCreateHook = ({ handleToggleSidePannel, isSidePanel, empId }) => {
   const [listData, setListData] = useState(null);
 
   useEffect(() => {
-    serviceBadgeIndustry({id:empId}).then((res) => {
+    serviceBadgeIndustry({ id: empId }).then((res) => {
       if (!res.error) {
         setListData(res.data);
       }
     });
   }, []);
-console.log(listData, "Data")
+
   useEffect(() => {
     if (empId) {
       serviceBadgeDetail({ id: empId }).then((res) => {
         if (!res.error) {
           const data = res.data;
-          console.log(data);
+
           setForm({
             ...form,
             // id:data._id,
             name: data?.name,
             apply_to: data?.apply_to,
             logic: data?.logic,
-            industry_id:data?.industries?._id
+            industry_id: data?.industries?._id,
             // status: data?.status === Constants.GENERAL_STATUS.ACTIVE,
           });
           setLogos(data?.logo);
@@ -117,7 +112,7 @@ console.log(listData, "Data")
 
       if (!res.error) {
         handleToggleSidePannel();
-         window.location.reload();
+        window.location.reload();
       } else {
         SnackbarUtils.error(res.response_message);
       }
@@ -162,7 +157,7 @@ console.log(listData, "Data")
         t[fieldName] = text;
       } else if (fieldName === "industry_id") {
         t[fieldName] = text;
-      }else {
+      } else {
         t[fieldName] = text;
       }
 

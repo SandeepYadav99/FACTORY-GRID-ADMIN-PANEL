@@ -1,5 +1,5 @@
 import File from "../../../../../../components/FileComponent/FileComponent.component";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import styles from "./Style.module.css";
 import {
   Button,
@@ -15,7 +15,6 @@ import {
   Add as AddIcon,
   CloudUpload as UploadIcon,
   DeleteOutline as DeleteIcon,
-  Videocam,
 } from "@material-ui/icons";
 import { WaitingComponent } from "../../../../../../components/index.component";
 import {
@@ -40,7 +39,6 @@ const ImageContainer = ({
   image_type,
   galleryTitle,
 }) => {
-  console.log(galleryTitle, "URL");
   return (
     <div className={styles.imgContainer}>
       <div className={styles.imgBtn}>
@@ -232,7 +230,6 @@ const ImageGalleryComponent = ({
     let tempIndex = 0;
 
     remoteImages?.forEach((val, index) => {
-      console.log(val, "Val");
       imagesArr.push(
         <ImageContainer
           url={val}

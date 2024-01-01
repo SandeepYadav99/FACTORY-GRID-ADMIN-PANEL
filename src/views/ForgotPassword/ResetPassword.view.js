@@ -4,27 +4,24 @@
 import React, { Component } from "react";
 import { Field, reduxForm } from "redux-form";
 import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
-import classnames from "classnames";
+
 import styles from "./Forgot.module.css";
 import { renderTextField } from "../../libs/redux-material.utils";
 import {
   CircularProgress,
   Dialog,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
+
 } from "@material-ui/core";
 import { Button, withStyles } from "@material-ui/core";
 import {
-  serviceResetPassword,
+
   serviceResetProfilePassword,
 } from "../../services/index.services";
 import DashboardSnackbar from "../../components/Snackbar.component";
-import { Link } from "react-router-dom";
+
 import Slide from "@material-ui/core/Slide";
 import EventEmitter from "../../libs/Events.utils";
-import { updateTitle } from "../../libs/general.utils";
+
 import SnackbarUtils from "../../libs/SnackbarUtils";
 import historyUtils from "../../libs/history.utils";
 
@@ -258,7 +255,7 @@ ResetPasswordView = reduxForm({
           type: "error",
         });
       } else if (tempErrors.length == 1) {
-        console.log(errors[tempErrors[0]]);
+       
         const temp = errors[tempErrors[0]];
         EventEmitter.dispatch(EventEmitter.THROW_ERROR, {
           error: temp,
