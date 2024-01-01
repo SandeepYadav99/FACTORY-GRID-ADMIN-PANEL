@@ -38,9 +38,9 @@ const ImageContainer = ({
   index,
   localIndex,
   image_type,
-  imageList,
+  galleryTitle,
 }) => {
-  console.log(imageList, image_type);
+  console.log(galleryTitle, "URL");
   return (
     <div className={styles.imgContainer}>
       <div className={styles.imgBtn}>
@@ -54,45 +54,59 @@ const ImageContainer = ({
           <DeleteIcon />
         </ButtonBase>
       </div>
-      <a href={url} target={"_blank"} className={styles.bottomInfo}>
+      <div className={styles.bottomInfo}>
         <div className={styles.imgCard}>
-          <div
-            className={styles.img}
-            style={{
-              backgroundImage: "url(" + url + ")",
-              backgroundSize: "cover",
-            }}
-            alt=""
-          />
-          {url.mime_type == "VIDEO" ? (
+          {image_type === "GALLERY" ? (
+            <div
+              className={styles.img}
+              style={{
+                backgroundImage: "url(" + url.gallery_image + ")",
+                backgroundSize: "cover",
+              }}
+              alt=""
+            />
+          ) : (
+            <div
+              className={styles.img}
+              style={{
+                backgroundImage: "url(" + url.certificate_file + ")",
+                backgroundSize: "cover",
+              }}
+              alt=""
+            />
+          )}
+          {/* {url?.gallery_image?.mime_type === "VIDEO" ? (
             <div className={styles.video}>
               <Videocam className={styles.icn} />
             </div>
           ) : (
             ""
-          )}
+          )} */}
         </div>
-
-        {image_type === "GALLERY" ? (
-          <div className={styles.imgInfo}>
-            <div className={styles.updated}>Image Title / Image Label</div>
-            <div className={styles.updated}>Updated On 22/10/2022 11:00 PM</div>
+      </div>
+      {image_type === "GALLERY" ? (
+        <div className={styles.imgInfo}>
+          <div className={styles.updated}>
+            Image Title / Image Label : {url.image_title}
           </div>
-        ) : (
-          <div className={styles.imgInfo}>
-            <div className={styles.updated}>Certificate Name</div>
-            <div className={styles.updated}>Issued By:</div>
-            <div className={styles.updated}>Validity:</div>
-            <div className={styles.updated}>Updated On 22/10/2022 11:00 PM</div>
+          <div className={styles.updated}>Updated On :{url?.updatedAt}</div>
+        </div>
+      ) : (
+        <div className={styles.imgInfo}>
+          <div className={styles.updated}>
+            Certificate Name : {url.certificate_name}
           </div>
-        )}
-      </a>
+          <div className={styles.updated}>Issued By:{url.issuing_org}</div>
+          <div className={styles.updated}>Validity:{url.validity_date}</div>
+          <div className={styles.updated}>Updated On: {url.updatedAt}</div>
+        </div>
+      )}
     </div>
   );
 };
 
 const ImageGalleryComponent = ({
-  images,
+  // images,
   thumbnail,
   type,
   title,
@@ -103,7 +117,7 @@ const ImageGalleryComponent = ({
   imageList,
 }) => {
   const [localImages, setLocalImages] = useState([]);
-  const [remoteImages, setRemoteImages] = useState(images);
+  const [remoteImages, setRemoteImages] = useState(imageList);
   const [thumbnailIndex, setThumbnailIndex] = useState(thumbnail);
   const [isUploading, setIsUploading] = useState(false);
   const [isDeleteCalling, setIsDeleteCalling] = useState(false);
@@ -113,15 +127,16 @@ const ImageGalleryComponent = ({
     index: null,
     imageIdToDelete: null,
   });
-  useEffect(() => {
-    console.log("Images:", images);
-    console.log("Thumbnail Index:", thumbnailIndex);
-  }, [images, thumbnailIndex]);
 
-  useEffect(() => {
-    setRemoteImages(images);
-    setThumbnailIndex(thumbnail);
-  }, [images, thumbnail]);
+  // useEffect(() => {
+  //   // console.log("Images:", images);
+  //   console.log("Thumbnail Index:", thumbnailIndex);
+  // }, [images, thumbnailIndex]);
+
+  // useEffect(() => {
+  //   // setRemoteImages(images);
+  //   setThumbnailIndex(thumbnail);
+  // }, [images, thumbnail]);
 
   const suspendItem = () => {
     const updatedRemoteImages = [...remoteImages];
@@ -216,7 +231,8 @@ const ImageGalleryComponent = ({
     const imagesArr = [];
     let tempIndex = 0;
 
-    remoteImages.forEach((val, index) => {
+    remoteImages?.forEach((val, index) => {
+      console.log(val, "Val");
       imagesArr.push(
         <ImageContainer
           url={val}
@@ -228,27 +244,26 @@ const ImageGalleryComponent = ({
           index={index}
           localIndex={tempIndex}
           isLocal={false}
-          imageList={imageList}
         />
       );
       tempIndex++;
     });
 
-    localImages.forEach((val, index) => {
-      imagesArr.push(
-        <ImageContainer
-          isLocal
-          url={URL.createObjectURL(val)}
-          handleDelete={handleDeleteImage}
-          handleThumbNail={handleThumbnail}
-          isSelected={thumbnailIndex === tempIndex}
-          type={"LOCAL"}
-          index={index}
-          localIndex={tempIndex}
-        />
-      );
-      tempIndex++;
-    });
+    // localImages.forEach((val, index) => {
+    //   imagesArr.push(
+    //     <ImageContainer
+    //       isLocal
+    //       url={URL.createObjectURL(val)}
+    //       handleDelete={handleDeleteImage}
+    //       handleThumbNail={handleThumbnail}
+    //       isSelected={thumbnailIndex === tempIndex}
+    //       type={"LOCAL"}
+    //       index={index}
+    //       localIndex={tempIndex}
+    //     />
+    //   );
+    //   tempIndex++;
+    // });
 
     if (imagesArr.length > 0) {
       return (

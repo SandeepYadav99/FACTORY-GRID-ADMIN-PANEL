@@ -163,14 +163,13 @@ const BusinessDetails = ({ id, userProfile }) => {
             <ImageGalleryComponent
               title={"GALLERY"}
               image_type={"GALLERY"}
-              images={
-                (userProfile &&
-                  userProfile.galleries &&
-                  userProfile.galleries.map(
-                    (element) => element.gallery_image
-                  )) ||
-                []
-              }
+              // images={
+              //   (
+              //     userProfile?.galleries.map(
+              //       (element) => element.gallery_image
+              //     )) ||
+              //   []
+              // }
               thumbnail={0}
               userId={id}
               imageList={userProfile?.galleries}
@@ -183,10 +182,10 @@ const BusinessDetails = ({ id, userProfile }) => {
             <ImageGalleryComponent
               title={"CERTIFICATES"}
               image_type={"CERTIFICATES"}
-              images={certificateImages || []}
+              // images={certificateImages || []}
               thumbnail={0}
               userId={id}
-              imageList={userProfile.certificate}
+              imageList={userProfile?.certificate}
             />
           </div>
           <div className={styles.plain}>
