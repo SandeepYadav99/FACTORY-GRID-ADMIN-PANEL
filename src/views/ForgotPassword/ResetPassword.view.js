@@ -47,6 +47,9 @@ const validate = (values) => {
   if (values.confirm_password && values.password != values.confirm_password) {
     errors.confirm_password = "Password doesn't matches";
   }
+  if (values.password && values.password.length < 8) {
+    errors.password = "Password must be at least 8 characters";
+  }
   return errors;
 };
 
@@ -183,6 +186,7 @@ class ResetPasswordView extends Component {
               name="password"
               component={renderTextField}
               label="Password*"
+             
             />
           </div>
           <br />
@@ -193,6 +197,7 @@ class ResetPasswordView extends Component {
               name="confirm_password"
               component={renderTextField}
               label="Confirm Password*"
+             
             />
           </div>
           <br />
