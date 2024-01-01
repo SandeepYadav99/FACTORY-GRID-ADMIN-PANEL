@@ -27,7 +27,7 @@
     /*background: #4B80EA;*/
     transition: background 0.3s;
     /*max-width: 90px;*/
-    border-radius: 50px;
+    /* border-radius: 50px; */
 }
 .imgFileLabel {
     display: block;
