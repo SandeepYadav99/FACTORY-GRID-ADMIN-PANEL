@@ -10,10 +10,11 @@ import DataTables from "../../../Datatables/Datatable.table";
 import Constants from "../../../config/constants";
 import FilterComponent from "../../../components/Filter/Filter.component";
 
-import { Add } from "@material-ui/icons";
+import { Add, Create } from "@material-ui/icons";
 
 import useHubMasterHook from "./HubMasterHook";
 import HubMasterCreate from "../Create/HubMasterCreate";
+import StatusPill from "../../../FormFields/Status/StatusPill.component";
 
 const HubMasterList = (props) => {
   const {
@@ -39,7 +40,7 @@ const HubMasterList = (props) => {
     all: allData,
     currentPage,
     is_fetching: isFetching,
-  } = useSelector((state) => state.badge);
+  } = useSelector((state) => state.hubMaster);
 
   const renderFirstCell = useCallback((user) => {
     console.log(user, "User ");
@@ -63,71 +64,49 @@ const HubMasterList = (props) => {
     );
   }, []);
 
-  const renderStatus = useCallback(({ status }) => {
-    const activeStyle = {
-      fontSize: "12px",
-      color: "#20c997",
-      background: "rgba(32,201,151,.1)",
-      padding: "3px 10px",
-      borderRadius: "20px",
-      textTransform: "capitalize",
-    };
-
-    const inactiveStyle = {
-      fontSize: "12px",
-      color: "#fa8b0c",
-      background: `rgba(250,139,12,.1)`,
-      padding: "3px 10px",
-      borderRadius: "20px",
-      textTransform: "capitalize",
-    };
-
-    return (
-      <span style={status === "ACTIVE" ? activeStyle : inactiveStyle}>
-        {status}
-        {/* Hi */}
-      </span>
-    );
-  }, []);
-
   const tableStructure = useMemo(() => {
     return [
       {
         key: "hub",
         label: "Hub Name",
         sortable: true,
-        render: (value, all) => <div>{"HUB"} </div>, //renderFirstCell(all)
+        render: (value, all) => <div>{all?.name} </div>, //renderFirstCell(all)
       },
       {
         key: "industries",
         label: "Associated Industries",
         sortable: true,
-        render: (temp, all) => <div>{"iND"}</div>,
+        render: (temp, all) => <div>{all?.industryData?.name}</div>,
       },
       {
         key: "status",
         label: "Status",
         render: (temp, all) => (
           <div>
-            <Button onClick={() => handleEdit(all)}>Info</Button>
+            <StatusPill status={all?.status} />
           </div>
         ),
       },
       {
         key: "featured",
         label: "Featured",
-        render: (temp, all) => (
-          <div>
-            <Button onClick={() => handleEdit(all)}>Info</Button>
-          </div>
-        ),
+        render: (temp, all) => <div>{all?.featured ? "Yes" : "No"}</div>,
       },
       {
         key: "user_id",
         label: "Action",
         render: (temp, all) => (
           <div>
-            <Button onClick={() => handleEdit(all)}>Info</Button>
+            <IconButton
+              className={"tableActionBtn"}
+              color="secondary"
+              disabled={isCalling}
+              onClick={() => {
+                handleSideToggle(all?.id);
+              }}
+            >
+              <Create fontSize={"small"} />
+            </IconButton>
           </div>
         ),
       },
@@ -138,7 +117,7 @@ const HubMasterList = (props) => {
     isCalling,
     // renderContact,
     renderFirstCell,
-    renderStatus,
+
     handleEdit,
   ]);
 

@@ -12,10 +12,9 @@ import { serviceHubMasterCreate, serviceHubMasterDetail, serviceHubMasterUpdate 
 
 const initialForm = {
   name: "",
-  logo: "",
-  apply_to: "",
-  logic: "",
+  geofence:"",
   industry_id: "",
+  featured:false
 };
 
 const useHubMasterCreateHook = ({ handleToggleSidePannel, isSidePanel, empId }) => {
@@ -50,14 +49,15 @@ const useHubMasterCreateHook = ({ handleToggleSidePannel, isSidePanel, empId }) 
 
           setForm({
             ...form,
-            // id:data._id,
+           
             name: data?.name,
-            apply_to: data?.apply_to,
-            logic: data?.logic,
+         
             industry_id: data?.industries?._id,
+            featured:data?.featured,
+            geofence:data?.geofence
             // status: data?.status === Constants.GENERAL_STATUS.ACTIVE,
           });
-          setLogos(data?.logo);
+      
         } else {
           // SnackbarUtils.error(res?.message);
         }
@@ -82,7 +82,7 @@ const useHubMasterCreateHook = ({ handleToggleSidePannel, isSidePanel, empId }) 
 
   const checkFormValidation = useCallback(() => {
     const errors = { ...errorData };
-    let required = ["name", ...(empId ? [] : ["logo"])];
+    let required = ["name"];
 
     required.forEach((val) => {
       if (
@@ -103,24 +103,31 @@ const useHubMasterCreateHook = ({ handleToggleSidePannel, isSidePanel, empId }) 
     return errors;
   }, [form, errorData]);
 
-  const submitToServer = useCallback(async () => {
+  const submitToServer = useCallback( () => {
     if (isSubmitting) {
       return;
     }
 
     setIsSubmitting(true);
 
-    const formData = new FormData();
-   
+    const updateData ={
+      name:form?.name,
+      industry_id:form?.industry_id,
+      geofence:"geofence",
+      featured:form?.featured
+    }
+    if (empId) {
+      updateData.id = empId 
+    }
 
     const req = empId
-      ? serviceHubMasterUpdate(formData, formData.append("id", empId))
-      : serviceHubMasterCreate(formData); //
-    const res = await req;
+      ? serviceHubMasterUpdate(updateData)
+      : serviceHubMasterCreate(updateData); //
+    const res =  req;
 
     if (!res.error) {
       handleToggleSidePannel();
-      window.location.reload();
+      // window.location.reload();
     } else {
       SnackbarUtils.error(res.response_message);
     }
@@ -128,13 +135,13 @@ const useHubMasterCreateHook = ({ handleToggleSidePannel, isSidePanel, empId }) 
     setIsSubmitting(false);
   }, [form, isSubmitting, setIsSubmitting, empId, handleToggleSidePannel]);
 
-  const handleSubmit = useCallback(async () => {
+  const handleSubmit = useCallback( () => {
     const errors = checkFormValidation();
 
     if (Object.keys(errors).length > 0) {
       setErrorData(errors);
     } else {
-      await submitToServer();
+       submitToServer();
     }
   }, [checkFormValidation, setErrorData, form, submitToServer, empId]);
 

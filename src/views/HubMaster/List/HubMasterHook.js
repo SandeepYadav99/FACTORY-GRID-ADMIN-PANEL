@@ -20,7 +20,7 @@ const useHubMasterHook = ({}) => {
     query,
     query_data: queryData,
     all,
-  } = useSelector((state) => state.badge);
+  } = useSelector((state) => state.hubMaster);
 
   useEffect(() => {
     dispatch(
@@ -131,6 +131,7 @@ const useHubMasterHook = ({}) => {
       setSidePanel((e) => !e);
       //  historyUtils.push("/badge");
       // historyUtils.goBack();
+      setEditId(data)
       setEditData(null)
     },
     [setEditData, setSidePanel]

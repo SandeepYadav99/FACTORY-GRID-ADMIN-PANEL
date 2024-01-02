@@ -48,7 +48,7 @@ const HubMasterCreate = ({ handleToggleSidePannel, isSidePanel, empId }) => {
     handleDelete,
     listData,
     geofence,
-    handleCoordinate
+    handleCoordinate,
   } = useHubMasterCreateHook({ handleToggleSidePannel, isSidePanel, empId });
   const classes = useStyles();
 
@@ -74,72 +74,69 @@ const HubMasterCreate = ({ handleToggleSidePannel, isSidePanel, empId }) => {
       </div>
 
       <div>
-       <div className={"formFlex"}>
-            <div className={"formGroup"}>
-              <CustomTextField
-                isError={errorData?.name}
-                errorText={errorData?.name}
-                label={"Hub Name"}
-                value={form?.name}
-                onTextChange={(text) => {
-                  changeTextData(text, "name");
-                }}
-                onBlur={() => {
-                  onBlurHandler("name");
-                }}
-              />
-            </div>
+        <div className={"formFlex"}>
+          <div className={"formGroup"}>
+            <CustomTextField
+              isError={errorData?.name}
+              errorText={errorData?.name}
+              label={"Hub Name"}
+              value={form?.name}
+              onTextChange={(text) => {
+                changeTextData(text, "name");
+              }}
+              onBlur={() => {
+                onBlurHandler("name");
+              }}
+            />
           </div>
-          <div className={"formFlex"}>
-            <div className={"formGroup"}>
-              <CustomSelectField
-                isError={errorData?.industry_id}
-                errorText={errorData?.industry_id}
-                label={"Associated Industries"}
-                value={form?.industry_id}
-                handleChange={(value) => {
-                  changeTextData(value, "industry_id");
-                }}
-              >
-                {listData?.map((item) => {
-                  return <MenuItem value={item?.id}>{item?.name}</MenuItem>;
-                })}
-              </CustomSelectField>
-            </div>
-          </div>
-          <div className={"formFlex"}>
-        <div className="formGroup">
-        <p>Draw the boundary for the Hub</p>
-          <Geofencing polygon={geofence} handleSave={handleCoordinate} />
         </div>
-      </div>
-      <div className={"headerFlex"}>
-        <h4 className={"infoTitle"}>
-          <div className={"heading"}>Status</div>
-          <CustomSwitch
-            value={form?.is_active}
-            handleChange={() => {
-              changeTextData(!form?.is_active, "is_active");
-            }}
-            label={`Active`}
-          />
-        </h4>
-      </div>
-      <div>
-                <div className={"formGroup"}>
-                  <CustomCheckbox
-                    color={"primary"}
-                    handleChange={() => {
-                      changeTextData(
-                        !form?.is_first_employment_verification,
-                        "is_first_employment_verification"
-                      );
-                    }}
-                    label={"Featured"}
-                    checked={form?.is_first_employment_verification}
-                  />
-                </div>
-              </div>
+        <div className={"formFlex"}>
+          <div className={"formGroup"}>
+            <CustomSelectField
+              isError={errorData?.industry_id}
+              errorText={errorData?.industry_id}
+              label={"Associated Industries"}
+              value={form?.industry_id}
+              handleChange={(value) => {
+                changeTextData(value, "industry_id");
+              }}
+            >
+              {listData?.map((item) => {
+                return <MenuItem value={item?.id}>{item?.name}</MenuItem>;
+              })}
+            </CustomSelectField>
+          </div>
+        </div>
+        <div className={"formFlex"}>
+          <div className="formGroup">
+            <p>Draw the boundary for the Hub</p>
+            <Geofencing polygon={geofence} handleSave={handleCoordinate} />
+          </div>
+        </div>
+        <div className={"headerFlex"}>
+          <h4 className={"infoTitle"}>
+            <div className={"heading"}>Status</div>
+            <CustomSwitch
+              value={form?.is_active}
+              handleChange={() => {
+                changeTextData(!form?.is_active, "is_active");
+              }}
+              label={`Active`}
+            />
+          </h4>
+        </div>
+        <div>
+          <div className={"formGroup"}>
+            <CustomCheckbox
+              color={"primary"}
+              handleChange={() => {
+                changeTextData(!form?.featured, "featured");
+              }}
+              label={"Featured"}
+              checked={form?.featured}
+            />
+          </div>
+        </div>
         <div style={{ float: "right" }}>
           <Button
             variant={"contained"}
