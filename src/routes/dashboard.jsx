@@ -43,6 +43,9 @@ import {
   Settings,
 } from "@material-ui/icons";
 import RouteName from "./Route.name";
+import HubMasterList from "../views/HubMaster/List/HubmasterList";
+
+
 
 const dashboardRoutes = [
   {
@@ -306,6 +309,16 @@ const dashboardRoutes = [
     icon: SupervisedUserCircle,
     component: QuoteDetail,
     is_sidebar: false,
+    is_protect: true,
+    should_regex: false,
+  },
+  {
+    path: RouteName.HUB_MASTERS,
+    sidebarName: "Hub Master",
+    navbarName: "Hub Master",
+    icon: EventNote,
+    component: HubMasterList,
+    is_sidebar: true,
     is_protect: true,
     should_regex: false,
   },
