@@ -71,7 +71,7 @@ const useHubMasterCreateHook = ({
       });
     }
   }, [empId]);
-
+console.log(geofence, "Form")
   useEffect(() => {
     if (!isSidePanel) {
       handleReset();
@@ -80,7 +80,7 @@ const useHubMasterCreateHook = ({
 
   const handleCoordinate = useCallback(
     (data) => {
-      setGeoFence([0, 0]);
+      setGeoFence(data);
     },
     [setGeoFence]
   );
