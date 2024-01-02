@@ -68,7 +68,7 @@ const BusinessDetails = ({ id, userProfile }) => {
                 Company Name{" "}
               </div>
               <a className={styles.coord} href={"#"}  onClick={()=>openGoogleMaps(userProfile?.business?.company_fg_lat)}>
-                {userProfile?.business?.company_name || "N/A"}
+             {userProfile?.business?.company_name || "N/A"} 
                 {/* FG Coordinates */}
               </a>
               <div className={styles.member}>

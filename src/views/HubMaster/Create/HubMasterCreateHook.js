@@ -9,6 +9,8 @@ import {
   serviceHubMasterUpdate,
 } from "../../../services/HubMaster.service";
 import constants from "../../../config/constants";
+import { useDispatch } from "react-redux";
+import { actionFetchHubMaster } from "../../../actions/HubMaster.action";
 
 const initialForm = {
   name: "",
@@ -30,10 +32,9 @@ const useHubMasterCreateHook = ({
   const [form, setForm] = useState({ ...initialForm });
   const [isEdit] = useState(false);
   const includeRef = useRef(null);
-  const [selectedValues, setSelectedValues] = useState("");
   const [geofence, setGeoFence] = useState([]);
   const [listData, setListData] = useState(null);
-
+  const dispatch = useDispatch();
   useEffect(() => {
     serviceBadgeIndustry({ id: empId }).then((res) => {
       if (!res.error) {
@@ -104,7 +105,7 @@ const useHubMasterCreateHook = ({
     return errors;
   }, [form, errorData]);
 
-  const submitToServer = useCallback(async() => {
+  const submitToServer = useCallback(async () => {
     if (isSubmitting) {
       return;
     }
@@ -132,11 +133,12 @@ const useHubMasterCreateHook = ({
     const req = empId
       ? serviceHubMasterUpdate(updateData)
       : serviceHubMasterCreate(updateData); //
-    const res =await req;
+    const res = await req;
 
     if (!res.error) {
       handleToggleSidePannel();
-       window.location.reload();
+      //  window.location.reload();
+      dispatch(actionFetchHubMaster(1));
     } else {
       SnackbarUtils.error(res.message);
     }
@@ -144,13 +146,13 @@ const useHubMasterCreateHook = ({
     setIsSubmitting(false);
   }, [form, isSubmitting, setIsSubmitting, empId, handleToggleSidePannel]);
 
-  const handleSubmit = useCallback(async() => {
+  const handleSubmit = useCallback(async () => {
     const errors = checkFormValidation();
 
     if (Object.keys(errors).length > 0) {
       setErrorData(errors);
     } else {
-     await submitToServer();
+      await submitToServer();
       // window.location.reload();
     }
   }, [checkFormValidation, setErrorData, form, submitToServer, empId]);
@@ -167,16 +169,19 @@ const useHubMasterCreateHook = ({
   const changeTextData = useCallback(
     (text, fieldName) => {
       console.log(text);
-    
+
       let shouldRemoveError = true;
       const t = { ...form };
       if (fieldName === "name") {
         t[fieldName] = text;
       } else if (fieldName === "industry_id") {
         t[fieldName] = text.filter((item, index, self) => {
-          return index === self.findIndex((i) => i.id === item.id && i._id === item._id);
+          return (
+            index ===
+            self.findIndex((i) => i.id === item.id && i._id === item._id)
+          );
         });
-      }  else {
+      } else {
         t[fieldName] = text;
       }
 
@@ -219,7 +224,6 @@ const useHubMasterCreateHook = ({
     showPasswordCurrent,
     setShowPasswordCurrent,
 
-    selectedValues,
     geofence,
     setGeoFence,
     handleCoordinate,
