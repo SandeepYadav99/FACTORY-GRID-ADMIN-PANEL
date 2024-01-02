@@ -76,12 +76,17 @@ const HubMasterList = (props) => {
         key: "industries",
         label: "Associated Industries",
         sortable: true,
-        render: (temp, all) => <div >    {all?.industryData?.map((industry, index) => (
-          <React.Fragment key={index}>
-            {industry.name}
-            {index < all.industryData.length - 1 && <br/>} 
-          </React.Fragment>
-        ))}</div>,
+        render: (temp, all) => (
+          <div>
+            {" "}
+            {all?.industryData?.map((industry, index) => (
+              <React.Fragment key={index}>
+                {industry.name}
+                {index < all.industryData.length - 1 && <br />}
+              </React.Fragment>
+            ))}
+          </div>
+        ),
       },
       {
         key: "status",
@@ -95,7 +100,7 @@ const HubMasterList = (props) => {
       {
         key: "featured",
         label: "Featured",
-        render: (temp, all) => <div>{all?.featured }</div>,
+        render: (temp, all) => <div>{all?.featured}</div>,
       },
       {
         key: "user_id",
