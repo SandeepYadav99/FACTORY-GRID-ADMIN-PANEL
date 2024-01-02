@@ -1,12 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useCallback, useEffect, useRef, useState } from "react";
 
-import {
-  serviceBadgeCreate,
-  serviceBadgeDetail,
-  serviceBadgeIndustry,
-  serviceBadgeUpdate,
-} from "../../../services/Badge.service";
+import { serviceBadgeIndustry } from "../../../services/Badge.service";
 import SnackbarUtils from "../../../libs/SnackbarUtils";
 import {
   serviceHubMasterCreate,
@@ -35,12 +30,10 @@ const useHubMasterCreateHook = ({
   const [form, setForm] = useState({ ...initialForm });
   const [isEdit] = useState(false);
   const includeRef = useRef(null);
-  const [logos, setLogos] = useState(null);
   const [selectedValues, setSelectedValues] = useState("");
-  const [geofence, setGeoFence] = useState(null);
+  const [geofence, setGeoFence] = useState([]);
   const [listData, setListData] = useState(null);
-  const [lat, setLat] = useState(0);
-  const [lng, setLng] = useState(0);
+
   useEffect(() => {
     serviceBadgeIndustry({ id: empId }).then((res) => {
       if (!res.error) {
@@ -57,21 +50,25 @@ const useHubMasterCreateHook = ({
 
           setForm({
             ...form,
-
             name: data?.name,
+            industry_id: data?.industryData,
+            featured: data?.featured === "YES",
 
-            industry_id: data?.industries?._id,
-            featured: data?.featured,
-            geofence: data?.geofence,
-            // status: data?.status === constants.GENERAL_STATUS.ACTIVE,
+            status: data?.status === constants.GENERAL_STATUS.ACTIVE,
           });
+          setGeoFence(
+            data?.geofence?.coordinates
+              ? data?.geofence?.coordinates[0]?.map((coordinate) => [
+                  ...coordinate,
+                ])
+              : []
+          );
         } else {
-          // SnackbarUtils.error(res?.message);
         }
       });
     }
   }, [empId]);
-  console.log(geofence, "Form");
+
   useEffect(() => {
     if (!isSidePanel) {
       handleReset();
@@ -87,7 +84,7 @@ const useHubMasterCreateHook = ({
 
   const checkFormValidation = useCallback(() => {
     const errors = { ...errorData };
-    let required = ["name"];
+    let required = ["name", "industry_id"];
 
     required.forEach((val) => {
       if (
@@ -107,7 +104,7 @@ const useHubMasterCreateHook = ({
     });
     return errors;
   }, [form, errorData]);
-  console.log(form, "Form");
+
   const submitToServer = useCallback(() => {
     if (isSubmitting) {
       return;
@@ -115,8 +112,8 @@ const useHubMasterCreateHook = ({
 
     setIsSubmitting(true);
     const industryID =
-      Array.isArray(form?.industry_id) && form.industry_id.length > 0
-        ? form.industry_id.map((item) => item.id)
+      Array.isArray(form?.industry_id) && form?.industry_id.length > 0
+        ? form.industry_id?.map((item) => item.id)
         : [];
 
     const updateData = {
@@ -124,7 +121,7 @@ const useHubMasterCreateHook = ({
       industry_id: industryID,
       geofence_coordinates: {
         type: "Polygon",
-        coordinates: geofence ? geofence : null,
+        coordinates: geofence ? geofence : [],
       },
       featured: form?.featured ? "YES" : "NO",
       status: form?.status ? "ACTIVE" : "INACTIVE",
@@ -140,7 +137,7 @@ const useHubMasterCreateHook = ({
 
     if (!res.error) {
       handleToggleSidePannel();
-      // window.location.reload();
+      window.location.reload();
     } else {
       SnackbarUtils.error(res.response_message);
     }
@@ -181,6 +178,8 @@ const useHubMasterCreateHook = ({
         t[fieldName] = text.filter((item, index, self) => {
           return index === self?.findIndex((i) => i?.id === item?.id);
         });
+      } else if (fieldName === "featured") {
+        t[fieldName] = text;
       } else {
         t[fieldName] = text;
       }
@@ -223,7 +222,7 @@ const useHubMasterCreateHook = ({
     empId,
     showPasswordCurrent,
     setShowPasswordCurrent,
-    logos,
+
     selectedValues,
     geofence,
     setGeoFence,

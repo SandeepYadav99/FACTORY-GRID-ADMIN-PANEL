@@ -141,7 +141,7 @@ const HubMasterCreate = ({ handleToggleSidePannel, isSidePanel, empId }) => {
                 changeTextData(!form?.featured, "featured");
               }}
               label={"Featured"}
-              checked={form?.featured}
+              checked={form?.featured }
             />
           </div>
         </div>

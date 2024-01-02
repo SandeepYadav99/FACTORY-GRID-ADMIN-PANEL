@@ -78,44 +78,28 @@ class Geofencing extends Component {
         loadScript("https://maps.googleapis.com/maps/api/js?key=" + constants.GOOGLE_MAP_KEY + "&libraries=geometry,drawing,places&callback=initMap");
         window.initMap = this.initMap
     }
-    componentDidUpdate(prevProps) {
-        if (this.props.polygon !== prevProps.polygon) {
-          this._updatePolygon(this.props.polygon);
-        }
-      }
+ 
       
     
-    // _updatePolygon(data) {
-    //     const { handleSave } = this.props;
-       
-    //     this.setState({
-    //         polygon: data,
-    //     });
-    //     handleSave(data);
-       
-    // }
     _updatePolygon(data) {
         const { handleSave } = this.props;
-        console.log('Updated Polygon:', data);
-      
-        // Check if `data` is different from the current state to avoid unnecessary updates
-        if (data !== this.state?.polygon) {
-          this.setState({
+       
+        this.setState({
             polygon: data,
-          });
+        });
+        handleSave(data);
+       
+    }
+
       
-          // Only call handleSave if the data has changed
-          handleSave(data);
-        }
-      }
       
-      
+
     _renderUpdatePolygon() {
         const google = window.google;
         const { polygon } = this.props;
     
         // Check if the polygon array is empty or undefined
-        if (!polygon || polygon?.length === 0) {
+        if (!polygon || polygon.length === 0) {
             // Handle the case where the polygon is empty
             console.warn('Polygon data is empty or undefined.');
             return;
