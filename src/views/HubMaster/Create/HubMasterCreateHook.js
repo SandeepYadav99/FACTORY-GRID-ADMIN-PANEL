@@ -84,8 +84,7 @@ const useHubMasterCreateHook = ({
 
   const checkFormValidation = useCallback(() => {
     const errors = { ...errorData };
-    let required = ["name"];
-
+    let required = ["name", "industry_id"];
     required.forEach((val) => {
       if (
         !form?.[val] ||
@@ -104,7 +103,7 @@ const useHubMasterCreateHook = ({
     });
     return errors;
   }, [form, errorData]);
-console.log(form?.industry_id, "id")
+
   const submitToServer = useCallback(async() => {
     if (isSubmitting) {
       return;
@@ -113,7 +112,7 @@ console.log(form?.industry_id, "id")
     setIsSubmitting(true);
     const industryID =
       Array.isArray(form.industry_id) && form.industry_id.length > 0
-        ? form.industry_id.map((item) => item._id)
+        ? form.industry_id.map((item) => item.id || item._id)
         : [];
 
     const updateData = {
@@ -139,7 +138,7 @@ console.log(form?.industry_id, "id")
       handleToggleSidePannel();
        window.location.reload();
     } else {
-      SnackbarUtils.error(res.response_message);
+      SnackbarUtils.error(res.message);
     }
 
     setIsSubmitting(false);
@@ -175,7 +174,7 @@ console.log(form?.industry_id, "id")
         t[fieldName] = text;
       } else if (fieldName === "industry_id") {
         t[fieldName] = text.filter((item, index, self) => {
-          return index === self.findIndex((i) => i.id === item.id);
+          return index === self.findIndex((i) => i.id === item.id && i._id === item._id);
         });
       }  else {
         t[fieldName] = text;

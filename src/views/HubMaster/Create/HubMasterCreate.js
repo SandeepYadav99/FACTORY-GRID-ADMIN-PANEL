@@ -99,10 +99,10 @@ const HubMasterCreate = ({ handleToggleSidePannel, isSidePanel, empId }) => {
                   onChange={(e, value) => {
                     changeTextData(value, "industry_id");
                   }}
-                  value={form?.industry_id || []}
+                  value={form.industry_id || []}
                   // id="tags-standard"
                   options={listData || []}
-                  getOptionLabel={(option) => option?.name}
+                  getOptionLabel={(option) => option.name}
                   defaultValue={form?.industry_id || []}
                   renderInput={(params) => (
                     <TextField
