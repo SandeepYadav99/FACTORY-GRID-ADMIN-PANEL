@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Box, Button, IconButton, MenuItem } from "@material-ui/core";
+import { Box, Button, IconButton, MenuItem, TextField } from "@material-ui/core";
 import {
   ArrowRight,
   Delete as DeleteIcon,
@@ -17,7 +17,7 @@ import { makeStyles } from "@material-ui/styles";
 
 import File from "../../../components/FileComponent/FileComponent.component";
 import CustomTextField from "../../../FormFields/TextField.component";
-import { TreeItem, TreeView } from "@material-ui/lab";
+import { Autocomplete, TreeItem, TreeView } from "@material-ui/lab";
 import CustomSelectField from "../../../FormFields/SelectField/SelectField.component";
 import Cascader from "../../../components/FormFields/Cascader/Cascader";
 import useHubMasterCreateHook from "./HubMasterCreateHook";
@@ -92,19 +92,27 @@ const HubMasterCreate = ({ handleToggleSidePannel, isSidePanel, empId }) => {
         </div>
         <div className={"formFlex"}>
           <div className={"formGroup"}>
-            <CustomSelectField
-              isError={errorData?.industry_id}
-              errorText={errorData?.industry_id}
-              label={"Associated Industries"}
-              value={form?.industry_id}
-              handleChange={(value) => {
-                changeTextData(value, "industry_id");
-              }}
-            >
-              {listData?.map((item) => {
-                return <MenuItem value={item?.id}>{item?.name}</MenuItem>;
-              })}
-            </CustomSelectField>
+      
+              <Autocomplete
+                  multiple
+                  id="tags-outlined"
+                  onChange={(e, value) => {
+                    changeTextData(value, "industry_id");
+                  }}
+                  value={form?.industry_id || []}
+                  // id="tags-standard"
+                  options={listData || []}
+                  getOptionLabel={(option) => option?.name}
+                  defaultValue={form?.name || []}
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      variant="outlined"
+                      label="Choose Events"
+                      error={errorData?.industry_id}
+                    />
+                  )}
+                />
           </div>
         </div>
         <div className={"formFlex"}>
@@ -117,9 +125,9 @@ const HubMasterCreate = ({ handleToggleSidePannel, isSidePanel, empId }) => {
           <h4 className={"infoTitle"}>
             <div className={"heading"}>Status</div>
             <CustomSwitch
-              value={form?.is_active}
+              value={form?.status}
               handleChange={() => {
-                changeTextData(!form?.is_active, "is_active");
+                changeTextData(!form?.status, "status");
               }}
               label={`Active`}
             />

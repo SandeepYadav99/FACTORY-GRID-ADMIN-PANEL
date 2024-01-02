@@ -8,16 +8,26 @@ import {
   serviceBadgeUpdate,
 } from "../../../services/Badge.service";
 import SnackbarUtils from "../../../libs/SnackbarUtils";
-import { serviceHubMasterCreate, serviceHubMasterDetail, serviceHubMasterUpdate } from "../../../services/HubMaster.service";
+import {
+  serviceHubMasterCreate,
+  serviceHubMasterDetail,
+  serviceHubMasterUpdate,
+} from "../../../services/HubMaster.service";
+import constants from "../../../config/constants";
 
 const initialForm = {
   name: "",
-  geofence:"",
-  industry_id: "",
-  featured:false
+  geofence: "",
+  industry_id: [],
+  featured: false,
+  status: false,
 };
 
-const useHubMasterCreateHook = ({ handleToggleSidePannel, isSidePanel, empId }) => {
+const useHubMasterCreateHook = ({
+  handleToggleSidePannel,
+  isSidePanel,
+  empId,
+}) => {
   const [isLoading] = useState(false);
   const [showPasswordCurrent, setShowPasswordCurrent] = useState(false);
   const [errorData, setErrorData] = useState({});
@@ -27,9 +37,7 @@ const useHubMasterCreateHook = ({ handleToggleSidePannel, isSidePanel, empId }) 
   const includeRef = useRef(null);
   const [logos, setLogos] = useState(null);
   const [selectedValues, setSelectedValues] = useState("");
-  const [geofence, setGeoFence] = useState([
-   
-]);
+  const [geofence, setGeoFence] = useState([]);
   const [listData, setListData] = useState(null);
   const [lat, setLat] = useState(0);
   const [lng, setLng] = useState(0);
@@ -49,15 +57,14 @@ const useHubMasterCreateHook = ({ handleToggleSidePannel, isSidePanel, empId }) 
 
           setForm({
             ...form,
-           
+
             name: data?.name,
-         
+
             industry_id: data?.industries?._id,
-            featured:data?.featured,
-            geofence:data?.geofence
-            // status: data?.status === Constants.GENERAL_STATUS.ACTIVE,
+            featured: data?.featured,
+            geofence: data?.geofence,
+            status: data?.status === constants.GENERAL_STATUS.ACTIVE,
           });
-      
         } else {
           // SnackbarUtils.error(res?.message);
         }
@@ -73,11 +80,9 @@ const useHubMasterCreateHook = ({ handleToggleSidePannel, isSidePanel, empId }) 
 
   const handleCoordinate = useCallback(
     (data) => {
-   
-      setGeoFence([0,0]);
-  
+      setGeoFence([0, 0]);
     },
-    [ setGeoFence]
+    [setGeoFence]
   );
 
   const checkFormValidation = useCallback(() => {
@@ -102,28 +107,32 @@ const useHubMasterCreateHook = ({ handleToggleSidePannel, isSidePanel, empId }) 
     });
     return errors;
   }, [form, errorData]);
-
-  const submitToServer = useCallback( () => {
+  console.log(form, "Form");
+  const submitToServer = useCallback(() => {
     if (isSubmitting) {
       return;
     }
 
     setIsSubmitting(true);
-
-    const updateData ={
-      name:form?.name,
-      industry_id:form?.industry_id,
-      geofence:"geofence",
-      featured:form?.featured
-    }
+    const industryID =
+      Array.isArray(form?.industry_id) && form.industry_id.length > 0
+        ? form.industry_id.map((item) => item.id)
+        : [];
+    const updateData = {
+      name: form?.name,
+      industry_id: industryID,
+      geofence: "geofence",
+      featured: form?.featured,
+      status: form?.status ? "ACTIVE":"INACTIVE"
+    };
     if (empId) {
-      updateData.id = empId 
+      updateData.id = empId;
     }
 
     const req = empId
       ? serviceHubMasterUpdate(updateData)
       : serviceHubMasterCreate(updateData); //
-    const res =  req;
+    const res = req;
 
     if (!res.error) {
       handleToggleSidePannel();
@@ -135,13 +144,13 @@ const useHubMasterCreateHook = ({ handleToggleSidePannel, isSidePanel, empId }) 
     setIsSubmitting(false);
   }, [form, isSubmitting, setIsSubmitting, empId, handleToggleSidePannel]);
 
-  const handleSubmit = useCallback( () => {
+  const handleSubmit = useCallback(() => {
     const errors = checkFormValidation();
 
     if (Object.keys(errors).length > 0) {
       setErrorData(errors);
     } else {
-       submitToServer();
+      submitToServer();
     }
   }, [checkFormValidation, setErrorData, form, submitToServer, empId]);
 
@@ -156,6 +165,7 @@ const useHubMasterCreateHook = ({ handleToggleSidePannel, isSidePanel, empId }) 
 
   const changeTextData = useCallback(
     (text, fieldName) => {
+      console.log(text);
       if (fieldName === "Industry_Specific") {
         setSelectedValues(text);
       }
@@ -163,12 +173,10 @@ const useHubMasterCreateHook = ({ handleToggleSidePannel, isSidePanel, empId }) 
       const t = { ...form };
       if (fieldName === "name") {
         t[fieldName] = text;
-      } else if (fieldName === "logo") {
-        t[fieldName] = text;
-      } else if (fieldName === "category") {
-        t[fieldName] = text;
       } else if (fieldName === "industry_id") {
-        t[fieldName] = text;
+        t[fieldName] = text.filter((item, index, self) => {
+          return index === self?.findIndex((i) => i?.id === item?.id);
+        });
       } else {
         t[fieldName] = text;
       }
@@ -215,7 +223,7 @@ const useHubMasterCreateHook = ({ handleToggleSidePannel, isSidePanel, empId }) 
     selectedValues,
     geofence,
     setGeoFence,
-    handleCoordinate
+    handleCoordinate,
   };
 };
 

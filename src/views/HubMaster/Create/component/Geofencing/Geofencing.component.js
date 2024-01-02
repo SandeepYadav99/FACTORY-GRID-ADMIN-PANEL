@@ -78,18 +78,24 @@ class Geofencing extends Component {
         loadScript("https://maps.googleapis.com/maps/api/js?key=" + constants.GOOGLE_MAP_KEY + "&libraries=geometry,drawing,places&callback=initMap");
         window.initMap = this.initMap
     }
-
+    componentDidUpdate(prevProps) {
+        if (this.props.polygon !== prevProps.polygon) {
+          this._updatePolygon(this.props.polygon);
+        }
+      }
+      
     
     _updatePolygon(data) {
         const { handleSave } = this.props;
-        console.log('Updated Polygon:', this.props.polygon);
+       
         this.setState({
             polygon: data,
         });
         handleSave(data);
        
     }
-
+   
+      
     _renderUpdatePolygon() {
         const google = window.google;
         const { polygon } = this.props;
