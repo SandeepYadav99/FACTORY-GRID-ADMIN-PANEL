@@ -14,3 +14,7 @@ export async function serviceGetCustomers(params) {
 export async function serviceGetCustomersProfile(params) {
     return await postRequest('user/get/user/profile', params);
 }
+
+export async function serviceGetUserSuspend(params) {
+    return await postRequest('user/suspend', params);
+}

@@ -5,6 +5,10 @@ import SimplePopover from "../../../../../../components/FormFields/SimplePopover
 import bankImage from "../../../../../../assets/img/sent_blue.svg";
 const BankDetail = ({ bankdetail }) => {
 
+  if (!bankdetail) {
+    return <div>Not Found</div>;
+  }
+  
   const CustomTooltip = withStyles((theme) => ({
     tooltip: {
       backgroundColor: "#e3f2fd", 

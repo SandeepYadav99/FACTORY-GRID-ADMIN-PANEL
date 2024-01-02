@@ -324,7 +324,7 @@ const useUpperTabsHook = ({
   const handleReset = useCallback(() => {
     setForm({ ...initialForm });
   }, [form]);
-  console.log(errorData, "ErrorData");
+
   return {
     form,
     changeTextData,

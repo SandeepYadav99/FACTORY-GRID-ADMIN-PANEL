@@ -9,6 +9,8 @@ import Slide from "@material-ui/core/Slide";
 import Dialog from "@material-ui/core/Dialog";
 import styles from "./Style.module.css";
 import { makeStyles } from "@material-ui/styles";
+import SnackbarUtils from "../../../../libs/SnackbarUtils";
+import { serviceGetUserSuspend } from "../../../../services/CustomersRequest.service";
 
 
 
@@ -41,15 +43,15 @@ const SuspendPopup = ({ isOpen, handleToggle, candidateId }) => {
   
   const handleSubmit = () => {
     if (candidateId) {
-    //   serviceMarkExpired({ letter_id: candidateId }).then((res) => {
-    //     if (!res?.error) {
-    //       handleToggle();
-    //       // historyUtils.goBack()
-    //       SnackbarUtils.success("Offer Letter Expired Successfully")
-    //     }else{
-    //       SnackbarUtils.error("Offer letter not found")
-    //     }
-    //   });
+      serviceGetUserSuspend({ id: candidateId }).then((res) => {
+        if (!res?.error) {
+          handleToggle();
+          // historyUtils.goBack()
+          SnackbarUtils.success("Suspend Successfully")
+        }else{
+          SnackbarUtils.error(" Not Found")
+        }
+      });
      }
   };
   return (

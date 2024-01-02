@@ -97,30 +97,26 @@ const useBadgeCreateHook = ({ handleToggleSidePannel, isSidePanel, empId }) => {
 
     setIsSubmitting(true);
 
-    try {
-      const formData = new FormData();
-      formData.append("name", form.name);
-      formData.append("logo", form.logo);
-      formData.append("apply_to", form?.apply_to);
-      formData.append("logic", form?.logic);
-      formData.append("industry_id", form?.industry_id);
+    const formData = new FormData();
+    formData.append("name", form.name);
+    formData.append("logo", form.logo);
+    formData.append("apply_to", form?.apply_to);
+    formData.append("logic", form?.logic);
+    formData.append("industry_id", form?.industry_id);
 
-      const req = empId
-        ? serviceBadgeUpdate(formData, formData.append("id", empId))
-        : serviceBadgeCreate(formData); //
-      const res = await req;
+    const req = empId
+      ? serviceBadgeUpdate(formData, formData.append("id", empId))
+      : serviceBadgeCreate(formData); //
+    const res = await req;
 
-      if (!res.error) {
-        handleToggleSidePannel();
-        window.location.reload();
-      } else {
-        SnackbarUtils.error(res.response_message);
-      }
-    } catch (error) {
-      console.error("Error submitting data:", error);
-    } finally {
-      setIsSubmitting(false);
+    if (!res.error) {
+      handleToggleSidePannel();
+      window.location.reload();
+    } else {
+      SnackbarUtils.error(res.response_message);
     }
+
+    setIsSubmitting(false);
   }, [form, isSubmitting, setIsSubmitting, empId, handleToggleSidePannel]);
 
   const handleSubmit = useCallback(async () => {

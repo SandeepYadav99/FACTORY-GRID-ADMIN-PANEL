@@ -194,6 +194,7 @@ const BusinessDetails = ({ id, userProfile }) => {
               imageList={userProfile?.certificate}
             />
           </div>
+          
           <div className={styles.plain}>
             <div className={styles.accountFlex}>
               <div className={styles.headings}>Banking Details</div>
@@ -203,18 +204,19 @@ const BusinessDetails = ({ id, userProfile }) => {
                 <ButtonBase className={styles.view} onClick={() => viewFile()}>
                   (View File)
                 </ButtonBase>
-                <div style={{ marginLeft: "10px" }}>
+                {userProfile?.bankdetail?.cancelled_check_status &&  <div style={{ marginLeft: "10px" }}>
                   <CustomTooltip title={userProfile?.bankdetail?.cancelled_check_status}>
                   <img src={bankImage} alt="" height={15} width={15} />
                   </CustomTooltip>
             
-            </div>
+            </div>}
+               
               </div>
             </div>
-            {userProfile?.bankdetail  ? (
+            { userProfile.bankdetail.benificiery_name ? (
               <BankDetail bankdetail={userProfile?.bankdetail} />
             ) : (
-              <div>Not Available</div>
+              <div style={{textAlign:"center"}}>Not Available</div>
             )}
           </div>
         </div>

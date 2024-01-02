@@ -74,7 +74,7 @@ const ManufacturerTabs = ({ classes, theme }) => {
   const [value, setValue] = useState(0);
   const { userProfile, renderInterestArea } = useCustomerProfileHook();
   
-  
+  console.log(userProfile)
   const [isOpenDialog, setIsOpenDialog] = useState(false);
 
   const toggleIsOpenDialog = useCallback(
@@ -90,13 +90,7 @@ const ManufacturerTabs = ({ classes, theme }) => {
     // ComponentDidMount logic can go here
   }, []);
 
-  const handleMouseEnter = () => {
-    // Handle mouse enter logic
-  };
-
-  const handleMouseLeave = () => {
-    // Handle mouse leave logic
-  };
+ 
 
   const handleSuspendBtn = () => {};
 
@@ -238,7 +232,7 @@ const ManufacturerTabs = ({ classes, theme }) => {
         <TabPanel value={value} index={3} dir={theme.direction}></TabPanel>
       </div>
       <SuspendPopup 
-        candidateId={""}
+        candidateId={userProfile?._id}
         isOpen={isOpenDialog}
         handleToggle={toggleIsOpenDialog}
       />
