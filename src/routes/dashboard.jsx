@@ -21,6 +21,7 @@ import UnitList from "../views/Unit/UnitList.container";
 import SubCategoryList from "../views/SubCategory/SubCategoryList.container";
 import QuoteList from "../views/Quotes/QuoteList.container";
 import QuoteDetail from "../views/Quotes/Quote.view";
+import HubMasterList from "../views/HubMaster/List/HubMasterList";
 // import TableList from "views/TableList/TableList.jsx";
 // import Typography from "views/Typography/Typography.jsx";
 // import Icons from "views/Icons/Icons.jsx";
@@ -43,7 +44,7 @@ import {
   Settings,
 } from "@material-ui/icons";
 import RouteName from "./Route.name";
-import HubMasterList from "../views/HubMaster/List/HubmasterList";
+
 
 
 

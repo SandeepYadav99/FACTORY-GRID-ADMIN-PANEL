@@ -24,6 +24,7 @@ import AppSettingReducer from './AppSettings.reducer';
 import QuotesReducer from './Quotes.reducer';
 import ProviderUser from './ProviderUser.reducer';
 import AuthReducer from './Auth.reducer';
+import HubMasterReducer from './HubMaster.reducer';
 
 const rootReducer = combineReducers({
     state: (state = {}) => state,
@@ -49,6 +50,7 @@ const rootReducer = combineReducers({
     quotes: QuotesReducer,
     customers: Customers,
     // form: formReducer,
+    hubMaster:HubMasterReducer
 });
 
 export default rootReducer;
