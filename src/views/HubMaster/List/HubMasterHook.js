@@ -129,10 +129,10 @@ const useHubMasterHook = ({}) => {
   const handleSideToggle = useCallback(
     (data) => {
       setSidePanel((e) => !e);
-      //  historyUtils.push("/badge");
-      // historyUtils.goBack();
+      
       setEditId(data)
       setEditData(null)
+     
     },
     [setEditData, setSidePanel]
   );

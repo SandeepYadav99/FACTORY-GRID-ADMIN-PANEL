@@ -103,12 +103,12 @@ const HubMasterCreate = ({ handleToggleSidePannel, isSidePanel, empId }) => {
                   // id="tags-standard"
                   options={listData || []}
                   getOptionLabel={(option) => option?.name}
-                  defaultValue={form?.name || []}
+                  defaultValue={form?.industry_id || []}
                   renderInput={(params) => (
                     <TextField
                       {...params}
                       variant="outlined"
-                      label="Choose Events"
+                      label="Associated Industries"
                       error={errorData?.industry_id}
                     />
                   )}

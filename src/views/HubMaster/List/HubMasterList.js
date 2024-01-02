@@ -70,7 +70,7 @@ const HubMasterList = (props) => {
         key: "hub",
         label: "Hub Name",
         sortable: true,
-        render: (value, all) => <div>{all?.name} </div>, //renderFirstCell(all)
+        render: (value, all) => <div>{all?.name} </div>, 
       },
       {
         key: "industries",

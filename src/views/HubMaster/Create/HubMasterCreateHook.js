@@ -84,7 +84,7 @@ const useHubMasterCreateHook = ({
 
   const checkFormValidation = useCallback(() => {
     const errors = { ...errorData };
-    let required = ["name", "industry_id"];
+    let required = ["name"];
 
     required.forEach((val) => {
       if (
@@ -104,16 +104,16 @@ const useHubMasterCreateHook = ({
     });
     return errors;
   }, [form, errorData]);
-
-  const submitToServer = useCallback(() => {
+console.log(form?.industry_id, "id")
+  const submitToServer = useCallback(async() => {
     if (isSubmitting) {
       return;
     }
 
     setIsSubmitting(true);
     const industryID =
-      Array.isArray(form?.industry_id) && form?.industry_id.length > 0
-        ? form.industry_id?.map((item) => item.id)
+      Array.isArray(form.industry_id) && form.industry_id.length > 0
+        ? form.industry_id.map((item) => item._id)
         : [];
 
     const updateData = {
@@ -133,11 +133,11 @@ const useHubMasterCreateHook = ({
     const req = empId
       ? serviceHubMasterUpdate(updateData)
       : serviceHubMasterCreate(updateData); //
-    const res = req;
+    const res =await req;
 
     if (!res.error) {
       handleToggleSidePannel();
-      window.location.reload();
+       window.location.reload();
     } else {
       SnackbarUtils.error(res.response_message);
     }
@@ -145,13 +145,14 @@ const useHubMasterCreateHook = ({
     setIsSubmitting(false);
   }, [form, isSubmitting, setIsSubmitting, empId, handleToggleSidePannel]);
 
-  const handleSubmit = useCallback(() => {
+  const handleSubmit = useCallback(async() => {
     const errors = checkFormValidation();
 
     if (Object.keys(errors).length > 0) {
       setErrorData(errors);
     } else {
-      submitToServer();
+     await submitToServer();
+      // window.location.reload();
     }
   }, [checkFormValidation, setErrorData, form, submitToServer, empId]);
 
@@ -167,20 +168,16 @@ const useHubMasterCreateHook = ({
   const changeTextData = useCallback(
     (text, fieldName) => {
       console.log(text);
-      if (fieldName === "Industry_Specific") {
-        setSelectedValues(text);
-      }
+    
       let shouldRemoveError = true;
       const t = { ...form };
       if (fieldName === "name") {
         t[fieldName] = text;
       } else if (fieldName === "industry_id") {
         t[fieldName] = text.filter((item, index, self) => {
-          return index === self?.findIndex((i) => i?.id === item?.id);
+          return index === self.findIndex((i) => i.id === item.id);
         });
-      } else if (fieldName === "featured") {
-        t[fieldName] = text;
-      } else {
+      }  else {
         t[fieldName] = text;
       }
 
