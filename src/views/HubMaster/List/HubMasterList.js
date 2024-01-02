@@ -201,7 +201,7 @@ const HubMasterList = (props) => {
       </PageBox>
       <SidePanelComponent
         handleToggle={handleSideToggle}
-        title={editId ? "Update Badge" : "New Badge"}
+        title={editId ? "Update Hubs" : "Hubs"}
         open={isSidePanel}
         side={"right"}
       >
