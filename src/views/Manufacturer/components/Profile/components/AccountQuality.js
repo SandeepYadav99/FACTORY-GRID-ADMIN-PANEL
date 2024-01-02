@@ -78,7 +78,7 @@ const AccountQuality = ({ userProfileAccountQuality }) => {
       <div>
         <div className={styles.key}>Contact Information</div>
         <div className={styles.val}>
-          +91 {userProfileAccountQuality?.contact}
+          {userProfileAccountQuality?.contact || "N/A"}
         </div>
         <div className={styles.val}>{userProfileAccountQuality?.email}</div>
       </div>

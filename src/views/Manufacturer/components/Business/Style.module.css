@@ -1,396 +1,401 @@
-.upperFlex{
-    display: flex;
+.upperFlex {
+  display: flex;
 }
 
-.left{
-    flex: 0.5;
-    margin-right: 10px;
+.left {
+  flex: 0.5;
+  margin-right: 10px;
 }
 
 .right {
-    flex: 1;
-    margin-left: 10px;
+  flex: 1;
+  margin-left: 10px;
 }
 
-.leftChat{
-    flex: 0.3;
-    margin-right: 15px;
+.leftChat {
+  flex: 0.3;
+  margin-right: 15px;
 }
 
-.week{
-    font-size: 12px;
-    color: rgb(146, 153, 184);
+.week {
+  font-size: 12px;
+  color: rgb(146, 153, 184);
 }
 
-.chatWidth{
-    width: 200px;
+.chatWidth {
+  width: 200px;
 }
 
-.rightChat{
-    flex: 1;
-    margin-left: 15px;
+.rightChat {
+  flex: 1;
+  margin-left: 15px;
 }
 
-.plain{
-    border-radius: 10px;
-    padding: 1.2rem 1.2rem;
-    margin-bottom: 20px;
-    background-color: white;
-    box-shadow: 0 0 8px rgb(0 0 0 / 15%);
+.plain {
+  border-radius: 10px;
+  padding: 1.2rem 1.2rem;
+  margin-bottom: 20px;
+  background-color: white;
+  box-shadow: 0 0 8px rgb(0 0 0 / 15%);
 }
 
 .inputCity {
-    width: calc(100%);
-    padding-left: 20px;
-    height: 40px;
-    box-sizing: border-box;
-    border: none;
-    /*border: 1px solid #80808021;*/
-    background: rgb(244, 245, 247);
-    border-radius: 30px;
-    font-size: 14px;
-    position: relative;
-    padding-right: 40px;
-    /*margin-left: 12px;*/
-    /*margin-right: 12px;*/
+  width: calc(100%);
+  padding-left: 20px;
+  height: 40px;
+  box-sizing: border-box;
+  border: none;
+  /*border: 1px solid #80808021;*/
+  background: rgb(244, 245, 247);
+  border-radius: 30px;
+  font-size: 14px;
+  position: relative;
+  padding-right: 40px;
+  /*margin-left: 12px;*/
+  /*margin-right: 12px;*/
 }
 
 .inputCity:focus {
-    outline: none;
+  outline: none;
 }
 
-.searchIcon{
-    position: absolute;
-    right: 33px;
-    top: 28px;
-    color: gray;
+.searchIcon {
+  position: absolute;
+  right: 33px;
+  top: 28px;
+  color: gray;
 }
 
-.templateImg{
-    width: 70px;
-    height: 70px;
-    border-radius: 50%;
-    margin-right: 10px;
-    border: 1px solid #80808021;
+.templateImg {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  margin-right: 10px;
+  border: 1px solid #80808021;
 }
 
-.chatIcon{
-    width: 45px;
-    height: 45px;
-    border-radius: 50%;
-    margin-right: 15px;
-    border: 1px solid #80808021;
+.chatIcon {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  margin-right: 15px;
+  border: 1px solid #80808021;
 }
 
-.chatFlex{
-    display: flex;
-    justify-content: space-around;
-    /*align-items: center;*/
+.chatFlex {
+  display: flex;
+  justify-content: space-around;
+  /*align-items: center;*/
 }
 
-.innerFlex{
-    display: flex;
+.innerFlex {
+  display: flex;
 }
 
-.chatContainer{
-    margin-top: 30px;
-    text-align: left;
-    /*margin-bottom: 40px;*/
+.chatContainer {
+  margin-top: 30px;
+  text-align: left;
+  /*margin-bottom: 40px;*/
 }
 
-.number{
-    background: #20c997;
-    font-size: 0.7rem;
-    color: white;
-    height: 20px;
-    width: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 10px;
-    margin-top: 10px;
+.number {
+  background: #20c997;
+  font-size: 0.7rem;
+  color: white;
+  height: 20px;
+  width: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  margin-top: 10px;
 }
 
-.weekFlex{
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    justify-content: end;
+.weekFlex {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: end;
 }
 
-.desc{
-    color: rgb(146, 153, 184);
-    font-size: 0.8rem;
-    line-height: 20px;
+.desc {
+  color: rgb(146, 153, 184);
+  font-size: 0.8rem;
+  line-height: 20px;
 }
 
-.chatName{
-    font-weight: 600;
-    font-size: 0.8rem;
-    margin-top: 3px;
-    margin-bottom: 5px;
+.chatName {
+  font-weight: 600;
+  font-size: 0.8rem;
+  margin-top: 3px;
+  margin-bottom: 5px;
 }
-.removeBtn{
-    color: red !important;
-}
-
-.profile{
-    text-align: center;
-    margin-bottom: 10px;
+.removeBtn {
+  color: red !important;
 }
 
-.user{
-    font-size: 0.9rem;
-    font-weight: bold;
-    margin-top: 10px;
-    /*margin-bottom: 10px;*/
+.profile {
+  text-align: center;
+  margin-bottom: 10px;
 }
 
-.name{
-    font-size: 0.8rem;
-    margin-bottom: 5px;
+.user {
+  font-size: 0.9rem;
+  font-weight: bold;
+  margin-top: 10px;
+  /*margin-bottom: 10px;*/
 }
 
-.categoryFlex{
-    display: flex;
-    justify-content: center;
-    margin-top: 15px;
+.name {
+  font-size: 0.8rem;
+  margin-bottom: 5px;
 }
 
-.category{
-    background-color: #072ead;
-    padding: 15px 25px;
-    border-radius: 30px;
-    font-size: 0.8rem;
-    color: white;
-    width: 80px;
-    text-align: center;
+.categoryFlex {
+  display: flex;
+  justify-content: center;
+  margin-top: 15px;
 }
 
-.ageFlex{
-    display: flex;
-    justify-content: space-between;
+.category {
+  background-color: #072ead;
+  padding: 15px 25px;
+  border-radius: 30px;
+  font-size: 0.8rem;
+  color: white;
+  width: 80px;
+  text-align: center;
 }
 
-.gender{
-    font-size: 0.8rem;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    margin-top: 30px;
-    margin-bottom: 15px;
+.ageFlex {
+  display: flex;
+  justify-content: space-between;
 }
 
-.key{
-    font-weight: 600;
-    font-size: 0.8rem;
-    margin-bottom: 7px;
+.gender {
+  font-size: 0.8rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-top: 30px;
+  margin-bottom: 15px;
 }
 
-.head{
-    font-weight: 600;
-    font-size: 0.8rem;
-    display: flex;
-    margin-bottom: 3px;
+.key {
+  font-weight: 600;
+  font-size: 0.8rem;
+  margin-bottom: 7px;
 }
 
-.kyc{
-    font-weight: 600;
-    font-size: 0.7rem;
-    display: flex;
+.head {
+  font-weight: 600;
+  font-size: 0.8rem;
+  display: flex;
+  margin-bottom: 3px;
 }
 
-.value{
-    font-size: 0.8rem;
-    margin-left: 10px;
-    text-transform: capitalize;
+.kyc {
+  font-weight: 600;
+  font-size: 0.7rem;
+  display: flex;
 }
 
-.cert{
-    text-transform: capitalize;
-    font-size: 0.8rem;
-    margin-top: 10px;
-    margin-left: 15px;
+.value {
+  font-size: 0.8rem;
+  margin-left: 10px;
+  text-transform: capitalize;
 }
 
-.val{
-    font-size: 0.8rem;
-    margin-left: 10px;
+.cert {
+  text-transform: capitalize;
+  font-size: 0.8rem;
+  margin-top: 10px;
+  margin-left: 15px;
 }
 
-.website{
-    color: #072ead;
-    text-decoration: underline;
-    font-size: 0.8rem;
-    cursor: pointer;
+.val {
+  font-size: 0.8rem;
+  margin-left: 10px;
 }
 
-.designation{
-    font-size: 0.7rem;
+.website {
+  color: #072ead;
+  text-decoration: underline;
+  font-size: 0.8rem;
+  cursor: pointer;
 }
 
-.line:after{
-    content: "";
-    display: block;
-    width: 80%;
-    border: 1px solid black;
-    margin: 20px auto;
+.designation {
+  font-size: 0.7rem;
 }
 
-.contactHeading{
-    margin-bottom: 15px;
+.line:after {
+  content: "";
+  display: block;
+  width: 80%;
+  border: 1px solid black;
+  margin: 20px auto;
 }
 
-.conContainer{
-    margin-bottom: 14px;
+.contactHeading {
+  margin-bottom: 15px;
 }
 
-.attach{
-    color: #1593ff;
+.conContainer {
+  margin-bottom: 14px;
 }
 
-.verified{
-    color: #F76A6D;
-    font-size: 0.9rem !important;
-    margin-left: 4px;
+.attach {
+  color: #1593ff;
 }
 
-.priceFlex{
-    display: flex;
-    justify-content: space-between;
-    font-size: 1rem;
-    font-weight: 600;
-    margin-top: 20px;
-    margin-bottom: 20px;
+.verified {
+  color: #f76a6d;
+  font-size: 0.9rem !important;
+  margin-left: 4px;
 }
 
-.rating{
-    font-size: 1.6rem !important;
-    color: orange;
-    margin-bottom: 4px;
-}
-.rating1{
-    font-size: 1rem !important;
-    color: orange;
-}
-
-.reviews{
-    color: gray;
+.priceFlex {
+  display: flex;
+  justify-content: space-between;
+  font-size: 1rem;
+  font-weight: 600;
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
 
-.blockFlex{
-    display: flex;
-    font-size: 0.8rem;
-    justify-content: space-between;
+.rating {
+  font-size: 1.6rem !important;
+  color: orange;
+  margin-bottom: 4px;
+}
+.rating1 {
+  font-size: 1rem !important;
+  color: orange;
 }
 
-.view{
-    color: #1593ff !important;
-    text-decoration: underline !important;
-    font-size: 0.7rem !important;
+.reviews {
+  color: gray;
 }
 
-.recent{
-    margin-left: 10px;
-    font-size: 0.8rem;
-    margin-bottom: 10px;
+.blockFlex {
+  display: flex;
+  font-size: 0.8rem;
+  justify-content: space-between;
 }
 
-
-.headings{
-    font-size: 0.9rem;
-    font-weight: 600;
-    margin-bottom: 10px;
+.view {
+  color: #1593ff !important;
+  text-decoration: underline !important;
+  font-size: 0.7rem !important;
 }
 
-.brochure{
-    font-size: 0.7rem;
-    margin-right: 5px;
+.recent {
+  margin-left: 10px;
+  font-size: 0.8rem;
+  margin-bottom: 10px;
 }
 
-.bankingFlex{
-    display: flex;
+.headings {
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-bottom: 10px;
 }
 
-.accountInfo{
-    flex: 1;
+.brochure {
+  font-size: 0.9rem;
+  margin-right: 5px;
+  font-weight: bold;
 }
 
-.noChat{
-    text-align: center;
-    font-size: 1rem;
-    font-weight: 600;
-    padding-top: 30px;
+.bankingFlex {
+  display: flex;
 }
 
-.bgGreen{
-    background: #e6f9ef69;
+.accountInfo {
+  flex: 1;
+}
+
+.noChat {
+  text-align: center;
+  font-size: 1rem;
+  font-weight: 600;
+  padding-top: 30px;
+}
+
+.bgGreen {
+  background: #e6f9ef69;
 }
 .flex {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
 
-.member{
-    margin-top: 6px;
-    display: flex;
-    justify-content: center;
-    font-size: 0.9rem;
-    align-items: center;
+.member {
+  margin-top: 6px;
+  display: flex;
+  justify-content: center;
+  font-size: 0.9rem;
+  align-items: center;
 }
 
-.bottomProfile{
-    display: flex;
-    /*align-items: center;*/
+.bottomProfile {
+  display: flex;
+  /*align-items: center;*/
 }
 
-.profileImg{
-    height: 35px;
+.profileImg {
+  height: 35px;
 }
 
-.info{
-    margin-left: 10px;
+.info {
+  margin-left: 10px;
 }
 
-.profileName{
-    font-weight: 600;
-    font-size: 0.8rem;
+.profileName {
+  font-weight: 600;
+  font-size: 0.8rem;
 }
 
-.accountFlex{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 15px;
+.accountFlex {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
 }
 
-.industries{
-    font-size: 0.8rem;
-    margin-top: 10px;
-    margin-bottom: 10px;
+.industries {
+  font-size: 0.8rem;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
-.latest{
-    font-size: 0.8rem;
+.latest {
+  font-size: 0.8rem;
 }
 
-.activityFlex{
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 10px;
+.activityFlex {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
 }
 
-.msgDate{
-    font-weight: 600;
+.msgDate {
+  font-weight: 600;
 }
 
-.coord{
-    color: #072ead;
-    text-decoration: underline;
-    font-size: 0.8rem;
+.coord {
+  color: #072ead;
+  text-decoration: underline;
+  font-size: 0.8rem;
 }
 
-.notfound{
-    text-align: center;
+.notfound {
+  text-align: center;
+}
+.bankdetailContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
 }

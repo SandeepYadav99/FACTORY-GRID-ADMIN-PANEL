@@ -30,14 +30,7 @@ const BusinessDetails = ({ id, userProfile }) => {
     }
   }, []);
 
-  const viewFile = () => {
-    const fileUrl = userProfile?.bankdetail?.bank_canceled_cheque;
-
-    if (fileUrl) {
-      window.open(fileUrl, "_blank");
-    } else {
-    }
-  };
+ 
 
   const CERTIFICATES = userProfile.certificate || [];
   const certificateImages = CERTIFICATES.map(
@@ -199,19 +192,7 @@ const BusinessDetails = ({ id, userProfile }) => {
             <div className={styles.accountFlex}>
               <div className={styles.headings}>Banking Details</div>
 
-              <div>
-                <span className={styles.brochure}>Cancelled Cheque</span>
-                <ButtonBase className={styles.view} onClick={() => viewFile()}>
-                  (View File)
-                </ButtonBase>
-                {userProfile?.bankdetail?.cancelled_check_status &&  <div style={{ marginLeft: "10px" }}>
-                  <CustomTooltip title={userProfile?.bankdetail?.cancelled_check_status}>
-                  <img src={bankImage} alt="" height={15} width={15} />
-                  </CustomTooltip>
-            
-            </div>}
-               
-              </div>
+              <a href="#" className={styles.coord}>Edit</a>
             </div>
             { userProfile.bankdetail.benificiery_name ? (
               <BankDetail bankdetail={userProfile?.bankdetail} />

@@ -37,7 +37,7 @@ const useHubMasterCreateHook = ({
   const includeRef = useRef(null);
   const [logos, setLogos] = useState(null);
   const [selectedValues, setSelectedValues] = useState("");
-  const [geofence, setGeoFence] = useState([]);
+  const [geofence, setGeoFence] = useState(null);
   const [listData, setListData] = useState(null);
   const [lat, setLat] = useState(0);
   const [lng, setLng] = useState(0);
@@ -71,7 +71,7 @@ const useHubMasterCreateHook = ({
       });
     }
   }, [empId]);
-console.log(geofence, "Form")
+  console.log(geofence, "Form");
   useEffect(() => {
     if (!isSidePanel) {
       handleReset();
@@ -118,12 +118,16 @@ console.log(geofence, "Form")
       Array.isArray(form?.industry_id) && form.industry_id.length > 0
         ? form.industry_id.map((item) => item.id)
         : [];
+
     const updateData = {
       name: form?.name,
       industry_id: industryID,
-      geofence: "geofence",
-      featured: form?.featured,
-      status: form?.status ? "ACTIVE":"INACTIVE"
+      geofence_coordinates: {
+        type: "Polygon",
+        coordinates: geofence ? geofence : null,
+      },
+      featured: form?.featured ? "YES" : "NO",
+      status: form?.status ? "ACTIVE" : "INACTIVE",
     };
     if (empId) {
       updateData.id = empId;

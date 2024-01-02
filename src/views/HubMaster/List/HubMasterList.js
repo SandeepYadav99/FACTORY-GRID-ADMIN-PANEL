@@ -90,7 +90,7 @@ const HubMasterList = (props) => {
       {
         key: "featured",
         label: "Featured",
-        render: (temp, all) => <div>{all?.featured ? "Yes" : "No"}</div>,
+        render: (temp, all) => <div>{all?.featured }</div>,
       },
       {
         key: "user_id",
