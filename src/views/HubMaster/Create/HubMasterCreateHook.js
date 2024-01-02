@@ -63,7 +63,7 @@ const useHubMasterCreateHook = ({
             industry_id: data?.industries?._id,
             featured: data?.featured,
             geofence: data?.geofence,
-            status: data?.status === constants.GENERAL_STATUS.ACTIVE,
+            // status: data?.status === constants.GENERAL_STATUS.ACTIVE,
           });
         } else {
           // SnackbarUtils.error(res?.message);
