@@ -4,9 +4,13 @@ import Popover from "@material-ui/core/Popover";
 import Typography from "@material-ui/core/Typography";
 import { ButtonBase } from "@material-ui/core";
 import { ReportProblem } from "@material-ui/icons";
-import { serviceResetUserEmail } from "../../../services/CustomersRequest.service";
+import {
+  serviceResetUserEmail,
+  serviceResetUserStatusUpdate,
+} from "../../../services/CustomersRequest.service";
+import renderImagebyType from "../../../libs/Helper";
+import { useParams } from "react-router-dom";
 import SnackbarUtils from "../../../libs/SnackbarUtils";
-
 const useStyles = makeStyles((theme) => ({
   typography: {
     padding: theme.spacing(2),
@@ -27,18 +31,26 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: "10px !important",
     textDecoration: "underline",
   },
+  bankDetail: {
+    display: "flex",
+    justifyContent: "spaceBetween",
+    padding: theme.spacing(2),
+  },
 }));
 
 export default function SimplePopover({
   val,
- 
+
   isClose,
   userProfile,
+  type,
+  title,
+  bankDetailId,
 }) {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const { id } = useParams();
 
-  console.log(userProfile, "Profile");
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -53,28 +65,39 @@ export default function SimplePopover({
   }, [isClose]);
 
   const open = Boolean(anchorEl);
-  const id = open ? "simple-popover" : undefined;
+  const ids = open ? "simple-popover" : undefined;
 
-  const handleResend =()=>{
+  const handleResend = () => {
     // serviceResetUserEmail({user_id:userProfile._id, email:userProfile.email}).then((res)=>{
     //   if(!res.error){
     //    SnackbarUtils.success("Resend Successfully")
     //   }
     // })
-  }
+  };
+  console.log(type);
+  const handleVerify = () => {
+    serviceResetUserStatusUpdate({
+      user_id: id,
+      [type]: "VERIFIED",
+    }).then((res) => {
+      if (!res.error) {
+        SnackbarUtils.success("Verified Succesfully");
+      }
+    });
+  };
 
   return (
     <div onMouseLeave={handleClose}>
       <ButtonBase
-        aria-describedby={id}
+        aria-describedby={ids}
         onClick={handleClick}
         onMouseEnter={handleClick}
       >
-        <ReportProblem className={classes.notverified} />
+        {renderImagebyType(title)}
       </ButtonBase>
 
       <Popover
-        id={id}
+        ids={ids}
         open={open}
         anchorEl={anchorEl}
         onClose={handleClose}
@@ -87,17 +110,28 @@ export default function SimplePopover({
           horizontal: "top",
         }}
       >
-        <Typography className={classes.typography}>
-          <div className={classes.mainText}>
-            Your email is currently not verified ?
-          </div>
-          <div>
-            <ButtonBase className={classes.email}>Change Email</ButtonBase>
-            <ButtonBase className={classes.verify} onClick={handleResend}>
-              Verify Now
+        {type ? (
+          <div className={classes.bankDetail}>
+            <ButtonBase>Cancel</ButtonBase>
+            <ButtonBase className={classes.verify} onClick={handleVerify}>
+              Verify
             </ButtonBase>
           </div>
-        </Typography>
+        ) : (
+          <>
+            <Typography className={classes.typography}>
+              <div className={classes.mainText}>
+                Your email is currently not verified ?
+              </div>
+              <div>
+                <ButtonBase className={classes.email}>Change Email</ButtonBase>
+                <ButtonBase className={classes.verify} onClick={handleResend}>
+                  Verify Now
+                </ButtonBase>
+              </div>
+            </Typography>
+          </>
+        )}
       </Popover>
     </div>
   );

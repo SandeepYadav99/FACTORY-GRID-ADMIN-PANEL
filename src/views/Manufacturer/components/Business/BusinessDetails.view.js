@@ -16,7 +16,7 @@ const dummy = [
   require("../../../../assets/img/cover.jpeg"),
 ];
 
-const BusinessDetails = ({ id, userProfile }) => {
+const BusinessDetails = ({ id, userProfile , isLoading}) => {
   // const { userProfile, renderInterestArea } = useCustomerProfileHook();
 
   const galleryImage = useCallback((images) => {
@@ -50,6 +50,7 @@ const BusinessDetails = ({ id, userProfile }) => {
       fontSize: theme.typography.fontSize,
     },
   }))(Tooltip);
+
   return (
     <div>
       <div className={styles.upperFlex}>

@@ -103,7 +103,7 @@ const ProfileView = ({ userProfile, renderInterestArea, isLoading }) => {
                   {userProfile.is_email_verified ? (
                     <VerifiedUserIcon className={styles.verified} />
                   ) : (
-                    <SimplePopover userProfile={userProfile} type={"Email"}/>
+                    <SimplePopover userProfile={userProfile} title={"Email"}/>
                   )}
                 </div>
               </div>
