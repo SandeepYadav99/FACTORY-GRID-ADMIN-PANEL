@@ -56,11 +56,11 @@ export default function SimplePopover({
   const id = open ? "simple-popover" : undefined;
 
   const handleResend =()=>{
-    serviceResetUserEmail({user_id:userProfile._id, email:userProfile.email}).then((res)=>{
-      if(!res.error){
-       SnackbarUtils.success("Resend Successfully")
-      }
-    })
+    // serviceResetUserEmail({user_id:userProfile._id, email:userProfile.email}).then((res)=>{
+    //   if(!res.error){
+    //    SnackbarUtils.success("Resend Successfully")
+    //   }
+    // })
   }
 
   return (
