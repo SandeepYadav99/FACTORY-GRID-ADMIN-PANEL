@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import {
  
-  ButtonBase,
+  ButtonBase, CircularProgress,
  
 } from "@material-ui/core";
 import { Close } from "@material-ui/icons";
@@ -40,9 +40,11 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 
 const SuspendPopup = ({ isOpen, handleToggle, candidateId }) => {
   const classes = useStyles();
+  const [isSubmitting, setIsSubmitting]=useState(false)
   
   const handleSubmit = () => {
     if (candidateId) {
+      setIsSubmitting(true)
       serviceGetUserSuspend({ id: candidateId }).then((res) => {
         if (!res?.error) {
           handleToggle();
@@ -51,7 +53,9 @@ const SuspendPopup = ({ isOpen, handleToggle, candidateId }) => {
         }else{
           SnackbarUtils.error(" Not Found")
         }
-      });
+      }).finally(()=>{
+        setIsSubmitting(false)
+      })
      }
   };
   return (
@@ -105,7 +109,10 @@ const SuspendPopup = ({ isOpen, handleToggle, candidateId }) => {
                styles.createBtn 
               }
             >
-              CONFIRM
+                {isSubmitting ? (
+              <CircularProgress color="success" size="20px" />
+            ) : " CONFIRM"}
+             
             </ButtonBase>
           </div>
         </div>
