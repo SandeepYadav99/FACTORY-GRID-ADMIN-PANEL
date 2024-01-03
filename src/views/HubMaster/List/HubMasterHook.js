@@ -3,8 +3,10 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
-
-import { actionFetchHubMaster, actionSetPageHubMasterRequests } from "../../../actions/HubMaster.action";
+import {
+  actionFetchHubMaster,
+  actionSetPageHubMasterRequests,
+} from "../../../actions/HubMaster.action";
 
 const useHubMasterHook = ({}) => {
   const [isSidePanel, setSidePanel] = useState(false);
@@ -34,21 +36,16 @@ const useHubMasterHook = ({}) => {
       )
     );
     isMountRef.current = true;
-
   }, []);
-  
-  useEffect(()=>{
 
-  },[setEditId]);
-  
+  useEffect(() => {}, [setEditId]);
+
   const handlePageChange = useCallback((type) => {
-   
     dispatch(actionSetPageHubMasterRequests(type)); // actionSetPageBadgeRequests
   }, []);
 
   const queryFilter = useCallback(
     (key, value) => {
-     
       // dispatch(actionSetPageAdminUserRequests(1));
       dispatch(
         actionFetchHubMaster(1, sortingData, {
@@ -63,7 +60,6 @@ const useHubMasterHook = ({}) => {
 
   const handleFilterDataChange = useCallback(
     (value) => {
-      
       queryFilter("FILTER_DATA", value);
     },
     [queryFilter]
@@ -71,7 +67,6 @@ const useHubMasterHook = ({}) => {
 
   const handleSearchValueChange = useCallback(
     (value) => {
-      
       queryFilter("SEARCH_TEXT", value);
     },
     [queryFilter]
@@ -79,7 +74,6 @@ const useHubMasterHook = ({}) => {
 
   const handleSortOrderChange = useCallback(
     (row, order) => {
-     
       dispatch(actionSetPageHubMasterRequests(1));
       dispatch(
         actionFetchHubMaster(
@@ -95,9 +89,7 @@ const useHubMasterHook = ({}) => {
     [query, queryData]
   );
 
-  const handleRowSize = (page) => {
-   
-  };
+  const handleRowSize = (page) => {};
 
   const handleDelete = useCallback(
     (id) => {
@@ -109,7 +101,6 @@ const useHubMasterHook = ({}) => {
   );
 
   const handleEdit = useCallback((all) => {
-   
     setSidePanel((e) => !e);
     setEditData(all);
     setEditId(all?.id);
@@ -123,21 +114,28 @@ const useHubMasterHook = ({}) => {
     [setSidePanel, setEditData]
   );
 
-  
- 
-
   const handleSideToggle = useCallback(
     (data) => {
       setSidePanel((e) => !e);
-      
-      setEditId(data)
-      setEditData(null)
+
      
+      
     },
     [setEditData, setSidePanel]
   );
 
-  
+  const handleEditHubMaster = useCallback(
+    (data) => {
+      setSidePanel((e) => !e);
+
+      setEditId(data);
+      if (!isSidePanel) {
+        setEditData(null);
+      }
+    },
+    [setEditData, setSidePanel]
+  );
+
   const handleSideOpenSide = useCallback(
     (data) => {
       setSidePanel((e) => !e);
@@ -151,7 +149,6 @@ const useHubMasterHook = ({}) => {
   const handleCloseSideToggle = useCallback(
     (data) => {
       setSidePanel((e) => !e);
- 
     },
     [setEditData, setSidePanel]
   );
@@ -200,7 +197,8 @@ const useHubMasterHook = ({}) => {
     handleFileView,
     editId,
     handleSideOpenSide,
-    handleCloseSideToggle
+    handleCloseSideToggle,
+    handleEditHubMaster,
   };
 };
 

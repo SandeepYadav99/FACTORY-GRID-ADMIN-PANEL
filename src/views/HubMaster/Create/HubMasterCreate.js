@@ -69,7 +69,7 @@ const HubMasterCreate = ({ handleToggleSidePannel, isSidePanel, empId }) => {
             <InfoIcon fontSize={"small"} />
           </Tooltip>
         </h4>
-        {data && (
+        {empId && (
           <IconButton
             variant={"contained"}
             className={classes.iconBtnError}

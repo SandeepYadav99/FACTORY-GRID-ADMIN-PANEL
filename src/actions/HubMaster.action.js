@@ -7,7 +7,7 @@
 import store from '../store';
 import Constants from '../config/constants';
 import EventEmitter from "../libs/Events.utils";
-import { serviceHubMasterCreate, serviceHubMasterList, serviceHubMasterUpdate } from '../services/HubMaster.service';
+import { serviceHubMasterCreate, serviceHubMasterDelete, serviceHubMasterList, serviceHubMasterUpdate } from '../services/HubMaster.service';
 
 
 export const FETCH_INIT = 'FETCH_INIT_HUB_MASTER';
@@ -72,11 +72,11 @@ export function actionUpdateHubMaster(data) {
     }
 }
 
-export function actionDeleteBadge(id) {
-    // const request = serviceDeleteBadge({ id: id});
-    // return (dispatch) => {
-    //     dispatch({type: DELETE_ITEM, payload: id})
-    // }
+export function actionDeleteMasterDelete(id) {
+    const request = serviceHubMasterDelete({ id: id});
+    return (dispatch) => {
+        dispatch({type: DELETE_ITEM, payload: id})
+    }
 }
 
 

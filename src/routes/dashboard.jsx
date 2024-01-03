@@ -285,6 +285,17 @@ const dashboardRoutes = [
     parent: "masters",
   },
   {
+    path: RouteName.HUB_MASTERS,
+    sidebarName: "Hub Master",
+    navbarName: "Hub Master",
+    icon: EventNote,
+    component: HubMasterList,
+    is_sidebar: true,
+    is_protect: true,
+    // should_regex: false,
+    parent: "masters",
+  },
+  {
     path: "/app/settings",
     sidebarName: "App Settings",
     navbarName: "App Settings",
@@ -312,17 +323,7 @@ const dashboardRoutes = [
     is_sidebar: false,
     is_protect: true,
     should_regex: false,
-  },
-  {
-    path: RouteName.HUB_MASTERS,
-    sidebarName: "Hub Master",
-    navbarName: "Hub Master",
-    icon: EventNote,
-    component: HubMasterList,
-    is_sidebar: true,
-    is_protect: true,
-    should_regex: false,
-  },
+  }
   // {
   //   path: "/notifications",
   //   sidebarName: "Notifications",

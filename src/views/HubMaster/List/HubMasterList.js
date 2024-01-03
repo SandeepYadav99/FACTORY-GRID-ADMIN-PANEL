@@ -32,7 +32,7 @@ const HubMasterList = (props) => {
     editData,
     editId,
     handleSideOpenSide,
-    handleToggleSidePannel,
+    handleEditHubMaster,
   } = useHubMasterHook({});
 
   const {
@@ -112,7 +112,8 @@ const HubMasterList = (props) => {
               color="secondary"
               disabled={isCalling}
               onClick={() => {
-                handleSideToggle(all?.id);
+                // handleSideToggle(all?.id);
+                handleEditHubMaster(all?.id)
               }}
             >
               <Create fontSize={"small"} />

@@ -16,3 +16,6 @@ export async function serviceHubMasterDetail(params) {
     return await postRequest('hub/master/details', params);
 }
 
+export async function serviceHubMasterDelete(params) {
+    return await postRequest('hub/master/delete', params);
+}

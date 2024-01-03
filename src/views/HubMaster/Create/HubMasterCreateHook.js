@@ -10,7 +10,10 @@ import {
 } from "../../../services/HubMaster.service";
 import constants from "../../../config/constants";
 import { useDispatch } from "react-redux";
-import { actionFetchHubMaster } from "../../../actions/HubMaster.action";
+import {
+  actionDeleteMasterDelete,
+  actionFetchHubMaster,
+} from "../../../actions/HubMaster.action";
 import WaitingComponent from "../../../components/Waiting.component";
 
 const initialForm = {
@@ -58,16 +61,20 @@ const useHubMasterCreateHook = ({
             featured: data?.featured === "YES",
             status: data?.status === constants.GENERAL_STATUS.ACTIVE,
           });
-          setGeoFence(
-            data?.geofence?.coordinates
-              ? data?.geofence?.coordinates[0]?.map((coordinate) => [
-                  ...coordinate,
-                ])
-              : []
-          );
+          if (data?.geofence?.coordinates) {
+            setGeoFence(
+              data?.geofence?.coordinates[0]?.map((coordinate) => [
+                ...coordinate,
+              ])
+            );
+          } else {
+            setGeoFence([]);
+          }
         } else {
         }
       });
+    } else {
+      setGeoFence([]);
     }
   }, [empId]);
 
@@ -76,6 +83,10 @@ const useHubMasterCreateHook = ({
       handleReset();
     }
   }, [isSidePanel]);
+
+  useEffect(() => {
+    setGeoFence([]);
+  }, [listData, geofence]);
 
   const handleCoordinate = useCallback(
     (data) => {
@@ -138,7 +149,8 @@ const useHubMasterCreateHook = ({
 
     if (!res.error) {
       handleToggleSidePannel();
-      // dispatch(actionFetchHubMaster(1));
+      dispatch(actionFetchHubMaster(1, {}, {}));
+
       window.location.reload();
     } else {
       SnackbarUtils.error(res.message);
@@ -152,6 +164,7 @@ const useHubMasterCreateHook = ({
     handleToggleSidePannel,
     geofence,
     dispatch,
+    geofenceLoading,
   ]);
 
   const handleSubmit = useCallback(async () => {
@@ -203,7 +216,14 @@ const useHubMasterCreateHook = ({
     [changeTextData]
   );
 
-  const handleDelete = useCallback(() => {}, []);
+  const handleDelete = useCallback(
+    (id) => {
+      dispatch(actionDeleteMasterDelete(empId));
+      handleToggleSidePannel();
+      dispatch(actionFetchHubMaster(1, {}, {}));
+    },
+    [empId]
+  );
 
   const handleReset = useCallback(() => {
     setForm({ ...initialForm });
@@ -229,6 +249,7 @@ const useHubMasterCreateHook = ({
     geofence,
     setGeoFence,
     handleCoordinate,
+    geofenceLoading,
   };
 };
 
