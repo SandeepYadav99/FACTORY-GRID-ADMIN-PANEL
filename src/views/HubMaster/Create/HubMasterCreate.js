@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Box, Button, IconButton, MenuItem, TextField } from "@material-ui/core";
+import { Box, Button, CircularProgress, IconButton, MenuItem, TextField } from "@material-ui/core";
 import {
   ArrowRight,
   Delete as DeleteIcon,
@@ -49,6 +49,7 @@ const HubMasterCreate = ({ handleToggleSidePannel, isSidePanel, empId }) => {
     listData,
     geofence,
     handleCoordinate,
+    isSubmitting
   } = useHubMasterCreateHook({ handleToggleSidePannel, isSidePanel, empId });
   const classes = useStyles();
 
@@ -152,7 +153,14 @@ const HubMasterCreate = ({ handleToggleSidePannel, isSidePanel, empId }) => {
             type={"submit"}
             onClick={handleSubmit}
           >
-            {empId ? "UPDATE" : "Submit"}
+              {isSubmitting ? (
+            <CircularProgress color="success" size="20px" />
+          ) : empId ? (
+            "UPDATE"
+          ) : (
+            "Submit"
+          )}
+         
           </Button>
         </div>
       </div>

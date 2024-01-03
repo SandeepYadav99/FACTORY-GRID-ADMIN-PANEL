@@ -11,6 +11,7 @@ import {
 import constants from "../../../config/constants";
 import { useDispatch } from "react-redux";
 import { actionFetchHubMaster } from "../../../actions/HubMaster.action";
+import WaitingComponent from "../../../components/Waiting.component";
 
 const initialForm = {
   name: "",
@@ -20,8 +21,11 @@ const initialForm = {
   status: false,
 };
 
-const useHubMasterCreateHook = ({handleToggleSidePannel,isSidePanel,empId}) => {
-
+const useHubMasterCreateHook = ({
+  handleToggleSidePannel,
+  isSidePanel,
+  empId,
+}) => {
   const [isLoading] = useState(false);
   const [showPasswordCurrent, setShowPasswordCurrent] = useState(false);
   const [errorData, setErrorData] = useState({});
@@ -31,6 +35,7 @@ const useHubMasterCreateHook = ({handleToggleSidePannel,isSidePanel,empId}) => {
   const includeRef = useRef(null);
   const [geofence, setGeoFence] = useState([]);
   const [listData, setListData] = useState(null);
+  const [geofenceLoading, setGeofenceLoading] = useState(false);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -76,7 +81,7 @@ const useHubMasterCreateHook = ({handleToggleSidePannel,isSidePanel,empId}) => {
     (data) => {
       setGeoFence(data);
     },
-    [setGeoFence]
+    [setGeoFence, geofenceLoading]
   );
 
   const checkFormValidation = useCallback(() => {
@@ -105,8 +110,11 @@ const useHubMasterCreateHook = ({handleToggleSidePannel,isSidePanel,empId}) => {
       return;
     }
     setIsSubmitting(true);
-
-    const industryID =Array.isArray(form.industry_id) && form.industry_id.length > 0
+    if (empId) {
+      setGeofenceLoading(true);
+    }
+    const industryID =
+      Array.isArray(form.industry_id) && form.industry_id.length > 0
         ? form.industry_id.map((item) => item.id || item._id)
         : [];
 
@@ -130,12 +138,21 @@ const useHubMasterCreateHook = ({handleToggleSidePannel,isSidePanel,empId}) => {
 
     if (!res.error) {
       handleToggleSidePannel();
-      dispatch(actionFetchHubMaster(1));
+      // dispatch(actionFetchHubMaster(1));
+      window.location.reload();
     } else {
       SnackbarUtils.error(res.message);
     }
     setIsSubmitting(false);
-  }, [form, isSubmitting, setIsSubmitting, empId, handleToggleSidePannel]);
+  }, [
+    form,
+    isSubmitting,
+    setIsSubmitting,
+    empId,
+    handleToggleSidePannel,
+    geofence,
+    dispatch,
+  ]);
 
   const handleSubmit = useCallback(async () => {
     const errors = checkFormValidation();
@@ -143,7 +160,6 @@ const useHubMasterCreateHook = ({handleToggleSidePannel,isSidePanel,empId}) => {
       setErrorData(errors);
     } else {
       await submitToServer();
-    
     }
   }, [checkFormValidation, setErrorData, form, submitToServer, empId]);
 

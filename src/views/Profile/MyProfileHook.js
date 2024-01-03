@@ -6,8 +6,8 @@ import RouteName from "../../routes/Route.name";
 
 const useMyProfileHook = () => {
   const [profileDetails, setProfileDetails] = useState(null);
-
-  // access query params id in url
+const [isLoading, setIsLoading]=useState(false)
+  
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const id = queryParams.get("id");
@@ -16,11 +16,15 @@ const useMyProfileHook = () => {
   const userObject = JSON.parse(userData);
 
   useEffect(() => {
+    setIsLoading(true)
     serviceProfileDetail({ id: id ? id : userObject?.user?.id }).then((res) => {
       if (!res?.error) {
         setProfileDetails(res?.data);
+
       }
-    });
+    }).finally(()=>{
+      setIsLoading(false)
+    })
   }, [id]);
 
   const handleEdit = useCallback((profile) => {
@@ -29,6 +33,7 @@ const useMyProfileHook = () => {
   return {
     profileDetails,
     handleEdit,
+    isLoading
   };
 };
 

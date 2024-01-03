@@ -161,182 +161,184 @@ import {
 } from "@material-ui/icons";
 import ResetPasswordDialog from "../ForgotPassword/ResetPassword.view";
 import useMyProfileHook from "./MyProfileHook";
+import WaitingComponent from "../../components/Waiting.component";
 
 const Profile = () => {
   const [open, setOpen] = useState(false);
-  const { profileDetails, handleEdit } = useMyProfileHook();
-  console.log(profileDetails, "Profile DETAIL");
-  const handleResetPassword = () => {
-    // Your logic for handling reset password
-  };
+  const { profileDetails, handleEdit, isLoading } = useMyProfileHook();
 
   const handleClose = () => {
-    
     setOpen(!open);
   };
 
   return (
     <div>
-      <div className={styles.upperFlex}>
-        <div className={styles.profileHeading}>My Profile</div>
+      {isLoading ? (
+        <WaitingComponent />
+      ) : (
         <div>
-          <ButtonBase className={styles.resetButton} onClick={handleClose}>
+          <div className={styles.upperFlex}>
+            <div className={styles.profileHeading}>My Profile</div>
             <div>
-              <Lock fontSize={"small"} />
-            </div>
-            <div className={styles.innerText}>Reset Password</div>
-          </ButtonBase>
+              <ButtonBase className={styles.resetButton} onClick={handleClose}>
+                <div>
+                  <Lock fontSize={"small"} />
+                </div>
+                <div className={styles.innerText}>Reset Password</div>
+              </ButtonBase>
 
-          <ButtonBase className={styles.addTask}>
-            <div>
-              <Add fontSize={"small"} />
-            </div>
-            <div className={styles.innerText}>Add Task</div>
-          </ButtonBase>
-        </div>
-      </div>
-
-      <div className={styles.profileFlex}>
-        <div className={styles.leftSection}>
-          <div className={styles.plain}>
-            <ButtonBase
-              className={styles.edit}
-              onClick={() => handleEdit(profileDetails)}
-            >
-              Edit
-            </ButtonBase>
-            <div className={styles.profileContainer}>
-              <img src={profileDetails?.image} alt="" />
-              {/*<div>NO PHOTO THEN SHOW INITIALS</div>*/}
-
-              <div className={styles.name}>{profileDetails?.name}</div>
-              <div className={styles.position}>
-                Emp. ID : {profileDetails?.employee_id || "N/A"}
-              </div>
-
-              {/* <div className={styles.designation}>Administrator</div> */}
-              <div className={styles.designation}>
-                {profileDetails?.role || "N/A"}
-              </div>
-              <div className={styles.status}>
-                {profileDetails?.status || "N/A"}
-              </div>
-            </div>
-
-            <hr />
-            <h5 className={styles.heading}>Contact Info</h5>
-            <div>
-              <div className={styles.contactFlex}>
-                <EmailIcon className={styles.contactIcons} />
-                <span className={styles.email}>
-                  {" "}
-                  {profileDetails?.email || "N/A"}
-                </span>
-              </div>
-              <div className={styles.contactFlex}>
-                <CallIcon className={styles.contactIcons} />{" "}
-                <span className={styles.email}>
-                  {" "}
-                  {profileDetails?.contact || "N/A"}
-                </span>
-              </div>
-            </div>
-
-            <h5 className={styles.heading}>Work Info</h5>
-            <div>
-              <div className={styles.activityFlex}>
-                <Description className={styles.contactIcons} />
-                {/* <span className={styles.activity}>Department</span> */}
-                <span className={styles.activity}>
-                  {profileDetails?.department}
-                </span>
-              </div>
-              <div className={styles.activityFlex}>
-                <Details className={styles.contactIcons} />
-                {/* <span className={styles.activity}>Designation</span> */}
-                <span className={styles.activity}>
-                  {profileDetails?.designation}
-                </span>
-              </div>
-              <div className={styles.activityFlex}>
-                <CalendarToday className={styles.contactIcons} />
-                {/* <span className={styles.activity}>Date Of Joining</span> */}
-                <span className={styles.activity}>
-                  {profileDetails?.joiningDateText || "N/A"}
-                </span>
-              </div>
-              <div className={styles.activityFlex}>
-                <Assignment className={styles.contactIcons} />
-                {/* <span className={styles.activity}>Manager</span> */}
-                <span className={styles.activity}>Manager</span>
-              </div>
-            </div>
-
-            <h5 className={styles.heading}>Activity Info</h5>
-            <div>
-              <div className={styles.activityFlex}>
-                <EmailIcon className={styles.contactIcons} />
-                {/* <span className={styles.activity}>12/02/2021 12:12:00</span> */}
-                <span className={styles.activity}>
-                  {profileDetails?.lastLoginText !== "Invalid date"
-                    ? profileDetails?.lastLoginText
-                    : "N/A"}
-                </span>
-              </div>
-              <div className={styles.activityFlex}>
-                <CallIcon className={styles.contactIcons} />
-                <span className={styles.activity}>
-                  {profileDetails?.current_ip || "N/A"}
-                </span>
-              </div>
+              <ButtonBase className={styles.addTask}>
+                <div>
+                  <Add fontSize={"small"} />
+                </div>
+                <div className={styles.innerText}>Add Task</div>
+              </ButtonBase>
             </div>
           </div>
-        </div>
-        <div className={styles.rightSection}>
-          <div className={styles.plain}>
-            <div className={styles.upperFlex}>
-              <h3 className={styles.taskHeading}>Tasks Lists</h3>
-              <div className={"myprofile"}>
-                <FormControl
-                  variant={"outlined"}
-                  className={styles.selectWidth}
+
+          <div className={styles.profileFlex}>
+            <div className={styles.leftSection}>
+              <div className={styles.plain}>
+                <ButtonBase
+                  className={styles.edit}
+                  onClick={() => handleEdit(profileDetails)}
                 >
-                  <Select
-                    disableUnderline
-                    // value={''}
-                    // onChange={_handleChange}
-                    // IconComponent={ExpandMore}
-                  >
-                    <MenuItem value={"PENDING"}>Pending</MenuItem>
-                    <MenuItem value={"COMPLETED"}>Completed</MenuItem>
-                    {/*<MenuItem value={'PRICE_HIGH'}>Price (High to Low)</MenuItem>*/}
-                    {/*<MenuItem value={'RATING'}>Rating</MenuItem>*/}
-                  </Select>
-                </FormControl>
-              </div>
-            </div>
-            <div className={styles.check}>
-              <Checkbox color={"primary"} />
-              Animation Css Practise
-            </div>
-            <div className={styles.dummy}>
-              Lorem Ipsum is simply dummy text of the printing and typesetting
-              industry text of the simply dummy
-            </div>
+                  Edit
+                </ButtonBase>
+                <div className={styles.profileContainer}>
+                  <img src={profileDetails?.image} alt="" />
+                  {/*<div>NO PHOTO THEN SHOW INITIALS</div>*/}
 
-            <div className={styles.taskFlex}>
-              <div className={styles.timeFlex}>
-                <EmailIcon className={styles.contactIcons} />
-                <span className={styles.info}>20 July 2021 12:00 PM</span>
+                  <div className={styles.name}>{profileDetails?.name}</div>
+                  <div className={styles.position}>
+                    Emp. ID : {profileDetails?.employee_id || "N/A"}
+                  </div>
+
+                  {/* <div className={styles.designation}>Administrator</div> */}
+                  <div className={styles.designation}>
+                    {profileDetails?.role || "N/A"}
+                  </div>
+                  <div className={styles.status}>
+                    {profileDetails?.status || "N/A"}
+                  </div>
+                </div>
+
+                <hr />
+                <h5 className={styles.heading}>Contact Info</h5>
+                <div>
+                  <div className={styles.contactFlex}>
+                    <EmailIcon className={styles.contactIcons} />
+                    <span className={styles.email}>
+                      {" "}
+                      {profileDetails?.email || "N/A"}
+                    </span>
+                  </div>
+                  <div className={styles.contactFlex}>
+                    <CallIcon className={styles.contactIcons} />{" "}
+                    <span className={styles.email}>
+                      {" "}
+                      {profileDetails?.contact || "N/A"}
+                    </span>
+                  </div>
+                </div>
+
+                <h5 className={styles.heading}>Work Info</h5>
+                <div>
+                  <div className={styles.activityFlex}>
+                    <Description className={styles.contactIcons} />
+                    {/* <span className={styles.activity}>Department</span> */}
+                    <span className={styles.activity}>
+                      {profileDetails?.department}
+                    </span>
+                  </div>
+                  <div className={styles.activityFlex}>
+                    <Details className={styles.contactIcons} />
+                    {/* <span className={styles.activity}>Designation</span> */}
+                    <span className={styles.activity}>
+                      {profileDetails?.designation}
+                    </span>
+                  </div>
+                  <div className={styles.activityFlex}>
+                    <CalendarToday className={styles.contactIcons} />
+                    {/* <span className={styles.activity}>Date Of Joining</span> */}
+                    <span className={styles.activity}>
+                      {profileDetails?.joiningDateText || "N/A"}
+                    </span>
+                  </div>
+                  <div className={styles.activityFlex}>
+                    <Assignment className={styles.contactIcons} />
+                    {/* <span className={styles.activity}>Manager</span> */}
+                    <span className={styles.activity}>Manager</span>
+                  </div>
+                </div>
+
+                <h5 className={styles.heading}>Activity Info</h5>
+                <div>
+                  <div className={styles.activityFlex}>
+                    <EmailIcon className={styles.contactIcons} />
+                    {/* <span className={styles.activity}>12/02/2021 12:12:00</span> */}
+                    <span className={styles.activity}>
+                      {profileDetails?.lastLoginText !== "Invalid date"
+                        ? profileDetails?.lastLoginText
+                        : "N/A"}
+                    </span>
+                  </div>
+                  <div className={styles.activityFlex}>
+                    <CallIcon className={styles.contactIcons} />
+                    <span className={styles.activity}>
+                      {profileDetails?.current_ip || "N/A"}
+                    </span>
+                  </div>
+                </div>
               </div>
-              <div className={styles.priority}>HIGH</div>
-              <div className={styles.section}>Finance</div>
+            </div>
+            <div className={styles.rightSection}>
+              <div className={styles.plain}>
+                <div className={styles.upperFlex}>
+                  <h3 className={styles.taskHeading}>Tasks Lists</h3>
+                  <div className={"myprofile"}>
+                    <FormControl
+                      variant={"outlined"}
+                      className={styles.selectWidth}
+                    >
+                      <Select
+                        disableUnderline
+                        // value={''}
+                        // onChange={_handleChange}
+                        // IconComponent={ExpandMore}
+                      >
+                        <MenuItem value={"PENDING"}>Pending</MenuItem>
+                        <MenuItem value={"COMPLETED"}>Completed</MenuItem>
+                        {/*<MenuItem value={'PRICE_HIGH'}>Price (High to Low)</MenuItem>*/}
+                        {/*<MenuItem value={'RATING'}>Rating</MenuItem>*/}
+                      </Select>
+                    </FormControl>
+                  </div>
+                </div>
+                <div className={styles.check}>
+                  <Checkbox color={"primary"} />
+                  Animation Css Practise
+                </div>
+                <div className={styles.dummy}>
+                  Lorem Ipsum is simply dummy text of the printing and
+                  typesetting industry text of the simply dummy
+                </div>
+
+                <div className={styles.taskFlex}>
+                  <div className={styles.timeFlex}>
+                    <EmailIcon className={styles.contactIcons} />
+                    <span className={styles.info}>20 July 2021 12:00 PM</span>
+                  </div>
+                  <div className={styles.priority}>HIGH</div>
+                  <div className={styles.section}>Finance</div>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-      </div>
 
-      <ResetPasswordDialog open={open} handleClose={handleClose}/>
+          <ResetPasswordDialog open={open} handleClose={handleClose} />
+        </div>
+      )}
     </div>
   );
 };
