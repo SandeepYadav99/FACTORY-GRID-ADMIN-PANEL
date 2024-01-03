@@ -38,7 +38,7 @@ const useHubMasterCreateHook = ({
   const includeRef = useRef(null);
   const [geofence, setGeoFence] = useState([]);
   const [listData, setListData] = useState(null);
-  const [geofenceLoading, setGeofenceLoading] = useState(false);
+
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -61,20 +61,15 @@ const useHubMasterCreateHook = ({
             featured: data?.featured === "YES",
             status: data?.status === constants.GENERAL_STATUS.ACTIVE,
           });
-          if (data?.geofence?.coordinates) {
+        
             setGeoFence(
               data?.geofence?.coordinates[0]?.map((coordinate) => [
                 ...coordinate,
               ])
             );
-          } else {
-            setGeoFence([]);
-          }
-        } else {
-        }
+          
+        } 
       });
-    } else {
-      setGeoFence([]);
     }
   }, [empId]);
 
@@ -84,15 +79,13 @@ const useHubMasterCreateHook = ({
     }
   }, [isSidePanel]);
 
-  useEffect(() => {
-    setGeoFence([]);
-  }, [listData, geofence]);
+
 
   const handleCoordinate = useCallback(
     (data) => {
       setGeoFence(data);
     },
-    [setGeoFence, geofenceLoading]
+    [setGeoFence]
   );
 
   const checkFormValidation = useCallback(() => {
@@ -121,9 +114,7 @@ const useHubMasterCreateHook = ({
       return;
     }
     setIsSubmitting(true);
-    if (empId) {
-      setGeofenceLoading(true);
-    }
+  
     const industryID =
       Array.isArray(form.industry_id) && form.industry_id.length > 0
         ? form.industry_id.map((item) => item.id || item._id)
@@ -151,7 +142,7 @@ const useHubMasterCreateHook = ({
       handleToggleSidePannel();
       dispatch(actionFetchHubMaster(1, {}, {}));
 
-      window.location.reload();
+       window.location.reload();
     } else {
       SnackbarUtils.error(res.message);
     }
@@ -164,7 +155,7 @@ const useHubMasterCreateHook = ({
     handleToggleSidePannel,
     geofence,
     dispatch,
-    geofenceLoading,
+  
   ]);
 
   const handleSubmit = useCallback(async () => {
@@ -249,7 +240,7 @@ const useHubMasterCreateHook = ({
     geofence,
     setGeoFence,
     handleCoordinate,
-    geofenceLoading,
+   
   };
 };
 

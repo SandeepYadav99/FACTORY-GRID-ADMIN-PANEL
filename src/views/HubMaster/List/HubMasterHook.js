@@ -129,9 +129,9 @@ const useHubMasterHook = ({}) => {
       setSidePanel((e) => !e);
 
       setEditId(data);
-      if (!isSidePanel) {
+    
         setEditData(null);
-      }
+      
     },
     [setEditData, setSidePanel]
   );
@@ -139,9 +139,7 @@ const useHubMasterHook = ({}) => {
   const handleSideOpenSide = useCallback(
     (data) => {
       setSidePanel((e) => !e);
-      //  historyUtils.push("/badge");
-      // historyUtils.goBack();
-      setEditId("");
+   
     },
     [setEditData, setSidePanel]
   );

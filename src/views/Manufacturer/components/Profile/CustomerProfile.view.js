@@ -16,9 +16,7 @@ import { serviceResetUserEmail } from "../../../../services/CustomersRequest.ser
 
 const ProfileView = ({ userProfile, renderInterestArea, isLoading }) => {
 
-  const handleResend =useCallback(()=>{
- 
-  },[])
+  
 
   // useEffect(()=>{
   //   handleResend()

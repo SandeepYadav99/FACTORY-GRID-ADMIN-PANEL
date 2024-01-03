@@ -29,6 +29,9 @@ import useCustomerProfileHook from "../../helper/CustomerProfileHook";
 import SimplePopover from "../../components/FormFields/SimplePopover/SimplePopover";
 import SuspendPopup from "./components/SuspendPopup/SuspendPopup";
 import WaitingComponent from "../../components/Waiting.component";
+
+
+
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -71,6 +74,8 @@ const useStyles = makeStyles((theme) => ({
 const ManufacturerTabs = ({ classes, theme }) => {
   const [value, setValue] = useState(0);
   const { userProfile, renderInterestArea , isLoading} = useCustomerProfileHook();
+  
+
   const [isOpenDialog, setIsOpenDialog] = useState(false);
  
   const toggleIsOpenDialog = useCallback(
@@ -85,6 +90,8 @@ const ManufacturerTabs = ({ classes, theme }) => {
   useEffect(() => {
     // ComponentDidMount logic can go here
   }, []);
+
+ 
 
   const handleSuspendBtn = () => {};
 
