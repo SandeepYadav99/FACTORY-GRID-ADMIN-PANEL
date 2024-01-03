@@ -1,6 +1,13 @@
 import React from "react";
 
-import { Box, Button, CircularProgress, IconButton, MenuItem, TextField } from "@material-ui/core";
+import {
+  Box,
+  Button,
+  CircularProgress,
+  IconButton,
+  MenuItem,
+  TextField,
+} from "@material-ui/core";
 import {
   ArrowRight,
   Delete as DeleteIcon,
@@ -49,7 +56,7 @@ const HubMasterCreate = ({ handleToggleSidePannel, isSidePanel, empId }) => {
     listData,
     geofence,
     handleCoordinate,
-    isSubmitting
+    isSubmitting,
   } = useHubMasterCreateHook({ handleToggleSidePannel, isSidePanel, empId });
   const classes = useStyles();
 
@@ -93,27 +100,26 @@ const HubMasterCreate = ({ handleToggleSidePannel, isSidePanel, empId }) => {
         </div>
         <div className={"formFlex"}>
           <div className={"formGroup"}>
-      
-              <Autocomplete
-                  multiple
-                  id="tags-outlined"
-                  onChange={(e, value) => {
-                    changeTextData(value, "industry_id");
-                  }}
-                  value={form.industry_id || []}
-                  // id="tags-standard"
-                  options={listData || []}
-                  getOptionLabel={(option) => option.name}
-                  defaultValue={form?.industry_id || []}
-                  renderInput={(params) => (
-                    <TextField
-                      {...params}
-                      variant="outlined"
-                      label="Associated Industries"
-                      error={errorData?.industry_id}
-                    />
-                  )}
+            <Autocomplete
+              multiple
+              id="tags-outlined"
+              onChange={(e, value) => {
+                changeTextData(value, "industry_id");
+              }}
+              value={form.industry_id || []}
+              // id="tags-standard"
+              options={listData || []}
+              getOptionLabel={(option) => option.name}
+              defaultValue={form?.industry_id || []}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  variant="outlined"
+                  label="Associated Industries"
+                  error={errorData?.industry_id}
                 />
+              )}
+            />
           </div>
         </div>
         <div className={"formFlex"}>
@@ -142,7 +148,7 @@ const HubMasterCreate = ({ handleToggleSidePannel, isSidePanel, empId }) => {
                 changeTextData(!form?.featured, "featured");
               }}
               label={"Featured"}
-              checked={form?.featured }
+              checked={form?.featured}
             />
           </div>
         </div>
@@ -153,14 +159,13 @@ const HubMasterCreate = ({ handleToggleSidePannel, isSidePanel, empId }) => {
             type={"submit"}
             onClick={handleSubmit}
           >
-              {isSubmitting ? (
-            <CircularProgress color="success" size="20px" />
-          ) : empId ? (
-            "UPDATE"
-          ) : (
-            "Submit"
-          )}
-         
+            {isSubmitting ? (
+              <CircularProgress color="success" size="20px" />
+            ) : empId ? (
+              "UPDATE"
+            ) : (
+              "Submit"
+            )}
           </Button>
         </div>
       </div>

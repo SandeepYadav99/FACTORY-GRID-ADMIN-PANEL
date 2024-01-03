@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Box, Button, IconButton, MenuItem } from "@material-ui/core";
+import { Box, Button, CircularProgress, IconButton, MenuItem } from "@material-ui/core";
 import {
   ArrowRight,
   Delete as DeleteIcon,
@@ -48,6 +48,7 @@ const BadgeView = ({ handleToggleSidePannel, isSidePanel, empId }) => {
     data,
     handleDelete,
     listData,
+    isSubmitting
   } = useBadgeCreateHook({ handleToggleSidePannel, isSidePanel, empId });
   const classes = useStyles();
 
@@ -178,7 +179,14 @@ const BadgeView = ({ handleToggleSidePannel, isSidePanel, empId }) => {
             type={"submit"}
             onClick={handleSubmit}
           >
-            {empId ? "UPDATE" : "Submit"}
+            {isSubmitting ? (
+              <CircularProgress color="success" size="20px" />
+            ) : empId ? (
+              "UPDATE"
+            ) : (
+              "Submit"
+            )}
+          
           </Button>
         </div>
       </div>
