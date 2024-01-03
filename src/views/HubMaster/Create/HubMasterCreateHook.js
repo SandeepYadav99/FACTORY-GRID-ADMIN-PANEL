@@ -20,11 +20,8 @@ const initialForm = {
   status: false,
 };
 
-const useHubMasterCreateHook = ({
-  handleToggleSidePannel,
-  isSidePanel,
-  empId,
-}) => {
+const useHubMasterCreateHook = ({handleToggleSidePannel,isSidePanel,empId}) => {
+
   const [isLoading] = useState(false);
   const [showPasswordCurrent, setShowPasswordCurrent] = useState(false);
   const [errorData, setErrorData] = useState({});
@@ -35,6 +32,7 @@ const useHubMasterCreateHook = ({
   const [geofence, setGeoFence] = useState([]);
   const [listData, setListData] = useState(null);
   const dispatch = useDispatch();
+
   useEffect(() => {
     serviceBadgeIndustry({ id: empId }).then((res) => {
       if (!res.error) {
@@ -48,13 +46,11 @@ const useHubMasterCreateHook = ({
       serviceHubMasterDetail({ id: empId }).then((res) => {
         if (!res.error) {
           const data = res.data;
-
           setForm({
             ...form,
             name: data?.name,
             industry_id: data?.industryData,
             featured: data?.featured === "YES",
-
             status: data?.status === constants.GENERAL_STATUS.ACTIVE,
           });
           setGeoFence(
@@ -96,7 +92,6 @@ const useHubMasterCreateHook = ({
         delete errors[val];
       }
     });
-
     Object.keys(errors).forEach((key) => {
       if (!errors[key]) {
         delete errors[key];
@@ -109,10 +104,9 @@ const useHubMasterCreateHook = ({
     if (isSubmitting) {
       return;
     }
-
     setIsSubmitting(true);
-    const industryID =
-      Array.isArray(form.industry_id) && form.industry_id.length > 0
+
+    const industryID =Array.isArray(form.industry_id) && form.industry_id.length > 0
         ? form.industry_id.map((item) => item.id || item._id)
         : [];
 
@@ -129,7 +123,6 @@ const useHubMasterCreateHook = ({
     if (empId) {
       updateData.id = empId;
     }
-
     const req = empId
       ? serviceHubMasterUpdate(updateData)
       : serviceHubMasterCreate(updateData); //
@@ -137,23 +130,20 @@ const useHubMasterCreateHook = ({
 
     if (!res.error) {
       handleToggleSidePannel();
-      //  window.location.reload();
       dispatch(actionFetchHubMaster(1));
     } else {
       SnackbarUtils.error(res.message);
     }
-
     setIsSubmitting(false);
   }, [form, isSubmitting, setIsSubmitting, empId, handleToggleSidePannel]);
 
   const handleSubmit = useCallback(async () => {
     const errors = checkFormValidation();
-
     if (Object.keys(errors).length > 0) {
       setErrorData(errors);
     } else {
       await submitToServer();
-      // window.location.reload();
+    
     }
   }, [checkFormValidation, setErrorData, form, submitToServer, empId]);
 
@@ -168,8 +158,6 @@ const useHubMasterCreateHook = ({
 
   const changeTextData = useCallback(
     (text, fieldName) => {
-      console.log(text);
-
       let shouldRemoveError = true;
       const t = { ...form };
       if (fieldName === "name") {
@@ -184,7 +172,6 @@ const useHubMasterCreateHook = ({
       } else {
         t[fieldName] = text;
       }
-
       setForm(t);
       shouldRemoveError && removeError(fieldName);
     },
@@ -223,7 +210,6 @@ const useHubMasterCreateHook = ({
     empId,
     showPasswordCurrent,
     setShowPasswordCurrent,
-
     geofence,
     setGeoFence,
     handleCoordinate,

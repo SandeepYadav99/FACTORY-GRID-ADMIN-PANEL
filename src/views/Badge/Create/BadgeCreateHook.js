@@ -27,7 +27,6 @@ const useBadgeCreateHook = ({ handleToggleSidePannel, isSidePanel, empId }) => {
   const includeRef = useRef(null);
   const [logos, setLogos] = useState(null);
   const [selectedValues, setSelectedValues] = useState("");
-
   const [listData, setListData] = useState(null);
 
   useEffect(() => {
@@ -43,15 +42,12 @@ const useBadgeCreateHook = ({ handleToggleSidePannel, isSidePanel, empId }) => {
       serviceBadgeDetail({ id: empId }).then((res) => {
         if (!res.error) {
           const data = res.data;
-
           setForm({
             ...form,
-            // id:data._id,
             name: data?.name,
             apply_to: data?.apply_to,
             logic: data?.logic,
             industry_id: data?.industries?._id,
-            // status: data?.status === Constants.GENERAL_STATUS.ACTIVE,
           });
           setLogos(data?.logo);
         } else {
@@ -70,7 +66,6 @@ const useBadgeCreateHook = ({ handleToggleSidePannel, isSidePanel, empId }) => {
   const checkFormValidation = useCallback(() => {
     const errors = { ...errorData };
     let required = ["name", ...(empId ? [] : ["logo"])];
-
     required.forEach((val) => {
       if (
         !form?.[val] ||
@@ -94,29 +89,26 @@ const useBadgeCreateHook = ({ handleToggleSidePannel, isSidePanel, empId }) => {
     if (isSubmitting) {
       return;
     }
-
     setIsSubmitting(true);
-
-    const formData = new FormData();
-    formData.append("name", form.name);
-    formData.append("logo", form.logo);
-    formData.append("apply_to", form?.apply_to);
-    formData.append("logic", form?.logic);
-    formData.append("industry_id", form?.industry_id);
-
-    const req = empId
-      ? serviceBadgeUpdate(formData, formData.append("id", empId))
-      : serviceBadgeCreate(formData); //
-    const res = await req;
-
-    if (!res.error) {
-      handleToggleSidePannel();
-      window.location.reload();
-    } else {
-      SnackbarUtils.error(res.response_message);
+    try {
+      const formData = new FormData();
+      const fields = ["name", "logo", "apply_to", "logic", "industry_id"];
+      fields.forEach((field) => {
+        formData.append(field, form?.[field]);
+      });
+      formData.append("id", empId);
+      const serviceFunction = empId ? serviceBadgeUpdate : serviceBadgeCreate;
+      const res = await serviceFunction(formData);
+      if (!res.error) {
+        handleToggleSidePannel();
+        window.location.reload();
+      } else {
+        SnackbarUtils.error(res.message);
+      }
+    } catch (error) {
+    } finally {
+      setIsSubmitting(false);
     }
-
-    setIsSubmitting(false);
   }, [form, isSubmitting, setIsSubmitting, empId, handleToggleSidePannel]);
 
   const handleSubmit = useCallback(async () => {
