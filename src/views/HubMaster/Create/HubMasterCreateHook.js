@@ -209,9 +209,9 @@ const useHubMasterCreateHook = ({
 
   const handleDelete = useCallback(
     (id) => {
-      dispatch(actionDeleteMasterDelete(empId));
-      handleToggleSidePannel();
-      dispatch(actionFetchHubMaster(1, {}, {}));
+      // dispatch(actionDeleteMasterDelete(empId));
+      // handleToggleSidePannel();
+      // dispatch(actionFetchHubMaster(1, {}, {}));
     },
     [empId]
   );
