@@ -1,7 +1,7 @@
 import styles from "./Style.module.css";
 import { makeStyles } from "@material-ui/styles";
 import CustomSelectField from "../../../../FormFields/SelectField/SelectField.component";
-import { Button, MenuItem } from "@material-ui/core";
+import { Button, CircularProgress, MenuItem } from "@material-ui/core";
 import CustomDatePicker from "../../../../FormFields/DatePicker/CustomDatePicker";
 import CustomTextField from "../../../../FormFields/TextField.component";
 import { formattedOptions } from "../../../../helper/Department";
@@ -26,7 +26,8 @@ const WorkProfile = ({
   handleSubmit,
   listData,
   setTypeOf,
-  handleSubmitToSave
+  handleSubmitToSave,
+  isSubmitting
 }) => {
   const classes = useStyles();
 
@@ -124,7 +125,12 @@ const WorkProfile = ({
               type="button"
               onClick={handleSaveClick}
             >
-              Save
+               {isSubmitting ? (
+                <CircularProgress color="success" size="20px" />
+              ) : (
+                " Save"
+              )}
+              
             </Button>
           </div>
         </div>

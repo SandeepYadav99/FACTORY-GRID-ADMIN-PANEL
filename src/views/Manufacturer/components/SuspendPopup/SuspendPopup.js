@@ -1,9 +1,5 @@
 import React, { useState } from "react";
-import {
- 
-  ButtonBase, CircularProgress,
- 
-} from "@material-ui/core";
+import { ButtonBase, CircularProgress } from "@material-ui/core";
 import { Close } from "@material-ui/icons";
 import Slide from "@material-ui/core/Slide";
 import Dialog from "@material-ui/core/Dialog";
@@ -11,9 +7,6 @@ import styles from "./Style.module.css";
 import { makeStyles } from "@material-ui/styles";
 import SnackbarUtils from "../../../../libs/SnackbarUtils";
 import { serviceGetUserSuspend } from "../../../../services/CustomersRequest.service";
-
-
-
 
 const useStyles = makeStyles((theme) => ({
   flex: {
@@ -40,23 +33,25 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 
 const SuspendPopup = ({ isOpen, handleToggle, candidateId }) => {
   const classes = useStyles();
-  const [isSubmitting, setIsSubmitting]=useState(false)
-  
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
   const handleSubmit = () => {
     if (candidateId) {
-      setIsSubmitting(true)
-      serviceGetUserSuspend({ id: candidateId }).then((res) => {
-        if (!res?.error) {
-          handleToggle();
-          // historyUtils.goBack()
-          SnackbarUtils.success("Suspend Successfully")
-        }else{
-          SnackbarUtils.error(" Not Found")
-        }
-      }).finally(()=>{
-        setIsSubmitting(false)
-      })
-     }
+      setIsSubmitting(true);
+      serviceGetUserSuspend({ id: candidateId })
+        .then((res) => {
+          if (!res?.error) {
+            handleToggle();
+          
+            SnackbarUtils.success("Suspend Successfully");
+          } else {
+            SnackbarUtils.error(" Not Found");
+          }
+        })
+        .finally(() => {
+          setIsSubmitting(false);
+        });
+    }
   };
   return (
     <div>
@@ -86,33 +81,20 @@ const SuspendPopup = ({ isOpen, handleToggle, candidateId }) => {
             <div className={styles.heading}>Suspended User</div>
             <div className={styles.newLine}></div>
             <div className={styles.des}>
-            Please confirm you wish to mark user as suspended. 
+              Please confirm you wish to mark user as suspended.
             </div>
           </div>
 
-          
-       
           <div className={styles.printFlex}>
-          <ButtonBase
-               onClick={handleToggle}
-            
-              className={
-               styles.createBtn 
-              }
-            >
+            <ButtonBase onClick={handleToggle} className={styles.createBtn}>
               Cancel
             </ButtonBase>
-            <ButtonBase
-               onClick={handleSubmit}
-            
-              className={
-               styles.createBtn 
-              }
-            >
-                {isSubmitting ? (
-              <CircularProgress color="success" size="20px" />
-            ) : " CONFIRM"}
-             
+            <ButtonBase onClick={handleSubmit} className={styles.createBtn}>
+              {isSubmitting ? (
+                <CircularProgress color="success" size="20px" />
+              ) : (
+                " CONFIRM"
+              )}
             </ButtonBase>
           </div>
         </div>

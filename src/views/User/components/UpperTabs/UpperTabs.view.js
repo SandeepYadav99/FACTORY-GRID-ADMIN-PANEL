@@ -68,7 +68,8 @@ const ProfileView = () => {
     image,
     setTypeOf,
     setPhoneContact,
-    handleSubmitToSave
+    handleSubmitToSave,
+    isSubmitting
     
   } = useUpperTabsHook({});
 
@@ -136,7 +137,8 @@ const ProfileView = () => {
             handleSubmitToSave={handleSubmitToSave}
             listData={listData}
             setTypeOf={setTypeOf}
-            setPhoneContact={setPhoneContact}/>
+            setPhoneContact={setPhoneContact}
+            isSubmitting={isSubmitting}/>
         </TabPanel>
         {/* <TabPanel value={value} index={2}></TabPanel> */}
       </div>
