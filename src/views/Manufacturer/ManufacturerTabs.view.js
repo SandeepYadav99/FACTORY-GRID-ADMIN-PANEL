@@ -28,9 +28,7 @@ import BusinessDetails from "./components/Business/BusinessDetails.view";
 import useCustomerProfileHook from "../../helper/CustomerProfileHook";
 import SimplePopover from "../../components/FormFields/SimplePopover/SimplePopover";
 import SuspendPopup from "./components/SuspendPopup/SuspendPopup";
-
-
-
+import WaitingComponent from "../../components/Waiting.component";
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -72,11 +70,9 @@ const useStyles = makeStyles((theme) => ({
 
 const ManufacturerTabs = ({ classes, theme }) => {
   const [value, setValue] = useState(0);
-  const { userProfile, renderInterestArea } = useCustomerProfileHook();
-  
-  console.log(userProfile)
+  const { userProfile, renderInterestArea , isLoading} = useCustomerProfileHook();
   const [isOpenDialog, setIsOpenDialog] = useState(false);
-
+ 
   const toggleIsOpenDialog = useCallback(
     (data) => {
       setIsOpenDialog((e) => !e);
@@ -89,8 +85,6 @@ const ManufacturerTabs = ({ classes, theme }) => {
   useEffect(() => {
     // ComponentDidMount logic can go here
   }, []);
-
- 
 
   const handleSuspendBtn = () => {};
 
@@ -220,13 +214,17 @@ const ManufacturerTabs = ({ classes, theme }) => {
 
       <div className={styles.paperBackground}>
         <TabPanel value={value} index={0} dir={theme.direction}>
+        {isLoading ? <WaitingComponent/> : 
           <CustomerProfile
             userProfile={userProfile}
             renderInterestArea={renderInterestArea}
-          />
+            isLoading={isLoading}
+          />}
         </TabPanel>
         <TabPanel value={value} index={1} dir={theme.direction}>
-          <BusinessDetails  userProfile={userProfile}/>
+          <BusinessDetails  userProfile={userProfile} renderInterestArea={renderInterestArea}
+            isLoading={isLoading}/>
+          
         </TabPanel>
         <TabPanel value={value} index={2} dir={theme.direction}></TabPanel>
         <TabPanel value={value} index={3} dir={theme.direction}></TabPanel>

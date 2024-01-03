@@ -11,10 +11,13 @@ import Activity from "./components/Activity";
 import useCustomerProfileHook from "../../../../helper/CustomerProfileHook";
 import { ReportProblem } from "@material-ui/icons";
 import SimplePopover from "../../../../components/FormFields/SimplePopover/SimplePopover";
+import WaitingComponent from "../../../../components/Waiting.component";
 
-const ProfileView = ({ userProfile, renderInterestArea }) => {
+const ProfileView = ({ userProfile, renderInterestArea, isLoading }) => {
+ 
   return (
     <div>
+    
       <div className={styles.upperFlex}>
         <div className={styles.left}>
           <div className={styles.plain}>
