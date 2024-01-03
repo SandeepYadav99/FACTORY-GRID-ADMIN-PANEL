@@ -60,10 +60,14 @@ const Queries = ({queryLists}) => {
         <div className={styles.total}>Unresolved: 0</div>
         <div className={styles.total}>Resolved: 0</div>
       </div>
+      {queryLists?.length > 0 ? <div>
+
       <div>{renderTimeline()}</div>
       <div className={styles.viewBtn}>
         <ButtonBase className={styles.viewMore}>View All</ButtonBase>
       </div>
+
+      </div>:<div className={styles.query}>Not Available</div>}
     </div>
   );
 };

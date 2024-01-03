@@ -4,15 +4,18 @@ import Popover from "@material-ui/core/Popover";
 import Typography from "@material-ui/core/Typography";
 import { ButtonBase } from "@material-ui/core";
 import { ReportProblem } from "@material-ui/icons";
+import { serviceResetUserEmail } from "../../../services/CustomersRequest.service";
+import SnackbarUtils from "../../../libs/SnackbarUtils";
+
 const useStyles = makeStyles((theme) => ({
   typography: {
     padding: theme.spacing(2),
     fontSize: "0.7rem",
   },
-  notverified:{
+  notverified: {
     color: "yellow",
-   fontSize: "1.2rem",
-    marginBottom: "1px"
+    fontSize: "1.2rem",
+    marginBottom: "1px",
   },
   email: {
     color: "grey",
@@ -26,10 +29,16 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SimplePopover({ val, handleResend, isClose }) {
+export default function SimplePopover({
+  val,
+ 
+  isClose,
+  userProfile,
+}) {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
 
+  console.log(userProfile, "Profile");
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -42,9 +51,17 @@ export default function SimplePopover({ val, handleResend, isClose }) {
       setAnchorEl(null);
     }
   }, [isClose]);
-  
+
   const open = Boolean(anchorEl);
   const id = open ? "simple-popover" : undefined;
+
+  const handleResend =()=>{
+    serviceResetUserEmail({user_id:userProfile._id, email:userProfile.email}).then((res)=>{
+      if(!res.error){
+       SnackbarUtils.success("Resend Successfully")
+      }
+    })
+  }
 
   return (
     <div onMouseLeave={handleClose}>
@@ -53,8 +70,7 @@ export default function SimplePopover({ val, handleResend, isClose }) {
         onClick={handleClick}
         onMouseEnter={handleClick}
       >
-         <ReportProblem  className={classes.notverified}/>
-        {/* <img src={val} height={15} width={15} /> */}
+        <ReportProblem className={classes.notverified} />
       </ButtonBase>
 
       <Popover
@@ -77,10 +93,7 @@ export default function SimplePopover({ val, handleResend, isClose }) {
           </div>
           <div>
             <ButtonBase className={classes.email}>Change Email</ButtonBase>
-            <ButtonBase
-              className={classes.verify}
-              onClick={() => handleResend()}
-            >
+            <ButtonBase className={classes.verify} onClick={handleResend}>
               Verify Now
             </ButtonBase>
           </div>

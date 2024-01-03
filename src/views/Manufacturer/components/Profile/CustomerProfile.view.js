@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback, useEffect } from "react";
 import { ButtonBase, Tooltip } from "@material-ui/core";
 import VerifiedUserIcon from "@material-ui/icons/VerifiedUser";
 import Timeline from "./components/Timeline/Timeline.view";
@@ -12,9 +12,17 @@ import useCustomerProfileHook from "../../../../helper/CustomerProfileHook";
 import { ReportProblem } from "@material-ui/icons";
 import SimplePopover from "../../../../components/FormFields/SimplePopover/SimplePopover";
 import WaitingComponent from "../../../../components/Waiting.component";
+import { serviceResetUserEmail } from "../../../../services/CustomersRequest.service";
 
 const ProfileView = ({ userProfile, renderInterestArea, isLoading }) => {
+
+  const handleResend =useCallback(()=>{
  
+  },[])
+
+  // useEffect(()=>{
+  //   handleResend()
+  // },[])
   return (
     <div>
     
@@ -95,7 +103,7 @@ const ProfileView = ({ userProfile, renderInterestArea, isLoading }) => {
                   {userProfile.is_email_verified ? (
                     <VerifiedUserIcon className={styles.verified} />
                   ) : (
-                    <SimplePopover />
+                    <SimplePopover userProfile={userProfile} type={"Email"}/>
                   )}
                 </div>
               </div>

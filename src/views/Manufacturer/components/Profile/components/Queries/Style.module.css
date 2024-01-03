@@ -104,3 +104,6 @@
 .total{
     flex: 1;
 }
+.query{
+    text-align: center;
+}
