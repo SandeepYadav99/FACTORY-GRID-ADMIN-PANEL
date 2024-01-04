@@ -2,7 +2,6 @@
 /* eslint-disable no-unused-vars */
 import { useDispatch, useSelector } from "react-redux";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-
 import {
   actionFetchHubMaster,
   actionSetPageHubMasterRequests,
@@ -41,19 +40,19 @@ const useHubMasterHook = ({}) => {
   useEffect(() => {}, [setEditId]);
 
   const handlePageChange = useCallback((type) => {
-    dispatch(actionSetPageHubMasterRequests(type)); // actionSetPageBadgeRequests
+    dispatch(actionSetPageHubMasterRequests(type)); 
   }, []);
 
   const queryFilter = useCallback(
     (key, value) => {
-      // dispatch(actionSetPageAdminUserRequests(1));
+      
       dispatch(
         actionFetchHubMaster(1, sortingData, {
           query: key == "SEARCH_TEXT" ? value : query,
           query_data: key == "FILTER_DATA" ? value : queryData,
         })
       );
-      // dispatch(actionFetchAdminUser(1, sortingData))
+    
     },
     [sortingData, query, queryData]
   );
@@ -119,21 +118,15 @@ const useHubMasterHook = ({}) => {
 
   return {
     handlePageChange,
-
     handleFilterDataChange,
     handleSearchValueChange,
-
     handleSortOrderChange,
-
     handleSideToggle,
-
     isCalling,
     editData,
     isSidePanel,
     configFilter,
-
     editId,
-
     handleEditHubMaster,
   };
 };

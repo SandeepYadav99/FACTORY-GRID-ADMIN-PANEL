@@ -5,13 +5,10 @@ import { useSelector } from "react-redux";
 import SidePanelComponent from "../../../components/SidePanel/SidePanel.component";
 import styles from "./Style.module.css";
 import PageBox from "../../../components/PageBox/PageBox.component";
-
 import DataTables from "../../../Datatables/Datatable.table";
 import Constants from "../../../config/constants";
 import FilterComponent from "../../../components/Filter/Filter.component";
-
 import { Add, Create } from "@material-ui/icons";
-
 import useHubMasterHook from "./HubMasterHook";
 import HubMasterCreate from "../Create/HubMasterCreate";
 import StatusPill from "../../../FormFields/Status/StatusPill.component";
@@ -21,7 +18,6 @@ const HubMasterList = (props) => {
     handleSortOrderChange,
     handleRowSize,
     handlePageChange,
- 
     handleFilterDataChange,
     handleSearchValueChange,
     handleViewDetails,
@@ -29,9 +25,7 @@ const HubMasterList = (props) => {
     configFilter,
     handleSideToggle,
     isSidePanel,
-    editData,
     editId,
-   
     handleEditHubMaster,
   } = useHubMasterHook({});
 

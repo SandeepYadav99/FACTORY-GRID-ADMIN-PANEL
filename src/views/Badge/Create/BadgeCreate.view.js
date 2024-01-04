@@ -1,16 +1,12 @@
 import React from "react";
 
-import { Box, Button, CircularProgress, IconButton, MenuItem } from "@material-ui/core";
+import {Button, CircularProgress, IconButton, MenuItem } from "@material-ui/core";
 import {
-  ArrowRight,
+
   Delete as DeleteIcon,
-  ExpandMore,
+
 } from "@material-ui/icons";
 
-// import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-// import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-// import { TreeView } from '@mui/x-tree-view/TreeView';
-// import { TreeItem } from '@mui/x-tree-view/TreeItem';
 import styles from "../Style.module.css";
 
 import CustomRadioLabel from "../../../components/CustomRadioLabel/CustomRadioLabel.component";
@@ -22,9 +18,9 @@ import { makeStyles } from "@material-ui/styles";
 import useBadgeCreateHook from "./BadgeCreateHook";
 import File from "../../../components/FileComponent/FileComponent.component";
 import CustomTextField from "../../../FormFields/TextField.component";
-import { TreeItem, TreeView } from "@material-ui/lab";
+
 import CustomSelectField from "../../../FormFields/SelectField/SelectField.component";
-import Cascader from "../../../components/FormFields/Cascader/Cascader";
+
 
 const useStyles = makeStyles((theme) => ({
   iconBtnError: {

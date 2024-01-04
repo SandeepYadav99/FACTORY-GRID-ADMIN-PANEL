@@ -14,7 +14,7 @@ import {
   actionDeleteMasterDelete,
   actionFetchHubMaster,
 } from "../../../actions/HubMaster.action";
-import WaitingComponent from "../../../components/Waiting.component";
+
 
 const initialForm = {
   name: "",
@@ -81,7 +81,7 @@ const useHubMasterCreateHook = ({ handleSideToggle, isSidePanel, empId }) => {
   const toggleAcceptDialog = useCallback(
     (obj) => {
       setIsAcceptPopUp((e) => !e);
-      // setDataValue({ ...obj });
+     
     },
     [isAcceptPopUp, empId]
   );
@@ -125,7 +125,7 @@ const useHubMasterCreateHook = ({ handleSideToggle, isSidePanel, empId }) => {
         type: "Polygon",
         coordinates: geofence ? geofence : [],
       },
-      // geofence_coordinates: geofence ? geofence : [],
+    
 
       featured: form?.featured ? "YES" : "NO",
       status: form?.status ? "ACTIVE" : "INACTIVE",
@@ -231,7 +231,6 @@ const useHubMasterCreateHook = ({ handleSideToggle, isSidePanel, empId }) => {
     listData,
     errorData,
     isEdit,
-
     includeRef,
     handleReset,
     empId,

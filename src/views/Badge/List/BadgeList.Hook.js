@@ -2,12 +2,9 @@
 /* eslint-disable no-unused-vars */
 import { useDispatch, useSelector } from "react-redux";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-
 import {
-
   actionFetchBadge,
   actionSetPageBadgeRequests,
-
 } from "../../../actions/Badge.action";
 
 const useBadgeListHook = ({}) => {
@@ -42,25 +39,21 @@ const useBadgeListHook = ({}) => {
   }, []);
   
   useEffect(()=>{
-
   },[setEditId]);
   
   const handlePageChange = useCallback((type) => {
-   
-    dispatch(actionSetPageBadgeRequests(type)); // actionSetPageBadgeRequests
+    dispatch(actionSetPageBadgeRequests(type)); 
   }, []);
 
   const queryFilter = useCallback(
     (key, value) => {
-     
-      // dispatch(actionSetPageAdminUserRequests(1));
+    
       dispatch(
         actionFetchBadge(1, sortingData, {
           query: key == "SEARCH_TEXT" ? value : query,
           query_data: key == "FILTER_DATA" ? value : queryData,
         })
       );
-      // dispatch(actionFetchAdminUser(1, sortingData))
     },
     [sortingData, query, queryData]
   );
