@@ -31,7 +31,7 @@ const useHubMasterCreateHook = ({ handleSideToggle, isSidePanel, empId }) => {
   const [form, setForm] = useState({ ...initialForm });
   const [isEdit] = useState(false);
   const includeRef = useRef(null);
-  const [geofence, setGeoFence] = useState([]);
+  const [geofenceCoordinates, setGeofenceCoordinates] = useState([]);
   const [listData, setListData] = useState(null);
   const [isAcceptPopUp, setIsAcceptPopUp] = useState(false);
   const dispatch = useDispatch();
@@ -57,8 +57,8 @@ const useHubMasterCreateHook = ({ handleSideToggle, isSidePanel, empId }) => {
             status: data?.status === constants.GENERAL_STATUS.ACTIVE,
           });
 
-          setGeoFence(
-            data?.geofence?.coordinates?.map((coordinate) => [...coordinate])
+          setGeofenceCoordinates(
+            data?.geofence?.map((coordinate) => [...coordinate])
           );
         }
       });
@@ -73,9 +73,9 @@ const useHubMasterCreateHook = ({ handleSideToggle, isSidePanel, empId }) => {
 
   const handleCoordinate = useCallback(
     (data) => {
-      setGeoFence(data);
+      setGeofenceCoordinates(data);
     },
-    [setGeoFence]
+    [setGeofenceCoordinates]
   );
   const toggleAcceptDialog = useCallback(
     (obj) => {
@@ -119,7 +119,7 @@ const useHubMasterCreateHook = ({ handleSideToggle, isSidePanel, empId }) => {
     const updateData = {
       name: form?.name,
       industry_id: industryID,
-      geofence_coordinates: geofence ? geofence : [],
+      geofence: geofenceCoordinates ? geofenceCoordinates : [],
 
       featured: form?.featured ? "YES" : "NO",
       status: form?.status ? "ACTIVE" : "INACTIVE",
@@ -144,7 +144,8 @@ const useHubMasterCreateHook = ({ handleSideToggle, isSidePanel, empId }) => {
     setIsSubmitting,
     empId,
     handleSideToggle,
-    geofence,
+    geofenceCoordinates,
+    
     dispatch,
   ]);
 
@@ -230,8 +231,8 @@ const useHubMasterCreateHook = ({ handleSideToggle, isSidePanel, empId }) => {
     empId,
     showPasswordCurrent,
     setShowPasswordCurrent,
-    geofence,
-    setGeoFence,
+    geofenceCoordinates,
+    setGeofenceCoordinates,
     handleCoordinate,
     toggleAcceptDialog,
     isAcceptPopUp,

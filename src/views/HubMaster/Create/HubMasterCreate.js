@@ -6,9 +6,7 @@ import {
   IconButton,
   TextField,
 } from "@material-ui/core";
-import {
-  Delete as DeleteIcon,
-} from "@material-ui/icons";
+import { Delete as DeleteIcon } from "@material-ui/icons";
 import styles from "./Style.module.css";
 import Tooltip from "@material-ui/core/Tooltip";
 import InfoIcon from "@material-ui/icons/Info";
@@ -27,7 +25,6 @@ const useStyles = makeStyles((theme) => ({
   },
   deleteBtn: {
     color: "red",
- 
   },
 }));
 
@@ -39,12 +36,13 @@ const HubMasterCreate = ({ handleSideToggle, isSidePanel, empId }) => {
     onBlurHandler,
     changeTextData,
     listData,
-    geofence,
+    geofenceCoordinates,
+
     handleCoordinate,
     isSubmitting,
     toggleAcceptDialog,
     isAcceptPopUp,
-    suspendItem
+    suspendItem,
   } = useHubMasterCreateHook({ handleSideToggle, isSidePanel, empId });
   const classes = useStyles();
 
@@ -113,7 +111,10 @@ const HubMasterCreate = ({ handleSideToggle, isSidePanel, empId }) => {
         <div className={"formFlex"}>
           <div className="formGroup">
             <p>Draw the boundary for the Hub</p>
-            <Geofencing polygon={geofence} handleSave={handleCoordinate} />
+            <Geofencing
+              polygon={geofenceCoordinates}
+              handleSave={handleCoordinate}
+            />
           </div>
         </div>
         <div className={"headerFlex"}>
@@ -157,10 +158,12 @@ const HubMasterCreate = ({ handleSideToggle, isSidePanel, empId }) => {
           </Button>
         </div>
       </div>
-      <DeleteModal   isOpen={isAcceptPopUp}
-          handleToggle={toggleAcceptDialog}
-          empId={empId} 
-          suspendItem={suspendItem}/>
+      <DeleteModal
+        isOpen={isAcceptPopUp}
+        handleToggle={toggleAcceptDialog}
+        empId={empId}
+        suspendItem={suspendItem}
+      />
     </div>
   );
 };
