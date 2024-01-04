@@ -147,7 +147,7 @@ const useHubMasterCreateHook = ({
 
     if (!res.error) {
       handleToggleSidePannel();
-      dispatch(actionFetchHubMaster(1, {}, {}));
+      // dispatch(actionFetchHubMaster(1, {}, {}));
 
        window.location.reload();
     } else {
@@ -213,19 +213,12 @@ const useHubMasterCreateHook = ({
     },
     [changeTextData]
   );
+  const suspendItem = useCallback(() => {
+    dispatch(actionDeleteMasterDelete(empId));
+    handleToggleSidePannel();
+    setIsAcceptPopUp((e) => !e);
+  }, [empId]);
 
-//   const handleDelete = useCallback(
-//     (id) => {
-//      setShowConfirm(true)
-//     },
-//     [showConfirm]
-//   );
-
-
-
-// const handleDialogClose =()=>{
-// setShowConfirm(false)
-// }
   const handleReset = useCallback(() => {
     setForm({ ...initialForm });
   }, [form, setForm]);
@@ -252,7 +245,7 @@ const useHubMasterCreateHook = ({
     handleCoordinate,
     toggleAcceptDialog,
     isAcceptPopUp,
-   
+    suspendItem
   };
 };
 

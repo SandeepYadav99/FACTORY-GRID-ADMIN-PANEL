@@ -48,7 +48,7 @@
 
 // export default DeleteModal;
 
-import React from "react";
+import React, { useCallback, useEffect } from "react";
 import { Button, ButtonBase, DialogActions } from "@material-ui/core";
 import { Close } from "@material-ui/icons";
 import Slide from "@material-ui/core/Slide";
@@ -57,6 +57,8 @@ import styles from "./Style.module.css";
 import { makeStyles } from "@material-ui/styles";
 import CustomTextField from "../../../../components/FormFields/TextField/TextField.component";
 import CustomAutoComplete from "../../../../components/FormFields/AutoCompleteText/CustomAutoComplete";
+import { useDispatch } from "react-redux";
+import { actionDeleteMasterDelete } from "../../../../actions/HubMaster.action";
 
 const useStyles = makeStyles((theme) => ({
   flex: {
@@ -81,8 +83,10 @@ const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const DeleteModal = ({ isOpen, handleToggle, suspendItem }) => {
+const DeleteModal = ({ isOpen, handleToggle,  suspendItem,empId }) => {
   const classes = useStyles();
+  const dispatch = useDispatch();
+
   //   const {
   //     changeTextData,
   //     errorData,
@@ -91,6 +95,7 @@ const DeleteModal = ({ isOpen, handleToggle, suspendItem }) => {
   //     onBlurHandler,
   //     listData,
   //   } = useAcceptDialogHook({ isOpen, handleToggle, candidateId });
+ 
 
   return (
     <div>
@@ -123,7 +128,7 @@ const DeleteModal = ({ isOpen, handleToggle, suspendItem }) => {
           </div>
 
           <div className={styles.printFlex}>
-            <div >
+            <div>
               <Button onClick={handleToggle} color="primary">
                 Disagree
               </Button>

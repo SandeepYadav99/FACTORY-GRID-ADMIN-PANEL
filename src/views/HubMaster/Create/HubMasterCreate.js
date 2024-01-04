@@ -60,6 +60,7 @@ const HubMasterCreate = ({ handleToggleSidePannel, isSidePanel, empId }) => {
     isSubmitting,
     toggleAcceptDialog,
     isAcceptPopUp,
+    suspendItem
   } = useHubMasterCreateHook({ handleToggleSidePannel, isSidePanel, empId });
   const classes = useStyles();
 
@@ -174,7 +175,8 @@ const HubMasterCreate = ({ handleToggleSidePannel, isSidePanel, empId }) => {
       </div>
       <DeleteModal   isOpen={isAcceptPopUp}
           handleToggle={toggleAcceptDialog}
-          candidateId={""}/>
+          empId={empId} 
+          suspendItem={suspendItem}/>
     </div>
   );
 };
