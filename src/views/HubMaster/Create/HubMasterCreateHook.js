@@ -38,7 +38,7 @@ const useHubMasterCreateHook = ({
   const includeRef = useRef(null);
   const [geofence, setGeoFence] = useState([]);
   const [listData, setListData] = useState(null);
-
+  const [isAcceptPopUp, setIsAcceptPopUp] = useState(false);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -86,6 +86,13 @@ const useHubMasterCreateHook = ({
       setGeoFence(data);
     },
     [setGeoFence]
+  );
+  const toggleAcceptDialog = useCallback(
+    (obj) => {
+      setIsAcceptPopUp((e) => !e);
+      // setDataValue({ ...obj });
+    },
+    [isAcceptPopUp]
   );
 
   const checkFormValidation = useCallback(() => {
@@ -207,15 +214,18 @@ const useHubMasterCreateHook = ({
     [changeTextData]
   );
 
-  const handleDelete = useCallback(
-    (id) => {
-      // dispatch(actionDeleteMasterDelete(empId));
-      // handleToggleSidePannel();
-      // dispatch(actionFetchHubMaster(1, {}, {}));
-    },
-    [empId]
-  );
+//   const handleDelete = useCallback(
+//     (id) => {
+//      setShowConfirm(true)
+//     },
+//     [showConfirm]
+//   );
 
+
+
+// const handleDialogClose =()=>{
+// setShowConfirm(false)
+// }
   const handleReset = useCallback(() => {
     setForm({ ...initialForm });
   }, [form, setForm]);
@@ -231,7 +241,7 @@ const useHubMasterCreateHook = ({
     listData,
     errorData,
     isEdit,
-    handleDelete,
+
     includeRef,
     handleReset,
     empId,
@@ -240,6 +250,8 @@ const useHubMasterCreateHook = ({
     geofence,
     setGeoFence,
     handleCoordinate,
+    toggleAcceptDialog,
+    isAcceptPopUp,
    
   };
 };

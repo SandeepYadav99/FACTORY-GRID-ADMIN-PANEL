@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 import {
   Box,
@@ -31,6 +31,7 @@ import useHubMasterCreateHook from "./HubMasterCreateHook";
 import Geofencing from "./component/Geofencing/Geofencing.component";
 import CustomSwitch from "../../../FormFields/CustomSwitch";
 import CustomCheckbox from "../../../FormFields/CustomCheckbox";
+import DeleteModal from "./DilogModal/DilogModal";
 
 const useStyles = makeStyles((theme) => ({
   iconBtnError: {
@@ -57,6 +58,8 @@ const HubMasterCreate = ({ handleToggleSidePannel, isSidePanel, empId }) => {
     geofence,
     handleCoordinate,
     isSubmitting,
+    toggleAcceptDialog,
+    isAcceptPopUp,
   } = useHubMasterCreateHook({ handleToggleSidePannel, isSidePanel, empId });
   const classes = useStyles();
 
@@ -73,7 +76,7 @@ const HubMasterCreate = ({ handleToggleSidePannel, isSidePanel, empId }) => {
           <IconButton
             variant={"contained"}
             className={classes.iconBtnError}
-            onClick={handleDelete}
+            onClick={toggleAcceptDialog}
             type="button"
           >
             <DeleteIcon />
@@ -169,6 +172,9 @@ const HubMasterCreate = ({ handleToggleSidePannel, isSidePanel, empId }) => {
           </Button>
         </div>
       </div>
+      <DeleteModal   isOpen={isAcceptPopUp}
+          handleToggle={toggleAcceptDialog}
+          candidateId={""}/>
     </div>
   );
 };
