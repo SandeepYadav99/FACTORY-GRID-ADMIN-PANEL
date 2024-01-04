@@ -43,7 +43,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const HubMasterCreate = ({ handleToggleSidePannel, isSidePanel, empId }) => {
+const HubMasterCreate = ({ handleSideToggle, isSidePanel, empId }) => {
   const {
     form,
     errorData,
@@ -61,7 +61,7 @@ const HubMasterCreate = ({ handleToggleSidePannel, isSidePanel, empId }) => {
     toggleAcceptDialog,
     isAcceptPopUp,
     suspendItem
-  } = useHubMasterCreateHook({ handleToggleSidePannel, isSidePanel, empId });
+  } = useHubMasterCreateHook({ handleSideToggle, isSidePanel, empId });
   const classes = useStyles();
 
   return (

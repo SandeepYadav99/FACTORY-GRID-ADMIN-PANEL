@@ -89,79 +89,21 @@ const useHubMasterHook = ({}) => {
     [query, queryData]
   );
 
-  const handleRowSize = (page) => {};
-
-  const handleDelete = useCallback(
-    (id) => {
-      // dispatch(actionDeletePolicyList(id));
-      // setSidePanel(false);
-      // setEditData(null);
-    },
-    [setEditData, setSidePanel]
-  );
-
-  const handleEdit = useCallback((all) => {
-    setSidePanel((e) => !e);
-    setEditData(all);
-    setEditId(all?.id);
-  }, []);
-
-  const handleToggleSidePannel = useCallback(
-    (data) => {
-      setSidePanel((e) => !e);
-      // setEditData(data?.id);
-    },
-    [setSidePanel, setEditData]
-  );
-
   const handleSideToggle = useCallback(
     (data) => {
       setSidePanel((e) => !e);
-
-     
-      
+      setEditId("");
     },
-    [setEditData, setSidePanel]
+    [setEditData, setSidePanel, editId]
   );
 
   const handleEditHubMaster = useCallback(
     (data) => {
       setSidePanel((e) => !e);
-
-      setEditId(data);
-    
-        setEditData(null);
-      
+      setEditId(data?.id);
     },
     [setEditData, setSidePanel]
   );
-
-  const handleSideOpenSide = useCallback(
-    (data) => {
-      setSidePanel((e) => !e);
-   
-    },
-    [setEditData, setSidePanel]
-  );
-
-  const handleCloseSideToggle = useCallback(
-    (data) => {
-      setSidePanel((e) => !e);
-    },
-    [setEditData, setSidePanel]
-  );
-
-  const handleViewDetails = useCallback((data) => {
-    // historyUtils.push(RouteName.LOCATIONS_DETAILS + data.id); //+data.id
-  }, []);
-
-  const handleCreate = useCallback(() => {
-    // historyUtils.push(RouteName.LOCATIONS_CREATE);
-  }, []);
-
-  const handleFileView = useCallback((data) => {
-    // window.open(data?.document, "_blank");
-  }, []);
 
   const configFilter = useMemo(() => {
     return [
@@ -180,22 +122,18 @@ const useHubMasterHook = ({}) => {
 
     handleFilterDataChange,
     handleSearchValueChange,
-    handleRowSize,
+
     handleSortOrderChange,
-    handleDelete,
-    handleEdit,
+
     handleSideToggle,
-    handleViewDetails,
+
     isCalling,
     editData,
     isSidePanel,
     configFilter,
-    handleCreate,
-    handleToggleSidePannel,
-    handleFileView,
+
     editId,
-    handleSideOpenSide,
-    handleCloseSideToggle,
+
     handleEditHubMaster,
   };
 };

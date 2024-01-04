@@ -21,7 +21,7 @@ const HubMasterList = (props) => {
     handleSortOrderChange,
     handleRowSize,
     handlePageChange,
-    handleEdit,
+ 
     handleFilterDataChange,
     handleSearchValueChange,
     handleViewDetails,
@@ -31,7 +31,7 @@ const HubMasterList = (props) => {
     isSidePanel,
     editData,
     editId,
-    handleSideOpenSide,
+   
     handleEditHubMaster,
   } = useHubMasterHook({});
 
@@ -113,7 +113,7 @@ const HubMasterList = (props) => {
               disabled={isCalling}
               onClick={() => {
                 // handleSideToggle(all?.id);
-                handleEditHubMaster(all?.id)
+                handleEditHubMaster(all)
               }}
             >
               <Create fontSize={"small"} />
@@ -124,12 +124,12 @@ const HubMasterList = (props) => {
     ];
   }, [
     handleViewDetails,
-    handleEdit,
+   
     isCalling,
     // renderContact,
     renderFirstCell,
-
-    handleEdit,
+    handleEditHubMaster,
+   
   ]);
 
   const tableData = useMemo(() => {
@@ -163,7 +163,7 @@ const HubMasterList = (props) => {
         <div className={styles.headerContainer}>
           <span className={styles.title}>Hub List</span>
           <Button
-            onClick={handleSideOpenSide}
+            onClick={handleSideToggle}
             variant={"contained"}
             color={"primary"}
           >
@@ -196,7 +196,7 @@ const HubMasterList = (props) => {
         side={"right"}
       >
         <HubMasterCreate
-          handleToggleSidePannel={handleSideToggle}
+          handleSideToggle={handleSideToggle}
           isSidePanel={isSidePanel}
           empId={editId}
         />

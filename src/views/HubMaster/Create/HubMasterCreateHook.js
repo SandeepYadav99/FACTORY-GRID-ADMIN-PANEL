@@ -24,11 +24,7 @@ const initialForm = {
   status: false,
 };
 
-const useHubMasterCreateHook = ({
-  handleToggleSidePannel,
-  isSidePanel,
-  empId,
-}) => {
+const useHubMasterCreateHook = ({ handleSideToggle, isSidePanel, empId }) => {
   const [isLoading] = useState(false);
   const [showPasswordCurrent, setShowPasswordCurrent] = useState(false);
   const [errorData, setErrorData] = useState({});
@@ -47,7 +43,7 @@ const useHubMasterCreateHook = ({
         setListData(res.data);
       }
     });
-  }, []);
+  }, [empId]);
 
   useEffect(() => {
     if (empId) {
@@ -61,14 +57,11 @@ const useHubMasterCreateHook = ({
             featured: data?.featured === "YES",
             status: data?.status === constants.GENERAL_STATUS.ACTIVE,
           });
-        
-            setGeoFence(
-              data?.geofence?.coordinates[0]?.map((coordinate) => [
-                ...coordinate,
-              ])
-            );
-          
-        } 
+
+          setGeoFence(
+            data?.geofence?.coordinates[0]?.map((coordinate) => [...coordinate])
+          );
+        }
       });
     }
   }, [empId]);
@@ -78,8 +71,6 @@ const useHubMasterCreateHook = ({
       handleReset();
     }
   }, [isSidePanel]);
-
-
 
   const handleCoordinate = useCallback(
     (data) => {
@@ -92,7 +83,7 @@ const useHubMasterCreateHook = ({
       setIsAcceptPopUp((e) => !e);
       // setDataValue({ ...obj });
     },
-    [isAcceptPopUp]
+    [isAcceptPopUp, empId]
   );
 
   const checkFormValidation = useCallback(() => {
@@ -121,7 +112,7 @@ const useHubMasterCreateHook = ({
       return;
     }
     setIsSubmitting(true);
-  
+
     const industryID =
       Array.isArray(form.industry_id) && form.industry_id.length > 0
         ? form.industry_id.map((item) => item.id || item._id)
@@ -134,22 +125,21 @@ const useHubMasterCreateHook = ({
         type: "Polygon",
         coordinates: geofence ? geofence : [],
       },
+      // geofence_coordinates: geofence ? geofence : [],
+
       featured: form?.featured ? "YES" : "NO",
       status: form?.status ? "ACTIVE" : "INACTIVE",
     };
     if (empId) {
       updateData.id = empId;
     }
-    const req = empId
-      ? serviceHubMasterUpdate(updateData)
-      : serviceHubMasterCreate(updateData); //
-    const res = await req;
+    const req = empId ? serviceHubMasterUpdate : serviceHubMasterCreate; //
+    const res = await req(updateData);
 
     if (!res.error) {
-      handleToggleSidePannel();
-      // dispatch(actionFetchHubMaster(1, {}, {}));
-
-       window.location.reload();
+      handleSideToggle();
+      dispatch(actionFetchHubMaster(1));
+      window.location.reload();
     } else {
       SnackbarUtils.error(res.message);
     }
@@ -159,10 +149,9 @@ const useHubMasterCreateHook = ({
     isSubmitting,
     setIsSubmitting,
     empId,
-    handleToggleSidePannel,
+    handleSideToggle,
     geofence,
     dispatch,
-  
   ]);
 
   const handleSubmit = useCallback(async () => {
@@ -172,7 +161,14 @@ const useHubMasterCreateHook = ({
     } else {
       await submitToServer();
     }
-  }, [checkFormValidation, setErrorData, form, submitToServer, empId]);
+  }, [
+    checkFormValidation,
+    setErrorData,
+    form,
+    submitToServer,
+    empId,
+    errorData,
+  ]);
 
   const removeError = useCallback(
     (title) => {
@@ -213,11 +209,12 @@ const useHubMasterCreateHook = ({
     },
     [changeTextData]
   );
-  const suspendItem = useCallback(() => {
+  const suspendItem = useCallback(async () => {
     dispatch(actionDeleteMasterDelete(empId));
-    handleToggleSidePannel();
+    dispatch(actionFetchHubMaster(1));
+    handleSideToggle();
     setIsAcceptPopUp((e) => !e);
-  }, [empId]);
+  }, [empId, handleCoordinate, isAcceptPopUp, dispatch]);
 
   const handleReset = useCallback(() => {
     setForm({ ...initialForm });
@@ -245,7 +242,7 @@ const useHubMasterCreateHook = ({
     handleCoordinate,
     toggleAcceptDialog,
     isAcceptPopUp,
-    suspendItem
+    suspendItem,
   };
 };
 
