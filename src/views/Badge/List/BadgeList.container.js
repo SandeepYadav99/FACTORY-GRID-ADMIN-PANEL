@@ -30,7 +30,7 @@ const BadgeListContainer = (props) => {
     isSidePanel,
     editData,
     editId,
-    handleSideOpenSide,
+    handleOpenSidePanel,
      handleToggleSidePannel
   } = useBadgeListHook({});
 
@@ -155,7 +155,7 @@ const BadgeListContainer = (props) => {
         <div className={styles.headerContainer}>
           <span className={styles.title}>Badges List</span>
           <Button
-            onClick={handleSideOpenSide}
+            onClick={handleOpenSidePanel}
             variant={"contained"}
             color={"primary"}
           >
@@ -182,13 +182,13 @@ const BadgeListContainer = (props) => {
         </div>
       </PageBox>
       <SidePanelComponent
-        handleToggle={handleSideToggle}
+        handleToggle={handleOpenSidePanel}
         title={editId ? "Update Badge" : "New Badge"}
         open={isSidePanel}
         side={"right"}
       >
         <BadgeView
-          handleToggleSidePannel={handleSideToggle}
+          handleToggleSidePannel={handleOpenSidePanel}
           isSidePanel={isSidePanel}
           empId={editId}
         />
