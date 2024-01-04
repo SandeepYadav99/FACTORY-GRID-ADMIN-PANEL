@@ -15,7 +15,6 @@ import {
   actionFetchHubMaster,
 } from "../../../actions/HubMaster.action";
 
-
 const initialForm = {
   name: "",
   geofence: "",
@@ -59,7 +58,7 @@ const useHubMasterCreateHook = ({ handleSideToggle, isSidePanel, empId }) => {
           });
 
           setGeoFence(
-            data?.geofence?.coordinates[0]?.map((coordinate) => [...coordinate])
+            data?.geofence?.coordinates?.map((coordinate) => [...coordinate])
           );
         }
       });
@@ -81,7 +80,6 @@ const useHubMasterCreateHook = ({ handleSideToggle, isSidePanel, empId }) => {
   const toggleAcceptDialog = useCallback(
     (obj) => {
       setIsAcceptPopUp((e) => !e);
-     
     },
     [isAcceptPopUp, empId]
   );
@@ -121,11 +119,7 @@ const useHubMasterCreateHook = ({ handleSideToggle, isSidePanel, empId }) => {
     const updateData = {
       name: form?.name,
       industry_id: industryID,
-      geofence_coordinates: {
-        type: "Polygon",
-        coordinates: geofence ? geofence : [],
-      },
-    
+      geofence_coordinates: geofence ? geofence : [],
 
       featured: form?.featured ? "YES" : "NO",
       status: form?.status ? "ACTIVE" : "INACTIVE",
@@ -138,8 +132,8 @@ const useHubMasterCreateHook = ({ handleSideToggle, isSidePanel, empId }) => {
 
     if (!res.error) {
       handleSideToggle();
-      dispatch(actionFetchHubMaster(1));
-      window.location.reload();
+     // dispatch(actionFetchHubMaster(1));
+       window.location.reload();
     } else {
       SnackbarUtils.error(res.message);
     }

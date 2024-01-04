@@ -92,16 +92,18 @@ const useHubMasterHook = ({}) => {
     (data) => {
       setSidePanel((e) => !e);
       setEditId("");
+      setEditData(null)
     },
-    [setEditData, setSidePanel, editId]
+    [setEditId, setSidePanel, setEditData]
   );
 
   const handleEditHubMaster = useCallback(
     (data) => {
       setSidePanel((e) => !e);
       setEditId(data?.id);
+      setEditData(data)
     },
-    [setEditData, setSidePanel]
+    [setEditData, setSidePanel, setEditId]
   );
 
   const configFilter = useMemo(() => {
