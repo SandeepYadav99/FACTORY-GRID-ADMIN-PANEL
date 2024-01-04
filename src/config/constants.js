@@ -28,8 +28,18 @@ export default {
         rowsPerPage: TABLE_LIMIT,
         rowsPerPageOptions: [],
     },
+    MAP_CENTER: { lat: 25.362945, lng: 82.975657 },
     PRODUCT_TAGS: ['VEG', 'VEGAN', 'GLUTEN FREE', 'DIARY'],
     CURRENCY: 'RS.',
+    GENERAL_STATUS: {
+        PENDING: "PENDING",
+        WAITING: "WAITING",
+        ACCEPTED: "ACCEPTED",
+        ACTIVE: "ACTIVE",
+        SUSPENDED: "SUSPENDED",
+        ALLOTTED: "ALLOTTED",
+        COMPLETED: "COMPLETED",
+      },
     STATUS: {
         'PENDING': 'warning',
         'WAITING': 'waiting',
