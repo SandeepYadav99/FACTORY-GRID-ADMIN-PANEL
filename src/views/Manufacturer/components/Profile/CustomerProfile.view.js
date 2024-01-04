@@ -1,29 +1,19 @@
-import React, { useCallback, useEffect } from "react";
-import { ButtonBase, Tooltip } from "@material-ui/core";
+import React from "react";
+
 import VerifiedUserIcon from "@material-ui/icons/VerifiedUser";
-import Timeline from "./components/Timeline/Timeline.view";
+
 import Queries from "./components/Queries/Queries.view";
 import Messages from "./components/Messages/Messages.component";
 import MessageForm from "./components/Messages/MessageForm.view";
 import styles from "./Style.module.css";
 import AccountQuality from "./components/AccountQuality";
 import Activity from "./components/Activity";
-import useCustomerProfileHook from "../../../../helper/CustomerProfileHook";
-import { ReportProblem } from "@material-ui/icons";
+
 import SimplePopover from "../../../../components/FormFields/SimplePopover/SimplePopover";
-import WaitingComponent from "../../../../components/Waiting.component";
-import { serviceResetUserEmail } from "../../../../services/CustomersRequest.service";
 
 const ProfileView = ({ userProfile, renderInterestArea, isLoading }) => {
-
-  
-
-  // useEffect(()=>{
-  //   handleResend()
-  // },[])
   return (
     <div>
-    
       <div className={styles.upperFlex}>
         <div className={styles.left}>
           <div className={styles.plain}>
@@ -44,9 +34,7 @@ const ProfileView = ({ userProfile, renderInterestArea, isLoading }) => {
               </div>
               <div className={styles.name}>
                 {" "}
-                {userProfile &&
-                  userProfile.business &&
-                  userProfile.business.company_name}
+                {userProfile?.business?.company_name}
               </div>
               <div className={styles.member}>
                 Member Since: {userProfile?.membershipStartText || "N/A"}
@@ -55,17 +43,13 @@ const ProfileView = ({ userProfile, renderInterestArea, isLoading }) => {
 
             <div>
               <div className={styles.key}>Industry </div>
-              <div className={styles.value}>
-                {userProfile?.industry && userProfile?.industry.name}
-              </div>
+              <div className={styles.value}>{userProfile?.industry.name}</div>
             </div>
             <br />
 
             <div className={styles.line}>
               <div className={styles.key}>Role</div>
-              <div className={styles.value}>
-                {(userProfile && userProfile?.role) || "N/A"}
-              </div>
+              <div className={styles.value}>{userProfile?.role || "N/A"}</div>
               {/* Owner/Primary Contact  */}
             </div>
 
@@ -96,34 +80,36 @@ const ProfileView = ({ userProfile, renderInterestArea, isLoading }) => {
             <h4 className={styles.contactHeading}>Contact</h4>
             <div className={styles.conContainer}>
               <div className={styles.head}>
-                Email{" "}
-                <div>
-                  {userProfile.is_email_verified ? (
-                    <VerifiedUserIcon className={styles.verified} />
-                  ) : (
-                    <SimplePopover userProfile={userProfile} title={"Email"}/>
-                  )}
+                <div className={styles.subhead}>Email </div>
+
+                <div className={styles.val}>
+                  { userProfile?.email}
                 </div>
               </div>
-              {/*{data.is_email_verified == true ? <span><VerifiedUserIcon className={styles.verified}/></span> : ''}*/}
-              <div className={styles.val}>
-                {userProfile && userProfile.email}
+              <div>
+                {userProfile.is_email_verified ? (
+                  <VerifiedUserIcon className={styles.verified} />
+                ) : (
+                  <SimplePopover userProfile={userProfile} title={"Email"} />
+                )}
               </div>
+              {/*{data.is_email_verified == true ? <span><VerifiedUserIcon className={styles.verified}/></span> : ''}*/}
             </div>
             <div className={styles.conContainer}>
               <div className={styles.head}>
-                Phone{" "}
-                <span>
-                  {userProfile?.is_contact_verified ? (
-                    <VerifiedUserIcon className={styles.verified} />
-                  ) : (
-                    <SimplePopover />
-                  )}
-                </span>
+                <div className={styles.subhead}>Phone</div>
+
+                <div className={styles.value}>
+                  {userProfile?.contact_string}
+                </div>
               </div>
-              <div className={styles.value}>
-                {userProfile && userProfile.contact_string}
-              </div>
+            <div>
+              {userProfile?.is_contact_verified ? (
+                <VerifiedUserIcon className={styles.verified} />
+              ) : (
+                <SimplePopover />
+              )}
+            </div>
             </div>
           </div>
           <AccountQuality
