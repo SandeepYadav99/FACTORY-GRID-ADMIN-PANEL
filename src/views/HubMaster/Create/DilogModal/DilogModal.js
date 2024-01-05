@@ -41,7 +41,7 @@ const DeleteModal = ({ isOpen, handleToggle, suspendItem, empId }) => {
         maxWidth={"sm"}
         TransitionComponent={Transition}
         open={isOpen}
-        onClose={() => {}}
+        onClose={handleToggle}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
