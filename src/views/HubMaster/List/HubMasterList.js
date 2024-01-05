@@ -12,6 +12,7 @@ import { Add, Create } from "@material-ui/icons";
 import useHubMasterHook from "./HubMasterHook";
 import HubMasterCreate from "../Create/HubMasterCreate";
 import StatusPill from "../../../FormFields/Status/StatusPill.component";
+import capitalizeFirstLetter from "../../../hooks/CapsFirstLetter";
 
 const HubMasterList = (props) => {
   const {
@@ -58,29 +59,30 @@ const HubMasterList = (props) => {
     );
   }, []);
 
+  const renderAssociatedIndustriesName = useCallback((industryData) => (
+    <div>
+      {industryData?.map((industry, index) => (
+        <React.Fragment key={index}>
+          {industry.name}
+          {index < industryData.length - 1 && ", "}
+        </React.Fragment>
+      ))}
+    </div>
+  ),[])
+  
   const tableStructure = useMemo(() => {
     return [
       {
         key: "hub",
         label: "Hub Name",
         sortable: true,
-        render: (value, all) => <div>{all?.name} </div>, 
+        render: (value, all) => <div>{capitalizeFirstLetter(all?.name)} </div>, 
       },
       {
         key: "industries",
         label: "Associated Industries",
         sortable: true,
-        render: (temp, all) => (
-          <div>
-            {" "}
-            {all?.industryData?.map((industry, index) => (
-              <React.Fragment key={index}>
-                {industry.name}
-                {index < all.industryData.length - 1 && <br />}
-              </React.Fragment>
-            ))}
-          </div>
-        ),
+        render: (temp, all) => renderAssociatedIndustriesName(all?.industryData)
       },
       {
         key: "status",
@@ -118,11 +120,12 @@ const HubMasterList = (props) => {
     ];
   }, [
     handleViewDetails,
-   
+    capitalizeFirstLetter,
     isCalling,
     // renderContact,
     renderFirstCell,
     handleEditHubMaster,
+    handleSideToggle
    
   ]);
 
@@ -149,6 +152,7 @@ const HubMasterList = (props) => {
     handleRowSize,
     present,
     currentPage,
+    
   ]);
 
   return (

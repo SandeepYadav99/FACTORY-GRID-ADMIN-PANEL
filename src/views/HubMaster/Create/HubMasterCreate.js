@@ -111,8 +111,10 @@ const HubMasterCreate = ({ handleSideToggle, isSidePanel, empId }) => {
         <div className={"formFlex"}>
           <div className="formGroup">
             <p>Draw the boundary for the Hub</p>
+
             <Geofencing
-              polygon={geofenceCoordinates}
+              key={geofenceCoordinates.length > 0}
+              polygon={geofenceCoordinates} //     key={geofenceCoordinates.length}
               handleSave={handleCoordinate}
             />
           </div>

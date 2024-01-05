@@ -24,14 +24,14 @@ class Geofencing extends Component {
         const {order_id} = this.props;
 
         this.renderMap();
-        
+    
     }
     componentDidUpdate(prevProps) {
        
-        if (this.props.polygon !== prevProps.polygon) {
-            this._updatePolygon(this.props.polygon);
-            this._renderUpdatePolygon(); // Add this line to re-render the map with updated polygon
-        }
+        // if (this.props.polygon !== prevProps.polygon) {
+        //     // this._updatePolygon(this.props.polygon);
+        //     this._renderUpdatePolygon(); // Add this line to re-render the map with updated polygon
+        // }
     }
     
 
@@ -83,7 +83,7 @@ class Geofencing extends Component {
     
     _updatePolygon(data) {
         const { handleSave } = this.props;
-       
+        console.log('Polygon Coordinates:', data);
         this.setState({
             polygon: data,
         });
@@ -98,15 +98,15 @@ class Geofencing extends Component {
         const google = window.google;
         const { polygon } = this.props;
     
-        // Check if the polygon array is empty or undefined
-        if (!polygon || polygon.length === 0) {
-            // Handle the case where the polygon is empty
-            console.warn('Polygon data is empty or undefined.');
-            return;
-        }
+        // // Check if the polygon array is empty or undefined
+        // if (!polygon || polygon.length === 0) {
+        //     // Handle the case where the polygon is empty
+        //     console.warn('Polygon data is empty or undefined.');
+        //     return;
+        // }
     
         const subArea = new window.google.maps.Polygon({
-            paths: polygon.map((val) => ({ lat: val[0], lng: val[1] })),
+            paths: polygon?.map((val) => ({ lat: val[0], lng: val[1] })),
             fillOpacity: 0.5,
             strokeWeight: 2,
             strokeColor: '#57ACF9',
@@ -116,7 +116,7 @@ class Geofencing extends Component {
             zIndex: 1,
         });
     
-        subArea.setMap(this.map);
+        subArea?.setMap(this.map);
     
         const prop = this;
     

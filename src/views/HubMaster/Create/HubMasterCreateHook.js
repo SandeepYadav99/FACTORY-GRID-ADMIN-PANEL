@@ -42,7 +42,7 @@ const useHubMasterCreateHook = ({ handleSideToggle, isSidePanel, empId }) => {
         setListData(res.data);
       }
     });
-  }, [empId]);
+  }, []);
 
   useEffect(() => {
     if (empId) {
@@ -57,9 +57,9 @@ const useHubMasterCreateHook = ({ handleSideToggle, isSidePanel, empId }) => {
             status: data?.status === constants.GENERAL_STATUS.ACTIVE,
           });
 
-          setGeofenceCoordinates(
-            data?.geofence?.map((coordinate) => [...coordinate])
-          );
+          setGeofenceCoordinates(data?.geofence);
+        } else {
+          setGeofenceCoordinates([]);
         }
       });
     }
@@ -75,7 +75,7 @@ const useHubMasterCreateHook = ({ handleSideToggle, isSidePanel, empId }) => {
     (data) => {
       setGeofenceCoordinates(data);
     },
-    [setGeofenceCoordinates]
+    [geofenceCoordinates]
   );
   const toggleAcceptDialog = useCallback(
     (obj) => {
@@ -119,25 +119,31 @@ const useHubMasterCreateHook = ({ handleSideToggle, isSidePanel, empId }) => {
     const updateData = {
       name: form?.name,
       industry_id: industryID,
-      geofence: geofenceCoordinates ? geofenceCoordinates : [],
+      geofence: geofenceCoordinates, // ? geofenceCoordinates : []
 
       featured: form?.featured ? "YES" : "NO",
       status: form?.status ? "ACTIVE" : "INACTIVE",
     };
+
     if (empId) {
       updateData.id = empId;
     }
-    const req = empId ? serviceHubMasterUpdate : serviceHubMasterCreate; //
-    const res = await req(updateData);
 
-    if (!res.error) {
-      handleSideToggle();
-     // dispatch(actionFetchHubMaster(1));
-       window.location.reload();
-    } else {
-      SnackbarUtils.error(res.message);
+    try {
+      const req = empId ? serviceHubMasterUpdate : serviceHubMasterCreate;
+      const res = await req(updateData);
+
+      if (!res.error) {
+        handleSideToggle();
+        dispatch(actionFetchHubMaster(1));
+        //window.location.reload();
+      } else {
+        SnackbarUtils.error(res.message);
+      }
+    } catch (error) {
+    } finally {
+      setIsSubmitting(false);
     }
-    setIsSubmitting(false);
   }, [
     form,
     isSubmitting,
@@ -145,7 +151,6 @@ const useHubMasterCreateHook = ({ handleSideToggle, isSidePanel, empId }) => {
     empId,
     handleSideToggle,
     geofenceCoordinates,
-    
     dispatch,
   ]);
 
@@ -163,6 +168,7 @@ const useHubMasterCreateHook = ({ handleSideToggle, isSidePanel, empId }) => {
     submitToServer,
     empId,
     errorData,
+    geofenceCoordinates,
   ]);
 
   const removeError = useCallback(
@@ -213,7 +219,8 @@ const useHubMasterCreateHook = ({ handleSideToggle, isSidePanel, empId }) => {
 
   const handleReset = useCallback(() => {
     setForm({ ...initialForm });
-  }, [form, setForm]);
+    setGeofenceCoordinates([]);
+  }, [form, setForm, geofenceCoordinates, empId]);
 
   return {
     form,

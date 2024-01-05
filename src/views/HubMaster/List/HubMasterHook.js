@@ -37,7 +37,7 @@ const useHubMasterHook = ({}) => {
     isMountRef.current = true;
   }, []);
 
-  useEffect(() => {}, [setEditId]);
+
 
   const handlePageChange = useCallback((type) => {
     dispatch(actionSetPageHubMasterRequests(type)); 
