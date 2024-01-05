@@ -1,6 +1,7 @@
 /* eslint-disable indent,linebreak-style */
 const TABLE_LIMIT = 50;
 //const tempLevel = true; 
+
  const tempLevel =  !(!process.env.NODE_ENV || process.env.NODE_ENV === 'development');
 const tempDate = new Date();
 export default {
@@ -12,7 +13,8 @@ export default {
     // DEFAULT_APP_URL: 'http://35.154.147.169:5055/api/',
     DEFAULT_PAGE_VALUE: TABLE_LIMIT,
     GOOGLE_LOGIN_KEY: '1027293586426-qg6lv2vsp57m05tn32m9stku2ljsd1uh.apps.googleusercontent.com',
-    GOOGLE_MAP_KEY: 'AIzaSyDUTIV7DaCvMUMg3qElE-sxdj4zR-dxhFM',
+    // GOOGLE_MAP_KEY: 'AIzaSyDUTIV7DaCvMUMg3qElE-sxdj4zR-dxhFM',
+    GOOGLE_MAP_KEY: 'AIzaSyCFLmHivV8XnwV9qV1vV8oIDI-EOYRCBhY',
     FACEBOOK_LOGIN_KEY: '213504989180156',
     DATATABLE_PROPERTIES: {
         title: 'Search',
