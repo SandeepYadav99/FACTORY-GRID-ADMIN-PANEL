@@ -84,9 +84,11 @@ const useHubMasterCreateHook = ({ handleSideToggle, isSidePanel, empId }) => {
     [isAcceptPopUp, empId]
   );
 
+  
   const checkFormValidation = useCallback(() => {
     const errors = { ...errorData };
     let required = ["name", "industry_id"];
+    
     required.forEach((val) => {
       if (
         !form?.[val] ||
@@ -97,6 +99,7 @@ const useHubMasterCreateHook = ({ handleSideToggle, isSidePanel, empId }) => {
         delete errors[val];
       }
     });
+    
     Object.keys(errors).forEach((key) => {
       if (!errors[key]) {
         delete errors[key];
@@ -187,11 +190,10 @@ const useHubMasterCreateHook = ({ handleSideToggle, isSidePanel, empId }) => {
       if (fieldName === "name") {
         t[fieldName] = text;
       } else if (fieldName === "industry_id") {
-        t[fieldName] = text.filter((item, index, self) => {
-          return (
-            index ===
-            self.findIndex((i) => i.id === item.id && i._id === item._id)
-          );
+        
+        t[fieldName] = text?.filter((item, index, self) => {
+          return  index === self.findIndex((i) => i.id === item.id && i._id === item._id)
+          
         });
       } else {
         t[fieldName] = text;
@@ -220,7 +222,7 @@ const useHubMasterCreateHook = ({ handleSideToggle, isSidePanel, empId }) => {
   const handleReset = useCallback(() => {
     setForm({ ...initialForm });
     setGeofenceCoordinates([]);
-  }, [form, setForm, geofenceCoordinates, empId]);
+  }, [form, setForm, geofenceCoordinates]);
 
   return {
     form,

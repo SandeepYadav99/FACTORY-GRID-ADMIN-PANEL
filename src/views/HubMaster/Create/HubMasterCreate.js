@@ -93,10 +93,10 @@ const HubMasterCreate = ({ handleSideToggle, isSidePanel, empId }) => {
                 changeTextData(value, "industry_id");
               }}
               value={form.industry_id || []}
-              // id="tags-standard"
               options={listData || []}
               getOptionLabel={(option) => option.name}
-              defaultValue={form?.industry_id || []}
+              defaultValue={form.industry_id || []}
+              //  getOptionSelected={(option, value) => option.id === value.id}
               renderInput={(params) => (
                 <TextField
                   {...params}
@@ -111,7 +111,6 @@ const HubMasterCreate = ({ handleSideToggle, isSidePanel, empId }) => {
         <div className={"formFlex"}>
           <div className="formGroup">
             <p>Draw the boundary for the Hub</p>
-
             <Geofencing
               key={geofenceCoordinates.length > 0}
               polygon={geofenceCoordinates} //     key={geofenceCoordinates.length}

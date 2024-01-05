@@ -8,8 +8,8 @@
 }
 
 .printFlex {
- display: flex;
- justify-content: end;
+  display: flex;
+  justify-content: end;
 }
 
 .btmBtn {
@@ -45,29 +45,32 @@
 .newLine {
   height: 5px;
   width: 30px;
- 
+
   text-align: center;
   margin: auto;
   background-image: linear-gradient(265deg, #7467f0, #2896e9) !important;
 }
 .heading {
-  font-weight: 600;
-  font-size: 1.2rem;
   /* text-align: start; */
-  margin-left: 10px;
+ 
+  font-size: 1.142rem;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  font-weight: 500;
+  line-height: 1.6;
+  letter-spacing: 0.0075em;
 }
 .headingWrapper {
-  display: flex;
-  flex-direction: column;
+  /* display: flex; */
+  /* flex-direction: column; */
   /* align-items: center; */
-  font-size: 0.875rem;
- 
+  /* font-size: 0.875rem; */
 }
 .des {
-  margin-top: 10px;
-  /* text-align: center; */
-  padding: 1rem;
-  font-size: medium;
+  font-size: 1rem;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  font-weight: 400;
+  line-height: 1.5;
+  letter-spacing: 0.00938em;
 }
 .cleckboxWrapper {
   margin-top: 20px;
