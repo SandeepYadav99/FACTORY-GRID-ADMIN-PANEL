@@ -93,6 +93,7 @@ const useHubMasterHook = ({}) => {
       setSidePanel((e) => !e);
       setEditId("");
       setEditData(null)
+      
     },
     [setEditId, setSidePanel, setEditData]
   );

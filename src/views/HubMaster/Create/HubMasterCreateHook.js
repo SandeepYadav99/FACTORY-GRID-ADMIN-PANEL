@@ -69,7 +69,8 @@ const useHubMasterCreateHook = ({ handleSideToggle, isSidePanel, empId }) => {
     if (!isSidePanel) {
       handleReset();
     }
-  }, [isSidePanel]);
+    
+  }, []);
 
   const handleCoordinate = useCallback(
     (data) => {
@@ -95,6 +96,7 @@ const useHubMasterCreateHook = ({ handleSideToggle, isSidePanel, empId }) => {
         (Array.isArray(form?.[val]) && form?.[val].length === 0)
       ) {
         errors[val] = true;
+        SnackbarUtils.error("Please enter values")
       } else if (["code"].indexOf(val) < 0) {
         delete errors[val];
       }
@@ -123,7 +125,6 @@ const useHubMasterCreateHook = ({ handleSideToggle, isSidePanel, empId }) => {
       name: form?.name,
       industry_id: industryID,
       geofence: geofenceCoordinates, // ? geofenceCoordinates : []
-
       featured: form?.featured ? "YES" : "NO",
       status: form?.status ? "ACTIVE" : "INACTIVE",
     };
@@ -144,6 +145,7 @@ const useHubMasterCreateHook = ({ handleSideToggle, isSidePanel, empId }) => {
         SnackbarUtils.error(res.message);
       }
     } catch (error) {
+     
     } finally {
       setIsSubmitting(false);
     }
@@ -210,7 +212,7 @@ const useHubMasterCreateHook = ({ handleSideToggle, isSidePanel, empId }) => {
         changeTextData(form?.[type].trim(), type);
       }
     },
-    [changeTextData]
+    [changeTextData, errorData, setErrorData]
   );
   const suspendItem = useCallback(async () => {
     dispatch(actionDeleteMasterDelete(empId));

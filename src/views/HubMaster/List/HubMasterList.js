@@ -118,16 +118,7 @@ const HubMasterList = (props) => {
         ),
       },
     ];
-  }, [
-    handleViewDetails,
-    capitalizeFirstLetter,
-    isCalling,
-    // renderContact,
-    renderFirstCell,
-    handleEditHubMaster,
-    handleSideToggle
-   
-  ]);
+  }, [renderAssociatedIndustriesName, isCalling, handleEditHubMaster]);
 
   const tableData = useMemo(() => {
     const datatableFunctions = {
@@ -152,7 +143,7 @@ const HubMasterList = (props) => {
     handleRowSize,
     present,
     currentPage,
-    
+ 
   ]);
 
   return (
