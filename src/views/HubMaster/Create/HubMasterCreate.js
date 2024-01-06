@@ -1,5 +1,4 @@
 import React from "react";
-
 import {
   Button,
   CircularProgress,
@@ -37,7 +36,6 @@ const HubMasterCreate = ({ handleSideToggle, isSidePanel, empId }) => {
     changeTextData,
     listData,
     geofenceCoordinates,
-
     handleCoordinate,
     isSubmitting,
     toggleAcceptDialog,
@@ -159,6 +157,7 @@ const HubMasterCreate = ({ handleSideToggle, isSidePanel, empId }) => {
           </Button>
         </div>
       </div>
+
       <DeleteModal
         isOpen={isAcceptPopUp}
         handleToggle={toggleAcceptDialog}

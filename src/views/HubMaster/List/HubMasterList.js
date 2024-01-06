@@ -167,14 +167,17 @@ const HubMasterList = (props) => {
             handleSearchValueChange={handleSearchValueChange}
             handleFilterDataChange={handleFilterDataChange}
           />
+
           <div>
             <br />
+
             <div style={{ width: "100%" }}>
               <DataTables
                 {...tableData.datatable}
                 {...tableData.datatableFunctions}
               />
             </div>
+            
           </div>
         </div>
       </PageBox>

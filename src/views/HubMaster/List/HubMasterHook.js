@@ -37,22 +37,18 @@ const useHubMasterHook = ({}) => {
     isMountRef.current = true;
   }, []);
 
-
-
   const handlePageChange = useCallback((type) => {
-    dispatch(actionSetPageHubMasterRequests(type)); 
+    dispatch(actionSetPageHubMasterRequests(type));
   }, []);
 
   const queryFilter = useCallback(
     (key, value) => {
-      
       dispatch(
         actionFetchHubMaster(1, sortingData, {
           query: key == "SEARCH_TEXT" ? value : query,
           query_data: key == "FILTER_DATA" ? value : queryData,
         })
       );
-    
     },
     [sortingData, query, queryData]
   );
@@ -92,8 +88,7 @@ const useHubMasterHook = ({}) => {
     (data) => {
       setSidePanel((e) => !e);
       setEditId("");
-      setEditData(null)
-      
+      setEditData(null);
     },
     [setEditId, setSidePanel, setEditData]
   );
@@ -102,7 +97,7 @@ const useHubMasterHook = ({}) => {
     (data) => {
       setSidePanel((e) => !e);
       setEditId(data?.id);
-      setEditData(data)
+      setEditData(data);
     },
     [setEditData, setSidePanel, setEditId]
   );

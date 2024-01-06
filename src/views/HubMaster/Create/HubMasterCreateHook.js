@@ -1,6 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useCallback, useEffect, useRef, useState } from "react";
-
+import { useCallback, useEffect,  useState } from "react";
 import { serviceBadgeIndustry } from "../../../services/Badge.service";
 import SnackbarUtils from "../../../libs/SnackbarUtils";
 import {
@@ -24,13 +23,9 @@ const initialForm = {
 };
 
 const useHubMasterCreateHook = ({ handleSideToggle, isSidePanel, empId }) => {
-  const [isLoading] = useState(false);
-  const [showPasswordCurrent, setShowPasswordCurrent] = useState(false);
   const [errorData, setErrorData] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [form, setForm] = useState({ ...initialForm });
-  const [isEdit] = useState(false);
-  const includeRef = useRef(null);
   const [geofenceCoordinates, setGeofenceCoordinates] = useState([]);
   const [listData, setListData] = useState(null);
   const [isAcceptPopUp, setIsAcceptPopUp] = useState(false);
@@ -56,7 +51,6 @@ const useHubMasterCreateHook = ({ handleSideToggle, isSidePanel, empId }) => {
             featured: data?.featured === "YES",
             status: data?.status === constants.GENERAL_STATUS.ACTIVE,
           });
-
           setGeofenceCoordinates(data?.geofence);
         } else {
           setGeofenceCoordinates([]);
@@ -68,9 +62,8 @@ const useHubMasterCreateHook = ({ handleSideToggle, isSidePanel, empId }) => {
   useEffect(() => {
     if (!isSidePanel) {
       handleReset();
-    }
-    
-  }, []);
+    }  
+  }, [handleSideToggle,  isSidePanel]);
 
   const handleCoordinate = useCallback(
     (data) => {
@@ -89,7 +82,6 @@ const useHubMasterCreateHook = ({ handleSideToggle, isSidePanel, empId }) => {
   const checkFormValidation = useCallback(() => {
     const errors = { ...errorData };
     let required = ["name", "industry_id"];
-    
     required.forEach((val) => {
       if (
         !form?.[val] ||
@@ -101,7 +93,6 @@ const useHubMasterCreateHook = ({ handleSideToggle, isSidePanel, empId }) => {
         delete errors[val];
       }
     });
-    
     Object.keys(errors).forEach((key) => {
       if (!errors[key]) {
         delete errors[key];
@@ -214,6 +205,7 @@ const useHubMasterCreateHook = ({ handleSideToggle, isSidePanel, empId }) => {
     },
     [changeTextData, errorData, setErrorData]
   );
+
   const suspendItem = useCallback(async () => {
     dispatch(actionDeleteMasterDelete(empId));
     dispatch(actionFetchHubMaster(1));
@@ -224,7 +216,8 @@ const useHubMasterCreateHook = ({ handleSideToggle, isSidePanel, empId }) => {
   const handleReset = useCallback(() => {
     setForm({ ...initialForm });
     setGeofenceCoordinates([]);
-  }, [form, setForm, geofenceCoordinates]);
+    setErrorData({});
+  }, [form, setForm, geofenceCoordinates, setErrorData]);
 
   return {
     form,
@@ -232,16 +225,11 @@ const useHubMasterCreateHook = ({ handleSideToggle, isSidePanel, empId }) => {
     onBlurHandler,
     removeError,
     handleSubmit,
-    isLoading,
     isSubmitting,
     listData,
     errorData,
-    isEdit,
-    includeRef,
     handleReset,
     empId,
-    showPasswordCurrent,
-    setShowPasswordCurrent,
     geofenceCoordinates,
     setGeofenceCoordinates,
     handleCoordinate,
