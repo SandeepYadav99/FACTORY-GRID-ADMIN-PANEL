@@ -14,6 +14,7 @@ import {
 } from "../../../actions/HubMaster.action";
 import {
   serviceProviderUserManager,
+  serviceSearchTask,
   serviceTaskManagementCreate,
 } from "../../../services/ProviderUser.service";
 
@@ -45,10 +46,19 @@ const useAddTaskCreate = ({ handleSideToggle, isSidePanel, empId }) => {
     serviceProviderUserManager().then((res) => {
       if (!res.error) {
         setListData(res.data);
-        setFilteredUsers(res.data);
+       
       }
     });
   }, []);
+
+  // useEffect(() => {
+  //   serviceSearchTask({query:"Sandeep"}).then((res) => {
+  //     if (!res.error) {
+       
+  //       setFilteredUsers(res.data);
+  //     }
+  //   });
+  // }, []);
 
   const handleSearchUsers = useCallback(
     (searchText) => {

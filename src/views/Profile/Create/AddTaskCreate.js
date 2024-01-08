@@ -1,20 +1,20 @@
 import {
   Button,
   CircularProgress,
-  IconButton,
+
   MenuItem,
   TextField,
   Tooltip,
 } from "@material-ui/core";
 import React from "react";
-import CustomCheckbox from "../../../FormFields/CustomCheckbox";
-import CustomSwitch from "../../../FormFields/CustomSwitch";
+
 import CustomTextField from "../../../FormFields/TextField.component";
 import styles from "./Style.module.css";
 import useAddTaskCreate from "./AddTaskCreateHook";
 import InfoIcon from "@material-ui/icons/Info";
 import CustomDatePicker from "../../../FormFields/DatePicker/CustomDatePicker";
 import { Autocomplete } from "@material-ui/lab";
+
 import { Search } from "@material-ui/icons";
 import CustomSelectField from "../../../FormFields/SelectField/SelectField.component";
 
@@ -28,7 +28,7 @@ const AddTaskCreate = ({ handleSideToggle, isSidePanel }) => {
     isSubmitting,
     listData,
     handleSearchUsers,
-    filteredUsers
+    filteredUsers,
   } = useAddTaskCreate({ handleSideToggle, isSidePanel });
 
   const COMENTs = [{ id: 1, name: "Task" }];
@@ -64,7 +64,6 @@ const AddTaskCreate = ({ handleSideToggle, isSidePanel }) => {
               handleChange={(value) => {
                 changeTextData(value, "assigned_to");
               }}
-              
             >
               {listData?.map((item) => {
                 return (
@@ -150,29 +149,7 @@ const AddTaskCreate = ({ handleSideToggle, isSidePanel }) => {
         </div>
         <div className={"formFlex"}>
           <div className={"formGroup"}>
-            {/* <Autocomplete
-             
-              id="tags-outlined"
-              onChange={(e, value) => {
-                changeTextData(value, "industry_id");
-              }}
-            
-              value={form.industry_id || []}
-              options={ []} // listData ||
-              getOptionLabel={(option) => option.name}
-              defaultValue={form.industry_id || []}
-              //  getOptionSelected={(option, value) => option.id === value.id}
-              renderInput={(params) => (
-                <TextField
-                  {...params}
-                  variant="outlined"
-                  label="Task Type"
-                  error={errorData?.industry_id}
-                />
-              )}
-            /> */}
-
-            <CustomSelectField
+           <CustomSelectField
               isError={errorData?.type}
               errorText={errorData?.type}
               label={"Task Type"}
@@ -187,27 +164,7 @@ const AddTaskCreate = ({ handleSideToggle, isSidePanel }) => {
         </div>
         <div className={"formFlex"}>
           <div className={"formGroup"}>
-            {/* <Autocomplete
-             
-              id="tags-outlined"
-              onChange={(e, value) => {
-                changeTextData(value, "industry_id");
-              }}
-            
-              value={form.industry_id || []}
-              options={ []} // listData ||
-              getOptionLabel={(option) => option.name}
-              defaultValue={form.industry_id || []}
-              //  getOptionSelected={(option, value) => option.id === value.id}
-              renderInput={(params) => (
-                <TextField
-                  {...params}
-                  variant="outlined"
-                  label="Task Priority"
-                  error={errorData?.industry_id}
-                />
-              )}
-            /> */}
+       
             <CustomSelectField
               isError={errorData?.priority}
               errorText={errorData?.priority}
@@ -230,7 +187,7 @@ const AddTaskCreate = ({ handleSideToggle, isSidePanel }) => {
               value={form?.associated_user}
               onTextChange={(text) => {
                 changeTextData(text, "associated_user");
-                handleSearchUsers(text)
+                handleSearchUsers(text);
               }}
               onBlur={() => {
                 onBlurHandler("associated_user");
@@ -238,49 +195,43 @@ const AddTaskCreate = ({ handleSideToggle, isSidePanel }) => {
               icon={"search"}
             />
           </div>
-        {/* <br/>
-          <div style={{}}>
-            {filteredUsers.map((user) => (
-              <div key={user.id}>{user.name}</div>
-            ))}
-          </div> */}
-     
+       
         </div>
         <div className={"formFlex"}>
           <div className={"formGroup"}>
-            <CustomTextField
-              isError={errorData?.associated_task}
-              errorText={errorData?.associated_task}
-              label={"Associated Task (Optional)"}
-              value={form?.associated_task}
-              onTextChange={(text) => {
+          
+            <Autocomplete
+              id="tags-outlined"
+              onChange={(text) => {
                 changeTextData(text, "associated_task");
               }}
-              onBlur={() => {
-                onBlurHandler("associated_task");
+              value={form.associated_task || []}
+              options={listData || []} // listData ||
+              getOptionLabel={(option) => option.name}
+              defaultValue={form?.associated_task || []}
+              filterOptions={(options, { inputValue }) => {
+                // Implement your custom search logic here
+                return options.filter((option) =>
+                  option.name.toLowerCase().includes(inputValue.toLowerCase())
+                );
               }}
-              icon={"search"}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  variant="outlined"
+                  label="Associated Task (Optional)"
+                  error={errorData?.associated_task}
+                  InputProps={{
+                    ...params.InputProps,
+                    endAdornment: <Search />,
+                  }}
+                />
+              )}
+              disableClearable
             />
           </div>
         </div>
-        {/* <div className={"formFlex"}>
-          <div className={"formGroup"}>
-            <CustomTextField
-              isError={errorData?.comment}
-              errorText={errorData?.comment}
-              label={"comments/notes"}
-              value={form?.comment}
-              onTextChange={(text) => {
-                changeTextData(text, "comment");
-              }}
-              onBlur={() => {
-                onBlurHandler("comment");
-              }}
-              multiline
-              rows={3}
-            />
-          </div>
-        </div> */}
+     
         <div className={"headerFlex"}>
           {/* <h4 className={"infoTitle"}>
             {/* <div className={"heading"}>Completed?</div> */}
@@ -308,13 +259,7 @@ const AddTaskCreate = ({ handleSideToggle, isSidePanel }) => {
           </Button>
         </div>
       </div>
-      {/* 
-    <DeleteModal
-      isOpen={isAcceptPopUp}
-      handleToggle={toggleAcceptDialog}
-      empId={empId}
-      suspendItem={suspendItem}
-    /> */}
+    
     </div>
   );
 };

@@ -50,5 +50,13 @@ export async function serviceTaskManagementDetail(params) {
 }
 
 export async function serviceTaskManagementUpdate(params) {
-    return await postRequest('task/management/update', params); 
+    return await postRequest('task/management/update', params); // task/management/search/task
+}
+
+export async function serviceSearchTask(params) {
+    return await postRequest('task/management/search/task', params); // task/management/search/task
+}
+
+export async function serviceSearchUser(params) {
+    return await postRequest('task/management/search/user', params); // task/management/search/task
 }
