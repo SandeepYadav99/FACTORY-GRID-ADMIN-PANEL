@@ -90,6 +90,7 @@ const HubMasterCreate = ({ handleSideToggle, isSidePanel, empId }) => {
               onChange={(e, value) => {
                 changeTextData(value, "industry_id");
               }}
+            
               value={form.industry_id || []}
               options={listData || []}
               getOptionLabel={(option) => option.name}

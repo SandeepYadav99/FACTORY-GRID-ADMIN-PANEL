@@ -1,6 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useCallback, useEffect,  useState } from "react";
-import { serviceBadgeIndustry } from "../../../services/Badge.service";
 import SnackbarUtils from "../../../libs/SnackbarUtils";
 import {
   serviceHubMasterCreate,
@@ -22,7 +21,7 @@ const initialForm = {
   status: false,
 };
 
-const useHubMasterCreateHook = ({ handleSideToggle, isSidePanel, empId }) => {
+const useAddTaskCreate = ({ handleSideToggle, isSidePanel, empId }) => {
   const [errorData, setErrorData] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [form, setForm] = useState({ ...initialForm });
@@ -31,13 +30,6 @@ const useHubMasterCreateHook = ({ handleSideToggle, isSidePanel, empId }) => {
   const [isAcceptPopUp, setIsAcceptPopUp] = useState(false);
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    serviceBadgeIndustry({ id: empId }).then((res) => {
-      if (!res.error) {
-        setListData(res.data);
-      }
-    });
-  }, []);
 
 
   useEffect(() => {
@@ -59,7 +51,7 @@ const useHubMasterCreateHook = ({ handleSideToggle, isSidePanel, empId }) => {
         }
       });
     }
-  }, [empId, listData]);
+  }, [empId]);
 
 
   
@@ -69,12 +61,7 @@ const useHubMasterCreateHook = ({ handleSideToggle, isSidePanel, empId }) => {
     }  
   }, [handleSideToggle,  isSidePanel]);
 
-  const handleCoordinate = useCallback(
-    (data) => {
-      setGeofenceCoordinates(data);
-    },
-    [geofenceCoordinates]
-  );
+  
   const toggleAcceptDialog = useCallback(
     (obj) => {
       setIsAcceptPopUp((e) => !e);
@@ -216,13 +203,13 @@ const useHubMasterCreateHook = ({ handleSideToggle, isSidePanel, empId }) => {
     dispatch(actionFetchHubMaster(1));
     handleSideToggle();
     setIsAcceptPopUp((e) => !e);
-  }, [empId, handleCoordinate, isAcceptPopUp, dispatch]);
+  }, [empId,  isAcceptPopUp, dispatch]);
 
   const handleReset = useCallback(() => {
     setForm({ ...initialForm });
-    setGeofenceCoordinates([]);
+  
     setErrorData({});
-  }, [form, setForm, geofenceCoordinates, setErrorData]);
+  }, [form, setForm,  setErrorData]);
 
   return {
     form,
@@ -237,11 +224,11 @@ const useHubMasterCreateHook = ({ handleSideToggle, isSidePanel, empId }) => {
     empId,
     geofenceCoordinates,
     setGeofenceCoordinates,
-    handleCoordinate,
+   
     toggleAcceptDialog,
     isAcceptPopUp,
     suspendItem,
   };
 };
 
-export default useHubMasterCreateHook;
+export default useAddTaskCreate;
