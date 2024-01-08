@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useCallback, useEffect,  useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import SnackbarUtils from "../../../libs/SnackbarUtils";
 import {
   serviceHubMasterCreate,
@@ -12,17 +12,23 @@ import {
   actionDeleteMasterDelete,
   actionFetchHubMaster,
 } from "../../../actions/HubMaster.action";
+import {
+  serviceProviderUserManager,
+  serviceTaskManagementCreate,
+} from "../../../services/ProviderUser.service";
 
 const initialForm = {
   title: "",
   description: "",
   due_date: "",
-  task_category: [],
-  task_type: "",
-  task_priority:"",
-  associated_user:"",
-  associated_task:"",
-  Comments:""
+  category: [],
+  type: "",
+  priority: "",
+  associated_user: "",
+  associated_task: "",
+  // comment:"",
+  // status: true,
+  assigned_to: "",
 };
 
 const useAddTaskCreate = ({ handleSideToggle, isSidePanel, empId }) => {
@@ -34,38 +40,41 @@ const useAddTaskCreate = ({ handleSideToggle, isSidePanel, empId }) => {
   const [isAcceptPopUp, setIsAcceptPopUp] = useState(false);
   const dispatch = useDispatch();
 
-
-
   useEffect(() => {
-    if (empId) {
-      serviceHubMasterDetail({ id: empId }).then((res) => {
-        if (!res.error) {
-          const data = res.data;
-          
-          setForm({
-            ...form,
-            name: data?.name,
-            industry_id: data?.industryData,
-            featured: data?.featured === "YES",
-            status: data?.status === constants.GENERAL_STATUS.ACTIVE,
-          });
-          setGeofenceCoordinates(data?.geofence);
-        } else {
-          setGeofenceCoordinates([]);
-        }
-      });
-    }
-  }, [empId]);
+    serviceProviderUserManager().then((res) => {
+      if (!res.error) {
+        setListData(res.data);
+      }
+    });
+  }, []);
 
+  // useEffect(() => {
+  //   if (empId) {
+  //     serviceHubMasterDetail({ id: empId }).then((res) => {
+  //       if (!res.error) {
+  //         const data = res.data;
 
-  
+  //         setForm({
+  //           ...form,
+  //           name: data?.name,
+  //           industry_id: data?.industryData,
+  //           featured: data?.featured === "YES",
+  //           status: data?.status === constants.GENERAL_STATUS.ACTIVE,
+  //         });
+  //         setGeofenceCoordinates(data?.geofence);
+  //       } else {
+  //         setGeofenceCoordinates([]);
+  //       }
+  //     });
+  //   }
+  // }, [empId]);
+
   useEffect(() => {
     if (!isSidePanel) {
       handleReset();
-    }  
-  }, [handleSideToggle,  isSidePanel]);
+    }
+  }, [handleSideToggle, isSidePanel]);
 
-  
   const toggleAcceptDialog = useCallback(
     (obj) => {
       setIsAcceptPopUp((e) => !e);
@@ -73,17 +82,16 @@ const useAddTaskCreate = ({ handleSideToggle, isSidePanel, empId }) => {
     [isAcceptPopUp, empId]
   );
 
-  
   const checkFormValidation = useCallback(() => {
     const errors = { ...errorData };
-    let required = ["name", "industry_id"];
+    let required = ["assigned_to", "type", "title", "description", "priority", "due_date", "category"]; // "name", "description", "due_date", "task_type", "comment"
     required.forEach((val) => {
       if (
         !form?.[val] ||
         (Array.isArray(form?.[val]) && form?.[val].length === 0)
       ) {
         errors[val] = true;
-        SnackbarUtils.error("Please enter values")
+        SnackbarUtils.error("Please enter values");
       } else if (["code"].indexOf(val) < 0) {
         delete errors[val];
       }
@@ -103,16 +111,22 @@ const useAddTaskCreate = ({ handleSideToggle, isSidePanel, empId }) => {
     setIsSubmitting(true);
 
     const industryID =
-      Array.isArray(form.industry_id) && form.industry_id.length > 0
-        ? form.industry_id.map((item) => item.id || item._id)
+      Array.isArray(form.category) && form.category.length > 0
+        ? form.category.map((item) => item.id || item._id)
         : [];
 
     const updateData = {
-      name: form?.name,
-      industry_id: industryID,
-      geofence: geofenceCoordinates, // ? geofenceCoordinates : []
-      featured: form?.featured ? "YES" : "NO",
-      status: form?.status ? "ACTIVE" : "INACTIVE",
+      title: form?.title,
+      description: form?.description,
+      due_date: form?.due_date,
+      category: industryID,
+      type: form?.type,
+      priority: form?.priority,
+      associated_user: "658e6ae02d64c05214b8e1c7",
+      associated_task: "658e6ae02d64c05214b8e1c7",
+      comment: "Task",
+      // is_completed: form?.status ? true : false,
+      assigned_to: form?.assigned_to,
     };
 
     if (empId) {
@@ -120,18 +134,17 @@ const useAddTaskCreate = ({ handleSideToggle, isSidePanel, empId }) => {
     }
 
     try {
-      const req = empId ? serviceHubMasterUpdate : serviceHubMasterCreate;
+      const req = serviceTaskManagementCreate; // empId ? serviceHubMasterUpdate :
       const res = await req(updateData);
 
       if (!res.error) {
         handleSideToggle();
-        dispatch(actionFetchHubMaster(1));
-        //window.location.reload();
+        // dispatch(actionFetchHubMaster(1));
+        // window.location.reload();
       } else {
         SnackbarUtils.error(res.message);
       }
     } catch (error) {
-     
     } finally {
       setIsSubmitting(false);
     }
@@ -173,17 +186,12 @@ const useAddTaskCreate = ({ handleSideToggle, isSidePanel, empId }) => {
 
   const changeTextData = useCallback(
     (text, fieldName) => {
-      console.log(text, "Text")
       let shouldRemoveError = true;
       const t = { ...form };
       if (fieldName === "name") {
         t[fieldName] = text;
-      } else if (fieldName === "industry_id") {
-        
-        t[fieldName] = text?.filter((item, index, self) => {
-          return  index === self.findIndex((i) => i.id === item.id && i._id === item._id)
-          
-        });
+      } else if (fieldName === "category") {
+        t[fieldName] = text.id;
       } else {
         t[fieldName] = text;
       }
@@ -193,6 +201,13 @@ const useAddTaskCreate = ({ handleSideToggle, isSidePanel, empId }) => {
     [removeError, form, setForm, listData]
   );
 
+  // else if (fieldName === "industry_id") {
+
+  //   t[fieldName] = text?.filter((item, index, self) => {
+  //     return  index === self.findIndex((i) => i.id === item.id && i._id === item._id)
+
+  //   });
+  // }
   const onBlurHandler = useCallback(
     (type) => {
       if (form?.[type]) {
@@ -207,13 +222,13 @@ const useAddTaskCreate = ({ handleSideToggle, isSidePanel, empId }) => {
     dispatch(actionFetchHubMaster(1));
     handleSideToggle();
     setIsAcceptPopUp((e) => !e);
-  }, [empId,  isAcceptPopUp, dispatch]);
+  }, [empId, isAcceptPopUp, dispatch]);
 
   const handleReset = useCallback(() => {
     setForm({ ...initialForm });
-  
+
     setErrorData({});
-  }, [form, setForm,  setErrorData]);
+  }, [form, setForm, setErrorData]);
 
   return {
     form,
@@ -228,7 +243,7 @@ const useAddTaskCreate = ({ handleSideToggle, isSidePanel, empId }) => {
     empId,
     geofenceCoordinates,
     setGeofenceCoordinates,
-   
+
     toggleAcceptDialog,
     isAcceptPopUp,
     suspendItem,

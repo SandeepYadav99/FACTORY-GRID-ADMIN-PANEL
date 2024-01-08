@@ -3,15 +3,16 @@ import {
   ButtonBase,
   Card,
   CardHeader,
- 
   makeStyles,
 } from "@material-ui/core";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import ArrowBackIosIcon from "@material-ui/icons/ArrowBackIos";
 import historyUtils from "../../../libs/history.utils";
 import styles from "./Style.module.css";
 import { useParams } from "react-router-dom/cjs/react-router-dom.min";
 import { Add } from "@material-ui/icons";
+import NotesDilog from "./components/NotesDilog/NotesDilog";
+
 
 const useStyles = makeStyles((theme) => ({
   boldTitle: {
@@ -27,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 const TaskDetailView = ({}) => {
- 
+  const [isAcceptPopUp, setIsAcceptPopUp] = useState(false);
   const { id } = useParams();
   const classes = useStyles();
 
@@ -64,7 +65,12 @@ const TaskDetailView = ({}) => {
     // });
   }, [id]);
 
-
+  const toggleAcceptDialog = useCallback(
+    (obj) => {
+      setIsAcceptPopUp((e) => !e);
+    },
+    [isAcceptPopUp]
+  );
 
   return (
     <div>
@@ -76,7 +82,6 @@ const TaskDetailView = ({}) => {
               <b>Task Detail</b>
             </span>
           </ButtonBase>
-        
         </div>
       </div>
       {/* <CandidateInfor empId={details?.emp_code} /> */}
@@ -217,7 +222,7 @@ const TaskDetailView = ({}) => {
           <div className={styles.notesContainer}>
             <div className={styles.title}>Notes</div>
             <div>
-              <ButtonBase className={styles.addTask}>
+              <ButtonBase className={styles.addTask} onClick={toggleAcceptDialog}>
                 <div>
                   <Add fontSize={"small"} />
                 </div>
@@ -253,6 +258,13 @@ const TaskDetailView = ({}) => {
                 />
               </Card>
             </div>
+            {/* Dilog Box nots */}
+            <NotesDilog
+              isOpen={isAcceptPopUp}
+              handleToggle={toggleAcceptDialog}
+            />
+            {/*  empId={empId}
+        suspendItem={suspendItem} */}
           </div>
         </div>
       </div>
