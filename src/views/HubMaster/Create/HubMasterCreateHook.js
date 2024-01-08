@@ -31,13 +31,7 @@ const useHubMasterCreateHook = ({ handleSideToggle, isSidePanel, empId }) => {
   const [isAcceptPopUp, setIsAcceptPopUp] = useState(false);
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    serviceBadgeIndustry({ id: empId }).then((res) => {
-      if (!res.error) {
-        setListData(res.data);
-      }
-    });
-  }, []);
+
 
   useEffect(() => {
     if (empId) {
@@ -59,6 +53,14 @@ const useHubMasterCreateHook = ({ handleSideToggle, isSidePanel, empId }) => {
     }
   }, [empId]);
 
+  useEffect(() => {
+    serviceBadgeIndustry({ id: empId }).then((res) => {
+      if (!res.error) {
+        setListData(res.data);
+      }
+    });
+  }, []);
+  
   useEffect(() => {
     if (!isSidePanel) {
       handleReset();
