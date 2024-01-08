@@ -27,6 +27,7 @@ const Profile = () => {
     isSidePanel,
     handleSideToggle,
     profileId,
+    handleDetailPage
   } = useMyProfileHook();
 
   const handleClose = () => {
@@ -177,6 +178,8 @@ const Profile = () => {
                     </FormControl>
                   </div>
                 </div>
+                <div onClick={handleDetailPage} className={styles.detailView}>
+
                 <div className={styles.check}>
                   <Checkbox color={"primary"} />
                   Animation Css Practise
@@ -193,6 +196,7 @@ const Profile = () => {
                   </div>
                   <div className={styles.priority}>HIGH</div>
                   <div className={styles.section}>Finance</div>
+                </div>
                 </div>
               </div>
             </div>

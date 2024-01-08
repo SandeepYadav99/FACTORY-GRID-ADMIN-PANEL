@@ -2,7 +2,7 @@ import React, {useCallback, useEffect, useState} from "react";
 import TextField from "@material-ui/core/TextField";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import ReactDOM from "react-dom";
-
+import { Search } from "@material-ui/icons";
 const CustomTextField = ({isError, errorText, icon, label, onChange, onTextChange, inputProps, ...rest }) => {
 
     const handleChange = useCallback((e) => {
@@ -17,8 +17,8 @@ const CustomTextField = ({isError, errorText, icon, label, onChange, onTextChang
            label={label}
            InputProps={{
                startAdornment: icon ? (
-                   <InputAdornment position="start">
-                       {icon ? <img className={'fieldIcon'} src={icon}/> : '' }
+                   <InputAdornment position="start" >
+                    {icon === "search" ? <Search /> : <img className={'fieldIcon'} src={icon} alt="icon" />}
                    </InputAdornment>
                ):'',
                ...(inputProps ? inputProps : {})

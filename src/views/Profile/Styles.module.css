@@ -191,3 +191,6 @@
 .innerText{
     margin-left: 10px;
 }
+.detailView{
+    cursor: pointer;
+}

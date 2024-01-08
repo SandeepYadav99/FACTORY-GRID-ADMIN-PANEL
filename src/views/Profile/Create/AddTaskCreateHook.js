@@ -14,11 +14,15 @@ import {
 } from "../../../actions/HubMaster.action";
 
 const initialForm = {
-  name: "",
-  geofence: "",
-  industry_id: [],
-  featured: false,
-  status: false,
+  title: "",
+  description: "",
+  due_date: "",
+  task_category: [],
+  task_type: "",
+  task_priority:"",
+  associated_user:"",
+  associated_task:"",
+  Comments:""
 };
 
 const useAddTaskCreate = ({ handleSideToggle, isSidePanel, empId }) => {

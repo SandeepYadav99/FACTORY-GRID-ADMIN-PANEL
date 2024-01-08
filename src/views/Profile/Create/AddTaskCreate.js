@@ -14,6 +14,7 @@ import useAddTaskCreate from "./AddTaskCreateHook";
 import InfoIcon from "@material-ui/icons/Info";
 import CustomDatePicker from "../../../FormFields/DatePicker/CustomDatePicker";
 import { Autocomplete } from "@material-ui/lab";
+import { Search } from "@material-ui/icons";
 
 const AddTaskCreate = ({ handleSideToggle, isSidePanel }) => {
   const {
@@ -201,7 +202,9 @@ const AddTaskCreate = ({ handleSideToggle, isSidePanel }) => {
               onBlur={() => {
                 onBlurHandler("name");
               }}
+              // icon={"search"}
             />
+          
           </div>
         </div>
         <div className={"formFlex"}>
@@ -245,7 +248,7 @@ const AddTaskCreate = ({ handleSideToggle, isSidePanel }) => {
             {isSubmitting ? (
               <CircularProgress color="success" size="20px" />
             ) : (
-              "Submit"
+              "Create"
             )}
           </Button>
         </div>

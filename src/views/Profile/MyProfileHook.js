@@ -41,13 +41,11 @@ const useMyProfileHook = () => {
     [ setSidePanel] // , profileId, id,  userObject?.user?.id
   );
 
-  const handleEditTask = useCallback(
+  const handleDetailPage = useCallback(
     (data) => {
-      setSidePanel((e) => !e);
-      // setEditId(data?.id);
-      // setEditData(data);
+      historyUtils.push(`${RouteName.TASK_DETAIL}`);
     },
-    [ setSidePanel, ]
+    [  ]
   );
   return {
     profileDetails,
@@ -55,7 +53,8 @@ const useMyProfileHook = () => {
     isLoading,
     isSidePanel,
     handleSideToggle,
-    profileId
+    profileId,
+    handleDetailPage
   };
 };
 
