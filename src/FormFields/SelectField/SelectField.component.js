@@ -41,6 +41,7 @@ const CustomSelectField = ({ isError, errorText, label, handleChange, icon, chil
                             fullWidth
                             // labelWidth={labelWidth}
                             id={`selectField${id}`}
+                          
                         />
                     }
                     onChange={(e) => { handleChangeLocal && handleChangeLocal(e); }}

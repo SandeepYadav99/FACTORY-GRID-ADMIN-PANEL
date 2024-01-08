@@ -38,16 +38,31 @@ const useAddTaskCreate = ({ handleSideToggle, isSidePanel, empId }) => {
   const [geofenceCoordinates, setGeofenceCoordinates] = useState([]);
   const [listData, setListData] = useState(null);
   const [isAcceptPopUp, setIsAcceptPopUp] = useState(false);
+  const [filteredUsers, setFilteredUsers] = useState([]);
   const dispatch = useDispatch();
 
   useEffect(() => {
     serviceProviderUserManager().then((res) => {
       if (!res.error) {
         setListData(res.data);
+        setFilteredUsers(res.data);
       }
     });
   }, []);
 
+  const handleSearchUsers = useCallback(
+    (searchText) => {
+      if (!searchText) {
+        setFilteredUsers(listData);
+      } else {
+        const filtered = listData.filter((user) =>
+          user.name.toLowerCase().includes(searchText.toLowerCase())
+        );
+        setFilteredUsers(filtered);
+      }
+    },
+    [listData]
+  );
   // useEffect(() => {
   //   if (empId) {
   //     serviceHubMasterDetail({ id: empId }).then((res) => {
@@ -243,10 +258,11 @@ const useAddTaskCreate = ({ handleSideToggle, isSidePanel, empId }) => {
     empId,
     geofenceCoordinates,
     setGeofenceCoordinates,
-
+    handleSearchUsers,
     toggleAcceptDialog,
     isAcceptPopUp,
     suspendItem,
+    filteredUsers
   };
 };
 

@@ -27,6 +27,8 @@ const AddTaskCreate = ({ handleSideToggle, isSidePanel }) => {
     changeTextData,
     isSubmitting,
     listData,
+    handleSearchUsers,
+    filteredUsers
   } = useAddTaskCreate({ handleSideToggle, isSidePanel });
 
   const COMENTs = [{ id: 1, name: "Task" }];
@@ -228,6 +230,7 @@ const AddTaskCreate = ({ handleSideToggle, isSidePanel }) => {
               value={form?.associated_user}
               onTextChange={(text) => {
                 changeTextData(text, "associated_user");
+                handleSearchUsers(text)
               }}
               onBlur={() => {
                 onBlurHandler("associated_user");
@@ -235,6 +238,13 @@ const AddTaskCreate = ({ handleSideToggle, isSidePanel }) => {
               icon={"search"}
             />
           </div>
+        {/* <br/>
+          <div style={{}}>
+            {filteredUsers.map((user) => (
+              <div key={user.id}>{user.name}</div>
+            ))}
+          </div> */}
+     
         </div>
         <div className={"formFlex"}>
           <div className={"formGroup"}>
