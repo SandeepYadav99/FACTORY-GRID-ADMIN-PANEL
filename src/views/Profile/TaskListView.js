@@ -2,6 +2,7 @@ import React from 'react';
 import Checkbox from '@material-ui/core/Checkbox';
 import EmailIcon from '@material-ui/icons/Email';
 import styles from './Styles.module.css'; 
+import { AccessTime, Watch } from '@material-ui/icons';
 
 const TaskListItem = ({ task, handleDetailPage }) => {
   const getPriorityColor = (priority) => {
@@ -26,7 +27,7 @@ const TaskListItem = ({ task, handleDetailPage }) => {
 
       <div className={styles.taskFlex}>
         <div className={styles.timeFlex}>
-          <EmailIcon className={styles.contactIcons} />
+          <AccessTime className={styles.contactIcons} fontSize='small'/>
           <span className={styles.info}>{task?.dueDateText}</span>
         </div>
         <div className={styles.priority} style={{ backgroundColor: getPriorityColor(task?.priority) }}>{task?.priority}</div>
