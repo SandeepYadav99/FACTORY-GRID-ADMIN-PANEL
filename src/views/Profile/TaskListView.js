@@ -10,7 +10,7 @@ const TaskListItem = ({ task, handleDetailPage }) => {
         <Checkbox color="primary" />
         {task?.title}
       </div>
-      <div className={styles.dummy}>{task?.designation}</div>
+      <div className={styles.dummy}>{task?.description}</div>
 
       <div className={styles.taskFlex}>
         <div className={styles.timeFlex}>
@@ -20,6 +20,7 @@ const TaskListItem = ({ task, handleDetailPage }) => {
         <div className={styles.priority}>{task?.priority}</div>
         <div className={styles.section}>{task?.type}</div>
       </div>
+      <div className={styles.gaps} />
     </div>
   );
 };

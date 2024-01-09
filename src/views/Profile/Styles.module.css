@@ -156,14 +156,16 @@
 }
 .check{
     margin-top: 15px;
+    font-size: 16px;
+    color: #000000;
 }
 
 .dummy{
     font-size: 0.8rem;
-    margin-top: 5px;
+
     margin-left: 12px;
     color: #5f5151;
-    margin-bottom: 25px;
+   
 }
 
 .priority{
@@ -193,4 +195,8 @@
 }
 .detailView{
     cursor: pointer;
+    margin-top: 10px;
 }
+.gaps {
+    padding: 10px;
+  }
