@@ -1,7 +1,6 @@
 import {
   Button,
   CircularProgress,
-
   MenuItem,
   TextField,
   Tooltip,
@@ -18,7 +17,7 @@ import { Autocomplete } from "@material-ui/lab";
 import { Search } from "@material-ui/icons";
 import CustomSelectField from "../../../FormFields/SelectField/SelectField.component";
 
-const AddTaskCreate = ({ handleSideToggle, isSidePanel }) => {
+const AddTaskCreate = ({ handleSideToggle, isSidePanel , setTaskCreated}) => {
   const {
     form,
     errorData,
@@ -30,8 +29,8 @@ const AddTaskCreate = ({ handleSideToggle, isSidePanel }) => {
     handleSearchUsers,
     filteredUsers,
     filteredTask,
-    filteredAssignedTo
-  } = useAddTaskCreate({ handleSideToggle, isSidePanel });
+    filteredAssignedTo,
+  } = useAddTaskCreate({ handleSideToggle, isSidePanel , setTaskCreated});
 
   const COMENTs = [{ id: 1, name: "Task" }];
 
@@ -59,21 +58,21 @@ const AddTaskCreate = ({ handleSideToggle, isSidePanel }) => {
       <div>
         <div className={"formFlex"}>
           <div className={"formGroup"}>
-        
             <Autocomplete
               id="tags-outlined"
-              onChange={(e,value) => {
+              onChange={(e, value) => {
                 changeTextData(value, "assigned_to");
               }}
               value={form.assigned_to || []}
-              options={ filteredAssignedTo|| []} // listData ||
+              options={filteredAssignedTo || []} // listData ||
               getOptionLabel={(option) => option?.name || ""}
-             
               defaultValue={form?.assigned_to || []}
               filterOptions={(options, { inputValue }) => {
                 // Implement your custom search logic here
                 return options?.filter((option) =>
-                  option?.name?.toLowerCase()?.includes(inputValue?.toLowerCase() || "")
+                  option?.name
+                    ?.toLowerCase()
+                    ?.includes(inputValue?.toLowerCase() || "")
                 );
               }}
               renderInput={(params) => (
@@ -166,7 +165,7 @@ const AddTaskCreate = ({ handleSideToggle, isSidePanel }) => {
         </div>
         <div className={"formFlex"}>
           <div className={"formGroup"}>
-           <CustomSelectField
+            <CustomSelectField
               isError={errorData?.type}
               errorText={errorData?.type}
               label={"Task Type"}
@@ -175,13 +174,12 @@ const AddTaskCreate = ({ handleSideToggle, isSidePanel }) => {
                 changeTextData(value, "type");
               }}
             >
-              <MenuItem value="TASK1">TASK-1</MenuItem>
+              <MenuItem value="DISCUSS">Discuss</MenuItem>
             </CustomSelectField>
           </div>
         </div>
         <div className={"formFlex"}>
           <div className={"formGroup"}>
-       
             <CustomSelectField
               isError={errorData?.priority}
               errorText={errorData?.priority}
@@ -191,16 +189,17 @@ const AddTaskCreate = ({ handleSideToggle, isSidePanel }) => {
                 changeTextData(value, "priority");
               }}
             >
-              <MenuItem value="TASK1">TASK-1</MenuItem>
+              <MenuItem value="MEDIUM">Medium</MenuItem>
+              <MenuItem value="HIGH">High</MenuItem>
+              <MenuItem value="LOW">Low</MenuItem>
             </CustomSelectField>
           </div>
         </div>
         <div className={"formFlex"}>
           <div className={"formGroup"}>
-            
-               <Autocomplete
+            <Autocomplete
               id="tags-outlined"
-              onChange={(e,value) => {
+              onChange={(e, value) => {
                 changeTextData(value, "associated_user");
               }}
               value={form.associated_user || []}
@@ -210,7 +209,9 @@ const AddTaskCreate = ({ handleSideToggle, isSidePanel }) => {
               filterOptions={(options, { inputValue }) => {
                 // Implement your custom search logic here
                 return options?.filter((option) =>
-                  option?.first_name?.toLowerCase()?.includes(inputValue?.toLowerCase() || "")
+                  option?.first_name
+                    ?.toLowerCase()
+                    ?.includes(inputValue?.toLowerCase() || "")
                 );
               }}
               renderInput={(params) => (
@@ -228,14 +229,12 @@ const AddTaskCreate = ({ handleSideToggle, isSidePanel }) => {
               disableClearable
             />
           </div>
-       
         </div>
         <div className={"formFlex"}>
           <div className={"formGroup"}>
-          
             <Autocomplete
               id="tags-outlined"
-              onChange={(e,value) => {
+              onChange={(e, value) => {
                 changeTextData(value, "associated_task");
               }}
               value={form.associated_task || []}
@@ -245,7 +244,9 @@ const AddTaskCreate = ({ handleSideToggle, isSidePanel }) => {
               filterOptions={(options, { inputValue }) => {
                 // Implement your custom search logic here
                 return options?.filter((option) =>
-                  option?.title?.toLowerCase()?.includes(inputValue?.toLowerCase() || "")
+                  option?.title
+                    ?.toLowerCase()
+                    ?.includes(inputValue?.toLowerCase() || "")
                 );
               }}
               renderInput={(params) => (
@@ -264,7 +265,7 @@ const AddTaskCreate = ({ handleSideToggle, isSidePanel }) => {
             />
           </div>
         </div>
-     
+
         <div className={"headerFlex"}>
           {/* <h4 className={"infoTitle"}>
             {/* <div className={"heading"}>Completed?</div> */}
@@ -282,7 +283,7 @@ const AddTaskCreate = ({ handleSideToggle, isSidePanel }) => {
             variant={"contained"}
             color={"primary"}
             type={"submit"}
-            onClick={handleSubmit}
+            onClick={()=>{handleSubmit(); setTaskCreated(true)}}
           >
             {isSubmitting ? (
               <CircularProgress color="success" size="20px" />
@@ -292,7 +293,6 @@ const AddTaskCreate = ({ handleSideToggle, isSidePanel }) => {
           </Button>
         </div>
       </div>
-    
     </div>
   );
 };

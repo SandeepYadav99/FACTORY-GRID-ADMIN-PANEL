@@ -64,3 +64,7 @@ export async function serviceSearchUser(params) {
 export async function serviceSearchAssignto(params) {
     return await postRequest('task/management/search/admin', params); // task/management/search/task
 }
+
+export async function serviceTaskMnagment(params) {
+    return await postRequest('task/management', params); // task/management/search/task
+}

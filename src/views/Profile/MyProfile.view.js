@@ -17,6 +17,7 @@ import useMyProfileHook from "./MyProfileHook";
 import WaitingComponent from "../../components/Waiting.component";
 import SidePanelComponent from "../../components/SidePanel/SidePanel.component";
 import AddTaskCreate from "./Create/AddTaskCreate";
+import TaskListItem from "./TaskListView";
 
 const Profile = () => {
   const [open, setOpen] = useState(false);
@@ -27,7 +28,10 @@ const Profile = () => {
     isSidePanel,
     handleSideToggle,
     profileId,
-    handleDetailPage
+    handleDetailPage,
+    taskLists,
+    taskCreated,
+    setTaskCreated
   } = useMyProfileHook();
 
   const handleClose = () => {
@@ -178,26 +182,20 @@ const Profile = () => {
                     </FormControl>
                   </div>
                 </div>
-                <div onClick={handleDetailPage} className={styles.detailView}>
-
-                <div className={styles.check}>
-                  <Checkbox color={"primary"} />
-                  Animation Css Practise
-                </div>
-                <div className={styles.dummy}>
-                  Lorem Ipsum is simply dummy text of the printing and
-                  typesetting industry text of the simply dummy
-                </div>
-
-                <div className={styles.taskFlex}>
-                  <div className={styles.timeFlex}>
-                    <EmailIcon className={styles.contactIcons} />
-                    <span className={styles.info}>20 July 2021 12:00 PM</span>
-                  </div>
-                  <div className={styles.priority}>HIGH</div>
-                  <div className={styles.section}>Finance</div>
-                </div>
-                </div>
+                {/* Detail View  */}
+                {taskCreated ? (
+                  <WaitingComponent />
+                ) : (
+                  <>
+                    {taskLists?.map((task) => (
+                      <TaskListItem
+                        key={task.id}
+                        task={task}
+                        handleDetailPage={handleDetailPage}
+                      />
+                    ))}
+                  </>
+                )}
               </div>
             </div>
           </div>
@@ -214,6 +212,9 @@ const Profile = () => {
               handleSideToggle={handleSideToggle}
               isSidePanel={isSidePanel}
               // empId={profileId}
+   
+    setTaskCreated={setTaskCreated}
+
             />
           </SidePanelComponent>
         </div>

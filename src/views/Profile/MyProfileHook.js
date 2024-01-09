@@ -1,6 +1,9 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
-import { serviceProfileDetail } from "../../services/ProviderUser.service";
+import {
+  serviceProfileDetail,
+  serviceTaskMnagment,
+} from "../../services/ProviderUser.service";
 import historyUtils from "../../libs/history.utils";
 import RouteName from "../../routes/Route.name";
 
@@ -8,10 +11,12 @@ const useMyProfileHook = () => {
   const [profileDetails, setProfileDetails] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [isSidePanel, setSidePanel] = useState(false);
-  const [profileId, setProfileId]=useState(null)
+  const [profileId, setProfileId] = useState(null);
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const id = queryParams.get("id");
+  const [taskLists, setTaskList] = useState(null);
+  const [taskCreated, setTaskCreated] = useState(false);
 
   const userData = localStorage.getItem("user");
   const userObject = JSON.parse(userData);
@@ -29,24 +34,40 @@ const useMyProfileHook = () => {
       });
   }, [id]);
 
+  console.log(taskCreated, "Created ");
+  useEffect(() => {
+
+    serviceTaskMnagment({
+      index: 1,
+      row: null,
+      order: null,
+      query: "",
+      query_data: null,
+    })
+      .then((res) => {
+        if (!res?.error) {
+          setTaskList(res?.data);
+        }
+      })
+      .finally(() => {
+        setTaskCreated(false);
+      });
+  }, [taskCreated]);
+
   const handleEdit = useCallback((profile) => {
     historyUtils.push(`${RouteName.USER_PROFILE}?id=${profile?.id}`);
   });
-  
+
   const handleSideToggle = useCallback(
     (data) => {
       setSidePanel((e) => !e);
-   
     },
-    [ setSidePanel] // , profileId, id,  userObject?.user?.id
+    [setSidePanel] // , profileId, id,  userObject?.user?.id
   );
 
-  const handleDetailPage = useCallback(
-    (data) => {
-      historyUtils.push(`${RouteName.TASK_DETAIL}`);
-    },
-    [  ]
-  );
+  const handleDetailPage = useCallback((data) => {
+    historyUtils.push(`${RouteName.TASK_DETAIL}?id=${data?.id}`);
+  }, []);
   return {
     profileDetails,
     handleEdit,
@@ -54,7 +75,10 @@ const useMyProfileHook = () => {
     isSidePanel,
     handleSideToggle,
     profileId,
-    handleDetailPage
+    handleDetailPage,
+    taskLists,
+    taskCreated,
+    setTaskCreated,
   };
 };
 

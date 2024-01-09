@@ -9,10 +9,11 @@ import React, { useCallback, useEffect, useState } from "react";
 import ArrowBackIosIcon from "@material-ui/icons/ArrowBackIos";
 import historyUtils from "../../../libs/history.utils";
 import styles from "./Style.module.css";
-import { useParams } from "react-router-dom/cjs/react-router-dom.min";
-import { Add } from "@material-ui/icons";
+import { useLocation } from "react-router-dom";
+import { Add, Check, Edit } from "@material-ui/icons";
 import NotesDilog from "./components/NotesDilog/NotesDilog";
-
+import { serviceTaskManagementDetail } from "../../../services/ProviderUser.service";
+import SnackbarUtils from "../../../libs/SnackbarUtils";
 
 const useStyles = makeStyles((theme) => ({
   boldTitle: {
@@ -29,40 +30,24 @@ const useStyles = makeStyles((theme) => ({
 }));
 const TaskDetailView = ({}) => {
   const [isAcceptPopUp, setIsAcceptPopUp] = useState(false);
-  const { id } = useParams();
+  const [isLoading, setIsLoading] = useState(false);
+  const [details, setDetails] = useState(null);
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const id = queryParams.get("id");
   const classes = useStyles();
-
+  console.log(details, "FE");
   useEffect(() => {
-    //  setIsLoading(true);
-    // serviceEmployeeBGVDetail({ id: id }).then((res) => {
-    //   if (!res.error) {
-    //     const data = res?.data;
-    //     setDetails({
-    //       ...details,
-    //       is_education_verification_status:
-    //         data?.is_education_verification_status,
-    //       is_first_employment_verification_status:
-    //         data?.is_first_employment_verification_status,
-    //       is_secound_employment_verification_status:
-    //         data?.is_secound_employment_verification_status,
-    //       is_criminal_verification_status:
-    //         data?.is_criminal_verification_status,
-    //       bgv_status: data?.bgv_status,
-    //       bgv_result: data?.bgv_result,
-    //       payment_status: data?.payment_status,
-    //       paymentCompleteText: data?.paymentCompleteText,
-    //       billing_to: data?.billing_to,
-    //       cost: data?.cost,
-    //       choose_action: data?.choose_action,
-    //       remark: data?.remark,
-    //       emp_code: data?.employeeObj?.emp_code,
-    //       action_remark: data?.action_remark,
-    //     });
-    //   } else {
-    //     SnackbarUtils.error(res.message);
-    //   }
-    //   // setIsLoading(false);
-    // });
+    // setIsLoading(true);
+    serviceTaskManagementDetail({ id: id ? id : "" }).then((res) => {
+      if (!res.error) {
+        const data = res?.data;
+        setDetails(data);
+      } else {
+        SnackbarUtils.error(res.message);
+      }
+      //  setIsLoading(false);
+    });
   }, [id]);
 
   const toggleAcceptDialog = useCallback(
@@ -83,34 +68,59 @@ const TaskDetailView = ({}) => {
             </span>
           </ButtonBase>
         </div>
+
+        <div>
+          <ButtonBase>
+            <Edit fontSize={"small"} />
+            <span>Edit</span>
+          </ButtonBase>
+        </div>
       </div>
       {/* <CandidateInfor empId={details?.emp_code} /> */}
       <div className={styles.plainPaper}>
         <div className={styles.newContainer}>
-          <div className={styles.subTitle}>
-            Create view for Admin User Task Management
+          <div className={styles.headerTitle}>
+            <div className={styles.subTitle}>{details?.title}</div>
+            <div className={styles.complte}>
+              <ButtonBase>
+                <Check fontSize={"small"} />
+                <span>Mark as Complete</span>
+              </ButtonBase>
+            </div>
           </div>
-          <div className={styles.paragraph}>
-            Follow admin profile view to create a Task List and task creation
-            form
-          </div>
+          <div className={styles.paragraph}>{details?.description}</div>
           <div className={styles.gaps} />
           <div className={styles.pillContainer}>
-            <div className={styles.priority}>HIGH</div>
-            <div className={styles.section}>Finance</div>
+            <div className={styles.priority}>{details?.priority}</div>
+            <div className={styles.section}>{details?.type}</div>
           </div>
           <div className={styles.gaps} />
           <div className={styles.mainFlex}>
             {/* <div className={styles.gaps} /> */}
             <div className={styles.backgroundStatus}>
               <div className={styles.getfiledSpace}>
+                <div className={styles.titleFiledSpace}>Due Date:</div>{" "}
+                {/* Avator  */}
+                <div>
+                  <CardHeader subheader={details?.dueDateText} />
+                </div>
+              </div>
+              <div className={styles.getfiledSpace}>
                 <div className={styles.titleFiledSpace}>Assigned To:</div>{" "}
                 {/* Avator  */}
                 <div>
                   <CardHeader
-                    avatar={<Avatar>R</Avatar>}
-                    title={<span className={classes.boldTitle}>Pranav</span>}
-                    subheader="September 14, 2016"
+                    avatar={
+                      <Avatar
+                        alt="User Avatar"
+                        src={details?.assignedTo?.image}
+                      ></Avatar>
+                    }
+                    title={
+                      <a className={classes.boldTitle} href="#">
+                        {details?.assignedTo?.name}
+                      </a>
+                    }
                   />
                 </div>
               </div>
@@ -119,9 +129,12 @@ const TaskDetailView = ({}) => {
                 {/* Avator  */}
                 <div>
                   <CardHeader
-                    avatar={<Avatar>R</Avatar>}
-                    title={<span className={classes.boldTitle}>Pranav</span>}
-                    subheader="September 14, 2016"
+                    avatar={<Avatar src={details?.assignedBy?.image}></Avatar>}
+                    title={
+                      <a className={classes.boldTitle} href="#">
+                        {details?.assignedBy?.name}
+                      </a>
+                    }
                   />
                 </div>
               </div>
@@ -129,22 +142,7 @@ const TaskDetailView = ({}) => {
                 <div className={styles.titleFiledSpace}>Task Type:</div>{" "}
                 {/* Avator  */}
                 <div>
-                  <CardHeader
-                    avatar={<Avatar>R</Avatar>}
-                    title={<span className={classes.boldTitle}>Pranav</span>}
-                    subheader="September 14, 2016"
-                  />
-                </div>
-              </div>
-              <div className={styles.getfiledSpace}>
-                <div className={styles.titleFiledSpace}>Due Date:</div>{" "}
-                {/* Avator  */}
-                <div>
-                  <CardHeader
-                    avatar={<Avatar>R</Avatar>}
-                    title={<span className={classes.boldTitle}>Pranav</span>}
-                    subheader="September 14, 2016"
-                  />
+                  <CardHeader subheader={details?.type} />
                 </div>
               </div>
             </div>
@@ -164,7 +162,7 @@ const TaskDetailView = ({}) => {
                     subheader={
                       <p className={classes.paragraph}>
                         {" "}
-                        26/12/2023 | 16:15 PM
+                        {details?.assignedOnText}
                       </p>
                     }
                   />
@@ -176,10 +174,10 @@ const TaskDetailView = ({}) => {
                   <CardHeader
                     title={
                       <span className={classes.subTitle}>
-                        Task assigned on:
+                        Task completed on:
                       </span>
                     }
-                    subheader="" // September 14, 2016
+                    subheader={details?.completedOnText} // September 14, 2016
                   />
                 </div>
               </div>
@@ -192,7 +190,12 @@ const TaskDetailView = ({}) => {
                     title={
                       <span className={classes.subTitle}>Associated User</span>
                     }
-                    subheader={<b> Abhishek Singh</b>}
+                    subheader={
+                      <b>
+                        {" "}
+                        {`${details?.associatedUser?.first_name} ${details?.associatedUser?.last_name}`}
+                      </b>
+                    }
                   />
                 </div>
               </div>
@@ -222,7 +225,10 @@ const TaskDetailView = ({}) => {
           <div className={styles.notesContainer}>
             <div className={styles.title}>Notes</div>
             <div>
-              <ButtonBase className={styles.addTask} onClick={toggleAcceptDialog}>
+              <ButtonBase
+                className={styles.addTask}
+                onClick={toggleAcceptDialog}
+              >
                 <div>
                   <Add fontSize={"small"} />
                 </div>

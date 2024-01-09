@@ -13,7 +13,9 @@ import {
   serviceSearchTask,
   serviceSearchUser,
   serviceTaskManagementCreate,
+  serviceTaskMnagment,
 } from "../../../services/ProviderUser.service";
+
 
 const initialForm = {
   title: "",
@@ -29,7 +31,7 @@ const initialForm = {
   assigned_to: "",
 };
 
-const useAddTaskCreate = ({ handleSideToggle, isSidePanel, empId }) => {
+const useAddTaskCreate = ({ handleSideToggle, isSidePanel, empId , setTaskCreated}) => {
   const [errorData, setErrorData] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [form, setForm] = useState({ ...initialForm });
@@ -158,8 +160,8 @@ useEffect(() => {
 
       if (!res.error) {
         handleSideToggle();
-        // dispatch(actionFetchHubMaster(1));
-        // window.location.reload();
+      
+       
       } else {
         SnackbarUtils.error(res.message);
       }
@@ -175,6 +177,7 @@ useEffect(() => {
     handleSideToggle,
     geofenceCoordinates,
     dispatch,
+   
   ]);
 
   const handleSubmit = useCallback(async () => {
