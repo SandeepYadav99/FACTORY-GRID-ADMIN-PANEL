@@ -71,6 +71,7 @@ const useMyProfileHook = () => {
   const handleDetailPage = useCallback((data) => {
     historyUtils.push(`${RouteName.TASK_DETAIL}?id=${data?.id}`);
   }, []);
+  
   return {
     profileDetails,
     handleEdit,

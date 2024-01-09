@@ -20,7 +20,7 @@ import TaskDetailHeader from "./TaskDetailView/TaskDetailHeader";
 import PillContainer from "./TaskDetailView/PillContainer";
 import AssignedContainer from "./TaskDetailView/AssignedContainer";
 import TaskAssignedContainer from "./TaskDetailView/TaskAssignedContainer";
-import AddNoteContainer from './NotesDilog/AddNoteContainer'
+import AddNoteContainer from "./NotesDilog/AddNoteContainer";
 
 const useStyles = makeStyles((theme) => ({
   boldTitle: {
@@ -70,7 +70,7 @@ const TaskDetailView = ({}) => {
       id: id ? id : "",
     }).then((res) => {
       if (!res.error) {
-        // If the update is successful, fetch and update task details
+      
         serviceTaskManagementDetail({ id: id ? id : "" }).then((res) => {
           if (!res.error) {
             const data = res?.data;
@@ -118,7 +118,7 @@ const TaskDetailView = ({}) => {
         </div>
 
         <div>
-          <ButtonBase>
+          <ButtonBase onClick={()=>{}}>
             <Edit fontSize={"small"} />
             <span>Edit</span>
           </ButtonBase>
@@ -130,23 +130,33 @@ const TaskDetailView = ({}) => {
       ) : (
         <div className={styles.plainPaper}>
           <div className={styles.newContainer}>
-
-           <TaskDetailHeader details={details} markAsCompleted={markAsCompleted} styles={styles} completedHandler={completedHandler}/>
-         
-            <PillContainer details={details} styles={styles}/>
-
-
-           <AssignedContainer styles={styles} details={details} classes={classes}/>
-
-           
-
-            <TaskAssignedContainer classes={classes} styles={styles} details={details}/>
+            <TaskDetailHeader
+              details={details}
+              markAsCompleted={markAsCompleted}
+              styles={styles}
+              completedHandler={completedHandler}
+            />
+            <PillContainer details={details} styles={styles} />
+            <AssignedContainer
+              styles={styles}
+              details={details}
+              classes={classes}
+            />
+            <TaskAssignedContainer
+              classes={classes}
+              styles={styles}
+              details={details}
+            />
           </div>
         </div>
       )}
-  
-     
-      <AddNoteContainer details={details} styles={styles} classes={classes} toggleAcceptDialog={toggleAcceptDialog}isAcceptPopUp={isAcceptPopUp}/>
+      <AddNoteContainer
+        details={details}
+        styles={styles}
+        classes={classes}
+        toggleAcceptDialog={toggleAcceptDialog}
+        isAcceptPopUp={isAcceptPopUp}
+      />
     </div>
   );
 };

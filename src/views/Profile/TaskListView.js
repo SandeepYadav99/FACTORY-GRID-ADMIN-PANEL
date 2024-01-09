@@ -1,6 +1,5 @@
 import React from 'react';
 import Checkbox from '@material-ui/core/Checkbox';
-import EmailIcon from '@material-ui/icons/Email';
 import styles from './Styles.module.css'; 
 import { AccessTime, Watch } from '@material-ui/icons';
 
@@ -17,6 +16,7 @@ const TaskListItem = ({ task, handleDetailPage }) => {
         return '#FFFFFF'; 
     }
   };
+  
   return (
     <div onClick={() => handleDetailPage(task)} className={styles.detailView}>
       <div className={styles.check}>
