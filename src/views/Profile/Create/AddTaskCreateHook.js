@@ -1,20 +1,17 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useCallback, useEffect, useState } from "react";
 import SnackbarUtils from "../../../libs/SnackbarUtils";
-import {
-  serviceHubMasterCreate,
-  serviceHubMasterDetail,
-  serviceHubMasterUpdate,
-} from "../../../services/HubMaster.service";
-import constants from "../../../config/constants";
+
 import { useDispatch } from "react-redux";
 import {
   actionDeleteMasterDelete,
   actionFetchHubMaster,
 } from "../../../actions/HubMaster.action";
 import {
-  serviceProviderUserManager,
+ 
+  serviceSearchAssignto,
   serviceSearchTask,
+  serviceSearchUser,
   serviceTaskManagementCreate,
 } from "../../../services/ProviderUser.service";
 
@@ -39,60 +36,57 @@ const useAddTaskCreate = ({ handleSideToggle, isSidePanel, empId }) => {
   const [geofenceCoordinates, setGeofenceCoordinates] = useState([]);
   const [listData, setListData] = useState(null);
   const [isAcceptPopUp, setIsAcceptPopUp] = useState(false);
-  const [filteredUsers, setFilteredUsers] = useState([]);
+  const [filteredUsers, setFilteredUsers] = useState(null);
+  const [filteredTask,setFilteredTask] =useState(null);
+  const [filteredAssignedTo,setFilteredAssignedTo] =useState(null)
   const dispatch = useDispatch();
 
+ 
+
   useEffect(() => {
-    serviceProviderUserManager().then((res) => {
+    if(!isSidePanel) return;
+    serviceSearchAssignto({ query: form?.assigned_to ? form?.assigned_to?.name : form?.assigned_to })
+      .then((res) => {
+        if (!res.error) {
+          setFilteredAssignedTo(res.data);
+        }
+      });
+  
+  }, [form?.assigned_to, isSidePanel]);
+
+
+
+useEffect(() => {
+  if(!isSidePanel) return;
+  serviceSearchTask({ query: form?.associated_task ? form?.associated_task?.title : form?.associated_task })
+    .then((res) => {
       if (!res.error) {
-        setListData(res.data);
-       
+        setFilteredTask(res.data);
       }
     });
-  }, []);
 
-  // useEffect(() => {
-  //   serviceSearchTask({query:"Sandeep"}).then((res) => {
-  //     if (!res.error) {
-       
-  //       setFilteredUsers(res.data);
-  //     }
-  //   });
-  // }, []);
+}, [form?.associated_task, isSidePanel]);
+
+useEffect(() => {
+  if(!isSidePanel) return;
+  serviceSearchUser({ query: form?.associated_user ? form?.associated_user?.first_name : form?.associated_user })
+    .then((res) => {
+      if (!res.error) {
+        setFilteredUsers(res.data);
+      }else{
+        setFilteredUsers(null)
+      }
+    });
+
+}, [form?.associated_user, isSidePanel]);
 
   const handleSearchUsers = useCallback(
     (searchText) => {
-      if (!searchText) {
-        setFilteredUsers(listData);
-      } else {
-        const filtered = listData.filter((user) =>
-          user.name.toLowerCase().includes(searchText.toLowerCase())
-        );
-        setFilteredUsers(filtered);
-      }
+    
     },
-    [listData]
+    []
   );
-  // useEffect(() => {
-  //   if (empId) {
-  //     serviceHubMasterDetail({ id: empId }).then((res) => {
-  //       if (!res.error) {
-  //         const data = res.data;
-
-  //         setForm({
-  //           ...form,
-  //           name: data?.name,
-  //           industry_id: data?.industryData,
-  //           featured: data?.featured === "YES",
-  //           status: data?.status === constants.GENERAL_STATUS.ACTIVE,
-  //         });
-  //         setGeofenceCoordinates(data?.geofence);
-  //       } else {
-  //         setGeofenceCoordinates([]);
-  //       }
-  //     });
-  //   }
-  // }, [empId]);
+ 
 
   useEffect(() => {
     if (!isSidePanel) {
@@ -147,11 +141,11 @@ const useAddTaskCreate = ({ handleSideToggle, isSidePanel, empId }) => {
       category: industryID,
       type: form?.type,
       priority: form?.priority,
-      associated_user: "658e6ae02d64c05214b8e1c7",
-      associated_task: "658e6ae02d64c05214b8e1c7",
+      associated_user: form?.associated_user?._id,
+      associated_task: form?.associated_task?._id,
       comment: "Task",
       // is_completed: form?.status ? true : false,
-      assigned_to: form?.assigned_to,
+      assigned_to: form?.assigned_to?._id,
     };
 
     if (empId) {
@@ -217,6 +211,8 @@ const useAddTaskCreate = ({ handleSideToggle, isSidePanel, empId }) => {
         t[fieldName] = text;
       } else if (fieldName === "category") {
         t[fieldName] = text.id;
+      }else if (fieldName === 'associated_task') {
+        t[fieldName] = text;
       } else {
         t[fieldName] = text;
       }
@@ -272,7 +268,9 @@ const useAddTaskCreate = ({ handleSideToggle, isSidePanel, empId }) => {
     toggleAcceptDialog,
     isAcceptPopUp,
     suspendItem,
-    filteredUsers
+    filteredUsers,
+    filteredTask,
+    filteredAssignedTo
   };
 };
 

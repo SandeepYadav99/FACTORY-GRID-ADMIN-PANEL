@@ -29,9 +29,12 @@ const AddTaskCreate = ({ handleSideToggle, isSidePanel }) => {
     listData,
     handleSearchUsers,
     filteredUsers,
+    filteredTask,
+    filteredAssignedTo
   } = useAddTaskCreate({ handleSideToggle, isSidePanel });
 
   const COMENTs = [{ id: 1, name: "Task" }];
+
   return (
     <div>
       <div className={styles.headerFlex}>
@@ -56,23 +59,37 @@ const AddTaskCreate = ({ handleSideToggle, isSidePanel }) => {
       <div>
         <div className={"formFlex"}>
           <div className={"formGroup"}>
-            <CustomSelectField
-              isError={errorData?.assigned_to}
-              errorText={errorData?.assigned_to}
-              label={"Assigned To"}
-              value={form?.assigned_to}
-              handleChange={(value) => {
+        
+            <Autocomplete
+              id="tags-outlined"
+              onChange={(e,value) => {
                 changeTextData(value, "assigned_to");
               }}
-            >
-              {listData?.map((item) => {
-                return (
-                  <MenuItem
-                    value={item?.id}
-                  >{`${item?.name}   (${item?.employee_id})`}</MenuItem>
+              value={form.assigned_to || []}
+              options={ filteredAssignedTo|| []} // listData ||
+              getOptionLabel={(option) => option?.name || ""}
+             
+              defaultValue={form?.assigned_to || []}
+              filterOptions={(options, { inputValue }) => {
+                // Implement your custom search logic here
+                return options?.filter((option) =>
+                  option?.name?.toLowerCase()?.includes(inputValue?.toLowerCase() || "")
                 );
-              })}
-            </CustomSelectField>
+              }}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  variant="outlined"
+                  label="Assigned To"
+                  error={errorData?.assigned_to}
+                  InputProps={{
+                    ...params.InputProps,
+                    endAdornment: <Search />,
+                  }}
+                />
+              )}
+              disableClearable
+            />
           </div>
         </div>
         <div className={"formFlex"}>
@@ -133,7 +150,7 @@ const AddTaskCreate = ({ handleSideToggle, isSidePanel }) => {
               }}
               value={form.category || []}
               options={COMENTs || []} // listData ||
-              getOptionLabel={(option) => option.name}
+              getOptionLabel={(option) => option.name || ""}
               defaultValue={form?.category || []}
               //  getOptionSelected={(option, value) => option.id === value.id}
               renderInput={(params) => (
@@ -180,19 +197,35 @@ const AddTaskCreate = ({ handleSideToggle, isSidePanel }) => {
         </div>
         <div className={"formFlex"}>
           <div className={"formGroup"}>
-            <CustomTextField
-              isError={errorData?.associated_user}
-              errorText={errorData?.associated_user}
-              label={"Associated User (Optional)"}
-              value={form?.associated_user}
-              onTextChange={(text) => {
-                changeTextData(text, "associated_user");
-                handleSearchUsers(text);
+            
+               <Autocomplete
+              id="tags-outlined"
+              onChange={(e,value) => {
+                changeTextData(value, "associated_user");
               }}
-              onBlur={() => {
-                onBlurHandler("associated_user");
+              value={form.associated_user || []}
+              options={filteredUsers || []} // listData ||
+              getOptionLabel={(option) => option?.first_name || ""}
+              defaultValue={form?.associated_user || []}
+              filterOptions={(options, { inputValue }) => {
+                // Implement your custom search logic here
+                return options?.filter((option) =>
+                  option?.first_name?.toLowerCase()?.includes(inputValue?.toLowerCase() || "")
+                );
               }}
-              icon={"search"}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  variant="outlined"
+                  label="Associated User (Optional)"
+                  error={errorData?.associated_user}
+                  InputProps={{
+                    ...params.InputProps,
+                    endAdornment: <Search />,
+                  }}
+                />
+              )}
+              disableClearable
             />
           </div>
        
@@ -202,17 +235,17 @@ const AddTaskCreate = ({ handleSideToggle, isSidePanel }) => {
           
             <Autocomplete
               id="tags-outlined"
-              onChange={(text) => {
-                changeTextData(text, "associated_task");
+              onChange={(e,value) => {
+                changeTextData(value, "associated_task");
               }}
               value={form.associated_task || []}
-              options={listData || []} // listData ||
-              getOptionLabel={(option) => option.name}
+              options={filteredTask || []} // listData ||
+              getOptionLabel={(option) => option?.title || ""}
               defaultValue={form?.associated_task || []}
               filterOptions={(options, { inputValue }) => {
                 // Implement your custom search logic here
-                return options.filter((option) =>
-                  option.name.toLowerCase().includes(inputValue.toLowerCase())
+                return options?.filter((option) =>
+                  option?.title?.toLowerCase()?.includes(inputValue?.toLowerCase() || "")
                 );
               }}
               renderInput={(params) => (

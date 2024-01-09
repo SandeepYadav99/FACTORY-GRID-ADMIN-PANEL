@@ -188,7 +188,7 @@ const useHubMasterCreateHook = ({ handleSideToggle, isSidePanel, empId }) => {
       if (fieldName === "name") {
         t[fieldName] = text;
       } else if (fieldName === "industry_id") {
-        
+        console.log(text, "Text")
         t[fieldName] = text?.filter((item, index, self) => {
           return  index === self.findIndex((i) => i.id === item.id && i._id === item._id)
           
