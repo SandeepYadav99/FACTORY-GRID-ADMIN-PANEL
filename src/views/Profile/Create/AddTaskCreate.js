@@ -17,7 +17,7 @@ import { Autocomplete } from "@material-ui/lab";
 import { Search } from "@material-ui/icons";
 import CustomSelectField from "../../../FormFields/SelectField/SelectField.component";
 
-const AddTaskCreate = ({ handleSideToggle, isSidePanel , setTaskCreated}) => {
+const AddTaskCreate = ({ handleSideToggle, isSidePanel , handleCreatedTask}) => {
   const {
     form,
     errorData,
@@ -30,7 +30,7 @@ const AddTaskCreate = ({ handleSideToggle, isSidePanel , setTaskCreated}) => {
     filteredUsers,
     filteredTask,
     filteredAssignedTo,
-  } = useAddTaskCreate({ handleSideToggle, isSidePanel , setTaskCreated});
+  } = useAddTaskCreate({ handleSideToggle, isSidePanel , handleCreatedTask});
 
   const COMENTs = [{ id: 1, name: "Task" }];
 
@@ -283,7 +283,7 @@ const AddTaskCreate = ({ handleSideToggle, isSidePanel , setTaskCreated}) => {
             variant={"contained"}
             color={"primary"}
             type={"submit"}
-            onClick={()=>{handleSubmit(); setTaskCreated(true)}}
+            onClick={()=>{handleSubmit()}}
           >
             {isSubmitting ? (
               <CircularProgress color="success" size="20px" />

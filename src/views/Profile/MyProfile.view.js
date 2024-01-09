@@ -31,7 +31,8 @@ const Profile = () => {
     handleDetailPage,
     taskLists,
     taskCreated,
-    setTaskCreated
+    setTaskCreated,
+    handleCreatedTask,
   } = useMyProfileHook();
 
   const handleClose = () => {
@@ -182,20 +183,13 @@ const Profile = () => {
                     </FormControl>
                   </div>
                 </div>
-                {/* Detail View  */}
-                {taskCreated ? (
-                  <WaitingComponent />
-                ) : (
-                  <>
-                    {taskLists?.map((task) => (
-                      <TaskListItem
-                        key={task.id}
-                        task={task}
-                        handleDetailPage={handleDetailPage}
-                      />
-                    ))}
-                  </>
-                )}
+                {taskLists?.map((task) => (
+                  <TaskListItem
+                    key={task.id}
+                    task={task}
+                    handleDetailPage={handleDetailPage}
+                  />
+                ))}
               </div>
             </div>
           </div>
@@ -212,9 +206,8 @@ const Profile = () => {
               handleSideToggle={handleSideToggle}
               isSidePanel={isSidePanel}
               // empId={profileId}
-   
-    setTaskCreated={setTaskCreated}
 
+              handleCreatedTask={handleCreatedTask}
             />
           </SidePanelComponent>
         </div>

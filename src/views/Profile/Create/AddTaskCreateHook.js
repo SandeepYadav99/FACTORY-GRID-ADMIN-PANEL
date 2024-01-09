@@ -31,7 +31,7 @@ const initialForm = {
   assigned_to: "",
 };
 
-const useAddTaskCreate = ({ handleSideToggle, isSidePanel, empId , setTaskCreated}) => {
+const useAddTaskCreate = ({ handleSideToggle, isSidePanel, empId , handleCreatedTask}) => {
   const [errorData, setErrorData] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [form, setForm] = useState({ ...initialForm });
@@ -160,7 +160,7 @@ useEffect(() => {
 
       if (!res.error) {
         handleSideToggle();
-      
+        handleCreatedTask()
        
       } else {
         SnackbarUtils.error(res.message);

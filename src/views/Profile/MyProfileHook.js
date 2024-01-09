@@ -50,10 +50,13 @@ const useMyProfileHook = () => {
         }
       })
       .finally(() => {
-        setTaskCreated(false);
+      
       });
   }, [taskCreated]);
 
+  const handleCreatedTask =()=>{
+    setTaskCreated(true)
+  }
   const handleEdit = useCallback((profile) => {
     historyUtils.push(`${RouteName.USER_PROFILE}?id=${profile?.id}`);
   });
@@ -79,6 +82,7 @@ const useMyProfileHook = () => {
     taskLists,
     taskCreated,
     setTaskCreated,
+    handleCreatedTask
   };
 };
 
