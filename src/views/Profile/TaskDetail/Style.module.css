@@ -184,8 +184,19 @@
 
 }
 .complte{
+ 
+}
+
+.complted{
   color: white !important;
   background-color: #02CC87 !important;
+  border: 10px;
+  padding: 2px 5px;
+}
+
+.markComplte{
+  border: 1px solid #02CC87 !important;
+  color: #02CC87 !important;
   border: 10px;
   padding: 2px 5px;
 }

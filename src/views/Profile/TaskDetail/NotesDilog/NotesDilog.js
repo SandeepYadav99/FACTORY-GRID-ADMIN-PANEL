@@ -5,7 +5,7 @@ import Slide from "@material-ui/core/Slide";
 import Dialog from "@material-ui/core/Dialog";
 import styles from "./Styles.module.css";
 import { makeStyles } from "@material-ui/styles";
-import CustomTextField from "../../../../../FormFields/TextField.component";
+import CustomTextField from "../../../../FormFields/TextField.component";
 
 const useStyles = makeStyles((theme) => ({
   flex: {
