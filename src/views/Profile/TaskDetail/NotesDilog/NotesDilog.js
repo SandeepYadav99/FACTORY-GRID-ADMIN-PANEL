@@ -7,6 +7,7 @@ import styles from "./Styles.module.css";
 import { makeStyles } from "@material-ui/styles";
 import CustomTextField from "../../../../FormFields/TextField.component";
 
+
 const useStyles = makeStyles((theme) => ({
   flex: {
     display: "flex",
@@ -37,9 +38,12 @@ const NotesDilog = ({
   empId,
   changeTextData,
   onBlurHandler,
+  form,
+  handleSubmit
 }) => {
   const classes = useStyles();
 
+ 
   return (
     <div>
       <Dialog
@@ -71,13 +75,13 @@ const NotesDilog = ({
                 // isError={errorData?.description}
                 // errorText={errorData?.description}
                 label={"Note (Max 500 Characters )"}
-                value={""}
+                value={form?.descriptions}
                 onTextChange={(text) => {
-                  changeTextData(text, "description");
+                  changeTextData(text, "descriptions");
                 }}
-                onBlur={() => {
-                  onBlurHandler("description");
-                }}
+                // onBlur={() => {
+                //   onBlurHandler("description");
+                // }}
                 multiline
                 rows={4}
               />
@@ -90,7 +94,7 @@ const NotesDilog = ({
             variant={"contained"}
             color={"primary"}
             type={"submit"}
-            onClick={()=>{}} // handleSubmit
+            onClick={handleSubmit} // handleSubmit
           >
             {/* {isSubmitting ? (
               <CircularProgress color="success" size="20px" />
