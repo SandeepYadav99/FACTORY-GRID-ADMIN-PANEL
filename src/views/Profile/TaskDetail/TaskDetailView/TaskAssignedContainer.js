@@ -49,10 +49,10 @@ const TaskAssignedContainer = ({styles, details, classes}) => {
               </span>
             }
             subheader={
-              <b>
-                {" "}
+              <div className={classes.subHeadeer}>
+             
                 {`${details?.associatedUser?.first_name} ${details?.associatedUser?.last_name}`}
-              </b>
+              </div>
             }
           />
         </div>

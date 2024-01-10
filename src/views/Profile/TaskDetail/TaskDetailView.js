@@ -29,6 +29,13 @@ const useStyles = makeStyles((theme) => ({
   subTitle: {
     fontWeight: "normal",
     fontSize: "13px",
+   
+  },
+  subHeadeer:{
+    fontSize:"14px",
+    color:"#000000",
+    fontWeight:"600",
+    
   },
   paragraph: {
     fontSize: "13px",
@@ -44,6 +51,13 @@ const TaskDetailView = ({}) => {
   const id = queryParams.get("id");
   const classes = useStyles();
 
+  const toggleAcceptDialog = useCallback(
+    (obj) => {
+      setIsAcceptPopUp((e) => !e);
+    },
+    [isAcceptPopUp]
+  );
+
   useEffect(() => {
     setIsLoading(true);
     serviceTaskManagementDetail({ id: id ? id : "" }).then((res) => {
@@ -57,12 +71,6 @@ const TaskDetailView = ({}) => {
     });
   }, [id]);
 
-  const toggleAcceptDialog = useCallback(
-    (obj) => {
-      setIsAcceptPopUp((e) => !e);
-    },
-    [isAcceptPopUp]
-  );
 
   const markAsCompleted = () => {
     serviceTaskMnagmentUpdateStatus({
@@ -118,7 +126,7 @@ const TaskDetailView = ({}) => {
         </div>
 
         <div>
-          <ButtonBase onClick={()=>{}}>
+          <ButtonBase onClick={()=>{}} className={styles.editAction}>
             <Edit fontSize={"small"} />
             <span>Edit</span>
           </ButtonBase>
