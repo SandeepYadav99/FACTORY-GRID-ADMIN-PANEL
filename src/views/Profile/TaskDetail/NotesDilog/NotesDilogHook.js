@@ -18,7 +18,7 @@ const useNotesDilogHook = () => {
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const id = queryParams.get("id");
-  const [noteDetail, setNoteDetail] = useState(null);
+  const [noteDetails, setNoteDetail] = useState(null);
 
   const toggleAcceptDialog = useCallback(
     (obj) => {
@@ -121,7 +121,7 @@ const useNotesDilogHook = () => {
     isAcceptPopUp,
     changeTextData,
     handleSubmit,
-    noteDetail
+    noteDetails
   };
 };
 
