@@ -2,7 +2,12 @@ import { ButtonBase } from "@material-ui/core";
 import { Check } from "@material-ui/icons";
 import React from "react";
 
-const TaskDetailHeader = ({ details, completedHandler, markAsCompleted , styles}) => {
+const TaskDetailHeader = ({
+  details,
+  completedHandler,
+  markAsCompleted,
+  styles,
+}) => {
   return (
     <>
       <div className={styles.headerTitle}>
@@ -26,7 +31,7 @@ const TaskDetailHeader = ({ details, completedHandler, markAsCompleted , styles}
         </div>
       </div>
       <div className={styles.paragraph}>{details?.description}</div>
-           <div className={styles.gaps} />
+      <div className={styles.gaps} />
     </>
   );
 };

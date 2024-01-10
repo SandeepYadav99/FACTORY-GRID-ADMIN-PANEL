@@ -2,11 +2,14 @@ import React, { useCallback, useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import {
   serviceProfileDetail,
+  serviceTaskFilterByUser,
   serviceTaskMnagment,
+  serviceTaskMnagmentByUser,
 } from "../../services/ProviderUser.service";
 import historyUtils from "../../libs/history.utils";
 import RouteName from "../../routes/Route.name";
 import { serviceTaskMnagmentUpdateStatus } from "../../services/TaskManage.service";
+import SnackbarUtils from "../../libs/SnackbarUtils";
 
 const useMyProfileHook = () => {
   const [profileDetails, setProfileDetails] = useState(null);
@@ -34,13 +37,24 @@ const useMyProfileHook = () => {
       });
   }, [id]);
 
+  // const updateTaskManagement = () => {
+  //   serviceTaskMnagment({
+  //     index: 1,
+  //     row: null,
+  //     order: null,
+  //     query: "",
+  //     query_data: null,
+  //   })
+  //     .then((res) => {
+  //       if (!res?.error) {
+  //         setTaskList(res?.data);
+  //       }
+  //     })
+  //     .finally(() => {});
+  // };
   const updateTaskManagement = () => {
-    serviceTaskMnagment({
-      index: 1,
-      row: null,
-      order: null,
-      query: "",
-      query_data: null,
+    serviceTaskMnagmentByUser({
+      id: id ? id : userObject?.user?.id,
     })
       .then((res) => {
         if (!res?.error) {
@@ -93,6 +107,24 @@ const useMyProfileHook = () => {
     historyUtils.push(`${RouteName.TASK_DETAIL}?id=${data?.id}`);
   }, []);
 
+  const filterCompltedTask = (event) => {
+    const newValue = event.target.value;
+    const queryValue = newValue === "PENDING" ? false : true;
+    serviceTaskFilterByUser({
+      is_completed: queryValue,
+      user_id: id ? id : userObject?.user?.id,
+    })
+      .then((res) => {
+
+        if (!res?.error) {
+          updateTaskManagement();
+        }else{
+          SnackbarUtils.error(res.message)
+        }
+      })
+      .finally(() => {});
+  };
+
   return {
     profileDetails,
     handleEdit,
@@ -107,6 +139,7 @@ const useMyProfileHook = () => {
     handleCreatedTask,
     markAsCompleted,
     completedHandler,
+    filterCompltedTask,
   };
 };
 
