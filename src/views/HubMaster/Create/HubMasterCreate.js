@@ -1,32 +1,17 @@
-import React, { useState } from "react";
-
+import React from "react";
 import {
-  Box,
   Button,
   CircularProgress,
   IconButton,
-  MenuItem,
   TextField,
 } from "@material-ui/core";
-import {
-  ArrowRight,
-  Delete as DeleteIcon,
-  ExpandMore,
-} from "@material-ui/icons";
-
+import { Delete as DeleteIcon } from "@material-ui/icons";
 import styles from "./Style.module.css";
-
-import CustomRadioLabel from "../../../components/CustomRadioLabel/CustomRadioLabel.component";
 import Tooltip from "@material-ui/core/Tooltip";
 import InfoIcon from "@material-ui/icons/Info";
-
 import { makeStyles } from "@material-ui/styles";
-
-import File from "../../../components/FileComponent/FileComponent.component";
 import CustomTextField from "../../../FormFields/TextField.component";
-import { Autocomplete, TreeItem, TreeView } from "@material-ui/lab";
-import CustomSelectField from "../../../FormFields/SelectField/SelectField.component";
-import Cascader from "../../../components/FormFields/Cascader/Cascader";
+import { Autocomplete } from "@material-ui/lab";
 import useHubMasterCreateHook from "./HubMasterCreateHook";
 import Geofencing from "./component/Geofencing/Geofencing.component";
 import CustomSwitch from "../../../FormFields/CustomSwitch";
@@ -39,7 +24,6 @@ const useStyles = makeStyles((theme) => ({
   },
   deleteBtn: {
     color: "red",
-    // borderBottom: '1px solid red'
   },
 }));
 
@@ -47,20 +31,16 @@ const HubMasterCreate = ({ handleSideToggle, isSidePanel, empId }) => {
   const {
     form,
     errorData,
-    selectedValues,
     handleSubmit,
     onBlurHandler,
     changeTextData,
-    logos,
-    data,
-    handleDelete,
     listData,
-    geofence,
+    geofenceCoordinates,
     handleCoordinate,
     isSubmitting,
     toggleAcceptDialog,
     isAcceptPopUp,
-    suspendItem
+    suspendItem,
   } = useHubMasterCreateHook({ handleSideToggle, isSidePanel, empId });
   const classes = useStyles();
 
@@ -110,11 +90,12 @@ const HubMasterCreate = ({ handleSideToggle, isSidePanel, empId }) => {
               onChange={(e, value) => {
                 changeTextData(value, "industry_id");
               }}
+            
               value={form.industry_id || []}
-              // id="tags-standard"
               options={listData || []}
               getOptionLabel={(option) => option.name}
-              defaultValue={form?.industry_id || []}
+              defaultValue={form.industry_id || []}
+              //  getOptionSelected={(option, value) => option.id === value.id}
               renderInput={(params) => (
                 <TextField
                   {...params}
@@ -129,7 +110,11 @@ const HubMasterCreate = ({ handleSideToggle, isSidePanel, empId }) => {
         <div className={"formFlex"}>
           <div className="formGroup">
             <p>Draw the boundary for the Hub</p>
-            <Geofencing polygon={geofence} handleSave={handleCoordinate} />
+            <Geofencing
+              key={geofenceCoordinates.length > 0}
+              polygon={geofenceCoordinates} //     key={geofenceCoordinates.length}
+              handleSave={handleCoordinate}
+            />
           </div>
         </div>
         <div className={"headerFlex"}>
@@ -173,10 +158,13 @@ const HubMasterCreate = ({ handleSideToggle, isSidePanel, empId }) => {
           </Button>
         </div>
       </div>
-      <DeleteModal   isOpen={isAcceptPopUp}
-          handleToggle={toggleAcceptDialog}
-          empId={empId} 
-          suspendItem={suspendItem}/>
+
+      <DeleteModal
+        isOpen={isAcceptPopUp}
+        handleToggle={toggleAcceptDialog}
+        empId={empId}
+        suspendItem={suspendItem}
+      />
     </div>
   );
 };

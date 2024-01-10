@@ -26,6 +26,7 @@ import ProviderUser from './ProviderUser.reducer';
 import AuthReducer from './Auth.reducer';
 import HubMasterReducer from './HubMaster.reducer';
 
+
 const rootReducer = combineReducers({
     state: (state = {}) => state,
     form: formReducer,
@@ -50,7 +51,8 @@ const rootReducer = combineReducers({
     quotes: QuotesReducer,
     customers: Customers,
     // form: formReducer,
-    hubMaster:HubMasterReducer
+    hubMaster:HubMasterReducer,
+
 });
 
 export default rootReducer;

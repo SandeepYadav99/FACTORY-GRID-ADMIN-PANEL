@@ -1,7 +1,7 @@
 /* eslint-disable indent,linebreak-style */
 const TABLE_LIMIT = 50;
- const tempLevel = true; 
-//  const tempLevel =  !(!process.env.NODE_ENV || process.env.NODE_ENV === 'development');
+const tempLevel = true;
+ //const tempLevel =  !(!process.env.NODE_ENV || process.env.NODE_ENV === 'development');
 const tempDate = new Date();
 export default {
     TIME_ZONE: -(tempDate.getTimezoneOffset()/60),
@@ -12,7 +12,8 @@ export default {
     // DEFAULT_APP_URL: 'http://35.154.147.169:5055/api/',
     DEFAULT_PAGE_VALUE: TABLE_LIMIT,
     GOOGLE_LOGIN_KEY: '1027293586426-qg6lv2vsp57m05tn32m9stku2ljsd1uh.apps.googleusercontent.com',
-    GOOGLE_MAP_KEY: 'AIzaSyDUTIV7DaCvMUMg3qElE-sxdj4zR-dxhFM',
+    // GOOGLE_MAP_KEY: 'AIzaSyDUTIV7DaCvMUMg3qElE-sxdj4zR-dxhFM',
+    GOOGLE_MAP_KEY: 'AIzaSyCFLmHivV8XnwV9qV1vV8oIDI-EOYRCBhY',
     FACEBOOK_LOGIN_KEY: '213504989180156',
     DATATABLE_PROPERTIES: {
         title: 'Search',
@@ -28,8 +29,18 @@ export default {
         rowsPerPage: TABLE_LIMIT,
         rowsPerPageOptions: [],
     },
+    MAP_CENTER: { lat: 25.362945, lng: 82.975657 },
     PRODUCT_TAGS: ['VEG', 'VEGAN', 'GLUTEN FREE', 'DIARY'],
     CURRENCY: 'RS.',
+    GENERAL_STATUS: {
+        PENDING: "PENDING",
+        WAITING: "WAITING",
+        ACCEPTED: "ACCEPTED",
+        ACTIVE: "ACTIVE",
+        SUSPENDED: "SUSPENDED",
+        ALLOTTED: "ALLOTTED",
+        COMPLETED: "COMPLETED",
+      },
     STATUS: {
         'PENDING': 'warning',
         'WAITING': 'waiting',

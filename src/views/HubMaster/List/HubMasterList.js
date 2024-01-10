@@ -5,23 +5,20 @@ import { useSelector } from "react-redux";
 import SidePanelComponent from "../../../components/SidePanel/SidePanel.component";
 import styles from "./Style.module.css";
 import PageBox from "../../../components/PageBox/PageBox.component";
-
 import DataTables from "../../../Datatables/Datatable.table";
 import Constants from "../../../config/constants";
 import FilterComponent from "../../../components/Filter/Filter.component";
-
 import { Add, Create } from "@material-ui/icons";
-
 import useHubMasterHook from "./HubMasterHook";
 import HubMasterCreate from "../Create/HubMasterCreate";
 import StatusPill from "../../../FormFields/Status/StatusPill.component";
+import capitalizeFirstLetter from "../../../hooks/CapsFirstLetter";
 
 const HubMasterList = (props) => {
   const {
     handleSortOrderChange,
     handleRowSize,
     handlePageChange,
- 
     handleFilterDataChange,
     handleSearchValueChange,
     handleViewDetails,
@@ -29,9 +26,7 @@ const HubMasterList = (props) => {
     configFilter,
     handleSideToggle,
     isSidePanel,
-    editData,
     editId,
-   
     handleEditHubMaster,
   } = useHubMasterHook({});
 
@@ -64,29 +59,30 @@ const HubMasterList = (props) => {
     );
   }, []);
 
+  const renderAssociatedIndustriesName = useCallback((industryData) => (
+    <div>
+      {industryData?.map((industry, index) => (
+        <React.Fragment key={index}>
+          {industry.name}
+          {index < industryData.length - 1 && ", "}
+        </React.Fragment>
+      ))}
+    </div>
+  ),[])
+  
   const tableStructure = useMemo(() => {
     return [
       {
         key: "hub",
         label: "Hub Name",
         sortable: true,
-        render: (value, all) => <div>{all?.name} </div>, 
+        render: (value, all) => <div>{capitalizeFirstLetter(all?.name)} </div>, 
       },
       {
         key: "industries",
         label: "Associated Industries",
         sortable: true,
-        render: (temp, all) => (
-          <div>
-            {" "}
-            {all?.industryData?.map((industry, index) => (
-              <React.Fragment key={index}>
-                {industry.name}
-                {index < all.industryData.length - 1 && <br />}
-              </React.Fragment>
-            ))}
-          </div>
-        ),
+        render: (temp, all) => renderAssociatedIndustriesName(all?.industryData)
       },
       {
         key: "status",
@@ -122,15 +118,7 @@ const HubMasterList = (props) => {
         ),
       },
     ];
-  }, [
-    handleViewDetails,
-   
-    isCalling,
-    // renderContact,
-    renderFirstCell,
-    handleEditHubMaster,
-   
-  ]);
+  }, [renderAssociatedIndustriesName, isCalling, handleEditHubMaster]);
 
   const tableData = useMemo(() => {
     const datatableFunctions = {
@@ -155,6 +143,7 @@ const HubMasterList = (props) => {
     handleRowSize,
     present,
     currentPage,
+ 
   ]);
 
   return (
@@ -178,20 +167,23 @@ const HubMasterList = (props) => {
             handleSearchValueChange={handleSearchValueChange}
             handleFilterDataChange={handleFilterDataChange}
           />
+
           <div>
             <br />
+
             <div style={{ width: "100%" }}>
               <DataTables
                 {...tableData.datatable}
                 {...tableData.datatableFunctions}
               />
             </div>
+            
           </div>
         </div>
       </PageBox>
       <SidePanelComponent
         handleToggle={handleSideToggle}
-        title={editId ? "Update Hubs" : "Hubs"}
+        title={editId ? "Update Hubs" : "New Hubs"}
         open={isSidePanel}
         side={"right"}
       >

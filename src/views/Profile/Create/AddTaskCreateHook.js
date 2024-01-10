@@ -1,80 +1,101 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useCallback, useEffect,  useState } from "react";
-import { serviceBadgeIndustry } from "../../../services/Badge.service";
+import { useCallback, useEffect, useState } from "react";
 import SnackbarUtils from "../../../libs/SnackbarUtils";
-import {
-  serviceHubMasterCreate,
-  serviceHubMasterDetail,
-  serviceHubMasterUpdate,
-} from "../../../services/HubMaster.service";
-import constants from "../../../config/constants";
+
 import { useDispatch } from "react-redux";
 import {
   actionDeleteMasterDelete,
   actionFetchHubMaster,
 } from "../../../actions/HubMaster.action";
+import {
+ 
+  serviceSearchAssignto,
+  serviceSearchTask,
+  serviceSearchUser,
+  serviceTaskManagementCreate,
+  serviceTaskMnagment,
+} from "../../../services/ProviderUser.service";
+
 
 const initialForm = {
-  name: "",
-  geofence: "",
-  industry_id: [],
-  featured: false,
-  status: false,
+  title: "",
+  description: "",
+  due_date: "",
+  category: [],
+  type: "",
+  priority: "",
+  associated_user: "",
+  associated_task: "",
+  // comment:"",
+  // status: true,
+  assigned_to: "",
 };
 
-const useHubMasterCreateHook = ({ handleSideToggle, isSidePanel, empId }) => {
+const useAddTaskCreate = ({ handleSideToggle, isSidePanel, empId , handleCreatedTask}) => {
   const [errorData, setErrorData] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [form, setForm] = useState({ ...initialForm });
   const [geofenceCoordinates, setGeofenceCoordinates] = useState([]);
   const [listData, setListData] = useState(null);
   const [isAcceptPopUp, setIsAcceptPopUp] = useState(false);
+  const [filteredUsers, setFilteredUsers] = useState(null);
+  const [filteredTask,setFilteredTask] =useState(null);
+  const [filteredAssignedTo,setFilteredAssignedTo] =useState(null)
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    serviceBadgeIndustry({ id: empId }).then((res) => {
-      if (!res.error) {
-        setListData(res.data);
-      }
-    });
-  }, []);
-
+ 
 
   useEffect(() => {
-    if (empId) {
-      serviceHubMasterDetail({ id: empId }).then((res) => {
+    if(!isSidePanel) return;
+    serviceSearchAssignto({ query: form?.assigned_to ? form?.assigned_to?.name : form?.assigned_to })
+      .then((res) => {
         if (!res.error) {
-          const data = res.data;
-          
-          setForm({
-            ...form,
-            name: data?.name,
-            industry_id: data?.industryData,
-            featured: data?.featured === "YES",
-            status: data?.status === constants.GENERAL_STATUS.ACTIVE,
-          });
-          setGeofenceCoordinates(data?.geofence);
-        } else {
-          setGeofenceCoordinates([]);
+          setFilteredAssignedTo(res.data);
         }
       });
-    }
-  }, [empId, listData]);
-
-
   
+  }, [form?.assigned_to, isSidePanel]);
+
+
+
+useEffect(() => {
+  if(!isSidePanel) return;
+  serviceSearchTask({ query: form?.associated_task ? form?.associated_task?.title : form?.associated_task })
+    .then((res) => {
+      if (!res.error) {
+        setFilteredTask(res.data);
+      }
+    });
+
+}, [form?.associated_task, isSidePanel]);
+
+useEffect(() => {
+  if(!isSidePanel) return;
+  serviceSearchUser({ query: form?.associated_user ? form?.associated_user?.first_name : form?.associated_user })
+    .then((res) => {
+      if (!res.error) {
+        setFilteredUsers(res.data);
+      }else{
+        setFilteredUsers(null)
+      }
+    });
+
+}, [form?.associated_user, isSidePanel]);
+
+  const handleSearchUsers = useCallback(
+    (searchText) => {
+    
+    },
+    []
+  );
+ 
+
   useEffect(() => {
     if (!isSidePanel) {
       handleReset();
-    }  
-  }, [handleSideToggle,  isSidePanel]);
+    }
+  }, [handleSideToggle, isSidePanel]);
 
-  const handleCoordinate = useCallback(
-    (data) => {
-      setGeofenceCoordinates(data);
-    },
-    [geofenceCoordinates]
-  );
   const toggleAcceptDialog = useCallback(
     (obj) => {
       setIsAcceptPopUp((e) => !e);
@@ -82,17 +103,16 @@ const useHubMasterCreateHook = ({ handleSideToggle, isSidePanel, empId }) => {
     [isAcceptPopUp, empId]
   );
 
-  
   const checkFormValidation = useCallback(() => {
     const errors = { ...errorData };
-    let required = ["name", "industry_id"];
+    let required = ["assigned_to", "type", "title", "description", "priority", "due_date", "category"]; // "name", "description", "due_date", "task_type", "comment"
     required.forEach((val) => {
       if (
         !form?.[val] ||
         (Array.isArray(form?.[val]) && form?.[val].length === 0)
       ) {
         errors[val] = true;
-        SnackbarUtils.error("Please enter values")
+        SnackbarUtils.error("Please enter values");
       } else if (["code"].indexOf(val) < 0) {
         delete errors[val];
       }
@@ -112,16 +132,22 @@ const useHubMasterCreateHook = ({ handleSideToggle, isSidePanel, empId }) => {
     setIsSubmitting(true);
 
     const industryID =
-      Array.isArray(form.industry_id) && form.industry_id.length > 0
-        ? form.industry_id.map((item) => item.id || item._id)
+      Array.isArray(form.category) && form.category.length > 0
+        ? form.category.map((item) => item.id || item._id)
         : [];
 
     const updateData = {
-      name: form?.name,
-      industry_id: industryID,
-      geofence: geofenceCoordinates, // ? geofenceCoordinates : []
-      featured: form?.featured ? "YES" : "NO",
-      status: form?.status ? "ACTIVE" : "INACTIVE",
+      title: form?.title,
+      description: form?.description,
+      due_date: form?.due_date,
+      category: industryID,
+      type: form?.type,
+      priority: form?.priority,
+      associated_user: form?.associated_user?._id,
+      associated_task: form?.associated_task?._id,
+      comment: "Task",
+      // is_completed: form?.status ? true : false,
+      assigned_to: form?.assigned_to?._id,
     };
 
     if (empId) {
@@ -129,18 +155,17 @@ const useHubMasterCreateHook = ({ handleSideToggle, isSidePanel, empId }) => {
     }
 
     try {
-      const req = empId ? serviceHubMasterUpdate : serviceHubMasterCreate;
+      const req = serviceTaskManagementCreate; // empId ? serviceHubMasterUpdate :
       const res = await req(updateData);
 
       if (!res.error) {
         handleSideToggle();
-        dispatch(actionFetchHubMaster(1));
-        //window.location.reload();
+        handleCreatedTask()
+       
       } else {
         SnackbarUtils.error(res.message);
       }
     } catch (error) {
-     
     } finally {
       setIsSubmitting(false);
     }
@@ -152,6 +177,7 @@ const useHubMasterCreateHook = ({ handleSideToggle, isSidePanel, empId }) => {
     handleSideToggle,
     geofenceCoordinates,
     dispatch,
+   
   ]);
 
   const handleSubmit = useCallback(async () => {
@@ -182,17 +208,14 @@ const useHubMasterCreateHook = ({ handleSideToggle, isSidePanel, empId }) => {
 
   const changeTextData = useCallback(
     (text, fieldName) => {
-      console.log(text, "Text")
       let shouldRemoveError = true;
       const t = { ...form };
       if (fieldName === "name") {
         t[fieldName] = text;
-      } else if (fieldName === "industry_id") {
-        console.log(text, "Text")
-        t[fieldName] = text?.filter((item, index, self) => {
-          return  index === self.findIndex((i) => i.id === item.id && i._id === item._id)
-          
-        });
+      } else if (fieldName === "category") {
+        t[fieldName] = text.id;
+      }else if (fieldName === 'associated_task') {
+        t[fieldName] = text;
       } else {
         t[fieldName] = text;
       }
@@ -202,6 +225,13 @@ const useHubMasterCreateHook = ({ handleSideToggle, isSidePanel, empId }) => {
     [removeError, form, setForm, listData]
   );
 
+  // else if (fieldName === "industry_id") {
+
+  //   t[fieldName] = text?.filter((item, index, self) => {
+  //     return  index === self.findIndex((i) => i.id === item.id && i._id === item._id)
+
+  //   });
+  // }
   const onBlurHandler = useCallback(
     (type) => {
       if (form?.[type]) {
@@ -216,13 +246,13 @@ const useHubMasterCreateHook = ({ handleSideToggle, isSidePanel, empId }) => {
     dispatch(actionFetchHubMaster(1));
     handleSideToggle();
     setIsAcceptPopUp((e) => !e);
-  }, [empId, handleCoordinate, isAcceptPopUp, dispatch]);
+  }, [empId, isAcceptPopUp, dispatch]);
 
   const handleReset = useCallback(() => {
     setForm({ ...initialForm });
-    setGeofenceCoordinates([]);
+
     setErrorData({});
-  }, [form, setForm, geofenceCoordinates, setErrorData]);
+  }, [form, setForm, setErrorData]);
 
   return {
     form,
@@ -237,11 +267,14 @@ const useHubMasterCreateHook = ({ handleSideToggle, isSidePanel, empId }) => {
     empId,
     geofenceCoordinates,
     setGeofenceCoordinates,
-    handleCoordinate,
+    handleSearchUsers,
     toggleAcceptDialog,
     isAcceptPopUp,
     suspendItem,
+    filteredUsers,
+    filteredTask,
+    filteredAssignedTo
   };
 };
 
-export default useHubMasterCreateHook;
+export default useAddTaskCreate;

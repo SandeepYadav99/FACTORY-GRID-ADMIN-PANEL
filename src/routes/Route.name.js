@@ -29,5 +29,6 @@ export default {
     CUSTOMERS_MANUFACTURES:"/customers/manufacturer/",
 
     USER_PROFILE : "/users/edit/",
-    HUB_MASTERS : "/hub/master"
+    HUB_MASTERS : "/hub/master",
+    TASK_DETAIL:"/task/detail/"
 };

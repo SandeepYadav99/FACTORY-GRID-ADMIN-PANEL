@@ -2,12 +2,9 @@
 /* eslint-disable no-unused-vars */
 import { useDispatch, useSelector } from "react-redux";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-
 import {
-
   actionFetchBadge,
   actionSetPageBadgeRequests,
-
 } from "../../../actions/Badge.action";
 
 const useBadgeListHook = ({}) => {
@@ -38,36 +35,28 @@ const useBadgeListHook = ({}) => {
       )
     );
     isMountRef.current = true;
-
   }, []);
-  
-  useEffect(()=>{
 
-  },[setEditId]);
-  
+  useEffect(() => {}, [setEditId]);
+
   const handlePageChange = useCallback((type) => {
-   
-    dispatch(actionSetPageBadgeRequests(type)); // actionSetPageBadgeRequests
+    dispatch(actionSetPageBadgeRequests(type));
   }, []);
 
   const queryFilter = useCallback(
     (key, value) => {
-     
-      // dispatch(actionSetPageAdminUserRequests(1));
       dispatch(
         actionFetchBadge(1, sortingData, {
           query: key == "SEARCH_TEXT" ? value : query,
           query_data: key == "FILTER_DATA" ? value : queryData,
         })
       );
-      // dispatch(actionFetchAdminUser(1, sortingData))
     },
     [sortingData, query, queryData]
   );
 
   const handleFilterDataChange = useCallback(
     (value) => {
-      
       queryFilter("FILTER_DATA", value);
     },
     [queryFilter]
@@ -75,7 +64,6 @@ const useBadgeListHook = ({}) => {
 
   const handleSearchValueChange = useCallback(
     (value) => {
-      
       queryFilter("SEARCH_TEXT", value);
     },
     [queryFilter]
@@ -83,7 +71,6 @@ const useBadgeListHook = ({}) => {
 
   const handleSortOrderChange = useCallback(
     (row, order) => {
-     
       dispatch(actionSetPageBadgeRequests(1));
       dispatch(
         actionFetchBadge(
@@ -99,77 +86,25 @@ const useBadgeListHook = ({}) => {
     [query, queryData]
   );
 
-  const handleRowSize = (page) => {
-   
-  };
-
-  const handleDelete = useCallback(
-    (id) => {
-      // dispatch(actionDeletePolicyList(id));
-      // setSidePanel(false);
-      // setEditData(null);
+  // Edit
+  const handleEdit = useCallback(
+    (all) => {
+      setSidePanel((e) => !e);
+      setEditData(all);
+      setEditId(all?.id);
     },
-    [setEditData, setSidePanel]
+    [setSidePanel, setEditData, setEditId]
   );
-
-  const handleEdit = useCallback((all) => {
-   
-    setSidePanel((e) => !e);
-    setEditData(all);
-    setEditId(all?.id);
-  }, []);
-
-  const handleToggleSidePannel = useCallback(
+  // Create
+  const handleOpenSidePanel = useCallback(
     (data) => {
       setSidePanel((e) => !e);
-      // setEditData(data?.id);
-    },
-    [setSidePanel, setEditData]
-  );
-
-  
- 
-
-  const handleSideToggle = useCallback(
-    (data) => {
-      setSidePanel((e) => !e);
-      //  historyUtils.push("/badge");
-      // historyUtils.goBack();
-      setEditData(null)
-    },
-    [setEditData, setSidePanel]
-  );
-
-  
-  const handleSideOpenSide = useCallback(
-    (data) => {
-      setSidePanel((e) => !e);
-      //  historyUtils.push("/badge");
-      // historyUtils.goBack();
+      setEditData(null);
       setEditId("");
     },
-    [setEditData, setSidePanel]
+    [setEditId, setSidePanel]
   );
 
-  const handleCloseSideToggle = useCallback(
-    (data) => {
-      setSidePanel((e) => !e);
- 
-    },
-    [setEditData, setSidePanel]
-  );
-
-  const handleViewDetails = useCallback((data) => {
-    // historyUtils.push(RouteName.LOCATIONS_DETAILS + data.id); //+data.id
-  }, []);
-
-  const handleCreate = useCallback(() => {
-    // historyUtils.push(RouteName.LOCATIONS_CREATE);
-  }, []);
-
-  const handleFileView = useCallback((data) => {
-    // window.open(data?.document, "_blank");
-  }, []);
 
   const configFilter = useMemo(() => {
     return [
@@ -185,25 +120,16 @@ const useBadgeListHook = ({}) => {
 
   return {
     handlePageChange,
-
     handleFilterDataChange,
     handleSearchValueChange,
-    handleRowSize,
     handleSortOrderChange,
-    handleDelete,
     handleEdit,
-    handleSideToggle,
-    handleViewDetails,
     isCalling,
     editData,
     isSidePanel,
     configFilter,
-    handleCreate,
-    handleToggleSidePannel,
-    handleFileView,
     editId,
-    handleSideOpenSide,
-    handleCloseSideToggle
+    handleOpenSidePanel,
   };
 };
 

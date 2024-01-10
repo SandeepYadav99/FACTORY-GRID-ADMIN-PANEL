@@ -44,6 +44,7 @@ import {
   Settings,
 } from "@material-ui/icons";
 import RouteName from "./Route.name";
+import TaskDetailView from "../views/Profile/TaskDetail/TaskDetailView";
 
 
 
@@ -66,7 +67,15 @@ const dashboardRoutes = [
     is_sidebar: true,
     is_protect: true,
   },
-
+  {
+    path: RouteName.TASK_DETAIL,
+    sidebarName: "My Profile",
+    navbarName: "My Profile",
+    icon: Person,
+    component:TaskDetailView,
+    is_sidebar: false,
+    is_protect: true,
+  },
   // {
   //     path: "/categories",
   //     sidebarName: "Categories",

@@ -1,19 +1,17 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback,  useState } from "react";
 import styles from "./AccountQuality.module.css";
 import { ButtonBase } from "@material-ui/core";
 import AcountQueltyPopUp from "./AcountQueltyPopUp/AcountQueltyPopUp";
 import { serviceProviderAssignManager } from "../../../../../services/ProviderUser.service";
 
-import { useDispatch, useSelector } from "react-redux";
-
 import historyUtils from "../../../../../libs/history.utils";
-import { useParams } from "react-router-dom/cjs/react-router-dom.min";
-import useCustomerProfileHook from "../../../../../helper/CustomerProfileHook";
-import { serviceGetCustomersProfile } from "../../../../../services/CustomersRequest.service";
-import { actionUserProfile } from "../../../../../actions/Support.action";
+import { useParams } from "react-router-dom";
+
 const AccountQuality = ({ userProfileAccountQuality }) => {
   const [open, setOpen] = useState(false);
-
+  const [accountProfile, setAccountProfile] = useState({
+    ...userProfileAccountQuality,
+  });
   const { id } = useParams();
 
   const _handleClose = useCallback(() => {
@@ -21,25 +19,26 @@ const AccountQuality = ({ userProfileAccountQuality }) => {
   }, [setOpen]);
 
   const handleSubmit = useCallback(
-    (data) => {
-      console.log(data?.user_id, "Data");
-      serviceProviderAssignManager({
+    async (data) => {
+      await serviceProviderAssignManager({
         manager_id: data?.user_id,
         user_id: id,
       }).then((res) => {
         if (!res?.error) {
           setOpen(false);
-          window.location.reload();
+
+          if (res?.data) {
+            setAccountProfile(res?.data);
+          }
         }
       });
-      //  dispatch(actionManageAccountQuelity(user_manager_detail.manager_id, data.user_id));
     },
     [setOpen, id]
   );
 
   const profileHandler = useCallback(() => {
-    historyUtils.push(`/profile/?id=${userProfileAccountQuality?.id}`);
-  }, [userProfileAccountQuality?.id]);
+    historyUtils.push(`/profile/?id=${accountProfile?.id}`);
+  }, [accountProfile?.id]);
 
   return (
     <div className={styles.plain}>
@@ -55,16 +54,16 @@ const AccountQuality = ({ userProfileAccountQuality }) => {
       <div className={styles.blockFlex}>
         <div className={styles.bottomProfile}>
           <img
-            src={userProfileAccountQuality?.image || ""}
+            src={accountProfile?.image || ""}
             className={styles.profileImg}
             alt=""
           />
           <div className={styles.info}>
             <div className={styles.profileName}>
-              {userProfileAccountQuality?.name || "N/A"}
+              {accountProfile?.name || "N/A"}
             </div>
             <div className={styles.designation}>
-              {userProfileAccountQuality?.designation || "N/A"}
+              {accountProfile?.designation || "N/A"}
             </div>
           </div>
         </div>
@@ -77,10 +76,8 @@ const AccountQuality = ({ userProfileAccountQuality }) => {
       <br />
       <div>
         <div className={styles.key}>Contact Information</div>
-        <div className={styles.val}>
-          {userProfileAccountQuality?.contact || "N/A"}
-        </div>
-        <div className={styles.val}>{userProfileAccountQuality?.email}</div>
+        <div className={styles.val}>{accountProfile?.contact || "N/A"}</div>
+        <div className={styles.val}>{accountProfile?.email}</div>
       </div>
       <div className={styles.caseFlex}>
         <AcountQueltyPopUp

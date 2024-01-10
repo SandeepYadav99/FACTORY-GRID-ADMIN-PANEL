@@ -107,16 +107,7 @@ const useCustomerListHook = ({}) => {
     [query, queryData]
   );
 
-//   _handleSortOrderChange(row, order) {
-//     console.log(`handleSortOrderChange key:${row} order: ${order}`);
-//     // this.props.actionSetPage(1);
-//     this.props.actionFetchData(1,
-//         {row, order}, {
-//             query: this.props.query,
-//             query_data: this.props.query_data,
-//         }, row);
-//     // this.props.fetchUsers(1, row, order, { query: this.props.query, query_data: this.props.query_data });
-// }
+
 
   const handleRowSize = (page) => {
     console.log(page);
@@ -124,9 +115,7 @@ const useCustomerListHook = ({}) => {
 
   const handleDelete = useCallback(
     (id) => {
-      // dispatch(actionDeletePolicyList(id));
-      // setSidePanel(false);
-      // setEditData(null);
+     
     },
     [setEditData, setSidePanel]
   );
@@ -149,24 +138,6 @@ const useCustomerListHook = ({}) => {
     [setSidePanel, setEditData]
   );
 
-  const handleSideToggle = useCallback(
-    (data) => {
-      // historyUtils.push(RouteName.LOCATIONS_UPDATE + data?.id);
-    },
-    [setEditData, setSidePanel]
-  );
-
-  const handleViewDetails = useCallback((data) => {
-    // historyUtils.push(RouteName.LOCATIONS_DETAILS + data.id); //+data.id
-  }, []);
-
-  const handleCreate = useCallback(() => {
-    // historyUtils.push(RouteName.LOCATIONS_CREATE);
-  }, []);
-
-  const handleFileView = useCallback((data) => {
-    // window.open(data?.document, "_blank");
-  }, []);
   
   const configFilter = useMemo(() => {
     return [
@@ -184,15 +155,14 @@ const useCustomerListHook = ({}) => {
     handleSortOrderChange,
     handleDelete,
     handleEdit,
-    handleSideToggle,
-    handleViewDetails,
+
     isCalling,
     editData,
     isSidePanel,
     configFilter,
-    handleCreate,
+   
     handleToggleSidePannel,
-    handleFileView,
+ 
   };
 };
 

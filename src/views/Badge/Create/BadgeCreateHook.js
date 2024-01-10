@@ -8,6 +8,8 @@ import {
   serviceBadgeUpdate,
 } from "../../../services/Badge.service";
 import SnackbarUtils from "../../../libs/SnackbarUtils";
+import { useDispatch } from "react-redux";
+import { actionFetchBadge } from "../../../actions/Badge.action";
 
 const initialForm = {
   name: "",
@@ -28,6 +30,7 @@ const useBadgeCreateHook = ({ handleToggleSidePannel, isSidePanel, empId }) => {
   const [logos, setLogos] = useState(null);
   const [selectedValues, setSelectedValues] = useState("");
   const [listData, setListData] = useState(null);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     serviceBadgeIndustry({ id: empId }).then((res) => {
@@ -101,7 +104,7 @@ const useBadgeCreateHook = ({ handleToggleSidePannel, isSidePanel, empId }) => {
       const res = await serviceFunction(formData);
       if (!res.error) {
         handleToggleSidePannel();
-        window.location.reload();
+        dispatch(actionFetchBadge());
       } else {
         SnackbarUtils.error(res.message);
       }

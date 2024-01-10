@@ -40,3 +40,31 @@ export async function serviceProviderIsExist(params) {
 export async function serviceProfileDetail(params) {
     return await postRequest('profile/details', params); 
 }
+
+export async function serviceTaskManagementCreate(params) {
+    return await postRequest('task/management/create', params); 
+}
+
+export async function serviceTaskManagementDetail(params) {
+    return await postRequest('task/management/details', params); 
+}
+
+export async function serviceTaskManagementUpdate(params) {
+    return await postRequest('task/management/update', params); // task/management/search/task
+}
+
+export async function serviceSearchTask(params) {
+    return await postRequest('task/management/search/task', params); // task/management/search/task
+}
+
+export async function serviceSearchUser(params) {
+    return await postRequest('task/management/search/user', params); // task/management/search/task
+}
+
+export async function serviceSearchAssignto(params) {
+    return await postRequest('task/management/search/admin', params); // task/management/search/task
+}
+
+export async function serviceTaskMnagment(params) {
+    return await postRequest('task/management', params); // task/management/search/task
+}

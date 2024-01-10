@@ -199,17 +199,20 @@
 }
 
 .head{
-    font-weight: 600;
+   
     font-size: 0.8rem;
-    display: flex;
+    /* display: flex; */
     margin-bottom: 3px;
-    justify-content: space-between;
+    /* justify-content: space-between; */
 }
-
+.subhead{
+    font-weight: 600;
+}
 .value{
     font-size: 0.8rem;
     margin-left: 10px;
     text-transform: capitalize;
+    margin-top: 10px;
 }
 
 .cert{
@@ -222,6 +225,8 @@
 .val{
     font-size: 0.8rem;
     margin-left: 10px;
+    font-family: 'Inter', sans-serif;
+    margin-top: 10px;
 }
 
 .designation{
@@ -242,6 +247,8 @@
 
 .conContainer{
     margin-bottom: 14px;
+    display: flex;
+    justify-content: space-between;
 }
 
 .attach{
