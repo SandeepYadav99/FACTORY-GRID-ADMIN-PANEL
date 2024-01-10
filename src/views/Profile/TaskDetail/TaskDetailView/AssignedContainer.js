@@ -1,7 +1,10 @@
 import { Avatar, CardHeader } from '@material-ui/core'
 import React, { memo } from 'react'
+import RouteName from '../../../../routes/Route.name'
+import history from '../../../../libs/history.utils'
 
 const AssignedContainer = ({details, styles, classes}) => {
+ 
   return (
     <div><div className={styles.mainFlex}>
     {/* <div className={styles.gaps} /> */}
@@ -25,7 +28,7 @@ const AssignedContainer = ({details, styles, classes}) => {
               ></Avatar>
             }
             title={
-              <a className={classes.boldTitle} href="#">
+              <a className={classes.boldTitle} href={`${"/profile/"}?id=${details?.assignedTo?.id}`}>
                 {details?.assignedTo?.name}
               </a>
             }
@@ -41,7 +44,7 @@ const AssignedContainer = ({details, styles, classes}) => {
               <Avatar src={details?.assignedBy?.image}></Avatar>
             }
             title={
-              <a className={classes.boldTitle} href="#">
+              <a className={classes.boldTitle} href={`${"/profile/"}?id=${details?.assignedBy?.id}`}>
                 {details?.assignedBy?.name}
               </a>
             }
@@ -52,7 +55,7 @@ const AssignedContainer = ({details, styles, classes}) => {
         <div className={styles.titleFiledSpace}>Task Type:</div>{" "}
         {/* Avator  */}
         <div>
-          <CardHeader subheader={details?.type} />
+          <CardHeader subheader={<div style={{fontSize:"13px", color:"#000000"}}>{details?.type}</div>} />
         </div>
       </div>
     </div>

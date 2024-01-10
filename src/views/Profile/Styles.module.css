@@ -216,3 +216,7 @@
 .gaps {
     padding: 10px;
   }
+  .notfound{
+    text-align: center;
+    font-size: 20px;
+  }

@@ -33,7 +33,9 @@ const Profile = () => {
     taskCreated,
     setTaskCreated,
     handleCreatedTask,
-    markAsCompleted, completedHandler
+    markAsCompleted,
+    completedHandler,
+    filterCompltedTask,
   } = useMyProfileHook();
 
   const handleClose = () => {
@@ -76,14 +78,12 @@ const Profile = () => {
                 </ButtonBase>
                 <div className={styles.profileContainer}>
                   <img src={profileDetails?.image} alt="" />
-                  {/*<div>NO PHOTO THEN SHOW INITIALS</div>*/}
-
+             
                   <div className={styles.name}>{profileDetails?.name}</div>
                   <div className={styles.position}>
                     Emp. ID : {profileDetails?.employee_id || "N/A"}
                   </div>
 
-                  {/* <div className={styles.designation}>Administrator</div> */}
                   <div className={styles.designation}>
                     {profileDetails?.role || "N/A"}
                   </div>
@@ -115,28 +115,28 @@ const Profile = () => {
                 <div>
                   <div className={styles.activityFlex}>
                     <Description className={styles.contactIcons} />
-                    {/* <span className={styles.activity}>Department</span> */}
+                 
                     <span className={styles.activity}>
                       {profileDetails?.department}
                     </span>
                   </div>
                   <div className={styles.activityFlex}>
                     <Details className={styles.contactIcons} />
-                    {/* <span className={styles.activity}>Designation</span> */}
+                
                     <span className={styles.activity}>
                       {profileDetails?.designation}
                     </span>
                   </div>
                   <div className={styles.activityFlex}>
                     <CalendarToday className={styles.contactIcons} />
-                    {/* <span className={styles.activity}>Date Of Joining</span> */}
+                
                     <span className={styles.activity}>
                       {profileDetails?.joiningDateText || "N/A"}
                     </span>
                   </div>
                   <div className={styles.activityFlex}>
                     <Assignment className={styles.contactIcons} />
-                    {/* <span className={styles.activity}>Manager</span> */}
+               
                     <span className={styles.activity}>Manager</span>
                   </div>
                 </div>
@@ -145,7 +145,7 @@ const Profile = () => {
                 <div>
                   <div className={styles.activityFlex}>
                     <EmailIcon className={styles.contactIcons} />
-                    {/* <span className={styles.activity}>12/02/2021 12:12:00</span> */}
+            
                     <span className={styles.activity}>
                       {profileDetails?.lastLoginText !== "Invalid date"
                         ? profileDetails?.lastLoginText
@@ -173,7 +173,7 @@ const Profile = () => {
                       <Select
                         disableUnderline
                         // value={''}
-                        // onChange={_handleChange}
+                        onChange={filterCompltedTask}
                         // IconComponent={ExpandMore}
                       >
                         <MenuItem value={"PENDING"}>Pending</MenuItem>
@@ -184,15 +184,19 @@ const Profile = () => {
                     </FormControl>
                   </div>
                 </div>
-                {taskLists?.map((task) => (
-                  <TaskListItem
-                    key={task.id}
-                    task={task}
-                    handleDetailPage={handleDetailPage}
-                    markAsCompleted={markAsCompleted}
-                    completedHandler={completedHandler}
-                  />
-                ))}
+                {taskLists && taskLists.length > 0 ? (
+                  taskLists.map((task) => (
+                    <TaskListItem
+                      key={task.id}
+                      task={task}
+                      handleDetailPage={handleDetailPage}
+                      markAsCompleted={markAsCompleted}
+                      completedHandler={completedHandler}
+                    />
+                  ))
+                ) : (
+                  <p className={styles.notfound}> Tasks is not available!</p>
+                )}
               </div>
             </div>
           </div>

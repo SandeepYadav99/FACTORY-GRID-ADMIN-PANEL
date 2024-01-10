@@ -66,5 +66,13 @@ export async function serviceSearchAssignto(params) {
 }
 
 export async function serviceTaskMnagment(params) {
-    return await postRequest('task/management', params); // task/management/search/task
+    return await postRequest('task/management', params); // task/management/by/user
+}
+
+export async function serviceTaskMnagmentByUser(params) {
+    return await postRequest('task/management/by/user', params); // task/management/filter/task
+}
+
+export async function serviceTaskFilterByUser(params) {
+    return await postRequest('task/management/filter/task', params); // task/management/filter/task
 }

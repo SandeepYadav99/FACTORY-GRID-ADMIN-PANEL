@@ -67,7 +67,7 @@ const TaskAssignedContainer = ({styles, details, classes}) => {
             <span className={classes.subTitle}>Associated Task</span>
           }
           subheader={
-            <a href="#" style={{ fontSize: "13px" }}>
+            <a href={`${"/profile/"}`} style={{ fontSize: "13px" }}>
               Task management view
             </a>
           }
