@@ -3,7 +3,7 @@ import Checkbox from '@material-ui/core/Checkbox';
 import styles from './Styles.module.css'; 
 import { AccessTime, Watch } from '@material-ui/icons';
 
-const TaskListItem = ({ task, handleDetailPage }) => {
+const TaskListItem = ({ task, handleDetailPage , markAsCompleted, completedHandler}) => {
   const getPriorityColor = (priority) => {
     switch (priority) {
       case 'HIGH':
@@ -17,15 +17,27 @@ const TaskListItem = ({ task, handleDetailPage }) => {
     }
   };
   
+  const handleCheckboxClick = async (e) => {
+    if (e.target.checked) {
+      await markAsCompleted(task);
+    } else {
+      await completedHandler(task);
+    }
+  };
+
+  
   return (
-    <div onClick={() => handleDetailPage(task)} className={styles.detailView}>
+    <div  >
       <div className={styles.check}>
-        <Checkbox color="primary" />
+        <Checkbox color="primary" checked={task?.is_completed ? true : false}  onClick={handleCheckboxClick}
+    />
         {task?.title}
       </div>
+      <div onClick={() => handleDetailPage(task)} className={styles.detailView}>
+
       <div className={styles.dummy}>{task?.description}</div>
 
-      <div className={styles.taskFlex}>
+      <div className={styles.taskFlex} >
         <div className={styles.timeFlex}>
           <AccessTime className={styles.contactIcons} fontSize='small'/>
           <span className={styles.info}>{task?.dueDateText}</span>
@@ -33,7 +45,8 @@ const TaskListItem = ({ task, handleDetailPage }) => {
         <div className={styles.priority} style={{ backgroundColor: getPriorityColor(task?.priority) }}>{task?.priority}</div>
         <div className={styles.section}>{task?.type}</div>
       </div>
-      <div className={styles.gaps} />
+    
+      </div>
     </div>
   );
 };

@@ -6,6 +6,7 @@ import {
 } from "../../services/ProviderUser.service";
 import historyUtils from "../../libs/history.utils";
 import RouteName from "../../routes/Route.name";
+import { serviceTaskMnagmentUpdateStatus } from "../../services/TaskManage.service";
 
 const useMyProfileHook = () => {
   const [profileDetails, setProfileDetails] = useState(null);
@@ -17,7 +18,6 @@ const useMyProfileHook = () => {
   const id = queryParams.get("id");
   const [taskLists, setTaskList] = useState(null);
   const [taskCreated, setTaskCreated] = useState(false);
-
   const userData = localStorage.getItem("user");
   const userObject = JSON.parse(userData);
 
@@ -34,9 +34,7 @@ const useMyProfileHook = () => {
       });
   }, [id]);
 
-  console.log(taskCreated, "Created ");
-  useEffect(() => {
-
+  const updateTaskManagement = () => {
     serviceTaskMnagment({
       index: 1,
       row: null,
@@ -49,14 +47,37 @@ const useMyProfileHook = () => {
           setTaskList(res?.data);
         }
       })
-      .finally(() => {
-      
-      });
+      .finally(() => {});
+  };
+  useEffect(() => {
+    updateTaskManagement();
   }, [taskCreated]);
 
-  const handleCreatedTask =()=>{
-    setTaskCreated(true)
-  }
+  const markAsCompleted = (data) => {
+    serviceTaskMnagmentUpdateStatus({
+      is_completed: true,
+      id: data?.id ? data?.id : "",
+    }).then((res) => {
+      if (!res.error) {
+        updateTaskManagement();
+      }
+    });
+  };
+
+  const completedHandler = (data) => {
+    serviceTaskMnagmentUpdateStatus({
+      is_completed: false,
+      id: data?.id ? data?.id : "",
+    }).then((res) => {
+      if (!res.error) {
+        updateTaskManagement();
+      }
+    });
+  };
+
+  const handleCreatedTask = () => {
+    setTaskCreated(true);
+  };
   const handleEdit = useCallback((profile) => {
     historyUtils.push(`${RouteName.USER_PROFILE}?id=${profile?.id}`);
   });
@@ -71,7 +92,7 @@ const useMyProfileHook = () => {
   const handleDetailPage = useCallback((data) => {
     historyUtils.push(`${RouteName.TASK_DETAIL}?id=${data?.id}`);
   }, []);
-  
+
   return {
     profileDetails,
     handleEdit,
@@ -83,7 +104,9 @@ const useMyProfileHook = () => {
     taskLists,
     taskCreated,
     setTaskCreated,
-    handleCreatedTask
+    handleCreatedTask,
+    markAsCompleted,
+    completedHandler,
   };
 };
 

@@ -22,7 +22,7 @@ const AddNoteContainer = ({details, styles, classes, toggleAcceptDialog,isAccept
           </ButtonBase>
         </div>
       </div>
-      {!details?.notes.length > 0 ? (
+      {!details?.notes> 0 ? (
         <div className={styles.mainFlex}>
           <div>
             <div style={{ marginLeft: "15px" }}>

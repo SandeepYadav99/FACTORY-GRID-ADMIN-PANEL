@@ -33,6 +33,7 @@ const Profile = () => {
     taskCreated,
     setTaskCreated,
     handleCreatedTask,
+    markAsCompleted, completedHandler
   } = useMyProfileHook();
 
   const handleClose = () => {
@@ -188,6 +189,8 @@ const Profile = () => {
                     key={task.id}
                     task={task}
                     handleDetailPage={handleDetailPage}
+                    markAsCompleted={markAsCompleted}
+                    completedHandler={completedHandler}
                   />
                 ))}
               </div>
