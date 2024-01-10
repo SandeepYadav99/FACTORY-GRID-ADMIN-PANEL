@@ -1,7 +1,7 @@
 import { Avatar, ButtonBase, Card, CardHeader } from "@material-ui/core";
 import { Add } from "@material-ui/icons";
-import React, { memo, useEffect, useState } from "react";
-import WaitingComponent from "../../../../components/Waiting.component";
+import React, { memo} from "react";
+
 import NotesDilog from "./NotesDilog";
 import useNotesDilogHook from "./NotesDilogHook";
 import NoteItem from "./NoteItems";
@@ -44,7 +44,7 @@ const AddNoteContainer = ({ details, styles, classes }) => {
             handleSubmit={handleSubmit}
           />
 
-          {noteDetails ? (
+          {noteDetails?.length > 0 ? (
             noteDetails.map((note, index) => (
               <NoteItem
                 key={index}
@@ -54,7 +54,7 @@ const AddNoteContainer = ({ details, styles, classes }) => {
               />
             ))
           ) : (
-            <WaitingComponent />
+            <div className={styles.notFound}>Notes not available!</div>
           )}
         </div>
       </div>

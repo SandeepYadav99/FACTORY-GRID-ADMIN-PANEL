@@ -20,7 +20,6 @@ const DashboardBarChart = ({ data }) => {
   return (
     <ResponsiveContainer  width="100%"  height={250}>
       <BarChart
-     
         data={transformedData}
         margin={{ top: 25, right: 0, left: 0, bottom: 0 }}
       >

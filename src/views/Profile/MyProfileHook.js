@@ -23,6 +23,7 @@ const useMyProfileHook = () => {
   const [taskCreated, setTaskCreated] = useState(false);
   const userData = localStorage.getItem("user");
   const userObject = JSON.parse(userData);
+  const [filterValue, setFilterValue] = useState("");// PENDING
 
   useEffect(() => {
     setIsLoading(true);
@@ -37,7 +38,7 @@ const useMyProfileHook = () => {
       });
   }, [id]);
 
-  // const updateTaskManagement = () => {
+  
   //   serviceTaskMnagment({
   //     index: 1,
   //     row: null,
@@ -67,27 +68,37 @@ const useMyProfileHook = () => {
     updateTaskManagement();
   }, [taskCreated]);
 
-  const markAsCompleted = (data) => {
+  const markAsCompleted = useCallback((data) => {
     serviceTaskMnagmentUpdateStatus({
       is_completed: true,
       id: data?.id ? data?.id : "",
     }).then((res) => {
       if (!res.error) {
-        updateTaskManagement();
+        setTaskList((tasks) => {
+          
+          return tasks.map((task) =>
+            task.id === data.id ? { ...task, is_completed: true } : task
+          );
+        });
       }
     });
-  };
+  },[])
 
-  const completedHandler = (data) => {
+  const completedHandler = useCallback((data) => {
     serviceTaskMnagmentUpdateStatus({
       is_completed: false,
       id: data?.id ? data?.id : "",
     }).then((res) => {
       if (!res.error) {
-        updateTaskManagement();
+        setTaskList((tasks) => {
+        
+          return tasks.map((task) =>
+            task.id === data.id ? { ...task, is_completed: false } : task
+          );
+        });
       }
     });
-  };
+  },[])
 
   const handleCreatedTask = () => {
     setTaskCreated(true);
@@ -107,8 +118,9 @@ const useMyProfileHook = () => {
     historyUtils.push(`${RouteName.TASK_DETAIL}?id=${data?.id}`);
   }, []);
 
-  const filterCompltedTask = (event) => {
+  const filterCompltedTask = useCallback((event) => {
     const newValue = event.target.value;
+    setFilterValue(newValue)
     const queryValue = newValue === "PENDING" ? false : true;
     serviceTaskFilterByUser({
       is_completed: queryValue,
@@ -124,7 +136,7 @@ const useMyProfileHook = () => {
         }
       })
       .finally(() => {});
-  };
+  },[filterValue])
 
   return {
     profileDetails,
@@ -141,6 +153,7 @@ const useMyProfileHook = () => {
     markAsCompleted,
     completedHandler,
     filterCompltedTask,
+    filterValue
   };
 };
 

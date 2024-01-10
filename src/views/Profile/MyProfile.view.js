@@ -30,7 +30,7 @@ const Profile = () => {
     profileId,
     handleDetailPage,
     taskLists,
-    taskCreated,
+    filterValue,
     setTaskCreated,
     handleCreatedTask,
     markAsCompleted,
@@ -172,7 +172,7 @@ const Profile = () => {
                     >
                       <Select
                         disableUnderline
-                        // value={''}
+                         value={filterValue}
                         onChange={filterCompltedTask}
                         // IconComponent={ExpandMore}
                       >

@@ -209,3 +209,9 @@
   padding: 3px 5px;
   border-radius: 5px;
 }
+
+.notFound{
+  text-align: center;
+  font-size: 18px;
+
+}
