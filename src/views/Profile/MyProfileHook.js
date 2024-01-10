@@ -117,7 +117,8 @@ const useMyProfileHook = () => {
       .then((res) => {
 
         if (!res?.error) {
-          updateTaskManagement();
+          // updateTaskManagement();
+          setTaskList(res?.data);
         }else{
           SnackbarUtils.error(res.message)
         }

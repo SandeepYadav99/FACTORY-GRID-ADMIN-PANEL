@@ -29,7 +29,7 @@ const DashboardBarChart = ({ data }) => {
         <YAxis tick={{ fontSize: 10 }}>
           <Label value="No. of Quotes"  angle={-90} position="center" />
         </YAxis>
-        {/* <Tooltip /> */}
+        <Tooltip />
         <Legend />
         <Bar dataKey="Date"  fill="#23BCDB" label={false} />
       </BarChart>
