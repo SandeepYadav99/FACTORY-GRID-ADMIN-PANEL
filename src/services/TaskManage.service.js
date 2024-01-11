@@ -12,3 +12,11 @@ export async function serviceTaskMnagmentNotesCreate(params) {
 export async function serviceTaskMnagmentNotesList(params) {
     return await postRequest('task/management/notes/by/task', params); ///task/management/notes/create
 }
+
+export async function serviceTaskMnagmentDetail(params) {
+    return await postRequest('task/management/details', params); ///task/management/notes/create
+}
+
+export async function serviceTaskMnagmentUpdate(params) {
+    return await postRequest('task/management/update', params); ///task/management/notes/create
+}

@@ -21,6 +21,10 @@ import PillContainer from "./TaskDetailView/PillContainer";
 import AssignedContainer from "./TaskDetailView/AssignedContainer";
 import TaskAssignedContainer from "./TaskDetailView/TaskAssignedContainer";
 import AddNoteContainer from "./NotesDilog/AddNoteContainer";
+import SidePanelComponent from "../../../components/SidePanel/SidePanel.component";
+import AddTaskCreate from "../Create/AddTaskCreate";
+import useAddTaskCreate from "../Create/AddTaskCreateHook";
+import AddTaskUpdate from "./Update/UpdateDetail";
 
 const useStyles = makeStyles((theme) => ({
   boldTitle: {
@@ -29,13 +33,11 @@ const useStyles = makeStyles((theme) => ({
   subTitle: {
     fontWeight: "normal",
     fontSize: "13px",
-   
   },
-  subHeadeer:{
-    fontSize:"14px",
-    color:"#000000",
-    fontWeight:"600",
-    
+  subHeadeer: {
+    fontSize: "14px",
+    color: "#000000",
+    fontWeight: "600",
   },
   paragraph: {
     fontSize: "13px",
@@ -50,6 +52,7 @@ const TaskDetailView = ({}) => {
   const queryParams = new URLSearchParams(location.search);
   const id = queryParams.get("id");
   const classes = useStyles();
+  const [isSidePanel, setSidePanel] = useState(false);
 
   const toggleAcceptDialog = useCallback(
     (obj) => {
@@ -69,16 +72,14 @@ const TaskDetailView = ({}) => {
       }
       setIsLoading(false);
     });
-  }, [id]);
+  }, [id, isSidePanel]);
 
-
-  const markAsCompleted = () => {
+  const updateStatus = (isCompleted) => {
     serviceTaskMnagmentUpdateStatus({
-      is_completed: true,
+      is_completed: isCompleted,
       id: id ? id : "",
     }).then((res) => {
       if (!res.error) {
-      
         serviceTaskManagementDetail({ id: id ? id : "" }).then((res) => {
           if (!res.error) {
             const data = res?.data;
@@ -91,27 +92,22 @@ const TaskDetailView = ({}) => {
         SnackbarUtils.error(res.message);
       }
     });
+  };
+
+  const markAsCompleted = () => {
+    updateStatus(true);
   };
 
   const completedHandler = () => {
-    serviceTaskMnagmentUpdateStatus({
-      is_completed: false,
-      id: id ? id : "",
-    }).then((res) => {
-      if (!res.error) {
-        serviceTaskManagementDetail({ id: id ? id : "" }).then((res) => {
-          if (!res.error) {
-            const data = res?.data;
-            setDetails(data);
-          } else {
-            SnackbarUtils.error(res.message);
-          }
-        });
-      } else {
-        SnackbarUtils.error(res.message);
-      }
-    });
+    updateStatus(false);
   };
+
+  const handleSideToggle = useCallback(
+    (data) => {
+      setSidePanel((e) => !e);
+    },
+    [setSidePanel] // , profileId, id,  userObject?.user?.id
+  );
 
   return (
     <div>
@@ -126,7 +122,7 @@ const TaskDetailView = ({}) => {
         </div>
 
         <div>
-          <ButtonBase onClick={()=>{}} className={styles.editAction}>
+          <ButtonBase onClick={handleSideToggle} className={styles.editAction}>
             <Edit fontSize={"small"} />
             <span>Edit</span>
           </ButtonBase>
@@ -165,6 +161,22 @@ const TaskDetailView = ({}) => {
         toggleAcceptDialog={toggleAcceptDialog}
         isAcceptPopUp={isAcceptPopUp}
       />
+
+      <SidePanelComponent
+        handleToggle={handleSideToggle}
+        title={"Create Update Task"} // profileId ? "Update Hubs" :
+        open={isSidePanel}
+        side={"right"}
+      >
+        <AddTaskUpdate
+          handleSideToggle={handleSideToggle}
+          isSidePanel={isSidePanel}
+           empId={id}
+           details={details}
+          // profileDetails={profileDetails}
+          // handleCreatedTask={handleCreatedTask}
+        />
+      </SidePanelComponent>
     </div>
   );
 };

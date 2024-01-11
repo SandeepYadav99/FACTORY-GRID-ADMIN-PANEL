@@ -4,7 +4,6 @@
 import React, { Component } from "react";
 import { Field, reduxForm } from "redux-form";
 import { connect } from "react-redux";
-
 import styles from "./Forgot.module.css";
 import { renderTextField } from "../../libs/redux-material.utils";
 import {
@@ -14,14 +13,11 @@ import {
 } from "@material-ui/core";
 import { Button, withStyles } from "@material-ui/core";
 import {
-
   serviceResetProfilePassword,
 } from "../../services/index.services";
 import DashboardSnackbar from "../../components/Snackbar.component";
-
 import Slide from "@material-ui/core/Slide";
 import EventEmitter from "../../libs/Events.utils";
-
 import SnackbarUtils from "../../libs/SnackbarUtils";
 import historyUtils from "../../libs/history.utils";
 

@@ -7,17 +7,25 @@ import {
 } from "@material-ui/core";
 import React from "react";
 
-import CustomTextField from "../../../FormFields/TextField.component";
+import CustomTextField from "../../../../FormFields/TextField.component";
 import styles from "./Style.module.css";
-import useAddTaskCreate from "./AddTaskCreateHook";
+
 import InfoIcon from "@material-ui/icons/Info";
-import CustomDatePicker from "../../../FormFields/DatePicker/CustomDatePicker";
+import CustomDatePicker from "../../../../FormFields/DatePicker/CustomDatePicker";
 import { Autocomplete } from "@material-ui/lab";
 
 import { Search } from "@material-ui/icons";
-import CustomSelectField from "../../../FormFields/SelectField/SelectField.component";
+import CustomSelectField from "../../../../FormFields/SelectField/SelectField.component";
+import useAddTaskUpdate from "./UpdateDetailHook";
 
-const AddTaskCreate = ({ handleSideToggle, isSidePanel , handleCreatedTask, profileDetails}) => {
+const AddTaskUpdate = ({
+  handleSideToggle,
+  isSidePanel,
+  handleCreatedTask,
+  profileDetails,
+  empId,
+  details,
+}) => {
   const {
     form,
     errorData,
@@ -30,10 +38,22 @@ const AddTaskCreate = ({ handleSideToggle, isSidePanel , handleCreatedTask, prof
     filteredUsers,
     filteredTask,
     filteredAssignedTo,
-  } = useAddTaskCreate({ handleSideToggle, isSidePanel , handleCreatedTask,});
+    fetchedAssignedTo,
+    fetchedTask,
+    fetchedUser
+  } = useAddTaskUpdate({
+    handleSideToggle,
+    isSidePanel,
+    handleCreatedTask,
+    empId,
+    details,
+  });
 
-  const COMENTs = [{ id: "t1", name: "Task1" }, { id: "t2", name: "Task2" }];
-  console.log("profileDetails.name:", profileDetails?.name);
+  const COMENTs = [
+    { id: "t1", name: "Task1" },
+    { id: "t2", name: "Task2" },
+  ];
+
   return (
     <div>
       <div className={styles.headerFlex}>
@@ -44,15 +64,15 @@ const AddTaskCreate = ({ handleSideToggle, isSidePanel , handleCreatedTask, prof
           </Tooltip>
         </h4>
         {/* {empId && (
-        <IconButton
-          variant={"contained"}
-          className={classes.iconBtnError}
-          onClick={toggleAcceptDialog}
-          type="button"
-        >
-          <DeleteIcon />
-        </IconButton>
-      )} */}
+          <IconButton
+            variant={"contained"}
+            className={classes.iconBtnError}
+            onClick={toggleAcceptDialog}
+            type="button"
+          >
+            <DeleteIcon />
+          </IconButton>
+        )} */}
       </div>
 
       <div>
@@ -63,10 +83,10 @@ const AddTaskCreate = ({ handleSideToggle, isSidePanel , handleCreatedTask, prof
               onChange={(e, value) => {
                 changeTextData(value, "assigned_to");
               }}
-              value={form.assigned_to || []}
-              options={ filteredAssignedTo || [] }
-              getOptionLabel={(option) => option?.name || ""}
-              defaultValue={form?.assigned_to || null}
+              value={form.assigned_to || fetchedAssignedTo || []}
+              options={filteredAssignedTo || []}
+              getOptionLabel={(option) => option?.name}
+              defaultValue={form?.assigned_to || []}
               filterOptions={(options, { inputValue }) => {
                 // Implement your custom search logic here
                 return options?.filter((option) =>
@@ -87,6 +107,7 @@ const AddTaskCreate = ({ handleSideToggle, isSidePanel , handleCreatedTask, prof
                   }}
                 />
               )}
+              
               disableClearable
             />
           </div>
@@ -202,7 +223,7 @@ const AddTaskCreate = ({ handleSideToggle, isSidePanel , handleCreatedTask, prof
               onChange={(e, value) => {
                 changeTextData(value, "associated_user");
               }}
-              value={form.associated_user || []}
+              value={form.associated_user || fetchedUser || []}
               options={filteredUsers || []} // listData ||
               getOptionLabel={(option) => option?.first_name || ""}
               defaultValue={form?.associated_user || []}
@@ -237,8 +258,8 @@ const AddTaskCreate = ({ handleSideToggle, isSidePanel , handleCreatedTask, prof
               onChange={(e, value) => {
                 changeTextData(value, "associated_task");
               }}
-              value={form.associated_task || []}
-              options={filteredTask || []} // listData ||
+              value={form.associated_task || fetchedTask || []}
+              options={filteredTask  || []} // listData ||
               getOptionLabel={(option) => option?.title || ""}
               defaultValue={form?.associated_task || []}
               filterOptions={(options, { inputValue }) => {
@@ -268,14 +289,14 @@ const AddTaskCreate = ({ handleSideToggle, isSidePanel , handleCreatedTask, prof
 
         <div className={"headerFlex"}>
           {/* <h4 className={"infoTitle"}>
-            {/* <div className={"heading"}>Completed?</div> */}
+              {/* <div className={"heading"}>Completed?</div> */}
           {/* <CustomSwitch
-              value={form?.status}
-              handleChange={() => {
-                changeTextData(!form?.status, "status");
-              }}
-              label={`Completed?`}
-            /> */}
+                value={form?.status}
+                handleChange={() => {
+                  changeTextData(!form?.status, "status");
+                }}
+                label={`Completed?`}
+              /> */}
         </div>
 
         <div style={{ float: "right" }}>
@@ -283,12 +304,14 @@ const AddTaskCreate = ({ handleSideToggle, isSidePanel , handleCreatedTask, prof
             variant={"contained"}
             color={"primary"}
             type={"submit"}
-            onClick={()=>{handleSubmit()}}
+            onClick={() => {
+              handleSubmit();
+            }}
           >
             {isSubmitting ? (
               <CircularProgress color="success" size="20px" />
             ) : (
-              "Create"
+              "Update"
             )}
           </Button>
         </div>
@@ -297,4 +320,4 @@ const AddTaskCreate = ({ handleSideToggle, isSidePanel , handleCreatedTask, prof
   );
 };
 
-export default AddTaskCreate;
+export default AddTaskUpdate;

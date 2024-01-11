@@ -3,7 +3,7 @@ import { useLocation } from "react-router-dom";
 import {
   serviceProfileDetail,
   serviceTaskFilterByUser,
-  serviceTaskMnagment,
+
   serviceTaskMnagmentByUser,
 } from "../../services/ProviderUser.service";
 import historyUtils from "../../libs/history.utils";
@@ -23,7 +23,7 @@ const useMyProfileHook = () => {
   const [taskCreated, setTaskCreated] = useState(false);
   const userData = localStorage.getItem("user");
   const userObject = JSON.parse(userData);
-  const [filterValue, setFilterValue] = useState("");// PENDING
+  const [filterValue, setFilterValue] = useState(""); // PENDING
 
   useEffect(() => {
     setIsLoading(true);
@@ -39,20 +39,6 @@ const useMyProfileHook = () => {
   }, [id]);
 
   
-  //   serviceTaskMnagment({
-  //     index: 1,
-  //     row: null,
-  //     order: null,
-  //     query: "",
-  //     query_data: null,
-  //   })
-  //     .then((res) => {
-  //       if (!res?.error) {
-  //         setTaskList(res?.data);
-  //       }
-  //     })
-  //     .finally(() => {});
-  // };
   const updateTaskManagement = () => {
     serviceTaskMnagmentByUser({
       id: id ? id : userObject?.user?.id,
@@ -68,37 +54,62 @@ const useMyProfileHook = () => {
     updateTaskManagement();
   }, [taskCreated]);
 
-  const markAsCompleted = useCallback((data) => {
-    serviceTaskMnagmentUpdateStatus({
-      is_completed: true,
-      id: data?.id ? data?.id : "",
-    }).then((res) => {
-      if (!res.error) {
-        setTaskList((tasks) => {
-          
-          return tasks.map((task) =>
-            task.id === data.id ? { ...task, is_completed: true } : task
-          );
-        });
-      }
-    });
-  },[])
+  const markAsCompleted = useCallback(
+    (data) => {
+      serviceTaskMnagmentUpdateStatus({
+        is_completed: true,
+        id: data?.id ? data?.id : "",
+      }).then((res) => {
+        if (!res.error) {
+          // setTaskList((tasks) => {
 
-  const completedHandler = useCallback((data) => {
-    serviceTaskMnagmentUpdateStatus({
-      is_completed: false,
-      id: data?.id ? data?.id : "",
-    }).then((res) => {
-      if (!res.error) {
-        setTaskList((tasks) => {
-        
-          return tasks.map((task) =>
-            task.id === data.id ? { ...task, is_completed: false } : task
-          );
-        });
-      }
-    });
-  },[])
+          //   return tasks.map((task) =>
+          //     task.id === data.id ? { ...task, is_completed: true } : task
+          //   );
+          // });
+          serviceTaskFilterByUser({
+            is_completed: false,
+            user_id: id ? id : userObject?.user?.id,
+          })
+            .then((res) => {
+              if (!res?.error) {
+                // updateTaskManagement();
+                setTaskList(res?.data);
+              } else {
+                SnackbarUtils.error(res.message);
+              }
+            })
+            .finally(() => {});
+        }
+      });
+    },
+    [taskCreated]
+  );
+
+  const completedHandler = useCallback(
+    (data) => {
+      serviceTaskMnagmentUpdateStatus({
+        is_completed: false,
+        id: data?.id ? data?.id : "",
+      }).then((res) => {
+        if (!res.error) {
+          serviceTaskFilterByUser({
+            is_completed: true,
+            user_id: id ? id : userObject?.user?.id,
+          })
+            .then((res) => {
+              if (!res?.error) {
+                setTaskList(res?.data);
+              } else {
+                SnackbarUtils.error(res.message);
+              }
+            })
+            .finally(() => {});
+        }
+      });
+    },
+    [taskCreated]
+  );
 
   const handleCreatedTask = () => {
     setTaskCreated(true);
@@ -118,25 +129,27 @@ const useMyProfileHook = () => {
     historyUtils.push(`${RouteName.TASK_DETAIL}?id=${data?.id}`);
   }, []);
 
-  const filterCompltedTask = useCallback((event) => {
-    const newValue = event.target.value;
-    setFilterValue(newValue)
-    const queryValue = newValue === "PENDING" ? false : true;
-    serviceTaskFilterByUser({
-      is_completed: queryValue,
-      user_id: id ? id : userObject?.user?.id,
-    })
-      .then((res) => {
-
-        if (!res?.error) {
-          // updateTaskManagement();
-          setTaskList(res?.data);
-        }else{
-          SnackbarUtils.error(res.message)
-        }
+  const filterCompltedTask = useCallback(
+    (event) => {
+      const newValue = event.target.value;
+      setFilterValue(newValue);
+      const queryValue = newValue === "PENDING" ? false : true;
+      serviceTaskFilterByUser({
+        is_completed: queryValue,
+        user_id: id ? id : userObject?.user?.id,
       })
-      .finally(() => {});
-  },[filterValue])
+        .then((res) => {
+          if (!res?.error) {
+            // updateTaskManagement();
+            setTaskList(res?.data);
+          } else {
+            SnackbarUtils.error(res.message);
+          }
+        })
+        .finally(() => {});
+    },
+    [filterValue]
+  );
 
   return {
     profileDetails,
@@ -153,7 +166,7 @@ const useMyProfileHook = () => {
     markAsCompleted,
     completedHandler,
     filterCompltedTask,
-    filterValue
+    filterValue,
   };
 };
 

@@ -78,7 +78,7 @@ const Profile = () => {
                 </ButtonBase>
                 <div className={styles.profileContainer}>
                   <img src={profileDetails?.image} alt="" />
-             
+
                   <div className={styles.name}>{profileDetails?.name}</div>
                   <div className={styles.position}>
                     Emp. ID : {profileDetails?.employee_id || "N/A"}
@@ -115,28 +115,28 @@ const Profile = () => {
                 <div>
                   <div className={styles.activityFlex}>
                     <Description className={styles.contactIcons} />
-                 
+
                     <span className={styles.activity}>
                       {profileDetails?.department}
                     </span>
                   </div>
                   <div className={styles.activityFlex}>
                     <Details className={styles.contactIcons} />
-                
+
                     <span className={styles.activity}>
                       {profileDetails?.designation}
                     </span>
                   </div>
                   <div className={styles.activityFlex}>
                     <CalendarToday className={styles.contactIcons} />
-                
+
                     <span className={styles.activity}>
                       {profileDetails?.joiningDateText || "N/A"}
                     </span>
                   </div>
                   <div className={styles.activityFlex}>
                     <Assignment className={styles.contactIcons} />
-               
+
                     <span className={styles.activity}>Manager</span>
                   </div>
                 </div>
@@ -145,7 +145,7 @@ const Profile = () => {
                 <div>
                   <div className={styles.activityFlex}>
                     <EmailIcon className={styles.contactIcons} />
-            
+
                     <span className={styles.activity}>
                       {profileDetails?.lastLoginText !== "Invalid date"
                         ? profileDetails?.lastLoginText
@@ -172,7 +172,7 @@ const Profile = () => {
                     >
                       <Select
                         disableUnderline
-                         value={filterValue}
+                        value={filterValue}
                         onChange={filterCompltedTask}
                         // IconComponent={ExpandMore}
                       >
@@ -213,7 +213,7 @@ const Profile = () => {
               handleSideToggle={handleSideToggle}
               isSidePanel={isSidePanel}
               // empId={profileId}
-
+              profileDetails={profileDetails}
               handleCreatedTask={handleCreatedTask}
             />
           </SidePanelComponent>

@@ -1,19 +1,23 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useCallback, useEffect, useState } from "react";
-import SnackbarUtils from "../../../libs/SnackbarUtils";
+import SnackbarUtils from "../../../../libs/SnackbarUtils";
 
 import { useDispatch } from "react-redux";
 import {
   actionDeleteMasterDelete,
   actionFetchHubMaster,
-} from "../../../actions/HubMaster.action";
+} from "../../../../actions/HubMaster.action";
 import {
   serviceSearchAssignto,
   serviceSearchTask,
   serviceSearchUser,
   serviceTaskManagementCreate,
+  serviceTaskManagementDetail,
+  serviceTaskManagementUpdate,
   serviceTaskMnagment,
-} from "../../../services/ProviderUser.service";
+} from "../../../../services/ProviderUser.service";
+import { serviceTaskMnagmentDetail } from "../../../../services/TaskManage.service";
+import { useLocation } from "react-router-dom";
 
 const initialForm = {
   title: "",
@@ -29,22 +33,46 @@ const initialForm = {
   assigned_to: "",
 };
 
-const useAddTaskCreate = ({
+const useAddTaskUpdate = ({
   handleSideToggle,
   isSidePanel,
   empId,
   handleCreatedTask,
   profileDetails,
+  details,
 }) => {
   const [errorData, setErrorData] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [form, setForm] = useState({ ...initialForm });
   const [listData, setListData] = useState(null);
   const [isAcceptPopUp, setIsAcceptPopUp] = useState(false);
+
   const [filteredUsers, setFilteredUsers] = useState(null);
   const [filteredTask, setFilteredTask] = useState(null);
   const [filteredAssignedTo, setFilteredAssignedTo] = useState(null);
+
+  const [fetchedAssignedTo, setFetchedAssignedTo] = useState(null);
+  const [fetchedTask, setFetchedTask] = useState(null);
+  const [fetchedUser, setFetchedUser] = useState(null);
   const dispatch = useDispatch();
+  console.log(fetchedTask, fetchedUser);
+  useEffect(() => {
+    // setIsLoading(true);
+    setForm({
+      ...form,
+      title: details?.title,
+      //  assigned_to: details?.assignedTo,
+      description: details?.description,
+      due_date: details?.due_date,
+      priority: details?.priority,
+      type: details?.type,
+      // associated_user: details?.associatedUser,
+      // associated_task: details?.associatedTask,
+    });
+    setFetchedAssignedTo(details?.assignedTo);
+    setFetchedUser(details?.associatedUser);
+    setFetchedTask(details?.associatedTask);
+  }, [details]);
 
   useEffect(() => {
     if (!isSidePanel) return;
@@ -104,7 +132,6 @@ const useAddTaskCreate = ({
   const checkFormValidation = useCallback(() => {
     const errors = { ...errorData };
     let required = [
-      "assigned_to",
       "type",
       "title",
       "description",
@@ -112,7 +139,9 @@ const useAddTaskCreate = ({
       "due_date",
       "category",
     ]; // "name", "description", "due_date", "task_type", "comment"
-
+    if (!fetchedAssignedTo) {
+      required.push("assigned_to");
+    }
     required.forEach((val) => {
       if (
         !form?.[val] ||
@@ -150,11 +179,11 @@ const useAddTaskCreate = ({
       category: industryID,
       type: form?.type,
       priority: form?.priority,
-      associated_user: form?.associated_user?._id,
-      associated_task: form?.associated_task?._id,
+      associated_user: form?.associated_user?.id || fetchedUser?.id,
+      associated_task: form?.associated_task?._id || fetchedTask?._id,
       comment: "Task",
       // is_completed: form?.status ? true : false,
-      assigned_to: form?.assigned_to?._id,
+      assigned_to: form?.assigned_to?._id || fetchedAssignedTo.id,
     };
 
     if (empId) {
@@ -162,7 +191,7 @@ const useAddTaskCreate = ({
     }
 
     try {
-      const req = serviceTaskManagementCreate; // empId ? serviceHubMasterUpdate :
+      const req = serviceTaskManagementUpdate; // empId ? serviceHubMasterUpdate :
       const res = await req(updateData);
 
       if (!res.error) {
@@ -223,13 +252,6 @@ const useAddTaskCreate = ({
     [removeError, form, setForm, listData]
   );
 
-  // else if (fieldName === "industry_id") {
-
-  //   t[fieldName] = text?.filter((item, index, self) => {
-  //     return  index === self.findIndex((i) => i.id === item.id && i._id === item._id)
-
-  //   });
-  // }
   const onBlurHandler = useCallback(
     (type) => {
       if (form?.[type]) {
@@ -240,8 +262,6 @@ const useAddTaskCreate = ({
   );
 
   const suspendItem = useCallback(async () => {
-    dispatch(actionDeleteMasterDelete(empId));
-    dispatch(actionFetchHubMaster(1));
     handleSideToggle();
     setIsAcceptPopUp((e) => !e);
   }, [empId, isAcceptPopUp, dispatch]);
@@ -271,7 +291,10 @@ const useAddTaskCreate = ({
     filteredUsers,
     filteredTask,
     filteredAssignedTo,
+    fetchedAssignedTo,
+    fetchedTask,
+    fetchedUser,
   };
 };
 
-export default useAddTaskCreate;
+export default useAddTaskUpdate;
