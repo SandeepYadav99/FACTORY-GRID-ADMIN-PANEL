@@ -27,6 +27,10 @@ const useNotesDilogHook = () => {
     [isAcceptPopUp]
   );
 
+  useEffect(()=>{
+    handleReset()
+  },[toggleAcceptDialog, isAcceptPopUp])
+  
   useEffect(() => {
     serviceTaskMnagmentNotesList({
       task_id: id ? id : "",
@@ -42,7 +46,7 @@ const useNotesDilogHook = () => {
         SnackbarUtils.error(res.message);
       }
     });
-  }, []);
+  }, [id, isAcceptPopUp]);
 
   const removeError = useCallback(
     (title) => {
@@ -96,7 +100,7 @@ const useNotesDilogHook = () => {
       const req = serviceTaskMnagmentNotesCreate; // empId ? serviceHubMasterUpdate :
       const res = await req(updateData);
       if (!res.error) {
-        setIsAcceptPopUp((e) => !e);
+        toggleAcceptDialog()
       } else {
         SnackbarUtils.error(res.message);
       }
@@ -104,16 +108,22 @@ const useNotesDilogHook = () => {
     } finally {
       setIsSubmitting(false);
     }
-  }, [form, isSubmitting, setIsSubmitting]);
+  }, [form, isSubmitting, setIsSubmitting, isAcceptPopUp]);
 
   const handleSubmit = useCallback(async () => {
     const errors = checkFormValidation();
-    if (Object.keys(errors).length > 0) {
+    if (Object.keys(errors)?.length > 0) {
       setErrorData(errors);
     } else {
       await submitToServer();
     }
   }, [checkFormValidation, setErrorData, form, submitToServer]);
+
+  const handleReset = useCallback(() => {
+    setForm({ ...initialForm });
+
+    setErrorData({});
+  }, [form, setForm, setErrorData]);
 
   return {
     form,

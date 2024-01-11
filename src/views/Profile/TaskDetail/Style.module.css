@@ -2,7 +2,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding-bottom: 30px;
+    padding-bottom: 10px;
   }
   
   .newLine {
@@ -210,8 +210,8 @@
 .editAction{
   background-color: #FFFFFF;
   color: #000000;
-  padding: 3px 5px;
-  border-radius: 5px;
+  padding: 5px 10px;
+  border-radius: 3px;
 }
 
 .notFound{

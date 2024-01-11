@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import { Avatar, Card, CardHeader } from "@material-ui/core";
 
 const NoteItem = ({ note, styles, classes }) => (
@@ -17,4 +17,4 @@ const NoteItem = ({ note, styles, classes }) => (
   </div>
 );
 
-export default NoteItem;
+export default memo(NoteItem);

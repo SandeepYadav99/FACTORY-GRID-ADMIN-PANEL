@@ -20,3 +20,7 @@ export async function serviceTaskMnagmentDetail(params) {
 export async function serviceTaskMnagmentUpdate(params) {
     return await postRequest('task/management/update', params); ///task/management/notes/create
 }
+
+export async function serviceSearchCategory(params) {
+    return await postRequest('task/category', params); // task/management/search/task
+}

@@ -1,19 +1,18 @@
 import {
   Button,
+  Chip,
   CircularProgress,
   MenuItem,
   TextField,
   Tooltip,
 } from "@material-ui/core";
 import React from "react";
-
 import CustomTextField from "../../../FormFields/TextField.component";
 import styles from "./Style.module.css";
 import useAddTaskCreate from "./AddTaskCreateHook";
 import InfoIcon from "@material-ui/icons/Info";
 import CustomDatePicker from "../../../FormFields/DatePicker/CustomDatePicker";
 import { Autocomplete } from "@material-ui/lab";
-
 import { Search } from "@material-ui/icons";
 import CustomSelectField from "../../../FormFields/SelectField/SelectField.component";
 
@@ -25,15 +24,14 @@ const AddTaskCreate = ({ handleSideToggle, isSidePanel , handleCreatedTask, prof
     onBlurHandler,
     changeTextData,
     isSubmitting,
-    listData,
-    handleSearchUsers,
+  
     filteredUsers,
     filteredTask,
     filteredAssignedTo,
-  } = useAddTaskCreate({ handleSideToggle, isSidePanel , handleCreatedTask,});
+    fetchedAssignedUser
+  } = useAddTaskCreate({ handleSideToggle, isSidePanel , handleCreatedTask,profileDetails});
 
-  const COMENTs = [{ id: "t1", name: "Task1" }, { id: "t2", name: "Task2" }];
-  console.log("profileDetails.name:", profileDetails?.name);
+
   return (
     <div>
       <div className={styles.headerFlex}>
@@ -58,15 +56,15 @@ const AddTaskCreate = ({ handleSideToggle, isSidePanel , handleCreatedTask, prof
       <div>
         <div className={"formFlex"}>
           <div className={"formGroup"}>
-            <Autocomplete
+          <Autocomplete
               id="tags-outlined"
               onChange={(e, value) => {
                 changeTextData(value, "assigned_to");
               }}
-              value={form.assigned_to || []}
-              options={ filteredAssignedTo || [] }
-              getOptionLabel={(option) => option?.name || ""}
-              defaultValue={form?.assigned_to || null}
+              value={form.assigned_to || fetchedAssignedUser ||  []}
+              options={filteredAssignedTo ||  []}
+              getOptionLabel={(option) => option?.name  }
+              defaultValue={form?.assigned_to || []}
               filterOptions={(options, { inputValue }) => {
                 // Implement your custom search logic here
                 return options?.filter((option) =>
@@ -87,6 +85,7 @@ const AddTaskCreate = ({ handleSideToggle, isSidePanel , handleCreatedTask, prof
                   }}
                 />
               )}
+              
               disableClearable
             />
           </div>
@@ -140,29 +139,43 @@ const AddTaskCreate = ({ handleSideToggle, isSidePanel , handleCreatedTask, prof
             />
           </div>
         </div>
-        <div className={"formFlex"}>
-          <div className={"formGroup"}>
-            <Autocomplete
-              id="tags-outlined"
-              onChange={(e, value) => {
-                changeTextData(value, "category");
-              }}
-              value={form.category || []}
-              options={COMENTs || []} // listData ||
-              getOptionLabel={(option) => option.name || ""}
-              defaultValue={form?.category || []}
-              //  getOptionSelected={(option, value) => option.id === value.id}
-              renderInput={(params) => (
-                <TextField
-                  {...params}
-                  variant="outlined"
-                  label="Task Category"
-                  error={errorData?.category}
-                />
-              )}
-            />
+       
+          <div className="formFlex">
+            <div className={"formGroup"}>
+              <Autocomplete
+                multiple
+                id="tags-outlined"
+                onChange={(e, value) => {
+                  changeTextData(value, "category");
+                }}
+                options={[]}
+                 value={form?.category}
+                freeSolo
+                selectOnFocus={false}
+                // noOptionsText={this._renderNoText}
+                renderTags={(value, getTagProps) =>
+                  value.map((option, index) => (
+                    <Chip
+                      variant="outlined"
+                      label={option}
+                       {...getTagProps({ index })}
+                    /> // disabled={option.length < 2}
+                  ))
+                }
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    variant="outlined"
+                    label="Task Category"
+                    error={errorData?.category}
+                  />
+                )}
+              />
+            </div>
           </div>
-        </div>
+          <label className={styles.enter}>
+            Please press enter to add a category if not found in the search results.
+          </label>
         <div className={"formFlex"}>
           <div className={"formGroup"}>
             <CustomSelectField
@@ -204,7 +217,7 @@ const AddTaskCreate = ({ handleSideToggle, isSidePanel , handleCreatedTask, prof
               }}
               value={form.associated_user || []}
               options={filteredUsers || []} // listData ||
-              getOptionLabel={(option) => option?.first_name || ""}
+              getOptionLabel={(option) => option?.first_name}
               defaultValue={form?.associated_user || []}
               filterOptions={(options, { inputValue }) => {
                 // Implement your custom search logic here
@@ -239,7 +252,7 @@ const AddTaskCreate = ({ handleSideToggle, isSidePanel , handleCreatedTask, prof
               }}
               value={form.associated_task || []}
               options={filteredTask || []} // listData ||
-              getOptionLabel={(option) => option?.title || ""}
+              getOptionLabel={(option) => option?.title}
               defaultValue={form?.associated_task || []}
               filterOptions={(options, { inputValue }) => {
                 // Implement your custom search logic here

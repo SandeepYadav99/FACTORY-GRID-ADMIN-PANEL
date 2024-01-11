@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import { Button, ButtonBase } from "@material-ui/core";
 import { Close } from "@material-ui/icons";
 import Slide from "@material-ui/core/Slide";
@@ -96,19 +96,11 @@ const NotesDilog = ({
             type={"submit"}
             onClick={handleSubmit} // handleSubmit
           >
-            {/* {isSubmitting ? (
-              <CircularProgress color="success" size="20px" />
-            ) : empId ? (
-              "UPDATE"
-            ) : (
-              "Submit"
-            )} */}
+        
               SAVE & SUBMIT
           </Button>
         </div>
-              {/* <Button onClick={suspendItem} color="primary">
-                SAVE & SUBMIT
-              </Button> */}
+             
             
           </div>
         </div>
@@ -117,4 +109,4 @@ const NotesDilog = ({
   );
 };
 
-export default NotesDilog;
+export default memo(NotesDilog);

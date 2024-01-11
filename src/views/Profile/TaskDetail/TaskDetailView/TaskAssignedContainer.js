@@ -15,12 +15,11 @@ const TaskAssignedContainer = ({styles, details, classes}) => {
                 Task assigned on:
               </span>
             }
-            subheader={
-              <p className={classes.paragraph}>
-                {" "}
-                {details?.assignedOnText}
-              </p>
-            }
+            subheader=
+            
+                {details?.createdAtText}
+             
+            
           />
         </div>
       </div>

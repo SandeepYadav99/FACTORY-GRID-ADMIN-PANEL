@@ -1,23 +1,13 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useCallback, useEffect, useState } from "react";
 import SnackbarUtils from "../../../../libs/SnackbarUtils";
-
-import { useDispatch } from "react-redux";
-import {
-  actionDeleteMasterDelete,
-  actionFetchHubMaster,
-} from "../../../../actions/HubMaster.action";
+import { useDispatch, useSelector } from "react-redux";
 import {
   serviceSearchAssignto,
   serviceSearchTask,
   serviceSearchUser,
-  serviceTaskManagementCreate,
-  serviceTaskManagementDetail,
   serviceTaskManagementUpdate,
-  serviceTaskMnagment,
 } from "../../../../services/ProviderUser.service";
-import { serviceTaskMnagmentDetail } from "../../../../services/TaskManage.service";
-import { useLocation } from "react-router-dom";
 
 const initialForm = {
   title: "",
@@ -38,36 +28,33 @@ const useAddTaskUpdate = ({
   isSidePanel,
   empId,
   handleCreatedTask,
-  profileDetails,
-  details,
+  
 }) => {
   const [errorData, setErrorData] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [form, setForm] = useState({ ...initialForm });
   const [listData, setListData] = useState(null);
   const [isAcceptPopUp, setIsAcceptPopUp] = useState(false);
-
   const [filteredUsers, setFilteredUsers] = useState(null);
   const [filteredTask, setFilteredTask] = useState(null);
   const [filteredAssignedTo, setFilteredAssignedTo] = useState(null);
-
   const [fetchedAssignedTo, setFetchedAssignedTo] = useState(null);
   const [fetchedTask, setFetchedTask] = useState(null);
   const [fetchedUser, setFetchedUser] = useState(null);
   const dispatch = useDispatch();
-  console.log(fetchedTask, fetchedUser);
+  const { present: details } = useSelector((state) => state.common);
+
   useEffect(() => {
     // setIsLoading(true);
     setForm({
       ...form,
       title: details?.title,
-      //  assigned_to: details?.assignedTo,
+      category:details?.category,
       description: details?.description,
       due_date: details?.due_date,
       priority: details?.priority,
       type: details?.type,
-      // associated_user: details?.associatedUser,
-      // associated_task: details?.associatedTask,
+     
     });
     setFetchedAssignedTo(details?.assignedTo);
     setFetchedUser(details?.associatedUser);
@@ -80,7 +67,7 @@ const useAddTaskUpdate = ({
       query: form?.assigned_to ? form?.assigned_to?.name : form?.assigned_to,
     }).then((res) => {
       if (!res.error) {
-        console.log("Filtered Assigned To Data:", res.data);
+      
         setFilteredAssignedTo(res.data);
       }
     });
@@ -114,7 +101,7 @@ const useAddTaskUpdate = ({
     });
   }, [form?.associated_user, isSidePanel]);
 
-  const handleSearchUsers = useCallback((searchText) => {}, []);
+ 
 
   useEffect(() => {
     if (!isSidePanel) {
@@ -138,7 +125,7 @@ const useAddTaskUpdate = ({
       "priority",
       "due_date",
       "category",
-    ]; // "name", "description", "due_date", "task_type", "comment"
+    ];
     if (!fetchedAssignedTo) {
       required.push("assigned_to");
     }
@@ -168,8 +155,8 @@ const useAddTaskUpdate = ({
     setIsSubmitting(true);
 
     const industryID =
-      Array.isArray(form.category) && form.category.length > 0
-        ? form.category.map((item) => item.id || item._id)
+      Array.isArray(form.category) && form?.category?.length > 0
+        ? form?.category?.map((item) => item) // item.id || item._id
         : [];
 
     const updateData = {
@@ -240,7 +227,7 @@ const useAddTaskUpdate = ({
       } else if (fieldName === "category") {
         t[fieldName] = text;
       } else if (fieldName === "associated_task") {
-        t[fieldName] = text?.id;
+        t[fieldName] = text;
       } else if (fieldName === "assigned_to") {
         t[fieldName] = text;
       } else {
@@ -283,8 +270,6 @@ const useAddTaskUpdate = ({
     errorData,
     handleReset,
     empId,
-
-    handleSearchUsers,
     toggleAcceptDialog,
     isAcceptPopUp,
     suspendItem,

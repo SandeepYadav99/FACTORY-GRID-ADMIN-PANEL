@@ -1,5 +1,6 @@
 import {
   Button,
+  Chip,
   CircularProgress,
   MenuItem,
   TextField,
@@ -83,7 +84,7 @@ const AddTaskUpdate = ({
               onChange={(e, value) => {
                 changeTextData(value, "assigned_to");
               }}
-              value={form.assigned_to || fetchedAssignedTo || []}
+              value={form?.assigned_to || fetchedAssignedTo || []}
               options={filteredAssignedTo || []}
               getOptionLabel={(option) => option?.name}
               defaultValue={form?.assigned_to || []}
@@ -161,29 +162,42 @@ const AddTaskUpdate = ({
             />
           </div>
         </div>
-        <div className={"formFlex"}>
-          <div className={"formGroup"}>
-            <Autocomplete
-              id="tags-outlined"
-              onChange={(e, value) => {
-                changeTextData(value, "category");
-              }}
-              value={form.category || []}
-              options={COMENTs || []} // listData ||
-              getOptionLabel={(option) => option.name || ""}
-              defaultValue={form?.category || []}
-              //  getOptionSelected={(option, value) => option.id === value.id}
-              renderInput={(params) => (
-                <TextField
-                  {...params}
-                  variant="outlined"
-                  label="Task Category"
-                  error={errorData?.category}
-                />
-              )}
-            />
+        <div className="formFlex">
+            <div className={"formGroup"}>
+              <Autocomplete
+                multiple
+                id="tags-outlined"
+                onChange={(e, value) => {
+                  changeTextData(value, "category");
+                }}
+                  options={ []}
+                 value={form?.category || []}
+                freeSolo
+                selectOnFocus={false}
+                //  noOptionsText={this._renderNoText}
+                renderTags={(value, getTagProps) =>
+                  value.map((option, index) => (
+                    <Chip
+                      variant="outlined"
+                      label={option}
+                      //  {...getTagProps({ index })}
+                    /> // disabled={option.length < 2}
+                  ))
+                }
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    variant="outlined"
+                    label="Task Category"
+                    error={errorData?.category}
+                  />
+                )}
+              />
+            </div>
           </div>
-        </div>
+          <label className={styles.enter}>
+            Please press enter to add a category if not found in the search results.
+          </label>
         <div className={"formFlex"}>
           <div className={"formGroup"}>
             <CustomSelectField

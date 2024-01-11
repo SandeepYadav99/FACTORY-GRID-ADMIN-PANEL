@@ -45,7 +45,7 @@ const AddNoteContainer = ({ details, styles, classes }) => {
           />
 
           {noteDetails?.length > 0 ? (
-            noteDetails.map((note, index) => (
+            noteDetails?.map((note, index) => (
               <NoteItem
                 key={index}
                 note={note}

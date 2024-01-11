@@ -1,7 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useCallback, useEffect, useState } from "react";
 import SnackbarUtils from "../../../libs/SnackbarUtils";
-
 import { useDispatch } from "react-redux";
 import {
   actionDeleteMasterDelete,
@@ -12,8 +11,8 @@ import {
   serviceSearchTask,
   serviceSearchUser,
   serviceTaskManagementCreate,
-  serviceTaskMnagment,
 } from "../../../services/ProviderUser.service";
+import { serviceSearchCategory } from "../../../services/TaskManage.service";
 
 const initialForm = {
   title: "",
@@ -44,7 +43,20 @@ const useAddTaskCreate = ({
   const [filteredUsers, setFilteredUsers] = useState(null);
   const [filteredTask, setFilteredTask] = useState(null);
   const [filteredAssignedTo, setFilteredAssignedTo] = useState(null);
+  const [fetchedAssignedUser, setFetchedAssinedUser] = useState(null);
   const dispatch = useDispatch();
+console.log(form, "Form")
+  useEffect(() => {
+    if (!isSidePanel) return;
+    serviceSearchCategory().then((res) => {
+      if (!res.error) {
+      }
+    });
+  }, [form?.assigned_to, isSidePanel]);
+
+  useEffect(() => {
+    setFetchedAssinedUser(profileDetails);
+  }, [fetchedAssignedUser]);
 
   useEffect(() => {
     if (!isSidePanel) return;
@@ -52,7 +64,7 @@ const useAddTaskCreate = ({
       query: form?.assigned_to ? form?.assigned_to?.name : form?.assigned_to,
     }).then((res) => {
       if (!res.error) {
-        console.log("Filtered Assigned To Data:", res.data);
+       
         setFilteredAssignedTo(res.data);
       }
     });
@@ -104,7 +116,6 @@ const useAddTaskCreate = ({
   const checkFormValidation = useCallback(() => {
     const errors = { ...errorData };
     let required = [
-      "assigned_to",
       "type",
       "title",
       "description",
@@ -112,11 +123,13 @@ const useAddTaskCreate = ({
       "due_date",
       "category",
     ]; // "name", "description", "due_date", "task_type", "comment"
-
+    if (!fetchedAssignedUser) {
+      required.push("assigned_to");
+    }
     required.forEach((val) => {
       if (
         !form?.[val] ||
-        (Array.isArray(form?.[val]) && form?.[val].length === 0)
+        (Array.isArray(form?.[val]) && form?.[val]?.length === 0)
       ) {
         errors[val] = true;
         SnackbarUtils.error("Please enter values");
@@ -131,7 +144,7 @@ const useAddTaskCreate = ({
     });
     return errors;
   }, [form, errorData]);
-
+console.log(form, "Form")
   const submitToServer = useCallback(async () => {
     if (isSubmitting) {
       return;
@@ -139,8 +152,8 @@ const useAddTaskCreate = ({
     setIsSubmitting(true);
 
     const industryID =
-      Array.isArray(form.category) && form.category.length > 0
-        ? form.category.map((item) => item.id || item._id)
+      Array.isArray(form.category) && form?.category?.length > 0
+        ? form?.category?.map((item) => item) // item.id || item._id
         : [];
 
     const updateData = {
@@ -154,7 +167,7 @@ const useAddTaskCreate = ({
       associated_task: form?.associated_task?._id,
       comment: "Task",
       // is_completed: form?.status ? true : false,
-      assigned_to: form?.assigned_to?._id,
+      assigned_to: form?.assigned_to?._id || fetchedAssignedUser?.id,
     };
 
     if (empId) {
@@ -179,7 +192,7 @@ const useAddTaskCreate = ({
 
   const handleSubmit = useCallback(async () => {
     const errors = checkFormValidation();
-    if (Object.keys(errors).length > 0) {
+    if (Object.keys(errors)?.length > 0) {
       setErrorData(errors);
     } else {
       await submitToServer();
@@ -209,9 +222,10 @@ const useAddTaskCreate = ({
       if (fieldName === "name") {
         t[fieldName] = text;
       } else if (fieldName === "category") {
+       
         t[fieldName] = text;
       } else if (fieldName === "associated_task") {
-        t[fieldName] = text?.id;
+        t[fieldName] = text;
       } else if (fieldName === "assigned_to") {
         t[fieldName] = text;
       } else {
@@ -223,13 +237,6 @@ const useAddTaskCreate = ({
     [removeError, form, setForm, listData]
   );
 
-  // else if (fieldName === "industry_id") {
-
-  //   t[fieldName] = text?.filter((item, index, self) => {
-  //     return  index === self.findIndex((i) => i.id === item.id && i._id === item._id)
-
-  //   });
-  // }
   const onBlurHandler = useCallback(
     (type) => {
       if (form?.[type]) {
@@ -271,6 +278,7 @@ const useAddTaskCreate = ({
     filteredUsers,
     filteredTask,
     filteredAssignedTo,
+    fetchedAssignedUser,
   };
 };
 
