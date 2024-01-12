@@ -23,5 +23,9 @@ export async function serviceGetIndustryList (params) {
 }
 
 export async function serviceIndustryCheck (params) {
-    return await postRequest('industry/check', params);
+    return await postRequest('industry/check', params); // industry/keyword
+}
+
+export async function serviceIndustryTags (params) {
+    return await postRequest('industry/keyword', params); // industry/keyword
 }

@@ -44,12 +44,14 @@ const useAddTaskCreate = ({
   const [filteredTask, setFilteredTask] = useState(null);
   const [filteredAssignedTo, setFilteredAssignedTo] = useState(null);
   const [fetchedAssignedUser, setFetchedAssinedUser] = useState(null);
+  const [categoryLists, setCategoryLists] = useState(null);
   const dispatch = useDispatch();
-console.log(form, "Form")
+  console.log(form, "Form");
   useEffect(() => {
     if (!isSidePanel) return;
     serviceSearchCategory().then((res) => {
       if (!res.error) {
+        setCategoryLists(res?.data)
       }
     });
   }, [form?.assigned_to, isSidePanel]);
@@ -64,7 +66,6 @@ console.log(form, "Form")
       query: form?.assigned_to ? form?.assigned_to?.name : form?.assigned_to,
     }).then((res) => {
       if (!res.error) {
-       
         setFilteredAssignedTo(res.data);
       }
     });
@@ -144,7 +145,9 @@ console.log(form, "Form")
     });
     return errors;
   }, [form, errorData]);
-console.log(form, "Form")
+  console.log( Array.isArray(form.category) && form?.category?.length > 0
+  ? form?.category?.map((item) => item) // item.id || item._id
+  : [], "Form");
   const submitToServer = useCallback(async () => {
     if (isSubmitting) {
       return;
@@ -222,7 +225,6 @@ console.log(form, "Form")
       if (fieldName === "name") {
         t[fieldName] = text;
       } else if (fieldName === "category") {
-       
         t[fieldName] = text;
       } else if (fieldName === "associated_task") {
         t[fieldName] = text;
@@ -270,7 +272,7 @@ console.log(form, "Form")
     errorData,
     handleReset,
     empId,
-
+    categoryLists,
     handleSearchUsers,
     toggleAcceptDialog,
     isAcceptPopUp,

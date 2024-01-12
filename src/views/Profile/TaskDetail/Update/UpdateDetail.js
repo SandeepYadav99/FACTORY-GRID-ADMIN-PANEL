@@ -41,7 +41,8 @@ const AddTaskUpdate = ({
     filteredAssignedTo,
     fetchedAssignedTo,
     fetchedTask,
-    fetchedUser
+    fetchedUser,
+    categoryLists
   } = useAddTaskUpdate({
     handleSideToggle,
     isSidePanel,
@@ -170,7 +171,7 @@ const AddTaskUpdate = ({
                 onChange={(e, value) => {
                   changeTextData(value, "category");
                 }}
-                  options={ []}
+                  options={categoryLists}
                  value={form?.category || []}
                 freeSolo
                 selectOnFocus={false}

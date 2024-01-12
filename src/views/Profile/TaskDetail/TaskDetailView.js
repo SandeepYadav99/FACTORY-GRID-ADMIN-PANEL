@@ -85,9 +85,9 @@ const TaskDetailView = ({}) => {
     },
     [setSidePanel] // , profileId, id,  userObject?.user?.id
   );
-  // if (!details) {
-  //   return <WaitingComponent />;
-  // }
+  if (!details && !isSidePanel) {
+    return <WaitingComponent />;
+  }
   return (
     <div>
       <div className={styles.outerFlex}>

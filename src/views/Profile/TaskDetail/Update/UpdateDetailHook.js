@@ -8,6 +8,7 @@ import {
   serviceSearchUser,
   serviceTaskManagementUpdate,
 } from "../../../../services/ProviderUser.service";
+import { serviceSearchCategory } from "../../../../services/TaskManage.service";
 
 const initialForm = {
   title: "",
@@ -42,6 +43,11 @@ const useAddTaskUpdate = ({
   const [fetchedTask, setFetchedTask] = useState(null);
   const [fetchedUser, setFetchedUser] = useState(null);
   const dispatch = useDispatch();
+  const [categoryLists, setCategoryLists] = useState(null);
+ 
+
+
+
   const { present: details } = useSelector((state) => state.common);
 
   useEffect(() => {
@@ -60,6 +66,15 @@ const useAddTaskUpdate = ({
     setFetchedUser(details?.associatedUser);
     setFetchedTask(details?.associatedTask);
   }, [details]);
+
+  useEffect(() => {
+    if (!isSidePanel) return;
+    serviceSearchCategory().then((res) => {
+      if (!res.error) {
+        setCategoryLists(res?.data)
+      }
+    });
+  }, [form?.assigned_to, isSidePanel]);
 
   useEffect(() => {
     if (!isSidePanel) return;
@@ -279,6 +294,7 @@ const useAddTaskUpdate = ({
     fetchedAssignedTo,
     fetchedTask,
     fetchedUser,
+    categoryLists
   };
 };
 

@@ -24,7 +24,7 @@ const AddTaskCreate = ({ handleSideToggle, isSidePanel , handleCreatedTask, prof
     onBlurHandler,
     changeTextData,
     isSubmitting,
-  
+    categoryLists,
     filteredUsers,
     filteredTask,
     filteredAssignedTo,
@@ -148,7 +148,7 @@ const AddTaskCreate = ({ handleSideToggle, isSidePanel , handleCreatedTask, prof
                 onChange={(e, value) => {
                   changeTextData(value, "category");
                 }}
-                options={[]}
+                options={categoryLists}
                  value={form?.category}
                 freeSolo
                 selectOnFocus={false}

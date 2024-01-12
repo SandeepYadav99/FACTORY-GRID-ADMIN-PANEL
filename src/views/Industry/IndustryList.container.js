@@ -237,6 +237,7 @@ class IndustryList extends Component {
   }
 
   _handleEdit(data) {
+  
     this.setState({
       side_panel: !this.state.side_panel,
       edit_data: data,

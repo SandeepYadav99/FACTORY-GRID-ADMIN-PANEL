@@ -18,6 +18,7 @@ import WaitingComponent from "../../components/Waiting.component";
 import SidePanelComponent from "../../components/SidePanel/SidePanel.component";
 import AddTaskCreate from "./Create/AddTaskCreate";
 import TaskListItem from "./TaskListView";
+import capitalizeFirstLetter from "../../hooks/CapsFirstLetter";
 
 const Profile = () => {
   const [open, setOpen] = useState(false);
@@ -79,7 +80,9 @@ const Profile = () => {
                 <div className={styles.profileContainer}>
                   <img src={profileDetails?.image} alt="" />
 
-                  <div className={styles.name}>{profileDetails?.name}</div>
+                  <div className={styles.name}>
+                    {capitalizeFirstLetter(profileDetails?.name)}
+                  </div>
                   <div className={styles.position}>
                     Emp. ID : {profileDetails?.employee_id || "N/A"}
                   </div>
