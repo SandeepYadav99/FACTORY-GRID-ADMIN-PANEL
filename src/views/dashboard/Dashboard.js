@@ -71,7 +71,7 @@ const Dashboard = () => {
         </Grid>
         <Grid item lg={5} md={12} sm={12} xs={12} style={{ marginLeft: "6px" }}>
           <div className={style.quoteRequest}>
-            <div style={{ display: "flex", justifyContent: "space-between" }}>
+            <div style={{ display: "flex", justifyContent: "space-between" , alignItems:"center"}}>
               <Typography
                 className={style.totalQuoteTitle}
                 style={{ fontSize: "14px", color: "#000000" , fontWeight:"600"}}
