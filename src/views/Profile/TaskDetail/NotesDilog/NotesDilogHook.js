@@ -29,24 +29,27 @@ const useNotesDilogHook = () => {
 
   useEffect(()=>{
     handleReset()
-  },[toggleAcceptDialog, isAcceptPopUp])
+  },[ isAcceptPopUp])
   
   useEffect(() => {
-    serviceTaskMnagmentNotesList({
-      task_id: id ? id : "",
-      index: 1,
-      row: null,
-      order: null,
-      query: "",
-      query_data: null,
-    }).then((res) => {
-      if (!res.error) {
-        setNoteDetail(res.data)
-      } else {
-        SnackbarUtils.error(res.message);
-      }
-    });
-  }, [id, isAcceptPopUp]);
+    const debounceTimeout = setTimeout(() => {
+      serviceTaskMnagmentNotesList({
+        task_id: id ? id : "",
+        index: 1,
+        row: null,
+        order: null,
+        query: "",
+        query_data: null,
+      }).then((res) => {
+        if (!res.error) {
+          setNoteDetail(res.data);
+        } else {
+          SnackbarUtils.error(res.message);
+        }
+      });
+    }, 300);
+    return () => clearTimeout(debounceTimeout);
+  }, [id]);
 
   const removeError = useCallback(
     (title) => {
