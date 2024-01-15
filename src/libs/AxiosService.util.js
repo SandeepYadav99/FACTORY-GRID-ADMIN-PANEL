@@ -31,11 +31,11 @@ export async function postRequest(url, params) {
       };
     }
   } catch (err) {
-    if (err.response.status === 401) {
+    if (err?.response?.status === 401) {
       store.dispatch(actionLogoutUser());
       return { error: true, authorization: false, response_code: 0 };
     }
-    if (err.response.status === 400) {
+    if (err?.response?.status === 400) {
       return {
         error: true,
         message: "Please Send Required Parameters",

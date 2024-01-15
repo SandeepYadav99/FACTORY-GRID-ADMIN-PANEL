@@ -29,7 +29,7 @@ const useAddTaskUpdate = ({
   isSidePanel,
   empId,
   handleCreatedTask,
-  
+  details
 }) => {
   const [errorData, setErrorData] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -42,13 +42,10 @@ const useAddTaskUpdate = ({
   const [fetchedAssignedTo, setFetchedAssignedTo] = useState(null);
   const [fetchedTask, setFetchedTask] = useState(null);
   const [fetchedUser, setFetchedUser] = useState(null);
-  const dispatch = useDispatch();
+ 
   const [categoryLists, setCategoryLists] = useState(null);
  
 
-
-
-  const { present: details } = useSelector((state) => state.common);
 
   useEffect(() => {
     // setIsLoading(true);
@@ -70,7 +67,7 @@ const useAddTaskUpdate = ({
   useEffect(() => {
     if (!isSidePanel) return;
     serviceSearchCategory().then((res) => {
-      if (!res.error) {
+      if (!res?.error) {
         setCategoryLists(res?.data)
       }
     });
@@ -81,7 +78,7 @@ const useAddTaskUpdate = ({
     serviceSearchAssignto({
       query: form?.assigned_to ? form?.assigned_to?.name : form?.assigned_to,
     }).then((res) => {
-      if (!res.error) {
+      if (!res?.error) {
       
         setFilteredAssignedTo(res.data);
       }
@@ -162,7 +159,7 @@ const useAddTaskUpdate = ({
     });
     return errors;
   }, [form, errorData]);
-
+console.log(form.associated_user, fetchedUser)
   const submitToServer = useCallback(async () => {
     if (isSubmitting) {
       return;
@@ -181,7 +178,7 @@ const useAddTaskUpdate = ({
       category: industryID,
       type: form?.type,
       priority: form?.priority,
-      associated_user: form?.associated_user?.id || fetchedUser?.id,
+      associated_user: form?.associated_user?._id || fetchedUser?._id,
       associated_task: form?.associated_task?._id || fetchedTask?._id,
       comment: "Task",
       // is_completed: form?.status ? true : false,
@@ -206,7 +203,7 @@ const useAddTaskUpdate = ({
     } finally {
       setIsSubmitting(false);
     }
-  }, [form, isSubmitting, setIsSubmitting, empId, handleSideToggle, dispatch]);
+  }, [form, isSubmitting, setIsSubmitting, empId, handleSideToggle, ]);
 
   const handleSubmit = useCallback(async () => {
     const errors = checkFormValidation();
@@ -266,7 +263,7 @@ const useAddTaskUpdate = ({
   const suspendItem = useCallback(async () => {
     handleSideToggle();
     setIsAcceptPopUp((e) => !e);
-  }, [empId, isAcceptPopUp, dispatch]);
+  }, [empId, isAcceptPopUp, ]);
 
   const handleReset = useCallback(() => {
     setForm({ ...initialForm });

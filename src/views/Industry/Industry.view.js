@@ -39,7 +39,10 @@ import Tooltip from "@material-ui/core/Tooltip";
 import Fab from "@material-ui/core/Fab";
 import InfoIcon from "@material-ui/icons/Info";
 import IncludeForm from "./components/includes/Includes.component";
-import { serviceIndustryCheck, serviceIndustryTags } from "../../services/Industry.service";
+import {
+  serviceIndustryCheck,
+  serviceIndustryTags,
+} from "../../services/Industry.service";
 import { Autocomplete } from "@material-ui/lab";
 // import {serviceProviderEmailExists} from "../../services/ProviderRequest.service";
 // import {servicePromotionCheck} from "../../services/Promotion.service";
@@ -164,14 +167,11 @@ class Industry extends Component {
 
   componentDidMount() {
     const { data } = this.props;
-    serviceIndustryTags()
-    .then((res) => {
-    
-
+    serviceIndustryTags().then((res) => {
       this.setState({
-        industryTags: res.data || data.tages,
+        industryTags: res.data ,
       });
-    })
+    });
     if (data) {
       requiredFields = ["name", "description", "slug", "searchKeyword"];
       Object.keys(data).forEach((val) => {
@@ -182,18 +182,24 @@ class Industry extends Component {
           this.props.change(val, temp);
         }
       });
-console.log(data.tages)
+      console.log(data.tages);
       this.setState({
         // is_active: data.status == 'ACTIVE',
         is_featured: data.is_featured,
         // coming_soon: data.is_coming_soon,
         questionnaire: data.kyc ? data.kyc : [],
-         searchKeyword:data.tages,
+        searchKeyword: data.tages ? data.tages : [],
         //  industryTags:data.tags
-      
       });
     } else {
-      requiredFields = ["name", "description", "banner", "logo", "status",  "searchKeyword"]; //'name','description','banner','logo'
+      requiredFields = [
+        "name",
+        "description",
+        "banner",
+        "logo",
+        "status",
+        "searchKeyword",
+      ]; //'name','description','banner','logo'
     }
   }
 
@@ -260,10 +266,10 @@ console.log(data.tages)
     }
   }
   _handleSubmit(tData) {
-    console.log(tData)
-   
-    const { questionnaire, kyc , searchKeyword} = this.state;
-  
+    console.log(tData);
+
+    const { questionnaire, kyc, searchKeyword } = this.state;
+
     if (Array.isArray(questionnaire) && questionnaire.length > 0) {
       this.setState({
         is_kyc: true,
@@ -282,30 +288,32 @@ console.log(data.tages)
         return true;
       }
     }
-    const searchKeywordArray = this.state?.searchKeyword.map(
-      (keyword) => keyword.trim()
-    );
+    // const searchKeywordArray = this.state?.searchKeyword.map((keyword) =>
+    //   keyword.trim()
+    // );
     const fd = new FormData();
     Object.keys(tData).forEach((key) => {
-      if (["is_featured", "is_kyc", "kyc", "status",].indexOf(key) < 0) {
+    
+      if (["is_featured", "is_kyc", "kyc", "status"].indexOf(key) < 0) {
         fd.append(key, tData[key]);
       }
     });
+   
   
+    
     fd.append("is_featured", this.state.is_featured);
     // fd.append('is_coming_soon', (this.state.coming_soon))
     fd.append("status", tData.status);
     fd.append("kyc", JSON.stringify(questionnaire));
-    fd.append("tages",JSON.stringify(searchKeywordArray)  );
+    //   fd.append("tages", JSON.stringify(searchKeywordArray));
     fd.append("is_kyc", this.state.is_kyc);
-    
     const { data } = this.props;
-
+    fd.append("tages", JSON.stringify(this.state?.searchKeyword));
     if (data) {
-
+     
       this.props.handleDataSave(fd, "UPDATE");
     } else {
-        
+    
       this.props.handleDataSave(fd, "CREATE");
     }
   }
@@ -568,8 +576,8 @@ console.log(data.tages)
                 onChange={this._handleChangeKeywords}
                 id="tags-filled"
                 // name="tages"
-                options={this.state.industryTags } // all_tags
-                value={this.state.searchKeyword }
+                options={this.state.industryTags} // all_tags
+                value={this.state.searchKeyword}
                 freeSolo
                 selectOnFocus={false}
                 // noOptionsText={this._renderNoText}

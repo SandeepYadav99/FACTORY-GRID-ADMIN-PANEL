@@ -18,6 +18,7 @@ const TaskListItem = ({ task, handleDetailPage , markAsCompleted, completedHandl
   };
   
   const handleCheckboxClick = async (e) => {
+   
     if (e.target.checked) {
       await markAsCompleted(task);
     } else {

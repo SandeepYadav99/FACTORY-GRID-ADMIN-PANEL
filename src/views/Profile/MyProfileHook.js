@@ -40,19 +40,25 @@ const useMyProfileHook = () => {
 
   
   const updateTaskManagement = () => {
-    serviceTaskMnagmentByUser({
-      id: id ? id : userObject?.user?.id,
+setTimeout(()=>{
+  serviceTaskMnagmentByUser({
+    id: id ? id : userObject?.user?.id,
+  })
+    .then((res) => {
+      if (!res?.error) {
+        setTaskList(res?.data);
+      }
     })
-      .then((res) => {
-        if (!res?.error) {
-          setTaskList(res?.data);
-        }
-      })
-      .finally(() => {});
+    .finally(() => {});
+
+},3000)
+     
+   
+  
   };
   useEffect(() => {
     updateTaskManagement();
-  }, [taskCreated]);
+  }, [taskCreated, id]);
 
   const markAsCompleted = useCallback(
     (data) => {
@@ -63,23 +69,28 @@ const useMyProfileHook = () => {
         if (!res.error) {
           // setTaskList((tasks) => {
 
+
           //   return tasks.map((task) =>
           //     task.id === data.id ? { ...task, is_completed: true } : task
           //   );
           // });
-          serviceTaskFilterByUser({
-            is_completed: false,
-            user_id: id ? id : userObject?.user?.id,
-          })
-            .then((res) => {
-              if (!res?.error) {
-                // updateTaskManagement();
-                setTaskList(res?.data);
-              } else {
-                SnackbarUtils.error(res.message);
-              }
+
+          setTimeout(()=>{
+            serviceTaskFilterByUser({
+              is_completed: false,
+              user_id: id ? id : userObject?.user?.id,
             })
-            .finally(() => {});
+              .then((res) => {
+                if (!res?.error) {
+                  // updateTaskManagement();
+                  setTaskList(res?.data);
+                } else {
+                  SnackbarUtils.error(res.message);
+                }
+              })
+              .finally(() => {});
+          },4000)
+        
         }
       });
     },
@@ -93,18 +104,21 @@ const useMyProfileHook = () => {
         id: data?.id ? data?.id : "",
       }).then((res) => {
         if (!res.error) {
-          serviceTaskFilterByUser({
-            is_completed: true,
-            user_id: id ? id : userObject?.user?.id,
-          })
-            .then((res) => {
-              if (!res?.error) {
-                setTaskList(res?.data);
-              } else {
-                SnackbarUtils.error(res.message);
-              }
+          setTimeout(()=>{
+            serviceTaskFilterByUser({
+              is_completed: true,
+              user_id: id ? id : userObject?.user?.id,
             })
-            .finally(() => {});
+              .then((res) => {
+                if (!res?.error) {
+                  // updateTaskManagement();
+                  setTaskList(res?.data);
+                } else {
+                  SnackbarUtils.error(res.message);
+                }
+              })
+              .finally(() => {});
+          },4000)
         }
       });
     },
@@ -134,19 +148,22 @@ const useMyProfileHook = () => {
       const newValue = event.target.value;
       setFilterValue(newValue);
       const queryValue = newValue === "PENDING" ? false : true;
-      serviceTaskFilterByUser({
-        is_completed: queryValue,
-        user_id: id ? id : userObject?.user?.id,
-      })
-        .then((res) => {
-          if (!res?.error) {
-            // updateTaskManagement();
-            setTaskList(res?.data);
-          } else {
-            SnackbarUtils.error(res.message);
-          }
+     
+        serviceTaskFilterByUser({
+          is_completed: queryValue,
+          user_id: id ? id : userObject?.user?.id,
         })
-        .finally(() => {});
+          .then((res) => {
+            if (!res?.error) {
+              // updateTaskManagement();
+              setTaskList(res?.data);
+            } else {
+              SnackbarUtils.error(res.message);
+            }
+          })
+          .finally(() => {});
+     
+   
     },
     [filterValue]
   );

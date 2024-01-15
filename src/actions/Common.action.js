@@ -11,7 +11,7 @@ export function actionTaskManagementDetail(taskId) {
         dispatch({ type: GET_TASK_DETAIL, payload: null });
         request.then((res) => {
           
-            if (!reset.error) {
+            if (!res?.error) {
                 dispatch({ type: GET_TASK_DETAIL, payload: res.data })
             }
         })

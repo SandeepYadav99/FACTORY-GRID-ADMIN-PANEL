@@ -17,6 +17,7 @@ import AddTaskUpdate from "./Update/UpdateDetail";
 import { useDispatch, useSelector } from "react-redux";
 import { actionTaskManagementDetail } from "../../../actions/Common.action";
 import WaitingComponent from "../../../components/Waiting.component";
+import { serviceTaskManagementDetail } from "../../../services/ProviderUser.service";
 
 const useStyles = makeStyles((theme) => ({
   boldTitle: {
@@ -45,7 +46,8 @@ const TaskDetailView = ({}) => {
   const classes = useStyles();
   const [isSidePanel, setSidePanel] = useState(false);
   const dispatch = useDispatch();
-  const { present: details } = useSelector((state) => state.common);
+  const [details, setDetails] = useState(null);
+  // const { present: details } = useSelector((state) => state.common);
 
   const toggleAcceptDialog = useCallback(
     (obj) => {
@@ -54,40 +56,68 @@ const TaskDetailView = ({}) => {
     [isAcceptPopUp]
   );
 
-  useEffect(() => {
-    dispatch(actionTaskManagementDetail(id));
-  }, [id, isSidePanel]);
+  const fetchTaskDetails = useCallback(() => {
+    setTimeout(()=>{
+      serviceTaskManagementDetail({ id: id }).then((res) => {
+        if (!res?.error) {
+          setDetails(res?.data);
+        } else {
+          SnackbarUtils.error(res?.message);
+        }
+      });
+    },2000)
+  }, [id]);
 
-  const updateStatus = (isCompleted) => {
+
+  const markAsCompleted = useCallback(() => {
     serviceTaskMnagmentUpdateStatus({
-      is_completed: isCompleted,
+      is_completed: true,
       id: id ? id : "",
     }).then((res) => {
       if (!res.error) {
-        dispatch(actionTaskManagementDetail(id));
+     
+        // setDetails((prevDetails) => ({ ...prevDetails, is_completed: true }));
+        setTimeout(()=>{
+          fetchTaskDetails()
+
+        },3000)
       } else {
         SnackbarUtils.error(res.message);
       }
     });
-  };
+  }, [id]);
+  
+  const completedHandler = useCallback(() => {
+    serviceTaskMnagmentUpdateStatus({
+      is_completed: false,
+      id: id ? id : "",
+    }).then((res) => {
+      if (!res.error) {
+        setTimeout(()=>{
+          fetchTaskDetails()
 
-  const markAsCompleted = () => {
-    updateStatus(true);
-  };
+        },3000)
+      } else {
+        SnackbarUtils.error(res.message);
+      }
+    });
+  }, [id]);
+  
 
-  const completedHandler = () => {
-    updateStatus(false);
-  };
 
-  const handleSideToggle = useCallback(
+  useEffect(()=>{
+    fetchTaskDetails()
+  },[id, isSidePanel])
+
+    const handleSideToggle = useCallback(
     (data) => {
       setSidePanel((e) => !e);
     },
     [setSidePanel] // , profileId, id,  userObject?.user?.id
   );
-  if (!details && !isSidePanel) {
-    return <WaitingComponent />;
-  }
+  // if (!details && !isSidePanel) {
+  //   return <WaitingComponent />;
+  // }
   return (
     <div>
       <div className={styles.outerFlex}>
