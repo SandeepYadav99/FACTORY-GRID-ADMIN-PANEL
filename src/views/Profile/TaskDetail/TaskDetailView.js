@@ -14,8 +14,7 @@ import TaskAssignedContainer from "./TaskDetailView/TaskAssignedContainer";
 import AddNoteContainer from "./NotesDilog/AddNoteContainer";
 import SidePanelComponent from "../../../components/SidePanel/SidePanel.component";
 import AddTaskUpdate from "./Update/UpdateDetail";
-import { useDispatch, useSelector } from "react-redux";
-import { actionTaskManagementDetail } from "../../../actions/Common.action";
+
 import WaitingComponent from "../../../components/Waiting.component";
 import { serviceTaskManagementDetail } from "../../../services/ProviderUser.service";
 
@@ -110,9 +109,9 @@ const TaskDetailView = ({}) => {
     },
     [setSidePanel] // , profileId, id,  userObject?.user?.id
   );
-  // if (!details && !isSidePanel) {
-  //   return <WaitingComponent />;
-  // }
+  if (!details && !isSidePanel) {
+    return <WaitingComponent />;
+  }
   return (
     <div>
       <div className={styles.outerFlex}>

@@ -199,7 +199,7 @@
   border-radius: 3px;
 }
 .transition {
-  transition: opacity 0.1s ease-out; /* Adjust properties and duration as needed */
+  transition: ease-out 0.4s; /* Adjust properties and duration as needed */
 }
 .editAction {
   background-color: #ffffff;
