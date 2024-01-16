@@ -31,8 +31,7 @@ const TaskDetailHeader = ({
           )}
         </div>
       </div>
-      <div className={styles.paragraph}>{details?.description}</div>
-      <div className={styles.gaps} />
+   
     </div>
   );
 };

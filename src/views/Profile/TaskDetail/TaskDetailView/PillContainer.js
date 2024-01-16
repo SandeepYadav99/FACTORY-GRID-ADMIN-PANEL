@@ -20,6 +20,9 @@ const PillContainer = ({ details, styles }) => {
         <div className={styles.priority} style={{ backgroundColor: getPriorityColor(details?.priority) }}>{details?.priority}</div>
         <div className={styles.section}>{details?.type}</div>
       </div>
+      <div>Description:</div> 
+      <div className={styles.paragraph}>{details?.description}</div>
+      
       <div className={styles.gaps} />
     </div>
   );

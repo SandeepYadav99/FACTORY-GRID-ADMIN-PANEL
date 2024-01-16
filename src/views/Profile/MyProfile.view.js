@@ -8,9 +8,15 @@ import {
   Add,
   Assignment,
   CalendarToday,
-  Description,
+
   Details,
+  Group,
+ 
   Lock,
+
+  Person,
+
+  WatchLaterRounded,
 } from "@material-ui/icons";
 import ResetPasswordDialog from "../ForgotPassword/ResetPassword.view";
 import useMyProfileHook from "./MyProfileHook";
@@ -118,28 +124,28 @@ const Profile = () => {
                 <h5 className={styles.heading}>Work Info</h5>
                 <div>
                   <div className={styles.activityFlex}>
-                    <Description className={styles.contactIcons} />
+                    <Group className={styles.contactIcons} />
 
                     <span className={styles.activity}>
-                      {profileDetails?.department}
+                      {capitalizeFirstLetter(profileDetails?.department)}
                     </span>
                   </div>
                   <div className={styles.activityFlex}>
-                    <Details className={styles.contactIcons} />
+                    <Person className={styles.contactIcons} />
 
                     <span className={styles.activity}>
-                      {profileDetails?.designation}
+                      {capitalizeFirstLetter(profileDetails?.designation)}
                     </span>
                   </div>
                   <div className={styles.activityFlex}>
                     <CalendarToday className={styles.contactIcons} />
 
                     <span className={styles.activity}>
-                      {profileDetails?.joiningDateText || "N/A"}
+                      {capitalizeFirstLetter(profileDetails?.joiningDateText || "N/A")}
                     </span>
                   </div>
                   <div className={styles.activityFlex}>
-                    <Assignment className={styles.contactIcons} />
+                    <Person className={styles.contactIcons} />
 
                     <span className={styles.activity}>Manager</span>
                   </div>
@@ -148,7 +154,7 @@ const Profile = () => {
                 <h5 className={styles.heading}>Activity Info</h5>
                 <div>
                   <div className={styles.activityFlex}>
-                    <EmailIcon className={styles.contactIcons} />
+                    <WatchLaterRounded className={styles.contactIcons} />
 
                     <span className={styles.activity}>
                       {profileDetails?.lastLoginText !== "Invalid date"
@@ -156,12 +162,12 @@ const Profile = () => {
                         : "N/A"}
                     </span>
                   </div>
-                  <div className={styles.activityFlex}>
+                  {/* <div className={styles.activityFlex}>
                     <CallIcon className={styles.contactIcons} />
                     <span className={styles.activity}>
                       {profileDetails?.current_ip || "N/A"}
                     </span>
-                  </div>
+                  </div> */}
                 </div>
               </div>
             </div>

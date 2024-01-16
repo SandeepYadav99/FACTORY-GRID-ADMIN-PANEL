@@ -45,8 +45,8 @@ const TaskDetailView = ({}) => {
   const id = queryParams.get("id");
   const classes = useStyles();
   const [isSidePanel, setSidePanel] = useState(false);
-  const dispatch = useDispatch();
-  const [details, setDetails] = useState(null);
+
+  const [details, setDetails] = useState([]);
   // const { present: details } = useSelector((state) => state.common);
 
   const toggleAcceptDialog = useCallback(
@@ -57,7 +57,7 @@ const TaskDetailView = ({}) => {
   );
 
   const fetchTaskDetails = useCallback(() => {
-    setTimeout(()=>{
+    setTimeout(() => {
       serviceTaskManagementDetail({ id: id }).then((res) => {
         if (!res?.error) {
           setDetails(res?.data);
@@ -65,50 +65,46 @@ const TaskDetailView = ({}) => {
           SnackbarUtils.error(res?.message);
         }
       });
-    },2000)
+    }, 2000);
   }, [id]);
 
+  const markAsCompleted = useCallback(async () => {
+    try {
+      await serviceTaskMnagmentUpdateStatus({
+        is_completed: true,
+        id: id ? id : "",
+      });
+      setTimeout(() => {
+        fetchTaskDetails();
+        SnackbarUtils.success("Task is marked as completed");
+      }, 3000);
+    } catch (error) {
+      console.error("Error marking task as completed:", error);
+    
+    }
+  }, [id, fetchTaskDetails]);
 
-  const markAsCompleted = useCallback(() => {
-    serviceTaskMnagmentUpdateStatus({
-      is_completed: true,
-      id: id ? id : "",
-    }).then((res) => {
-      if (!res.error) {
-     
-        // setDetails((prevDetails) => ({ ...prevDetails, is_completed: true }));
-        setTimeout(()=>{
-          fetchTaskDetails()
+  const completedHandler = useCallback(async () => {
+    try {
+      await serviceTaskMnagmentUpdateStatus({
+        is_completed: false,
+        id: id ? id : "",
+      });
+      setTimeout(() => {
+        fetchTaskDetails();
+        SnackbarUtils.success("Task is marked as incomplete");
+      }, 4000);
+    } catch (error) {
+      console.error("Error marking task as incomplete:", error);
+    
+    }
+  }, [id, fetchTaskDetails]);
 
-        },3000)
-      } else {
-        SnackbarUtils.error(res.message);
-      }
-    });
-  }, [id]);
-  
-  const completedHandler = useCallback(() => {
-    serviceTaskMnagmentUpdateStatus({
-      is_completed: false,
-      id: id ? id : "",
-    }).then((res) => {
-      if (!res.error) {
-        setTimeout(()=>{
-          fetchTaskDetails()
-        },3000)
-      } else {
-        SnackbarUtils.error(res.message);
-      }
-    });
-  }, [id]);
-  
+  useEffect(() => {
+    fetchTaskDetails();
+  }, [id, isSidePanel]);
 
-
-  useEffect(()=>{
-    fetchTaskDetails()
-  },[id, isSidePanel])
-
-    const handleSideToggle = useCallback(
+  const handleSideToggle = useCallback(
     (data) => {
       setSidePanel((e) => !e);
     },

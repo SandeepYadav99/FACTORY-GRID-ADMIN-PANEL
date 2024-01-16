@@ -14,7 +14,7 @@ const TaskAssignedContainer = ({ styles, details, classes }) => {
                 title={
                   <span className={classes.subTitle}>Task assigned on:</span>
                 }
-                subheader={details?.createdAtText}
+                subheader={details?.assignedOnDetailText}
               />
             </div>
           </div>
@@ -56,7 +56,7 @@ const TaskAssignedContainer = ({ styles, details, classes }) => {
             <CardHeader
               title={<span className={classes.subTitle}>Associated Task</span>}
               subheader={
-                <a href={`${"/profile/"}`} style={{ fontSize: "13px" }}>
+                <a href={`${"/profile/"}?id=${details?.assignedTo?.id}`} style={{ fontSize: "13px" }}>
                   Task management view
                 </a>
               }

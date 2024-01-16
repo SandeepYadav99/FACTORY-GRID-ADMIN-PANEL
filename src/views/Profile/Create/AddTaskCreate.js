@@ -16,7 +16,12 @@ import { Autocomplete } from "@material-ui/lab";
 import { Search } from "@material-ui/icons";
 import CustomSelectField from "../../../FormFields/SelectField/SelectField.component";
 
-const AddTaskCreate = ({ handleSideToggle, isSidePanel , handleCreatedTask, profileDetails}) => {
+const AddTaskCreate = ({
+  handleSideToggle,
+  isSidePanel,
+  handleCreatedTask,
+  profileDetails,
+}) => {
   const {
     form,
     errorData,
@@ -28,9 +33,13 @@ const AddTaskCreate = ({ handleSideToggle, isSidePanel , handleCreatedTask, prof
     filteredUsers,
     filteredTask,
     filteredAssignedTo,
-    fetchedAssignedUser
-  } = useAddTaskCreate({ handleSideToggle, isSidePanel , handleCreatedTask,profileDetails});
-
+    fetchedAssignedUser,
+  } = useAddTaskCreate({
+    handleSideToggle,
+    isSidePanel,
+    handleCreatedTask,
+    profileDetails,
+  });
 
   return (
     <div>
@@ -56,14 +65,22 @@ const AddTaskCreate = ({ handleSideToggle, isSidePanel , handleCreatedTask, prof
       <div>
         <div className={"formFlex"}>
           <div className={"formGroup"}>
-          <Autocomplete
+            <Autocomplete
               id="tags-outlined"
               onChange={(e, value) => {
                 changeTextData(value, "assigned_to");
               }}
-              value={form.assigned_to || fetchedAssignedUser ||  []}
-              options={filteredAssignedTo ||  []}
-              getOptionLabel={(option) => option?.name  }
+              value={form.assigned_to || fetchedAssignedUser || []}
+              options={filteredAssignedTo || []}
+              getOptionLabel={(option) => {
+                return (
+                  <div className={styles.serchImage}>
+                    <img src={option?.image} alt="" />
+                    <span>{option?.name}</span>
+                  <span>({option?.email})</span>
+                  </div>
+                );
+              }}
               defaultValue={form?.assigned_to || []}
               filterOptions={(options, { inputValue }) => {
                 // Implement your custom search logic here
@@ -85,7 +102,6 @@ const AddTaskCreate = ({ handleSideToggle, isSidePanel , handleCreatedTask, prof
                   }}
                 />
               )}
-              
               disableClearable
             />
           </div>
@@ -139,43 +155,44 @@ const AddTaskCreate = ({ handleSideToggle, isSidePanel , handleCreatedTask, prof
             />
           </div>
         </div>
-       
-          <div className="formFlex">
-            <div className={"formGroup"}>
-              <Autocomplete
-                multiple
-                id="tags-outlined"
-                onChange={(e, value) => {
-                  changeTextData(value, "category");
-                }}
-                options={categoryLists}
-                 value={form?.category}
-                freeSolo
-                selectOnFocus={false}
-                // noOptionsText={this._renderNoText}
-                renderTags={(value, getTagProps) =>
-                  value.map((option, index) => (
-                    <Chip
-                      variant="outlined"
-                      label={option}
-                       {...getTagProps({ index })}
-                    /> // disabled={option.length < 2}
-                  ))
-                }
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
+
+        <div className="formFlex">
+          <div className={"formGroup"}>
+            <Autocomplete
+              multiple
+              id="tags-outlined"
+              onChange={(e, value) => {
+                changeTextData(value, "category");
+              }}
+              options={categoryLists}
+              value={form?.category}
+              freeSolo
+              selectOnFocus={false}
+              // noOptionsText={this._renderNoText}
+              renderTags={(value, getTagProps) =>
+                value.map((option, index) => (
+                  <Chip
                     variant="outlined"
-                    label="Task Category"
-                    error={errorData?.category}
-                  />
-                )}
-              />
-            </div>
+                    label={option}
+                    {...getTagProps({ index })}
+                  /> // disabled={option.length < 2}
+                ))
+              }
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  variant="outlined"
+                  label="Task Category"
+                  error={errorData?.category}
+                />
+              )}
+            />
           </div>
-          <label className={styles.enter}>
-            Please press enter to add a category if not found in the search results.
-          </label>
+        </div>
+        <label className={styles.enter}>
+          Please press enter to add a category if not found in the search
+          results.
+        </label>
         <div className={"formFlex"}>
           <div className={"formGroup"}>
             <CustomSelectField
@@ -296,7 +313,9 @@ const AddTaskCreate = ({ handleSideToggle, isSidePanel , handleCreatedTask, prof
             variant={"contained"}
             color={"primary"}
             type={"submit"}
-            onClick={()=>{handleSubmit()}}
+            onClick={() => {
+              handleSubmit();
+            }}
           >
             {isSubmitting ? (
               <CircularProgress color="success" size="20px" />
