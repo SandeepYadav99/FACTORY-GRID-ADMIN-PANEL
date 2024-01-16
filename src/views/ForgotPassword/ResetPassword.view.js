@@ -113,6 +113,7 @@ class ResetPasswordView extends Component {
   }
 
   _handleSubmit(data) {
+    console.log(data, "Data")
     this.setState({
       is_calling: true,
     });
@@ -120,6 +121,7 @@ class ResetPasswordView extends Component {
       serviceResetProfilePassword({
         ...data,
         // token: this.state.token,
+        email: this.props.email
       }).then((val) => {
         this.setState({
           is_calling: false,

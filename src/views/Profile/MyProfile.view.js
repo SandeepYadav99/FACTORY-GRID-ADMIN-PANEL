@@ -43,6 +43,7 @@ const Profile = () => {
     setOpen(!open);
   };
 
+  console.log(profileDetails, "Profile")
   return (
     <div>
       {isLoading ? (
@@ -204,7 +205,7 @@ const Profile = () => {
             </div>
           </div>
 
-          <ResetPasswordDialog open={open} handleClose={handleClose} />
+          <ResetPasswordDialog open={open} handleClose={handleClose} email={profileDetails?.email}/>
           {/* Side Pannel for Add Task management  */}
           <SidePanelComponent
             handleToggle={handleSideToggle}

@@ -103,7 +103,22 @@ const useNotesDilogHook = () => {
       const req = serviceTaskMnagmentNotesCreate; // empId ? serviceHubMasterUpdate :
       const res = await req(updateData);
       if (!res.error) {
-        toggleAcceptDialog()
+        serviceTaskMnagmentNotesList({
+          task_id: id ? id : "",
+          index: 1,
+          row: null,
+          order: null,
+          query: "",
+          query_data: null,
+        }).then((res) => {
+          if (!res.error) {
+            setNoteDetail(res.data);
+            toggleAcceptDialog()
+          } else {
+            SnackbarUtils.error(res.message);
+          }
+        });
+     
       } else {
         SnackbarUtils.error(res.message);
       }
@@ -111,7 +126,7 @@ const useNotesDilogHook = () => {
     } finally {
       setIsSubmitting(false);
     }
-  }, [form, isSubmitting, setIsSubmitting, isAcceptPopUp]);
+  }, [form, isSubmitting, setIsSubmitting, isAcceptPopUp, id]);
 
   const handleSubmit = useCallback(async () => {
     const errors = checkFormValidation();
@@ -120,7 +135,7 @@ const useNotesDilogHook = () => {
     } else {
       await submitToServer();
     }
-  }, [checkFormValidation, setErrorData, form, submitToServer]);
+  }, [checkFormValidation, setErrorData, form, submitToServer, ]);
 
   const handleReset = useCallback(() => {
     setForm({ ...initialForm });

@@ -80,9 +80,10 @@ class IndustryList extends Component {
   }
 
   componentDidMount() {
-    // if (this.props.total_count <= 0) {
+    //  if (this.props.total_count <= 0) {
     this.props.actionFetchData();
-    // }
+
+    //  }
 
     // const request = serviceGetCustomList(['CATEGORY', 'PRODUCT']);
     // request.then((data)=> {
@@ -114,6 +115,10 @@ class IndustryList extends Component {
     } else {
       this.props.actionUpdateIndustry(data);
     }
+    
+    
+    
+  
     this.setState({
       side_panel: !this.state.side_panel,
       edit_data: null,
@@ -237,7 +242,6 @@ class IndustryList extends Component {
   }
 
   _handleEdit(data) {
-  
     this.setState({
       side_panel: !this.state.side_panel,
       edit_data: data,

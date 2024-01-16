@@ -95,7 +95,6 @@ const TaskDetailView = ({}) => {
       if (!res.error) {
         setTimeout(()=>{
           fetchTaskDetails()
-
         },3000)
       } else {
         SnackbarUtils.error(res.message);

@@ -148,7 +148,7 @@ setTimeout(()=>{
       const newValue = event.target.value;
       setFilterValue(newValue);
       const queryValue = newValue === "PENDING" ? false : true;
-     
+      setTimeout(()=>{
         serviceTaskFilterByUser({
           is_completed: queryValue,
           user_id: id ? id : userObject?.user?.id,
@@ -162,7 +162,7 @@ setTimeout(()=>{
             }
           })
           .finally(() => {});
-     
+      },3000)
    
     },
     [filterValue]
