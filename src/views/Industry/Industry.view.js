@@ -204,8 +204,6 @@ class Industry extends Component {
     }
   }
 
- 
-
   _handleChangeKeywords(event, value, reason, detail) {
     const { searchKeyword, all_tags } = this.state;
     //console.log('already', tags, 'new ', value, reason, detail);
@@ -294,40 +292,36 @@ class Industry extends Component {
 
     const fd = new FormData();
     fd.append("is_featured", this.state.is_featured);
-    // fd.append('is_coming_soon', (this.state.coming_soon))
+
     fd.append("status", tData.status);
     fd.append("is_kyc", this.state.is_kyc);
-    // fd.append("createdAt", tData?.createdAt);
+
     fd.append("tages", JSON.stringify(searchKeyword));
     fd.append("total_categories", tData?.total_categories || 0);
     fd.append("kyc", JSON.stringify(questionnaire));
     const { data } = this.props;
-    // fd.append("tages", JSON.stringify(this.state?.searchKeyword));
+
     if (data) {
       fd.append("name", tData.name);
       fd.append("description", tData.description);
       fd.append("slug", tData.slug);
-      
+
       fd.append("_id", tData._id);
       fd.append("id", tData.id);
-   
+
       this.props.handleDataSave(fd, "UPDATE");
-    
     } else {
       Object.keys(tData).forEach((key) => {
         if (["is_featured", "is_kyc", "kyc", "status"].indexOf(key) < 0) {
           fd.append(key, tData[key]);
         }
       });
-     
-      
+
       this.props.handleDataSave(fd, "CREATE");
-    
-      setTimeout(()=>{
-        this.props.actionFetchData();
-      },2000)
     }
- 
+    setTimeout(() => {
+      this.props.actionFetchData();
+    }, 4000);
     // window.location.reload();
     // this.setState({
     //   side_panel: !this.state.side_panel,

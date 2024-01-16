@@ -112,13 +112,11 @@ class IndustryList extends Component {
     // this.props.actionChangeStatus({...data, type: type});
     if (type == "CREATE") {
       this.props.actionCreateIndustry(data);
+     
     } else {
       this.props.actionUpdateIndustry(data);
     }
-    
-    
-    
-  
+ 
     this.setState({
       side_panel: !this.state.side_panel,
       edit_data: null,

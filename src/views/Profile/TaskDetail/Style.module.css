@@ -200,6 +200,7 @@
 }
 .transition {
   transition: ease-out 0.4s; /* Adjust properties and duration as needed */
+
 }
 .editAction {
   background-color: #ffffff;
