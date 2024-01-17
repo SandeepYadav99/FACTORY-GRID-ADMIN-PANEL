@@ -26,7 +26,7 @@ const initialForm = {
   // comment:"",
   // status: true,
   assigned_to: "",
-  taskType:""
+  // taskType:""
 };
 
 const useAddTaskCreate = ({
@@ -46,19 +46,18 @@ const useAddTaskCreate = ({
   const [filteredAssignedTo, setFilteredAssignedTo] = useState(null);
   const [fetchedAssignedUser, setFetchedAssinedUser] = useState(null);
   const [categoryLists, setCategoryLists] = useState(null);
-  const [taskTypes, setTaskTypes]=useState(["DISCUS"])
+  const [taskTypes, setTaskTypes] = useState(["DISCUS"]);
   const dispatch = useDispatch();
 
-  console.log(form, "Form");
   useEffect(() => {
     if (!isSidePanel) return;
     serviceSearchCategory().then((res) => {
       if (!res.error) {
-        setCategoryLists(res?.data)
+        setCategoryLists(res?.data);
       }
     });
   }, [form?.assigned_to, isSidePanel]);
-console.log(fetchedAssignedUser)
+
   useEffect(() => {
     setFetchedAssinedUser(profileDetails);
   }, [fetchedAssignedUser]);
@@ -126,7 +125,7 @@ console.log(fetchedAssignedUser)
       "priority",
       "due_date",
       "category",
-      "taskType"
+      // "taskType"
     ]; // "name", "description", "due_date", "task_type", "comment"
     if (!fetchedAssignedUser) {
       required.push("assigned_to");
@@ -142,6 +141,7 @@ console.log(fetchedAssignedUser)
         delete errors[val];
       }
     });
+
     Object.keys(errors).forEach((key) => {
       if (!errors[key]) {
         delete errors[key];
@@ -149,9 +149,7 @@ console.log(fetchedAssignedUser)
     });
     return errors;
   }, [form, errorData]);
-  console.log( Array.isArray(form.category) && form?.category?.length > 0
-  ? form?.category?.map((item) => item) // item.id || item._id
-  : [], "Form");
+
   const submitToServer = useCallback(async () => {
     if (isSubmitting) {
       return;
@@ -233,7 +231,6 @@ console.log(fetchedAssignedUser)
       } else if (fieldName === "associated_task") {
         t[fieldName] = text;
       } else if (fieldName === "assigned_to") {
-        console.log(text, "aaa")
         t[fieldName] = text;
       } else {
         t[fieldName] = text;
@@ -286,7 +283,7 @@ console.log(fetchedAssignedUser)
     filteredTask,
     filteredAssignedTo,
     fetchedAssignedUser,
-    taskTypes
+    taskTypes,
   };
 };
 

@@ -87,15 +87,7 @@ const AddTaskUpdate = ({
               }}
               value={form?.assigned_to || fetchedAssignedTo || []}
               options={filteredAssignedTo || []}
-              getOptionLabel={(option) => {
-                return (
-                  <div className={styles.serchImage}>
-                    <img src={option?.image} alt="" />
-                    <span>{option?.name}</span>
-                  <span>({option?.email})</span>
-                  </div>
-                );
-              }}
+               getOptionLabel={(option) => `${option?.name} (${option?.email})`}
               defaultValue={form?.assigned_to || []}
               filterOptions={(options, { inputValue }) => {
                 // Implement your custom search logic here

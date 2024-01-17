@@ -39,15 +39,15 @@ const useMyProfileHook = () => {
 
   const updateTaskManagement = () => {
     // setTimeout(() => {
-      serviceTaskMnagmentByUser({
-        id: id ? id : userObject?.user?.id,
+    serviceTaskMnagmentByUser({
+      id: id ? id : userObject?.user?.id,
+    })
+      .then((res) => {
+        if (!res?.error) {
+          setTaskList(res?.data);
+        }
       })
-        .then((res) => {
-          if (!res?.error) {
-            setTaskList(res?.data);
-          }
-        })
-        .finally(() => {});
+      .finally(() => {});
     // }, 3000);
   };
   useEffect(() => {
@@ -62,21 +62,19 @@ const useMyProfileHook = () => {
       }).then((res) => {
         if (!res.error) {
           if (filterValue) {
-          
-              serviceTaskFilterByUser({
-                is_completed: false,
-                user_id: id ? id : userObject?.user?.id,
+            serviceTaskFilterByUser({
+              is_completed: false,
+              user_id: id ? id : userObject?.user?.id,
+            })
+              .then((res) => {
+                if (!res?.error) {
+                  // updateTaskManagement();
+                  setTaskList(res?.data);
+                } else {
+                  SnackbarUtils.error(res.message);
+                }
               })
-                .then((res) => {
-                  if (!res?.error) {
-                    // updateTaskManagement();
-                    setTaskList(res?.data);
-                  } else {
-                    SnackbarUtils.error(res.message);
-                  }
-                })
-                .finally(() => {});
-           
+              .finally(() => {});
           } else {
             setTaskList((tasks) => {
               return tasks.map((task) =>
@@ -97,30 +95,27 @@ const useMyProfileHook = () => {
         id: data?.id ? data?.id : "",
       }).then((res) => {
         if (!res.error) {
-          if(filterValue){
-           
-              serviceTaskFilterByUser({
-                is_completed: true,
-                user_id: id ? id : userObject?.user?.id,
+          if (filterValue) {
+            serviceTaskFilterByUser({
+              is_completed: true,
+              user_id: id ? id : userObject?.user?.id,
+            })
+              .then((res) => {
+                if (!res?.error) {
+                  // updateTaskManagement();
+                  setTaskList(res?.data);
+                } else {
+                  SnackbarUtils.error(res.message);
+                }
               })
-                .then((res) => {
-                  if (!res?.error) {
-                    // updateTaskManagement();
-                    setTaskList(res?.data);
-                  } else {
-                    SnackbarUtils.error(res.message);
-                  }
-                })
-                .finally(() => {});
-        
-          }else {
+              .finally(() => {});
+          } else {
             setTaskList((tasks) => {
               return tasks.map((task) =>
                 task.id === data.id ? { ...task, is_completed: false } : task
               );
             });
           }
-        
         }
       });
     },
@@ -151,21 +146,20 @@ const useMyProfileHook = () => {
       console.log(newValue, "Vlaue is ");
       setFilterValue(newValue);
       const queryValue = newValue === "PENDING" ? false : true;
-     
-        serviceTaskFilterByUser({
-          is_completed: queryValue,
-          user_id: id ? id : userObject?.user?.id,
+
+      serviceTaskFilterByUser({
+        is_completed: queryValue,
+        user_id: id ? id : userObject?.user?.id,
+      })
+        .then((res) => {
+          if (!res?.error) {
+            // updateTaskManagement();
+            setTaskList(res?.data);
+          } else {
+            SnackbarUtils.error(res.message);
+          }
         })
-          .then((res) => {
-            if (!res?.error) {
-              // updateTaskManagement();
-              setTaskList(res?.data);
-            } else {
-              SnackbarUtils.error(res.message);
-            }
-          })
-          .finally(() => {});
-     
+        .finally(() => {});
     },
     [filterValue]
   );
@@ -186,7 +180,7 @@ const useMyProfileHook = () => {
     completedHandler,
     filterCompltedTask,
     filterValue,
-    id
+    id,
   };
 };
 

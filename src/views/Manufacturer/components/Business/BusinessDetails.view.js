@@ -37,8 +37,8 @@ const BusinessDetails = ({ id, userProfile }) => {
     (certificate) => certificate.certificate_file
   );
 
-  const openGoogleMaps = useCallback((company_lat) => {
-    const url = `https://www.google.com/maps/place?q=${company_lat[0]},${company_lat[1] || 0}`;
+  const openGoogleMaps = useCallback((company) => {
+    const url = `https://www.google.com/maps/place?q=${company?.company_lat},${company?.company_long}`;
 
     window.open(url, "_blank");
   }, []);
@@ -66,7 +66,7 @@ const BusinessDetails = ({ id, userProfile }) => {
               </div> */}
               <div className={styles.user}>
                
-              <a className={styles.coord} href={"#"}  onClick={()=>openGoogleMaps(userProfile?.business?.company_fg_lat)}>
+              <a className={styles.coord} href={"#"}  onClick={()=>openGoogleMaps(userProfile?.business)}>
              {userProfile?.business?.company_name || "N/A"} 
                 {/* FG Coordinates */}
               </a>

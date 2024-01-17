@@ -46,7 +46,7 @@ const Profile = () => {
     setOpen(!open);
   };
 
-  console.log(profileDetails, "Profile");
+ 
   return (
     <div>
       {isLoading ? (
