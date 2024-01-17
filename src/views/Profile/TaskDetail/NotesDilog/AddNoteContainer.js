@@ -52,7 +52,7 @@ console.log(noteDetail, "dETAIL")
                 <Card>
                   <CardHeader
                     avatar={<Avatar>R</Avatar>}
-                    title={<span className={classes.boldTitle}>Pranav</span>}
+                    title={<span className={classes.boldTitle}>noteDetail</span>}
                     subheader="September 14, 2016"
                   />
                 </Card>

@@ -22,6 +22,7 @@ import SubCategoryList from "../views/SubCategory/SubCategoryList.container";
 import QuoteList from "../views/Quotes/QuoteList.container";
 import QuoteDetail from "../views/Quotes/Quote.view";
 import HubMasterList from "../views/HubMaster/List/HubMasterList";
+// import ServiceListContainer from "../views/Service/List/ServiceListContainer";
 // import TableList from "views/TableList/TableList.jsx";
 // import Typography from "views/Typography/Typography.jsx";
 // import Icons from "views/Icons/Icons.jsx";
@@ -45,6 +46,13 @@ import {
 } from "@material-ui/icons";
 import RouteName from "./Route.name";
 import TaskDetailView from "../views/Profile/TaskDetail/TaskDetailView";
+// import ServiceView from "../views/Service/Create/ServiceCreate.view";
+import ServiceListContainer from "../views/Service/List/ServiceListContainer";
+import AssignedContainer from "../views/Profile/TaskDetail/TaskDetailView/AssignedContainer";
+import ServiceDetailView from "../views/Service/Detail/ServiceDetailView";
+
+// import ServiceView from "../views/Service/Create/ServiceCreate.view";
+
 
 
 
@@ -304,6 +312,9 @@ const dashboardRoutes = [
     // should_regex: false,
     parent: "masters",
   },
+  
+
+  
   {
     path: "/app/settings",
     sidebarName: "App Settings",
@@ -329,6 +340,28 @@ const dashboardRoutes = [
     navbarName: "Quotes Detail",
     icon: SupervisedUserCircle,
     component: QuoteDetail,
+    is_sidebar: false,
+    is_protect: true,
+    should_regex: false,
+  },
+
+  {
+    path: RouteName.SERVICE_DETAIL,
+    sidebarName: "Service",
+    navbarName: "Service",
+    icon: EventNote,
+    component: ServiceDetailView,
+    is_sidebar: true,
+    is_protect: true,
+    // should_regex: false,
+    parent: "masters",
+  },
+  {
+    path: "/service/list/",
+    sidebarName: "Service list",
+    navbarName: "service List",
+    icon: SupervisedUserCircle,
+    component: ServiceListContainer ,
     is_sidebar: false,
     is_protect: true,
     should_regex: false,
