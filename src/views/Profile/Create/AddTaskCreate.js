@@ -6,7 +6,7 @@ import {
   TextField,
   Tooltip,
 } from "@material-ui/core";
-import React from "react";
+import React, { useState } from "react";
 import CustomTextField from "../../../FormFields/TextField.component";
 import styles from "./Style.module.css";
 import useAddTaskCreate from "./AddTaskCreateHook";
@@ -40,7 +40,7 @@ const AddTaskCreate = ({
     handleCreatedTask,
     profileDetails,
   });
-
+const [tData, setTData]=useState(null)
   return (
     <div>
       <div className={styles.headerFlex}>
@@ -69,18 +69,11 @@ const AddTaskCreate = ({
               id="tags-outlined"
               onChange={(e, value) => {
                 changeTextData(value, "assigned_to");
+              
               }}
               value={form.assigned_to || fetchedAssignedUser || []}
               options={filteredAssignedTo || []}
-              getOptionLabel={(option) => {
-                return (
-                  <div className={styles.serchImage}>
-                    <img src={option?.image} alt="" />
-                    <span>{option?.name}</span>
-                  <span>({option?.email})</span>
-                  </div>
-                );
-              }}
+              getOptionLabel={(option) => `${option?.name} (${option?.email})`}
               defaultValue={form?.assigned_to || []}
               filterOptions={(options, { inputValue }) => {
                 // Implement your custom search logic here
@@ -96,6 +89,7 @@ const AddTaskCreate = ({
                   variant="outlined"
                   label="Assigned To"
                   error={errorData?.assigned_to}
+                
                   InputProps={{
                     ...params.InputProps,
                     endAdornment: <Search />,

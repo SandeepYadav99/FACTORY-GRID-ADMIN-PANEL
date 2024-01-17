@@ -58,7 +58,7 @@ const useAddTaskCreate = ({
       }
     });
   }, [form?.assigned_to, isSidePanel]);
-
+console.log(fetchedAssignedUser)
   useEffect(() => {
     setFetchedAssinedUser(profileDetails);
   }, [fetchedAssignedUser]);
@@ -233,6 +233,7 @@ const useAddTaskCreate = ({
       } else if (fieldName === "associated_task") {
         t[fieldName] = text;
       } else if (fieldName === "assigned_to") {
+        console.log(text, "aaa")
         t[fieldName] = text;
       } else {
         t[fieldName] = text;
