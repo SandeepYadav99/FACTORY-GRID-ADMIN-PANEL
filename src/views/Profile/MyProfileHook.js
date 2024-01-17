@@ -38,7 +38,7 @@ const useMyProfileHook = () => {
   }, [id]);
 
   const updateTaskManagement = () => {
-    setTimeout(() => {
+    // setTimeout(() => {
       serviceTaskMnagmentByUser({
         id: id ? id : userObject?.user?.id,
       })
@@ -48,7 +48,7 @@ const useMyProfileHook = () => {
           }
         })
         .finally(() => {});
-    }, 3000);
+    // }, 3000);
   };
   useEffect(() => {
     updateTaskManagement();
@@ -62,7 +62,7 @@ const useMyProfileHook = () => {
       }).then((res) => {
         if (!res.error) {
           if (filterValue) {
-            setTimeout(() => {
+          
               serviceTaskFilterByUser({
                 is_completed: false,
                 user_id: id ? id : userObject?.user?.id,
@@ -76,7 +76,7 @@ const useMyProfileHook = () => {
                   }
                 })
                 .finally(() => {});
-            }, 4000);
+           
           } else {
             setTaskList((tasks) => {
               return tasks.map((task) =>
@@ -98,7 +98,7 @@ const useMyProfileHook = () => {
       }).then((res) => {
         if (!res.error) {
           if(filterValue){
-            setTimeout(() => {
+           
               serviceTaskFilterByUser({
                 is_completed: true,
                 user_id: id ? id : userObject?.user?.id,
@@ -112,7 +112,7 @@ const useMyProfileHook = () => {
                   }
                 })
                 .finally(() => {});
-            }, 4000);
+        
           }else {
             setTaskList((tasks) => {
               return tasks.map((task) =>
@@ -151,7 +151,7 @@ const useMyProfileHook = () => {
       console.log(newValue, "Vlaue is ");
       setFilterValue(newValue);
       const queryValue = newValue === "PENDING" ? false : true;
-      setTimeout(() => {
+     
         serviceTaskFilterByUser({
           is_completed: queryValue,
           user_id: id ? id : userObject?.user?.id,
@@ -165,7 +165,7 @@ const useMyProfileHook = () => {
             }
           })
           .finally(() => {});
-      }, 3000);
+     
     },
     [filterValue]
   );
@@ -186,6 +186,7 @@ const useMyProfileHook = () => {
     completedHandler,
     filterCompltedTask,
     filterValue,
+    id
   };
 };
 

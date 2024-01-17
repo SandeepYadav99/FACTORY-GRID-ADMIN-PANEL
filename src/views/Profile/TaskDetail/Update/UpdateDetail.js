@@ -87,7 +87,15 @@ const AddTaskUpdate = ({
               }}
               value={form?.assigned_to || fetchedAssignedTo || []}
               options={filteredAssignedTo || []}
-              getOptionLabel={(option) => option?.name}
+              getOptionLabel={(option) => {
+                return (
+                  <div className={styles.serchImage}>
+                    <img src={option?.image} alt="" />
+                    <span>{option?.name}</span>
+                  <span>({option?.email})</span>
+                  </div>
+                );
+              }}
               defaultValue={form?.assigned_to || []}
               filterOptions={(options, { inputValue }) => {
                 // Implement your custom search logic here
@@ -164,37 +172,37 @@ const AddTaskUpdate = ({
           </div>
         </div>
         <div className="formFlex">
-            <div className={"formGroup"}>
-              <Autocomplete
-                multiple
-                id="tags-outlined"
-                onChange={(e, value) => {
-                  changeTextData(value, "category");
-                }}
-                  options={categoryLists}
-                 value={form?.category || []}
-                freeSolo
-                selectOnFocus={false}
-                //  noOptionsText={this._renderNoText}
-                renderTags={(value, getTagProps) =>
-                  value.map((option, index) => (
-                    <Chip
-                      variant="outlined"
-                      label={option}
-                      //  {...getTagProps({ index })}
-                    /> // disabled={option.length < 2}
-                  ))
-                }
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
+        <div className={"formGroup"}>
+            <Autocomplete
+              multiple
+              id="tags-outlined"
+              onChange={(e, value) => {
+                changeTextData(value, "category");
+              }}
+              options={categoryLists}
+              value={form?.category}
+              freeSolo
+              selectOnFocus={false}
+              // noOptionsText={this._renderNoText}
+              renderTags={(value, getTagProps) =>
+                value.map((option, index) => (
+                  <Chip
                     variant="outlined"
-                    label="Task Category"
-                    error={errorData?.category}
-                  />
-                )}
-              />
-            </div>
+                    label={option}
+                    {...getTagProps({ index })}
+                  /> // disabled={option.length < 2}
+                ))
+              }
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  variant="outlined"
+                  label="Task Category"
+                  error={errorData?.category}
+                />
+              )}
+            />
+          </div>
           </div>
           <label className={styles.enter}>
             Please press enter to add a category if not found in the search results.

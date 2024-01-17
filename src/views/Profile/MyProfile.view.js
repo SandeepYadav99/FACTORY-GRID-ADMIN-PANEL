@@ -31,7 +31,7 @@ const Profile = () => {
     isLoading,
     isSidePanel,
     handleSideToggle,
-    profileId,
+    id,
     handleDetailPage,
     taskLists,
     filterValue,
@@ -217,7 +217,7 @@ const Profile = () => {
                       <div className={styles.newLine2} />
                     </div>
                   </div>
-                  <AssociatedManufactures />
+                  <AssociatedManufactures id={id}/>
 
                   {/* listData={listData} */}
                 </div>

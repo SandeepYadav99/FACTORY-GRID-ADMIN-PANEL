@@ -18,8 +18,10 @@ import RouteName from "../../../routes/Route.name";
 import historyUtils from "../../../libs/history.utils";
 import useAssociatedManufacturesHook from "./AssociatedManufacturesHook";
 import StatusPill from "../../../components/Status/StatusPill.component";
+import { useEffect } from "react";
+import { serviceAssociatedList } from "../../../services/AssociatedManufactures.sercice";
 
-const AssociatedManufactures = ({ listData }) => {
+const AssociatedManufactures = ({ listData, id }) => {
   const {
     handleSortOrderChange,
     handleRowSize,
@@ -31,18 +33,18 @@ const AssociatedManufactures = ({ listData }) => {
     editData,
     isCalling,
     configFilter,
-
+    associatedManufactures,
     handleToggleSidePannel,
 
     handleToggleSend,
-  } = useAssociatedManufacturesHook({ listData });
+  } = useAssociatedManufacturesHook({ listData, id });
 
   const {
     present,
     all: allData,
     currentPage,
     is_fetching: isFetching,
-  } = useSelector((state) => state.hubMaster);
+  } = useSelector((state) => state.associatedManufactures);
 
   const renderStatus = useCallback((status) => {
     return <StatusPill status={status} />;
@@ -75,15 +77,11 @@ const AssociatedManufactures = ({ listData }) => {
         label: "Manufacturer",
         sortable: false,
         render: (temp, all) => (
-          <div>
-            <div
-              onClick={() => handleViewEmployee(all?.emp_code)}
-              className={styles.hyperlinkText}
-            >
-              {all?.name}
-            </div>
-            <br />
-            <div>{all?.emp_code}</div>
+          <div className={styles.image}>
+            <img src={all?.image} className={styles.imageContainer} />
+
+            <div style={{marginLeft:"3px"}}> {all?.first_name} </div>
+            <div style={{marginLeft:"5px"}}>{all?.last_name}</div>
           </div>
         ),
       },
@@ -91,47 +89,36 @@ const AssociatedManufactures = ({ listData }) => {
         key: "company_name",
         label: "Company Name",
         sortable: false,
-        render: (temp, all) => <div>{all?.doj}</div>,
+        render: (temp, all) => <div>{all?.business?.company_name}</div>,
       },
       {
         key: "membership_plan",
         label: "Membership Plan",
         sortable: false,
-        render: (temp, all) => <div>{all?.dobText}</div>,
+        render: (temp, all) => <div>{all?.membership_type}</div>,
         //  candidate?.applied_date
       },
       {
         key: "joined_on",
         label: "Joined On",
         sortable: false,
-        render: (temp, all) => <div>{all?.designation?.name}</div>,
+        render: (temp, all) => <div>{all?.createdAtText || "N/A"}</div>,
       },
       {
         key: "last_activity",
         label: "Last Activity",
         sortable: false,
-        render: (temp, all) => <div>{all?.department?.name}</div>,
+        render: (temp, all) => <div>{all?.lastLoginText || "N/A"}</div>,
       },
-      
-      
+
       {
         key: "status",
         label: "Current Status",
         sortable: false,
         render: (temp, all) => (
-          <div className={styles.btnWrap}>
-            <IconButton
-              className={"tableActionBtn"}
-              color="secondary"
-              // disabled={isCalling}
-              onClick={() => {
-                // handleViewDetails(all);
-                handleToggleSidePannel(all);
-              }}
-            >
-              <InfoOutlined fontSize={"small"} />
-            </IconButton>
-          </div>
+         
+           <StatusPill status={all?.status}/>
+       
         ),
       },
     ];
@@ -147,7 +134,7 @@ const AssociatedManufactures = ({ listData }) => {
       ...Constants.DATATABLE_PROPERTIES,
       columns: tableStructure,
       data: present,
-      count:  allData?.length,
+      count: allData?.length,
       page: currentPage,
     };
 

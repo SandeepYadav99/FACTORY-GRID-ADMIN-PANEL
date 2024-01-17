@@ -196,4 +196,12 @@
     margin-right: 45%;
     display: inline-block;
   }
-  
+  .image{
+    display: flex;
+    align-items: center;
+  }
+  .imageContainer{
+    height: 20px;
+    width: 20px;
+    border-radius: 20px;
+  }

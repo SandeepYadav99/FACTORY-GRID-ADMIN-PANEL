@@ -56,7 +56,7 @@ const TaskDetailView = ({}) => {
   );
 
   const fetchTaskDetails = useCallback(() => {
-    setTimeout(() => {
+    // setTimeout(() => {
       serviceTaskManagementDetail({ id: id }).then((res) => {
         if (!res?.error) {
           setDetails(res?.data);
@@ -64,7 +64,7 @@ const TaskDetailView = ({}) => {
           SnackbarUtils.error(res?.message);
         }
       });
-    }, 2000);
+    // }, 2000);
   }, [id]);
 
   const markAsCompleted = useCallback(async () => {
@@ -73,10 +73,10 @@ const TaskDetailView = ({}) => {
         is_completed: true,
         id: id ? id : "",
       });
-      setTimeout(() => {
+      // setTimeout(() => {
         fetchTaskDetails();
         SnackbarUtils.success("Task is marked as completed");
-      }, 3000);
+      // }, 3000);
     } catch (error) {
       console.error("Error marking task as completed:", error);
     
@@ -89,10 +89,10 @@ const TaskDetailView = ({}) => {
         is_completed: false,
         id: id ? id : "",
       });
-      setTimeout(() => {
+      // setTimeout(() => {
         fetchTaskDetails();
         SnackbarUtils.success("Task is marked as incomplete");
-      }, 4000);
+      // }, 4000);
     } catch (error) {
       console.error("Error marking task as incomplete:", error);
     
@@ -109,9 +109,9 @@ const TaskDetailView = ({}) => {
     },
     [setSidePanel] // , profileId, id,  userObject?.user?.id
   );
-  if (!details && !isSidePanel) {
-    return <WaitingComponent />;
-  }
+  // if (!details && !isSidePanel) {
+  //   return <WaitingComponent />;
+  // }
   return (
     <div>
       <div className={styles.outerFlex}>
@@ -164,7 +164,7 @@ const TaskDetailView = ({}) => {
 
       <SidePanelComponent
         handleToggle={handleSideToggle}
-        title={"Create Update Task"}
+        title={" Update Task"}
         open={isSidePanel}
         side={"right"}
       >
