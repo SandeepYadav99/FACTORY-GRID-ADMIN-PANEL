@@ -21,7 +21,7 @@ import SidePanelComponent from "../../components/SidePanel/SidePanel.component";
 import AddTaskCreate from "./Create/AddTaskCreate";
 import TaskListItem from "./TaskListView";
 import capitalizeFirstLetter from "../../hooks/CapsFirstLetter";
-
+import AssociatedManufactures from "./AssociatedManufactures/AssociatedManufactures";
 
 const Profile = () => {
   const [open, setOpen] = useState(false);
@@ -206,23 +206,22 @@ const Profile = () => {
                 ) : (
                   <p className={styles.notfound}> Tasks is not available!</p>
                 )}
-
               </div>
-          <div>
-                  <div className={styles.plainPaper}>
-                    <div className={styles.headingWrap}>
-                      <div className={styles.newLineWrap}>
-                        <span>
-                          <b>Associated Manufacturers</b>
-                        </span>
-                        <div className={styles.newLine2} />
-                      </div>
+              <div>
+                <div className={styles.plainPaper}>
+                  <div className={styles.headingWrap}>
+                    <div className={styles.newLineWrap}>
+                      <span>
+                        <b>Associated Manufacturers</b>
+                      </span>
+                      <div className={styles.newLine2} />
                     </div>
-
-                    
-                    {/* listData={listData} */}
                   </div>
+                  <AssociatedManufactures />
+
+                  {/* listData={listData} */}
                 </div>
+              </div>
             </div>
           </div>
 

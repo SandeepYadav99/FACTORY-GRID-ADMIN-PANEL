@@ -3,25 +3,23 @@
  */
 import React, { Component, useCallback, useMemo } from "react";
 import { Button, ButtonBase, IconButton, withStyles } from "@material-ui/core";
-import DataTables from "../../../../Datatables/Datatable.table";
-import Constants from "../../../../config/constants";
+import DataTables from "../../../Datatables/Datatable.table";
+import Constants from "../../../config/constants";
 import styles from "./Style.module.css";
 import classNames from "classnames";
 import { Add, Edit, InfoOutlined } from "@material-ui/icons";
-import StatusPill from "../../../../components/Status/StatusPill.component";
 
-import FilterComponent from "../../../../components/Filter/Filter.component";
-import useThisYearSuccessionPlaner from "./ThisYearSuccessionPlannerHook";
-import SidePanelComponent from "../../../../components/SidePanel/SidePanel.component";
-import SuccessionHistory from "./SuccessionHistory/SuccessionHistory";
-import SuccessionPlannerDetailform from "./SuccessionPlannerDetailform/SuccessionPlannerDetailform";
+import FilterComponent from "../../../components/Filter/Filter.component";
+
 import { useSelector } from "react-redux";
 import SendIcon from "@material-ui/icons/Send";
-import SendPopup from "./SendDialog/SendDialog.view";
-import RouteName from "../../../../routes/Route.name";
-import historyUtils from "../../../../libs/history.utils";
 
-const ThisYearSuccessionPlanner = ({ listData }) => {
+import RouteName from "../../../routes/Route.name";
+import historyUtils from "../../../libs/history.utils";
+import useAssociatedManufacturesHook from "./AssociatedManufacturesHook";
+import StatusPill from "../../../components/Status/StatusPill.component";
+
+const AssociatedManufactures = ({ listData }) => {
   const {
     handleSortOrderChange,
     handleRowSize,
@@ -33,57 +31,18 @@ const ThisYearSuccessionPlanner = ({ listData }) => {
     editData,
     isCalling,
     configFilter,
-    isSidePanel,
+
     handleToggleSidePannel,
-    isSidePanelForm,
-    handleToggleSidePannelForm,
-    isCandidatesFetching,
-    empId,
+
     handleToggleSend,
-    isSend,
-    handleResend,
-  } = useThisYearSuccessionPlaner({ listData });
+  } = useAssociatedManufacturesHook({ listData });
 
   const {
-    data,
+    present,
     all: allData,
     currentPage,
     is_fetching: isFetching,
-  } = useSelector((state) => state.successionPlaner);
-
-  const UpperInfo = useCallback(
-    (obj) => {
-      if (obj) {
-        return (
-          <div className={styles.headerContainer}>
-            <div className={styles.InfoWrap}>
-              <div>{"Succession History"} </div>
-              <div className={styles.newLine}></div>
-            </div>
-          </div>
-        );
-      }
-      return null;
-    },
-    [editData]
-  );
-
-  const UpperDetailFormInfo = useCallback(
-    (obj) => {
-      if (obj) {
-        return (
-          <div className={styles.headerContainer}>
-            <div className={styles.InfoWrap}>
-              <div>{"Add Details"} </div>
-              <div className={styles.newLine}></div>
-            </div>
-          </div>
-        );
-      }
-      return null;
-    },
-    [editData]
-  );
+  } = useSelector((state) => state.hubMaster);
 
   const renderStatus = useCallback((status) => {
     return <StatusPill status={status} />;
@@ -112,8 +71,8 @@ const ThisYearSuccessionPlanner = ({ listData }) => {
   const tableStructure = useMemo(() => {
     return [
       {
-        key: "employee",
-        label: "EMPLOYEE",
+        key: "manufacturer",
+        label: "Manufacturer",
         sortable: false,
         render: (temp, all) => (
           <div>
@@ -129,109 +88,35 @@ const ThisYearSuccessionPlanner = ({ listData }) => {
         ),
       },
       {
-        key: "doj",
-        label: "D.O.J",
+        key: "company_name",
+        label: "Company Name",
         sortable: false,
         render: (temp, all) => <div>{all?.doj}</div>,
       },
       {
-        key: "dob",
-        label: "D.O.B",
+        key: "membership_plan",
+        label: "Membership Plan",
         sortable: false,
         render: (temp, all) => <div>{all?.dobText}</div>,
         //  candidate?.applied_date
       },
       {
-        key: "designation",
-        label: "DESIGNATION",
+        key: "joined_on",
+        label: "Joined On",
         sortable: false,
         render: (temp, all) => <div>{all?.designation?.name}</div>,
       },
       {
-        key: "department",
-        label: "DEPARTMENT",
+        key: "last_activity",
+        label: "Last Activity",
         sortable: false,
         render: (temp, all) => <div>{all?.department?.name}</div>,
       },
+      
+      
       {
-        key: "location",
-        label: "LOCATION",
-        sortable: false,
-        render: (temp, all) => <div>{all?.location?.name}</div>,
-      },
-      {
-        key: "age",
-        label: "AGE",
-        sortable: false,
-        render: (temp, all) => <div>{all?.age}</div>,
-      },
-      {
-        key: "date_of_retirment",
-        label: "DATE OF RETIREMENT",
-        sortable: false,
-        render: (temp, all) => <div>{all?.expected_dor_text}</div>,
-      },
-      {
-        key: "annual_salary",
-        label: "ANNUAL SALARY",
-        sortable: false,
-        render: (temp, all) => (
-          <div style={{ whiteSpace: "nowrap" }}>
-            {all?.annual_salary && `₹ ${all?.annual_salary}`}
-          </div>
-        ),
-      },
-      {
-        key: "succession_cost_wrt_emp",
-        label: "SUCCESSION'S COST WRT EMPLOYEE",
-        sortable: false,
-        render: (temp, all) => <div>{all?.succession_wrt}</div>,
-      },
-      {
-        key: "nature_of_succession",
-        label: "NATURE OF SUCCESSION",
-        sortable: false,
-        render: (temp, all) => <div><StatusPill status={all?.nature_of_succession} /></div>,
-      },
-      {
-        key: "revert_by_date",
-        label: "REVERT BY DATE",
-        sortable: false,
-        render: (temp, all) => <div>{all?.last_submission_date}</div>,
-      },
-      {
-        key: "application",
-        label: "application STATUS",
-        sortable: false,
-        render: (temp, all) => (
-          <div>{<StatusPill status={all?.application_status} />}</div>
-        ),
-      },
-      {
-        key: "Extension",
-        label: "Extension STATUS",
-        sortable: false,
-        render: (temp, all) => (
-          <div>
-            {all?.extension_status ? (
-              <StatusPill status={all?.extension_status} />
-            ) : (
-              "NA"
-            )}
-          </div>
-        ),
-      },
-      {
-        key: "succession_status",
-        label: "SUCCESSION STATUS",
-        sortable: false,
-        render: (temp, all) => (
-          <div>{<StatusPill status={all?.succession_status} />}</div>
-        ),
-      },
-      {
-        key: "action_key",
-        label: "Action",
+        key: "status",
+        label: "Current Status",
         sortable: false,
         render: (temp, all) => (
           <div className={styles.btnWrap}>
@@ -246,18 +131,6 @@ const ThisYearSuccessionPlanner = ({ listData }) => {
             >
               <InfoOutlined fontSize={"small"} />
             </IconButton>
-            {!all?.is_succession_form_sent && (
-              <IconButton
-                className={"tableActionBtn"}
-                color="secondary"
-                disabled={isCalling}
-                onClick={() => {
-                  handleToggleSend(all);
-                }}
-              >
-                <SendIcon style={{ color: "#161616" }} fontSize={"small"} />
-              </IconButton>
-            )}
           </div>
         ),
       },
@@ -270,13 +143,11 @@ const ThisYearSuccessionPlanner = ({ listData }) => {
       onPageChange: handlePageChange,
       onRowSizeChange: handleRowSize,
     };
-
     const datatable = {
       ...Constants.DATATABLE_PROPERTIES,
-      rowsPerPage: 10,
       columns: tableStructure,
-      data: data,
-      count: allData.length,
+      data: present,
+      count:  allData?.length,
       page: currentPage,
     };
 
@@ -287,7 +158,7 @@ const ThisYearSuccessionPlanner = ({ listData }) => {
     handleSortOrderChange,
     handlePageChange,
     handleRowSize,
-    data,
+    present,
     currentPage,
   ]);
 
@@ -296,12 +167,12 @@ const ThisYearSuccessionPlanner = ({ listData }) => {
       <div>
         <div>
           <div>
-            <FilterComponent
+            {/* <FilterComponent
               is_progress={isFetching}
               filters={configFilter}
               handleSearchValueChange={handleSearchValueChange}
               handleFilterDataChange={handleFilterDataChange}
-            />
+            /> */}
           </div>
 
           <div>
@@ -314,41 +185,15 @@ const ThisYearSuccessionPlanner = ({ listData }) => {
             </div>
           </div>
         </div>
-        <SendPopup
+        {/* <SendPopup
           isOpen={isSend}
           handleToggle={handleToggleSend}
           handleSubmit={handleResend}
           empId={empId}
-        />
-        <SidePanelComponent
-          handleToggle={handleToggleSidePannel}
-          title={<UpperInfo />}
-          open={isSidePanel}
-          side={"right"}
-        >
-          <SuccessionHistory
-            handleToggleSidePannel={handleToggleSidePannel}
-            isSidePanel={isSidePanel}
-            empId={empId}
-          />
-        </SidePanelComponent>
-
-        <SidePanelComponent
-          handleToggle={handleToggleSidePannelForm}
-          title={<UpperDetailFormInfo />}
-          isBack={true}
-          open={isSidePanelForm}
-          side={"right"}
-        >
-          <SuccessionPlannerDetailform
-            handleToggleSidePannel={handleToggleSidePannelForm}
-            isSidePanel={isSidePanelForm}
-            empId={editData}
-          />
-        </SidePanelComponent>
+        /> */}
       </div>
     </div>
   );
 };
 
-export default ThisYearSuccessionPlanner;
+export default AssociatedManufactures;

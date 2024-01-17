@@ -5,7 +5,7 @@
     justify-content: space-between;
    
 }
-@media (max-width: 1090px) {
+@media (max-width: 1115px) {
     .profileFlex {
       display: flex;
       justify-content: center;
