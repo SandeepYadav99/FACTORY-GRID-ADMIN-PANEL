@@ -220,3 +220,21 @@
     text-align: center;
     font-size: 20px;
   }
+
+  .plainPaper {
+    border-radius: 10px;
+    padding: 1.2rem;
+    margin-bottom: 20px;
+    background-color: #fff;
+    box-shadow: 0px 20px 80px #00000011;
+  }
+
+  .heading {
+    font-size: 0.8rem;
+    font-weight: 600;
+  }
+  
+  .mainFlex {
+    display: flex;
+    /*align-items: center;*/
+  }

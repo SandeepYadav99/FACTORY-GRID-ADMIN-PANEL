@@ -65,12 +65,12 @@ const BusinessDetails = ({ id, userProfile }) => {
                 <ButtonBase className={styles.removeBtn}> Remove it</ButtonBase>
               </div> */}
               <div className={styles.user}>
-                Company Name{" "}
-              </div>
+               
               <a className={styles.coord} href={"#"}  onClick={()=>openGoogleMaps(userProfile?.business?.company_fg_lat)}>
              {userProfile?.business?.company_name || "N/A"} 
                 {/* FG Coordinates */}
               </a>
+              </div>
               <div className={styles.member}>
                 {/* <Rating
                   name="read-only"

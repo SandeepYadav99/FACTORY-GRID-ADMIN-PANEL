@@ -8,14 +8,10 @@ import {
   Add,
   Assignment,
   CalendarToday,
-
   Details,
   Group,
- 
   Lock,
-
   Person,
-
   WatchLaterRounded,
 } from "@material-ui/icons";
 import ResetPasswordDialog from "../ForgotPassword/ResetPassword.view";
@@ -25,6 +21,7 @@ import SidePanelComponent from "../../components/SidePanel/SidePanel.component";
 import AddTaskCreate from "./Create/AddTaskCreate";
 import TaskListItem from "./TaskListView";
 import capitalizeFirstLetter from "../../hooks/CapsFirstLetter";
+
 
 const Profile = () => {
   const [open, setOpen] = useState(false);
@@ -49,7 +46,7 @@ const Profile = () => {
     setOpen(!open);
   };
 
-  console.log(profileDetails, "Profile")
+  console.log(profileDetails, "Profile");
   return (
     <div>
       {isLoading ? (
@@ -141,7 +138,9 @@ const Profile = () => {
                     <CalendarToday className={styles.contactIcons} />
 
                     <span className={styles.activity}>
-                      {capitalizeFirstLetter(profileDetails?.joiningDateText || "N/A")}
+                      {capitalizeFirstLetter(
+                        profileDetails?.joiningDateText || "N/A"
+                      )}
                     </span>
                   </div>
                   <div className={styles.activityFlex}>
@@ -207,11 +206,31 @@ const Profile = () => {
                 ) : (
                   <p className={styles.notfound}> Tasks is not available!</p>
                 )}
+
               </div>
+          <div>
+                  <div className={styles.plainPaper}>
+                    <div className={styles.headingWrap}>
+                      <div className={styles.newLineWrap}>
+                        <span>
+                          <b>Associated Manufacturers</b>
+                        </span>
+                        <div className={styles.newLine2} />
+                      </div>
+                    </div>
+
+                    
+                    {/* listData={listData} */}
+                  </div>
+                </div>
             </div>
           </div>
 
-          <ResetPasswordDialog open={open} handleClose={handleClose} email={profileDetails?.email}/>
+          <ResetPasswordDialog
+            open={open}
+            handleClose={handleClose}
+            email={profileDetails?.email}
+          />
           {/* Side Pannel for Add Task management  */}
           <SidePanelComponent
             handleToggle={handleSideToggle}

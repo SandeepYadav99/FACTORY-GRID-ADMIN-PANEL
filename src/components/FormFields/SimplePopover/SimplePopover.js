@@ -78,7 +78,7 @@ export default function SimplePopover({
   const handleVerify = () => {
     serviceResetUserStatusUpdate({
       user_id: id,
-      [type]: "VERIFIED",
+      [type]: "ALERT",
     }).then((res) => {
       if (!res.error) {
         SnackbarUtils.success("Verified Succesfully");

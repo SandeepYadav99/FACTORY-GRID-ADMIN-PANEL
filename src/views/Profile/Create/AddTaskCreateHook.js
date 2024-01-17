@@ -26,6 +26,7 @@ const initialForm = {
   // comment:"",
   // status: true,
   assigned_to: "",
+  taskType:""
 };
 
 const useAddTaskCreate = ({
@@ -45,7 +46,9 @@ const useAddTaskCreate = ({
   const [filteredAssignedTo, setFilteredAssignedTo] = useState(null);
   const [fetchedAssignedUser, setFetchedAssinedUser] = useState(null);
   const [categoryLists, setCategoryLists] = useState(null);
+  const [taskTypes, setTaskTypes]=useState(["DISCUS"])
   const dispatch = useDispatch();
+
   console.log(form, "Form");
   useEffect(() => {
     if (!isSidePanel) return;
@@ -123,6 +126,7 @@ const useAddTaskCreate = ({
       "priority",
       "due_date",
       "category",
+      "taskType"
     ]; // "name", "description", "due_date", "task_type", "comment"
     if (!fetchedAssignedUser) {
       required.push("assigned_to");
@@ -281,6 +285,7 @@ const useAddTaskCreate = ({
     filteredTask,
     filteredAssignedTo,
     fetchedAssignedUser,
+    taskTypes
   };
 };
 
