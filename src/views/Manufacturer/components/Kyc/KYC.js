@@ -5,11 +5,12 @@ import IndustrySpecific from "./IndustrySpecific/IndustrySpecific";
 import RepresentativeKYCDetail from "./RepresentativeKYCDetails/RepresentativeKYCDetail";
 
 
-const KYC = () => {
+const KYC = ({userProfile}) => {
+ 
   return (
     <div>
-      <BusinessKYC />
-      <RepresentativeKYCDetail/>
+      <BusinessKYC userProfile={userProfile?.kyc}/>
+      <RepresentativeKYCDetail userProfile={userProfile?.representativekycs}/>
       <IndustrySpecific/>
     </div>
   );

@@ -222,7 +222,7 @@ const ManufacturerTabs = ({ classes, theme }) => {
         
         </TabPanel>
         <TabPanel value={value} index={3} dir={theme.direction}>
-      <KYC/>
+      <KYC userProfile={userProfile} />
         </TabPanel>
       </div>
       <SuspendPopup 
