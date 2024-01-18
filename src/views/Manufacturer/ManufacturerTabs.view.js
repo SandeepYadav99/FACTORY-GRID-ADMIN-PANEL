@@ -1,36 +1,29 @@
 import React, { useCallback, useEffect, useState } from "react";
 import styles from "./styles.module.css";
 import PropTypes from "prop-types";
-import SwipeableViews from "react-swipeable-views";
 import {
   makeStyles,
-  useTheme,
   withStyles,
-  withTheme,
 } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import PersonOutlineIcon from "@material-ui/icons/PersonOutline";
 import WorkOutlineIcon from "@material-ui/icons/WorkOutline";
-import ShareIcon from "@material-ui/icons/Share";
 import DetailsIcon from "@material-ui/icons/Details";
 import LoyaltyIcon from "@material-ui/icons/Loyalty";
 import FormatQuoteIcon from "@material-ui/icons/FormatQuote";
 import CreditCardIcon from "@material-ui/icons/CreditCard";
 import ShoppingBasketIcon from "@material-ui/icons/ShoppingBasket";
-import { Button, ButtonBase, Paper } from "@material-ui/core";
-import CustomerView from "../Customers/components/Info/Customer.view";
+import { Button } from "@material-ui/core";
 import { Report } from "@material-ui/icons";
 import MuiStyle from "../../libs/MuiStyle";
 import CustomerProfile from "./components/Profile/CustomerProfile.view";
 import BusinessDetails from "./components/Business/BusinessDetails.view";
 import useCustomerProfileHook from "../../helper/CustomerProfileHook";
-import SimplePopover from "../../components/FormFields/SimplePopover/SimplePopover";
 import SuspendPopup from "./components/SuspendPopup/SuspendPopup";
 import WaitingComponent from "../../components/Waiting.component";
-
-
+import KYC from "./components/Kyc/KYC";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -86,15 +79,7 @@ const ManufacturerTabs = ({ classes, theme }) => {
     [isOpenDialog]
   );
 
-
-  useEffect(() => {
-    // ComponentDidMount logic can go here
-  }, []);
-
- 
-
-  const handleSuspendBtn = () => {};
-
+ const handleSuspendBtn = () => {};
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
@@ -233,8 +218,12 @@ const ManufacturerTabs = ({ classes, theme }) => {
             isLoading={isLoading}/>
           
         </TabPanel>
-        <TabPanel value={value} index={2} dir={theme.direction}></TabPanel>
-        <TabPanel value={value} index={3} dir={theme.direction}></TabPanel>
+        <TabPanel value={value} index={2} dir={theme.direction}>
+        
+        </TabPanel>
+        <TabPanel value={value} index={3} dir={theme.direction}>
+      <KYC/>
+        </TabPanel>
       </div>
       <SuspendPopup 
         candidateId={userProfile?._id}

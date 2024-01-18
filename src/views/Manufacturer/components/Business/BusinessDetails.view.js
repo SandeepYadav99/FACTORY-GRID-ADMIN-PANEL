@@ -18,7 +18,6 @@ const dummy = [
 ];
 
 const BusinessDetails = ({ id, userProfile }) => {
-  // const { userProfile, renderInterestArea } = useCustomerProfileHook();
 
   const galleryImage = useCallback((images) => {
     if (images && Array.isArray(images)) {
