@@ -25,6 +25,8 @@ import AssociatedManufactures from "./AssociatedManufactures/AssociatedManufactu
 
 const Profile = () => {
   const [open, setOpen] = useState(false);
+  const userData = localStorage.getItem("user");
+  const userObject = JSON.parse(userData);
   const {
     profileDetails,
     handleEdit,
@@ -217,7 +219,7 @@ const Profile = () => {
                       <div className={styles.newLine2} />
                     </div>
                   </div>
-                  <AssociatedManufactures id={id}/>
+                  <AssociatedManufactures id={id ? id : userObject?.user?.id}/>
 
                   {/* listData={listData} */}
                 </div>
