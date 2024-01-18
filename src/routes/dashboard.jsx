@@ -346,26 +346,38 @@ const dashboardRoutes = [
   },
 
   {
-    path: RouteName.SERVICE_DETAIL,
+    path:"/service/list/" ,
     sidebarName: "Service",
     navbarName: "Service",
     icon: EventNote,
-    component: ServiceDetailView,
+    
+    component:ServiceListContainer ,
     is_sidebar: true,
     is_protect: true,
     // should_regex: false,
     parent: "masters",
   },
   {
-    path: "/service/list/",
+    path: RouteName.SERVICE_DETAIL,
     sidebarName: "Service list",
     navbarName: "service List",
     icon: SupervisedUserCircle,
-    component: ServiceListContainer ,
+    component: ServiceDetailView ,
     is_sidebar: false,
     is_protect: true,
     should_regex: false,
   }
+  // ,
+  // {
+  //   path: "/service/update/",
+  //   sidebarName: "Service list",
+  //   navbarName: "service List",
+  //   icon: SupervisedUserCircle,
+  //   component: ServiceListContainer ,
+  //   is_sidebar: false,
+  //   is_protect: true,
+  //   should_regex: false,
+  // }
   // {
   //   path: "/notifications",
   //   sidebarName: "Notifications",

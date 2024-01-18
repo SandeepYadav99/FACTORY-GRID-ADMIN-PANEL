@@ -4,27 +4,28 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import {
   serviceServiceCreate,
   serviceDetail,
-
   serviceServiceUpdate,
-} from "../../../services/Service.service";
-import SnackbarUtils from "../../../libs/SnackbarUtils";
+} from "../../../../services/Service.service";
+import SnackbarUtils from "../../../../libs/SnackbarUtils";
 import { useDispatch } from "react-redux";
-import { actionFetchService } from "../../../actions/Service.action";
-
+import { actionFetchService } from "../../../../actions/Service.action";
+import { useLocation } from "react-router-dom";
 const initialForm = {
   name: "",
   logo: "",
   apply_to: "",
   description: "",
   priority: "",
-  slug:"",
-  is_featured:"",
+  slug: "",
+  is_featured: "",
   status:""
 };
 
-
-
-const useServiceCreateHook = ({ handleToggleSidePannel, isSidePanel, empId }) => {
+const useServiceUpdateHook = ({
+  handleToggleSidePannel,
+  isSidePanel,
+  details,
+}) => {
   const [isLoading] = useState(false);
   const [showPasswordCurrent, setShowPasswordCurrent] = useState(false);
   const [errorData, setErrorData] = useState({});
@@ -37,36 +38,28 @@ const useServiceCreateHook = ({ handleToggleSidePannel, isSidePanel, empId }) =>
   const [listData, setListData] = useState(null);
   const dispatch = useDispatch();
 
-
-
   useEffect(() => {
-    if (empId) {
-      serviceDetail({ id: empId }).then((res) => {
-        if (!res.error) {
-          const data = res.data;
+    // serviceDetail({ id: id }).then((res) => {
+    //   if (!res.error) {
+    //     const data = res.data;
 
-        
-        //   description: "",
-        //   priority: "",
-          setForm({
-            ...form,
-            name: data?.name,
-            apply_to: data?.apply_to,
-            logo: data?.logo,
-            description: data?.description,
-            priority: data?.priority,
-            is_featured:data?.is_featured,
-            status:data?.status?"ACTIVE":"INACTIVE",
-            slug:data?.slug
-
-          });
-          setLogo(data?.logo);
-        } else {
-          // SnackbarUtils.error(res?.message);
-        }
-      });
-    }
-  }, [empId]);
+    setForm({
+      ...form,
+      name: details?.name,
+      apply_to: details?.apply_to,
+      description: details?.description,
+      priority: details?.priority,
+      is_featured: details?.is_featured,
+      slug: details?.slug,
+      status: details?.status,
+      id: details?._id,
+    });
+    setLogo(details?.logo);
+    // } else {
+    //   // SnackbarUtils.error(res?.message);
+    // }
+    // });
+  }, [details]);
 
   useEffect(() => {
     if (!isSidePanel) {
@@ -76,7 +69,7 @@ const useServiceCreateHook = ({ handleToggleSidePannel, isSidePanel, empId }) =>
 
   const checkFormValidation = useCallback(() => {
     const errors = { ...errorData };
-    let required = ["name", ...(empId ? [] : ["logo"])];
+    let required = ["name", ...(details?._id ? [] : ["logo"])];
     required.forEach((val) => {
       if (
         !form?.[val] ||
@@ -95,7 +88,7 @@ const useServiceCreateHook = ({ handleToggleSidePannel, isSidePanel, empId }) =>
     });
     return errors;
   }, [form, errorData]);
-console.log(form,"form")
+  console.log(form, "form");
   const submitToServer = useCallback(async () => {
     if (isSubmitting) {
       return;
@@ -103,25 +96,22 @@ console.log(form,"form")
     setIsSubmitting(true);
     try {
       const formData = new FormData();
-      console.log(formData,"formData")
+      console.log(formData, "formData");
       // const fields = ["name","slug", "logo", "apply_to", "description", "priority","is_featured"];
       // fields.forEach((field) => {
       //   formData.append(field, form?.[field]);
       // });
       formData.append("name", form?.name);
-       formData.append("slug", form?.name);
+      formData.append("slug", form?.name);
       formData.append("logo", form?.logo);
       formData.append("apply_to", form?.apply_to);
       formData.append("description", form?.description);
       formData.append("priority", form?.priority);
       formData.append("is_featured", form?.is_featured);
       formData.append("status", form?.status? "ACTIVE" : "INACTIVE");
-      formData.append("id", empId);
-
- 
-    
+      formData.append("id", details?._id );
       // const serviceFunction = empId ? serviceServiceUpdate : serviceServiceCreate;
-             const serviceFunction =  serviceServiceCreate;
+      const serviceFunction = serviceServiceUpdate;
       const res = await serviceFunction(formData);
       if (!res.error) {
         handleToggleSidePannel();
@@ -133,7 +123,7 @@ console.log(form,"form")
     } finally {
       setIsSubmitting(false);
     }
-  }, [form, isSubmitting, setIsSubmitting, empId, handleToggleSidePannel]);
+  }, [form, isSubmitting, setIsSubmitting,  handleToggleSidePannel]);
 
   const handleSubmit = useCallback(async () => {
     const errors = checkFormValidation();
@@ -143,7 +133,7 @@ console.log(form,"form")
     } else {
       await submitToServer();
     }
-  }, [checkFormValidation, setErrorData, form, submitToServer, empId]);
+  }, [checkFormValidation, setErrorData, form, submitToServer]);
 
   const removeError = useCallback(
     (title) => {
@@ -156,8 +146,6 @@ console.log(form,"form")
 
   const changeTextData = useCallback(
     (text, fieldName) => {
-      
-    
       let shouldRemoveError = true;
       const t = { ...form };
       if (fieldName === "name") {
@@ -170,18 +158,14 @@ console.log(form,"form")
         t[fieldName] = text;
       } else if (fieldName === "priority") {
         t[fieldName] = text;
-      }
-      else if (fieldName === "status") {
+      } else if (fieldName === "is_featured") {
+        t[fieldName] = text;}
+        else if (fieldName === "status") {
+          t[fieldName] = text;
+        
+      } else if (fieldName === "slug") {
         t[fieldName] = text;
-      }
-      else if (fieldName === "is_featured") {
-        t[fieldName] = text;
-      }
-      else if (fieldName === "slug") {
-        t[fieldName] = text;
-      }
-      
-      else {
+      } else {
         t[fieldName] = text;
       }
 
@@ -220,7 +204,7 @@ console.log(form,"form")
     handleDelete,
     includeRef,
     handleReset,
-    empId,
+  
     showPasswordCurrent,
     setShowPasswordCurrent,
     logo,
@@ -228,4 +212,4 @@ console.log(form,"form")
   };
 };
 
-export default useServiceCreateHook;
+export default useServiceUpdateHook;

@@ -31,5 +31,5 @@ export default {
     USER_PROFILE : "/users/edit/",
     HUB_MASTERS : "/hub/master",
     TASK_DETAIL:"/task/detail/",
-    SERVICE_DETAIL:"/service/detail"
+    SERVICE_DETAIL:"/service/detail/"
 };

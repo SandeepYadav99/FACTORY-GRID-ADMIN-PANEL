@@ -1,24 +1,25 @@
 import React, { memo } from "react";
-
+import classNames from "classnames";
 const PillContainer = ({ details, styles }) => {
-  const getstatusColor = (status) => {
-    switch (status) {
-      case 'ACTIVE':
-        return '#008000';
-      case 'INACTIVE':
-        return '#FF0000';
-    
-      default:
-        return '#FFFFFF'; 
-    }
-  };
+
   return (
     <div>
       {" "}
-      <div className={styles.pillContainer}>
-        <div className={styles.status} style={{ backgroundColor: getstatusColor(details?.status) }}>{details?.status}</div>
-        <div className={styles.section}>{details?.type}</div>
+      <div className={styles.container} >
+        <div>
+          <img src={details?.logo} height={30} alt="" />
+        </div>
+        <div className={classNames(styles.gaps, "openSans")}>
+          <span>
+            <strong>{`${details?.name}`}</strong>
+          </span>{" "}
+          <br />
+         
+        </div>
       </div>
+
+
+     
       <div className={styles.gaps} />
     </div>
   );

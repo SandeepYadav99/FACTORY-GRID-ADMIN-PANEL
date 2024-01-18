@@ -15,7 +15,7 @@ const ServiceDetailHeader = ({ details, styles }) => {
   return (
     <div>
       {" "}
-      <div className={styles.pillContainer}>
+      <div className={styles.headerTitle}>
         <div className={styles.status} style={{ backgroundColor: getstatusColor(details?.status) }}>{details?.status}</div>
         <div className={styles.section}>{details?.type}</div>
       </div>

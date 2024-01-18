@@ -1,28 +1,26 @@
 import React from "react";
 
-import {Button, CircularProgress, IconButton, MenuItem } from "@material-ui/core";
 import {
-
-  Delete as DeleteIcon,
-
-} from "@material-ui/icons";
+  Button,
+  CircularProgress,
+  IconButton,
+  MenuItem,
+} from "@material-ui/core";
+import { Delete as DeleteIcon } from "@material-ui/icons";
 
 // import styles from "";
 
-import CustomRadioLabel from "../../../components/CustomRadioLabel/CustomRadioLabel.component";
+import CustomRadioLabel from "../../../../components/CustomRadioLabel/CustomRadioLabel.component";
 import Tooltip from "@material-ui/core/Tooltip";
 import InfoIcon from "@material-ui/icons/Info";
-import CustomSwitch from "../../../FormFields/CustomSwitch";
-import CustomCheckbox from "../../../FormFields/CustomCheckbox";
+import CustomSwitch from "../../../../FormFields/CustomSwitch";
+import CustomCheckbox from "../../../../FormFields/TextField.component";
 import { makeStyles } from "@material-ui/styles";
 
-import useServiceCreateHook from "./ServiceCreateHooks";
-import File from "../../../components/FileComponent/FileComponent.component";
-import CustomTextField from "../../../FormFields/TextField.component";
-import styles from "../Create/Style.module.css";
-
-import CustomSelectField from "../../../FormFields/SelectField/SelectField.component";
-
+import File from "../../../../components/FileComponent/FileComponent.component";
+import CustomTextField from "../../../../FormFields/TextField.component";
+import styles from "../Update/Style.module.css";
+import useServiceUpdateHook from "./UpdateDetailHooks";
 
 const useStyles = makeStyles((theme) => ({
   iconBtnError: {
@@ -34,7 +32,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const ServiceView = ({ handleToggleSidePannel, isSidePanel, empId }) => {
+const ServiceUpdateView = ({
+  handleToggleSidePannel,
+  isSidePanel,
+ 
+  details,
+}) => {
   const {
     form,
     errorData,
@@ -46,8 +49,13 @@ const ServiceView = ({ handleToggleSidePannel, isSidePanel, empId }) => {
     data,
     handleDelete,
     listData,
-    isSubmitting
-  } = useServiceCreateHook({ handleToggleSidePannel, isSidePanel, empId });
+    isSubmitting,
+  } = useServiceUpdateHook({
+    handleToggleSidePannel,
+    isSidePanel,
+  
+    details,
+  });
   const classes = useStyles();
 
   return (
@@ -113,58 +121,55 @@ const ServiceView = ({ handleToggleSidePannel, isSidePanel, empId }) => {
         </div>
 
         <div className={"formFlex"}>
-            <div className={"formGroup"}>
-              <CustomTextField
-                isError={errorData?.name}
-                errorText={errorData?.name}
-                label={"Slug"}
-                value={form?.name}
-                onTextChange={(text) => {
-                  changeTextData(text, "name");
-                }}
-                onBlur={() => {
-                  onBlurHandler("name");
-                }}
-              />
-            </div>
+          <div className={"formGroup"}>
+            <CustomTextField
+              isError={errorData?.name}
+              errorText={errorData?.name}
+              label={"Slug"}
+              value={form?.name}
+              onTextChange={(text) => {
+                changeTextData(text, "name");
+              }}
+              onBlur={() => {
+                onBlurHandler("name");
+              }}
+            />
           </div>
+        </div>
 
-
-          <div className={"formFlex"}>
-            <div className={"formGroup"}>
-              <CustomTextField
-                isError={errorData?.description}
-                errorText={errorData?.description}
-                label={"Discription"}
-                value={form?.description}
-                onTextChange={(text) => {
-                  changeTextData(text, "description");
-                }}
-                onBlur={() => {
-                  onBlurHandler("description");
-                }}
-              />
-            </div>
+        <div className={"formFlex"}>
+          <div className={"formGroup"}>
+            <CustomTextField
+              isError={errorData?.description}
+              errorText={errorData?.description}
+              label={"Discription"}
+              value={form?.description}
+              onTextChange={(text) => {
+                changeTextData(text, "description");
+              }}
+              onBlur={() => {
+                onBlurHandler("description");
+              }}
+            />
           </div>
+        </div>
 
-
-          <div className={"formFlex"}>
-            <div className={"formGroup"}>
-              <CustomTextField
-                isError={errorData?.priority}
-                errorText={errorData?.priority}
-                label={"Priority"}
-                value={form?.priority}
-                onTextChange={(text) => {
-                  changeTextData(text, "priority");
-                }}
-                onBlur={() => {
-                  onBlurHandler("priority");
-                }}
-              />
-            </div>
+        <div className={"formFlex"}>
+          <div className={"formGroup"}>
+            <CustomTextField
+              isError={errorData?.priority}
+              errorText={errorData?.priority}
+              label={"Priority"}
+              value={form?.priority}
+              onTextChange={(text) => {
+                changeTextData(text, "priority");
+              }}
+              onBlur={() => {
+                onBlurHandler("priority");
+              }}
+            />
           </div>
-
+        </div>
 
         <div>
           <label>Applies To : </label>
@@ -180,7 +185,6 @@ const ServiceView = ({ handleToggleSidePannel, isSidePanel, empId }) => {
           </div>
         </div>
 
-      
         <div className={"headerFlex"}>
           <h4 className={"infoTitle"}>
             <div className={"heading"}>Status</div>
@@ -193,20 +197,18 @@ const ServiceView = ({ handleToggleSidePannel, isSidePanel, empId }) => {
             />
           </h4>
         </div>
-        <div>
-          <div className={"formGroup"}>
+       
+
+        <div className={"formGroup"}>
             <CustomCheckbox
               color={"primary"}
               handleChange={() => {
                 changeTextData(!form?.is_featured, "is_featured");
               }}
-              label={"Featured"}
+              label={"is_featured"}
               checked={form?.is_featured}
             />
           </div>
-        </div>
-
-       
 
         <div style={{ float: "right" }}>
           <Button
@@ -217,12 +219,9 @@ const ServiceView = ({ handleToggleSidePannel, isSidePanel, empId }) => {
           >
             {isSubmitting ? (
               <CircularProgress color="success" size="20px" />
-            ) : empId ? (
-              "UPDATE"
             ) : (
-              "Submit"
+              "UPDATE"
             )}
-          
           </Button>
         </div>
       </div>
@@ -230,4 +229,4 @@ const ServiceView = ({ handleToggleSidePannel, isSidePanel, empId }) => {
   );
 };
 
-export default ServiceView;
+export default React.memo(ServiceUpdateView);
