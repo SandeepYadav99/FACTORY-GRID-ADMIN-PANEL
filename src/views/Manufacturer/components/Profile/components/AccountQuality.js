@@ -37,9 +37,10 @@ const AccountQuality = ({ userProfileAccountQuality }) => {
   );
 
   const profileHandler = useCallback(() => {
-    historyUtils.push(`/profile/?id=${accountProfile?.id}`);
+    historyUtils.push(`/profile/?id=${accountProfile?.id || accountProfile?._id}`);
   }, [accountProfile?.id]);
 
+  console.log(accountProfile, "Profile")
   return (
     <div className={styles.plain}>
       <div className={styles.accountFlex}>
@@ -67,11 +68,12 @@ const AccountQuality = ({ userProfileAccountQuality }) => {
             </div>
           </div>
         </div>
-        <div>
+        {accountProfile?.id || accountProfile?._id ?  <div>
           <ButtonBase className={styles.view} onClick={profileHandler}>
             View Profile
           </ButtonBase>
-        </div>
+        </div> : null }
+       
       </div>
       <br />
       <div>
@@ -79,6 +81,7 @@ const AccountQuality = ({ userProfileAccountQuality }) => {
         <div className={styles.val}>{accountProfile?.contact || "N/A"}</div>
         <div className={styles.val}>{accountProfile?.email}</div>
       </div>
+      
       <div className={styles.caseFlex}>
         <AcountQueltyPopUp
           handleSubmitProps={handleSubmit}

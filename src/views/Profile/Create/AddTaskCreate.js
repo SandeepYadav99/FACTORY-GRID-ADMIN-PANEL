@@ -40,7 +40,7 @@ const AddTaskCreate = ({
     handleCreatedTask,
     profileDetails,
   });
-const [tData, setTData]=useState(null)
+  const [tData, setTData] = useState(null);
   return (
     <div>
       <div className={styles.headerFlex}>
@@ -61,7 +61,6 @@ const [tData, setTData]=useState(null)
         </IconButton>
       )} */}
       </div>
-
       <div>
         <div className={"formFlex"}>
           <div className={"formGroup"}>
@@ -69,7 +68,6 @@ const [tData, setTData]=useState(null)
               id="tags-outlined"
               onChange={(e, value) => {
                 changeTextData(value, "assigned_to");
-              
               }}
               value={form.assigned_to || fetchedAssignedUser || []}
               options={filteredAssignedTo || []}
@@ -89,7 +87,6 @@ const [tData, setTData]=useState(null)
                   variant="outlined"
                   label="Assigned To"
                   error={errorData?.assigned_to}
-                
                   InputProps={{
                     ...params.InputProps,
                     endAdornment: <Search />,

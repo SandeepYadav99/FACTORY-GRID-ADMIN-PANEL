@@ -67,11 +67,11 @@
 }
 
 .templateImg {
-  width: 70px;
-  height: 70px;
-  border-radius: 50%;
+  width: 120px;
+  height: 80px;
+  border-radius: 5px;
   margin-right: 10px;
-  border: 1px solid #80808021;
+  /* border: 1px solid #80808021; */
 }
 
 .chatIcon {
@@ -399,4 +399,8 @@
   display: flex;
   justify-content: space-between;
   align-items: baseline;
+}
+
+.gaps{
+  margin-bottom: 8px;
 }

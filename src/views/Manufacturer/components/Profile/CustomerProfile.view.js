@@ -112,6 +112,7 @@ const ProfileView = ({ userProfile, renderInterestArea, isLoading }) => {
             </div>
             </div>
           </div>
+       
           <AccountQuality
             userProfileAccountQuality={userProfile?.accountQualityManager}
           />

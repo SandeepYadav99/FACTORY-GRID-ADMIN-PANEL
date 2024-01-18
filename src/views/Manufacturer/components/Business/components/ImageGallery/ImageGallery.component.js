@@ -85,7 +85,7 @@ const ImageContainer = ({
       {image_type === "GALLERY" ? (
         <div className={styles.imgInfo}>
           <div className={styles.updated}>
-            Image Title / Image Label : {url.image_title}
+            {url.image_title}
           </div>
           <div className={styles.updated}>Updated On :{url?.updatedAt}</div>
         </div>

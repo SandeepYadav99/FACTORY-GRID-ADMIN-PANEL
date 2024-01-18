@@ -21,12 +21,14 @@ const CompanyRepresentative = ({userProfile}) => {
       </div>
     </div>
     <div>
-      <div className={styles.kyc}>
+      {console.log(userProfile?.representativekycs?.status, "Pro")}
+      {userProfile?.representativekycs?.status === "VERIFIED" ?  <div className={styles.kyc}>
         <span>
           <VerifiedUserIcon className={styles.verified} />
         </span>{" "}
         KYC Verified
-      </div>
+      </div> : ""}
+     
     </div>
   </div>
   <br />

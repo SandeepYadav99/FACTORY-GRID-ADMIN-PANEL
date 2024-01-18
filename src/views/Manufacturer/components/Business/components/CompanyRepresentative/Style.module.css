@@ -198,6 +198,7 @@
     font-weight: 600;
     font-size: 0.7rem;
     display: flex;
+    color: #20c997;
 }
 
 .value{
@@ -250,7 +251,7 @@
 }
 
 .verified{
-    color: #F76A6D;
+    color: #20c997;
     font-size: 0.9rem !important;
     margin-left: 4px;
 }
