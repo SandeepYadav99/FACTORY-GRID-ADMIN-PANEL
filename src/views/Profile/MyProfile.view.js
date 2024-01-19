@@ -20,7 +20,7 @@ import WaitingComponent from "../../components/Waiting.component";
 import SidePanelComponent from "../../components/SidePanel/SidePanel.component";
 import AddTaskCreate from "./Create/AddTaskCreate";
 import TaskListItem from "./TaskListView";
-import capitalizeFirstLetter from "../../hooks/CapsFirstLetter";
+import capitalizeFirstLetter from "../../hooks/CommonFunction";
 import AssociatedManufactures from "./AssociatedManufactures/AssociatedManufactures";
 
 const Profile = () => {
@@ -84,7 +84,7 @@ const Profile = () => {
                   Edit
                 </ButtonBase>
                 <div className={styles.profileContainer}>
-                  <img src={profileDetails?.image} alt="" />
+                  <img src={profileDetails?.image} alt="" height={250} width={250} />
 
                   <div className={styles.name}>
                     {capitalizeFirstLetter(profileDetails?.name)}
@@ -189,6 +189,7 @@ const Profile = () => {
                       >
                         <MenuItem value={"PENDING"}>Pending</MenuItem>
                         <MenuItem value={"COMPLETED"}>Completed</MenuItem>
+                        <MenuItem value={"ALL"}>All</MenuItem>
                         {/*<MenuItem value={'PRICE_HIGH'}>Price (High to Low)</MenuItem>*/}
                         {/*<MenuItem value={'RATING'}>Rating</MenuItem>*/}
                       </Select>

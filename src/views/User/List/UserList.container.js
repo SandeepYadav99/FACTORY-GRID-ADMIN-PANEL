@@ -16,7 +16,8 @@ import DataTables from "../../../Datatables/Datatable.table";
 import Constants from "../../../config/constants";
 import FilterComponent from "../../../components/Filter/Filter.component";
 import useUserListHook from "./UserListHook";
-import capitalizeFirstLetter from "../../../hooks/CapsFirstLetter";
+import capitalizeFirstLetter from "../../../hooks/CommonFunction";
+
 
 const UserList = (props) => {
   const {

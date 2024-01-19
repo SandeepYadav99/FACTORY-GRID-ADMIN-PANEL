@@ -51,7 +51,7 @@ const User = ({
             <File
               // bannerLabel="Profile"
               max_size={2 * 1024 * 1024}
-              type={["jpg", "png"]}
+              type={["jpg", "png", 'jpeg']}
               fullWidth={true}
               name="image"
               accept={"image/*"}

@@ -65,6 +65,9 @@
     text-align: center;
 }
 
+.profileContainer , img{
+   border-radius: 5px;
+}
 .edit{
     color: blue !important;
     display: flex !important;

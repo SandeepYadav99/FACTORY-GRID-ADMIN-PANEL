@@ -24,7 +24,7 @@ const initialForm = {
   type: "",
   employee_id: "",
   // password: "1231231admin",
-  joining_date: "",
+  joining_date: null,
   department: "",
   designation: "",
   manager: "",
@@ -186,7 +186,16 @@ const useUpperTabsHook = ({
         errors.email = "Invalid email address";
       }
     });
+    if (form?.joining_date) {
+      const selectedYear = new Date(form.joining_date).getFullYear();
+      const currentYear = new Date().getFullYear();
 
+      if (selectedYear > currentYear) {
+        errors.joining_date = true;
+      } else {
+        delete errors.joining_date;
+      }
+    }
     Object.keys(errors).forEach((key) => {
       if (!errors[key]) {
         delete errors[key];
@@ -291,11 +300,14 @@ const useUpperTabsHook = ({
       if (fieldName === "code") {
         shouldRemoveError = false;
       } else if (fieldName === "contact") {
-        console.log(text, "Contact");
+       
         // '+91'+
         t[fieldName] = text;
+      } else if (fieldName === "joining_date") {
+        console.log(text, "Text")
+        t[fieldName] = text;
       } else if (fieldName === "email") {
-        console.log(text, "Contact");
+       
         // '+91'+
         t[fieldName] = text;
       } else {

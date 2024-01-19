@@ -11,7 +11,8 @@ import useCustomerProfileHook from "../../../../helper/CustomerProfileHook";
 import BankDetail from "./components/BankDetail/BankDetail";
 import CompanyRepresentative from "./components/CompanyRepresentative/CompanyRepresentative";
 import bankImage from "../../../../assets/img/sent_blue.svg";
-import { formatString } from "../../../../hooks/CapsFirstLetter";
+import { formatString } from "../../../../hooks/CommonFunction";
+
 const dummy = [
   require("../../../../assets/img/cover.jpeg"),
   require("../../../../assets/img/cover.jpeg"),

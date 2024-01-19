@@ -44,7 +44,7 @@ const BusinessKYC = ({ userProfile }) => {
             <div>
               <div className={styles.title}>PAN File</div>
               <div>
-                <a href={userProfile?.pan_file}>abhaypanfile.jpg</a>
+                <a href={userProfile?.pan_file} target="_blank">Pan File</a>
               </div>
             </div>
 

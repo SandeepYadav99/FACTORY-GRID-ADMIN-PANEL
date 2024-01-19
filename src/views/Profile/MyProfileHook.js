@@ -22,7 +22,7 @@ const useMyProfileHook = () => {
   const [taskCreated, setTaskCreated] = useState(false);
   const userData = localStorage.getItem("user");
   const userObject = JSON.parse(userData);
-  const [filterValue, setFilterValue] = useState(""); // PENDING
+  const [filterValue, setFilterValue] = useState("ALL"); // PENDING
 
   useEffect(() => {
     setIsLoading(true);
@@ -61,7 +61,7 @@ const useMyProfileHook = () => {
         id: data?.id ? data?.id : "",
       }).then((res) => {
         if (!res.error) {
-          if (filterValue) {
+          if (filterValue !== "ALL") {
             serviceTaskFilterByUser({
               is_completed: false,
               user_id: id ? id : userObject?.user?.id,
@@ -70,6 +70,7 @@ const useMyProfileHook = () => {
                 if (!res?.error) {
                   // updateTaskManagement();
                   setTaskList(res?.data);
+                  SnackbarUtils.success("Task is marked as completed");
                 } else {
                   SnackbarUtils.error(res.message);
                 }
@@ -81,6 +82,7 @@ const useMyProfileHook = () => {
                 task.id === data.id ? { ...task, is_completed: true } : task
               );
             });
+            SnackbarUtils.success("Task is marked as completed");
           }
         }
       });
@@ -95,7 +97,7 @@ const useMyProfileHook = () => {
         id: data?.id ? data?.id : "",
       }).then((res) => {
         if (!res.error) {
-          if (filterValue) {
+          if (filterValue !== "ALL") {
             serviceTaskFilterByUser({
               is_completed: true,
               user_id: id ? id : userObject?.user?.id,
@@ -104,6 +106,7 @@ const useMyProfileHook = () => {
                 if (!res?.error) {
                   // updateTaskManagement();
                   setTaskList(res?.data);
+                  SnackbarUtils.success("Task is marked as incomplete");
                 } else {
                   SnackbarUtils.error(res.message);
                 }
@@ -115,6 +118,7 @@ const useMyProfileHook = () => {
                 task.id === data.id ? { ...task, is_completed: false } : task
               );
             });
+            SnackbarUtils.success("Task is marked as incomplete");
           }
         }
       });
@@ -143,23 +147,27 @@ const useMyProfileHook = () => {
   const filterCompltedTask = useCallback(
     (event) => {
       const newValue = event.target.value;
-      console.log(newValue, "Vlaue is ");
+      console.log(newValue, "all");
+
       setFilterValue(newValue);
       const queryValue = newValue === "PENDING" ? false : true;
-
-      serviceTaskFilterByUser({
-        is_completed: queryValue,
-        user_id: id ? id : userObject?.user?.id,
-      })
-        .then((res) => {
-          if (!res?.error) {
-            // updateTaskManagement();
-            setTaskList(res?.data);
-          } else {
-            SnackbarUtils.error(res.message);
-          }
+      if (newValue === "ALL") {
+        updateTaskManagement();
+      } else {
+        serviceTaskFilterByUser({
+          is_completed: queryValue,
+          user_id: id ? id : userObject?.user?.id,
         })
-        .finally(() => {});
+          .then((res) => {
+            if (!res?.error) {
+              // updateTaskManagement();
+              setTaskList(res?.data);
+            } else {
+              SnackbarUtils.error(res.message);
+            }
+          })
+          .finally(() => {});
+      }
     },
     [filterValue]
   );

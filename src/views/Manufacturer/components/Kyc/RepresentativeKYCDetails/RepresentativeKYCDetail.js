@@ -49,7 +49,7 @@ const RepresentativeKYCDetail = ({ userProfile }) => {
             <div>
               <div className={styles.title}>PAN File</div>
               <div>
-                <a href={pan_card}>Pan File</a>
+                <a href={pan_card}  target="_blank">Pan File</a>
               </div>
             </div>
           </div>
@@ -63,15 +63,15 @@ const RepresentativeKYCDetail = ({ userProfile }) => {
             </div>
 
             <div>
-              <div className={styles.title}>Aadhar Front</div>
+              <div className={styles.title}  >Aadhar Front</div>
               <div>
-                <a href={aadhar_front}>Adhar Front</a>
+                <a href={aadhar_front} target="_blank">Adhar Front</a>
               </div>
             </div>
             <div>
               <div className={styles.title}>Aadhar Back</div>
               <div>
-                <a href={aadhar_back}>Aadhar Back</a>
+                <a href={aadhar_back}  target="_blank">Aadhar Back</a>
               </div>
             </div>
           </div>
