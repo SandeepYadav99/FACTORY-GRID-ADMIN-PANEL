@@ -10,7 +10,7 @@ const TaskDetailHeader = ({
   
 }) => {
   return (
-    <div >
+  
       <div className={styles.headerTitle}>
         <div className={styles.subTitle}>{details?.title}</div>
         <div className={styles.complte}>
@@ -32,7 +32,7 @@ const TaskDetailHeader = ({
         </div>
       </div>
    
-    </div>
+ 
   );
 };
 

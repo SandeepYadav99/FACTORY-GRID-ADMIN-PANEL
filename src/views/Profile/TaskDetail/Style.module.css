@@ -55,6 +55,7 @@
   /*align-items: center;*/
   /* text-align: justify; */
   width: 90%;
+  margin-left: -15px;
 }
 .left {
   /*margin-right: 30px;*/
@@ -83,8 +84,13 @@
 }
 .backgroundStatus1 {
   display: flex;
-}
+  justify-content: space-between;
+  width: 43.3%;
 
+}
+.des{
+  font-size: 14px;
+}
 .gaps {
   padding: 10px;
 }
@@ -178,6 +184,7 @@
 .headerTitle {
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
 .complte {
 }

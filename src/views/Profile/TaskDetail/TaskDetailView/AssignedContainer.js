@@ -3,7 +3,7 @@ import React, { memo } from "react";
 
 const AssignedContainer = ({ details, styles, classes }) => {
   return (
-    <div>
+   
       <div className={styles.mainFlex}>
         {/* <div className={styles.gaps} /> */}
         <div className={styles.backgroundStatus}>
@@ -71,7 +71,7 @@ const AssignedContainer = ({ details, styles, classes }) => {
           </div>
         </div>
       </div>
-    </div>
+   
   );
 };
 

@@ -61,7 +61,7 @@ const useAddTaskCreate = ({
   useEffect(() => {
     setFetchedAssinedUser(profileDetails);
   }, [fetchedAssignedUser]);
-
+console.log(form?.assigned_to, "Assign")
   useEffect(() => {
     if (!isSidePanel) return;
     serviceSearchAssignto({
@@ -71,7 +71,7 @@ const useAddTaskCreate = ({
         setFilteredAssignedTo(res.data);
       }
     });
-  }, [form?.assigned_to, isSidePanel]);
+  }, [ isSidePanel]);
 
   useEffect(() => {
     if (!isSidePanel) return;
@@ -84,7 +84,7 @@ const useAddTaskCreate = ({
         setFilteredTask(res.data);
       }
     });
-  }, [form?.associated_task, isSidePanel]);
+  }, [isSidePanel]);
 
   useEffect(() => {
     if (!isSidePanel) return;
@@ -99,7 +99,7 @@ const useAddTaskCreate = ({
         setFilteredUsers(null);
       }
     });
-  }, [form?.associated_user, isSidePanel]);
+  }, [ isSidePanel]);
 
   const handleSearchUsers = useCallback((searchText) => {}, []);
 
@@ -231,6 +231,7 @@ const useAddTaskCreate = ({
       } else if (fieldName === "associated_task") {
         t[fieldName] = text;
       } else if (fieldName === "assigned_to") {
+      
         t[fieldName] = text;
       } else {
         t[fieldName] = text;

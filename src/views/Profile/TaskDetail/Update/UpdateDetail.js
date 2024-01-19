@@ -15,7 +15,7 @@ import InfoIcon from "@material-ui/icons/Info";
 import CustomDatePicker from "../../../../FormFields/DatePicker/CustomDatePicker";
 import { Autocomplete } from "@material-ui/lab";
 
-import { Search } from "@material-ui/icons";
+import { Clear, Search } from "@material-ui/icons";
 import CustomSelectField from "../../../../FormFields/SelectField/SelectField.component";
 import useAddTaskUpdate from "./UpdateDetailHook";
 
@@ -80,23 +80,16 @@ const AddTaskUpdate = ({
       <div>
         <div className={"formFlex"}>
           <div className={"formGroup"}>
-            <Autocomplete
+          
+             <Autocomplete
               id="tags-outlined"
               onChange={(e, value) => {
                 changeTextData(value, "assigned_to");
               }}
-              value={form?.assigned_to || fetchedAssignedTo || []}
+              value={form.assigned_to || fetchedAssignedTo || []}
               options={filteredAssignedTo || []}
-               getOptionLabel={(option) => `${option?.name} (${option?.email})`}
+              getOptionLabel={(option) => `${option?.name} (${option?.email})`}
               defaultValue={form?.assigned_to || []}
-              filterOptions={(options, { inputValue }) => {
-                // Implement your custom search logic here
-                return options?.filter((option) =>
-                  option?.name
-                    ?.toLowerCase()
-                    ?.includes(inputValue?.toLowerCase() || "")
-                );
-              }}
               renderInput={(params) => (
                 <TextField
                   {...params}
@@ -105,11 +98,16 @@ const AddTaskUpdate = ({
                   error={errorData?.assigned_to}
                   InputProps={{
                     ...params.InputProps,
-                    endAdornment: <Search />,
+                    endAdornment: (
+                      <>
+                        <Search
+                          style={{ marginRight: -20, cursor: "pointer" }}
+                        />
+                      </>
+                    ),
                   }}
                 />
               )}
-              
               disableClearable
             />
           </div>
@@ -242,14 +240,7 @@ const AddTaskUpdate = ({
               options={filteredUsers || []} // listData ||
               getOptionLabel={(option) => option?.first_name || ""}
               defaultValue={form?.associated_user || []}
-              filterOptions={(options, { inputValue }) => {
-                // Implement your custom search logic here
-                return options?.filter((option) =>
-                  option?.first_name
-                    ?.toLowerCase()
-                    ?.includes(inputValue?.toLowerCase() || "")
-                );
-              }}
+              
               renderInput={(params) => (
                 <TextField
                   {...params}
@@ -258,11 +249,24 @@ const AddTaskUpdate = ({
                   error={errorData?.associated_user}
                   InputProps={{
                     ...params.InputProps,
-                    endAdornment: <Search />,
+                    endAdornment: (
+                      <>
+                        {form?.associated_user ? (
+                          <Clear
+                            onClick={() =>
+                              changeTextData(null, "associated_user")
+                            }
+                          />
+                        ) : null}
+                        <Search
+                          style={{ marginRight: -40, cursor: "pointer" }}
+                        />
+                      </>
+                    ),
                   }}
                 />
               )}
-              disableClearable
+            
             />
           </div>
         </div>
@@ -277,14 +281,7 @@ const AddTaskUpdate = ({
               options={filteredTask  || []} // listData ||
               getOptionLabel={(option) => option?.title || ""}
               defaultValue={form?.associated_task || []}
-              filterOptions={(options, { inputValue }) => {
-                // Implement your custom search logic here
-                return options?.filter((option) =>
-                  option?.title
-                    ?.toLowerCase()
-                    ?.includes(inputValue?.toLowerCase() || "")
-                );
-              }}
+             
               renderInput={(params) => (
                 <TextField
                   {...params}
@@ -293,11 +290,24 @@ const AddTaskUpdate = ({
                   error={errorData?.associated_task}
                   InputProps={{
                     ...params.InputProps,
-                    endAdornment: <Search />,
+                    endAdornment: (
+                      <>
+                        {form?.associated_task ? (
+                          <Clear
+                            onClick={() =>
+                              changeTextData(null, "associated_task")
+                            }
+                          />
+                        ) : null}
+                        <Search
+                          style={{ marginRight: -40, cursor: "pointer" }}
+                        />
+                      </>
+                    ),
                   }}
                 />
               )}
-              disableClearable
+              // disableClearable
             />
           </div>
         </div>

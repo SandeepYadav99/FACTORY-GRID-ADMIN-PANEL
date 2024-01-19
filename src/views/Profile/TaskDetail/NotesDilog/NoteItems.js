@@ -3,8 +3,8 @@ import { Avatar, Card, CardHeader } from "@material-ui/core";
 
 const NoteItem = ({ note, styles, classes }) => (
   <div className={styles.mainFlex}>
-    <div>
-      <div style={{ marginLeft: "15px" , fontSize:"14px"}} >{note?.title}</div>
+    <div >
+      <div style={{marginLeft: "15px", fontSize: "14px",}} >{note?.title}</div>
       <Card>
         <CardHeader
           avatar={<Avatar src={note?.userData?.image} />}

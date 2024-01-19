@@ -83,7 +83,7 @@ const useAddTaskUpdate = ({
         setFilteredAssignedTo(res.data);
       }
     });
-  }, [form?.assigned_to, isSidePanel]);
+  }, [ isSidePanel]);
 
   useEffect(() => {
     if (!isSidePanel) return;
@@ -96,7 +96,7 @@ const useAddTaskUpdate = ({
         setFilteredTask(res.data);
       }
     });
-  }, [form?.associated_task, isSidePanel]);
+  }, [ isSidePanel]);
 
   useEffect(() => {
     if (!isSidePanel) return;
@@ -111,7 +111,7 @@ const useAddTaskUpdate = ({
         setFilteredUsers(null);
       }
     });
-  }, [form?.associated_user, isSidePanel]);
+  }, [ isSidePanel]);
 
  
 
@@ -159,7 +159,7 @@ const useAddTaskUpdate = ({
     });
     return errors;
   }, [form, errorData]);
-console.log(form.associated_user, fetchedUser)
+
   const submitToServer = useCallback(async () => {
     if (isSubmitting) {
       return;

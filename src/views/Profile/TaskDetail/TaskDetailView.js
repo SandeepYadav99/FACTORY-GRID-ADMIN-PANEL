@@ -57,13 +57,13 @@ const TaskDetailView = ({}) => {
 
   const fetchTaskDetails = useCallback(() => {
     // setTimeout(() => {
-      serviceTaskManagementDetail({ id: id }).then((res) => {
-        if (!res?.error) {
-          setDetails(res?.data);
-        } else {
-          SnackbarUtils.error(res?.message);
-        }
-      });
+    serviceTaskManagementDetail({ id: id }).then((res) => {
+      if (!res?.error) {
+        setDetails(res?.data);
+      } else {
+        SnackbarUtils.error(res?.message);
+      }
+    });
     // }, 2000);
   }, [id]);
 
@@ -74,12 +74,11 @@ const TaskDetailView = ({}) => {
         id: id ? id : "",
       });
       // setTimeout(() => {
-        fetchTaskDetails();
-        SnackbarUtils.success("Task is marked as completed");
+      fetchTaskDetails();
+      SnackbarUtils.success("Task is marked as completed");
       // }, 3000);
     } catch (error) {
       console.error("Error marking task as completed:", error);
-    
     }
   }, [id, fetchTaskDetails]);
 
@@ -90,12 +89,11 @@ const TaskDetailView = ({}) => {
         id: id ? id : "",
       });
       // setTimeout(() => {
-        fetchTaskDetails();
-        SnackbarUtils.success("Task is marked as incomplete");
+      fetchTaskDetails();
+      SnackbarUtils.success("Task is marked as incomplete");
       // }, 4000);
     } catch (error) {
       console.error("Error marking task as incomplete:", error);
-    
     }
   }, [id, fetchTaskDetails]);
 
@@ -153,7 +151,7 @@ const TaskDetailView = ({}) => {
           />
         </div>
       </div>
-      {/* )} */}
+
       <AddNoteContainer
         details={details}
         styles={styles}

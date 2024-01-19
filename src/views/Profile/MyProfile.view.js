@@ -84,7 +84,8 @@ const Profile = () => {
                   Edit
                 </ButtonBase>
                 <div className={styles.profileContainer}>
-                  <img src={profileDetails?.image} alt="" height={250} width={250} />
+                  {profileDetails?.image &&   <img src={profileDetails?.image} alt="" height={250} width={250} />}
+                
 
                   <div className={styles.name}>
                     {capitalizeFirstLetter(profileDetails?.name)}
