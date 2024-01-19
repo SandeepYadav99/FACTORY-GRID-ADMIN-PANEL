@@ -1,10 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 import styles from "./styles.module.css";
 import PropTypes from "prop-types";
-import {
-  makeStyles,
-  withStyles,
-} from "@material-ui/core/styles";
+import { makeStyles, withStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
@@ -65,24 +62,20 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const ManufacturerTabs = ({ classes, theme }) => {
-  const [value, setValue] = useState(0);
-  const { userProfile, renderInterestArea , isLoading} = useCustomerProfileHook();
-  
+  // const [value, setValue] = useState(0);
+  // const [isOpenDialog, setIsOpenDialog] = useState(false);
+  const {
+    userProfile,
+    renderInterestArea,
+    isLoading,
+    value,
+    isOpenDialog,
+    toggleIsOpenDialog,
+    handleChange,
+    handleSuspendBtn
+  } = useCustomerProfileHook();
 
-  const [isOpenDialog, setIsOpenDialog] = useState(false);
  
-  const toggleIsOpenDialog = useCallback(
-    (data) => {
-      setIsOpenDialog((e) => !e);
-      // setExpireLetter(data?.id)
-    },
-    [isOpenDialog]
-  );
-
- const handleSuspendBtn = () => {};
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
 
   const renderStatus = useCallback((status) => {
     if (status === "ACTIVE") {
@@ -132,9 +125,7 @@ const ManufacturerTabs = ({ classes, theme }) => {
               // className={`${classes.btnError} `}
               onClick={handleSuspendBtn}
               type="button"
-              
             >
-          
               {renderStatus(userProfile?.status || "N/A")}
             </Button>
             <Button
@@ -206,26 +197,29 @@ const ManufacturerTabs = ({ classes, theme }) => {
 
       <div className={styles.paperBackground}>
         <TabPanel value={value} index={0} dir={theme.direction}>
-        {isLoading ? <WaitingComponent/> : 
-          <CustomerProfile
+          {isLoading ? (
+            <WaitingComponent />
+          ) : (
+            <CustomerProfile
+              userProfile={userProfile}
+              renderInterestArea={renderInterestArea}
+              isLoading={isLoading}
+            />
+          )}
+        </TabPanel>
+        <TabPanel value={value} index={1} dir={theme.direction}>
+          <BusinessDetails
             userProfile={userProfile}
             renderInterestArea={renderInterestArea}
             isLoading={isLoading}
-          />}
+          />
         </TabPanel>
-        <TabPanel value={value} index={1} dir={theme.direction}>
-          <BusinessDetails  userProfile={userProfile} renderInterestArea={renderInterestArea}
-            isLoading={isLoading}/>
-          
-        </TabPanel>
-        <TabPanel value={value} index={2} dir={theme.direction}>
-        
-        </TabPanel>
+        <TabPanel value={value} index={2} dir={theme.direction}></TabPanel>
         <TabPanel value={value} index={3} dir={theme.direction}>
-      <KYC userProfile={userProfile} />
+          <KYC userProfile={userProfile} />
         </TabPanel>
       </div>
-      <SuspendPopup 
+      <SuspendPopup
         candidateId={userProfile?._id}
         isOpen={isOpenDialog}
         handleToggle={toggleIsOpenDialog}

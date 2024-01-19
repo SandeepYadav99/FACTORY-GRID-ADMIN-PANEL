@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import { ButtonBase, CircularProgress } from "@material-ui/core";
 import { Close } from "@material-ui/icons";
 import Slide from "@material-ui/core/Slide";
@@ -35,7 +35,7 @@ const SuspendPopup = ({ isOpen, handleToggle, candidateId }) => {
   const classes = useStyles();
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = () => {
+  const handleSubmit = useCallback(() => {
     if (candidateId) {
       setIsSubmitting(true);
       serviceGetUserSuspend({ id: candidateId })
@@ -52,7 +52,7 @@ const SuspendPopup = ({ isOpen, handleToggle, candidateId }) => {
           setIsSubmitting(false);
         });
     }
-  };
+  },[])
   return (
     <div>
       <Dialog

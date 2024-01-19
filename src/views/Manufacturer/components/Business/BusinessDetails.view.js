@@ -7,7 +7,7 @@ import Rating from "@material-ui/lab/Rating";
 import ImageGalleryComponent from "./components/ImageGallery/ImageGallery.component";
 
 import CompanyProfile from "./components/CompanyProfile/CompanyProfile";
-import useCustomerProfileHook from "../../../../helper/CustomerProfileHook";
+
 import BankDetail from "./components/BankDetail/BankDetail";
 import CompanyRepresentative from "./components/CompanyRepresentative/CompanyRepresentative";
 import bankImage from "../../../../assets/img/sent_blue.svg";

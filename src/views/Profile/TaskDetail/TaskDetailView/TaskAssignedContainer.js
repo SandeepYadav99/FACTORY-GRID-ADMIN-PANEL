@@ -1,5 +1,6 @@
 import { CardHeader } from "@material-ui/core";
 import React, { memo } from "react";
+import RouteName from "../../../../routes/Route.name";
 
 const TaskAssignedContainer = ({ styles, details, classes }) => {
   return (
@@ -36,11 +37,14 @@ const TaskAssignedContainer = ({ styles, details, classes }) => {
             <CardHeader
               title={<span className={classes.subTitle}>Associated User</span>}
               subheader={
-                <div className={classes.subHeadeer}>
+                <a  href={"#"} style={{fontWeight:"500"}}>
+                  {/* `${"/profile/"}?id=${details?.associatedUser?.id}` */}
+
                   {details?.associatedUser?.first_name
                     ? `${details?.associatedUser?.first_name} ${details?.associatedUser?.last_name}`
                     : "N/A"}
-                </div>
+              
+                </a>
               }
             />
           </div>
@@ -54,7 +58,7 @@ const TaskAssignedContainer = ({ styles, details, classes }) => {
             title={<span className={classes.subTitle}>Associated Task</span>}
             subheader={
               <a
-                href={`${"/profile/"}?id=${details?.assignedTo?.id}`}
+                href={`${RouteName.TASK_DETAIL}?id=${details?.associatedTask?._id}`}
                 style={{ fontSize: "13px" }}
               >
                {details?.associatedTask?.title || "N/A"}

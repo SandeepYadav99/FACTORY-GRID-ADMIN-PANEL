@@ -23,6 +23,7 @@ const AssignedContainer = ({ details, styles, classes }) => {
                   <Avatar
                     alt="User Avatar"
                     src={details?.assignedTo?.image}
+                     style={{ width: "40px", height: "40px" }}
                   ></Avatar>
                 }
                 title={
@@ -58,7 +59,7 @@ const AssignedContainer = ({ details, styles, classes }) => {
             {/* Avator  */}
             <CardHeader
               subheader={
-                <div style={{ fontSize: "13px", color: "#000000" }}>
+                <div style={{ fontSize: "14px", fontWeight:"500",color: "#000000" }}>
                   {details?.category?.map((cat, index) => (
                     <span key={index}>
                       {cat}

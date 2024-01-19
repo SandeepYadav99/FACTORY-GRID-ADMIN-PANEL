@@ -80,6 +80,7 @@
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
+  align-items: stretch
   /* margin: 0px 20rem 0px 0px; */
 }
 .backgroundStatus1 {

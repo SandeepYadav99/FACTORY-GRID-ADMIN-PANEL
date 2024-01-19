@@ -7,6 +7,8 @@ const useCustomerProfileHook = () => {
   const [userProfile, setUserProfile] = useState([]);
   const { id } = useParams();
   const [isLoading, setIsLoading] = useState(true);
+  const [value, setValue] = useState(0);
+  const [isOpenDialog, setIsOpenDialog] = useState(false);
 
   useEffect(() => {
     setIsLoading(true)
@@ -18,7 +20,7 @@ const useCustomerProfileHook = () => {
     }).finally(()=>{
       setIsLoading(false)
     })
-  }, [id]);
+  }, [id, isOpenDialog]);
 
   const renderInterestArea = useCallback((interest_area) => {
     const interest_area_list =
@@ -27,10 +29,29 @@ const useCustomerProfileHook = () => {
     return interest_area_list;
   }, []);
   
+  const toggleIsOpenDialog = useCallback(
+    (data) => {
+      setIsOpenDialog((e) => !e);
+      // setExpireLetter(data?.id)
+    },
+    [ value]
+  );
+
+  const handleSuspendBtn = () => {};
+
+  const handleChange = useCallback((event, newValue) => {
+    setValue(newValue);
+  },[value])
+
   return {
     userProfile,
     renderInterestArea,
-    isLoading
+    isLoading,
+    value,
+    isOpenDialog,
+    toggleIsOpenDialog,
+    handleChange,
+    handleSuspendBtn
   };
 };
 
