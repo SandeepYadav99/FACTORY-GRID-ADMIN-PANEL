@@ -182,10 +182,22 @@ const useUpperTabsHook = ({
       ) {
         errors[val] = true;
       }
+      if (!form.contact) {
+        errors.contact = "Contact cannot be empty";
+      } else {
+        // Check if the contact field has at least 10 digits
+        const contactDigits = form.contact.replace(/\D/g, ''); // Remove non-digits
+        if (contactDigits.length < 10) {
+          errors.contact = "Contact must have at least 10 digits";
+        } else {
+          delete errors.contact; // Remove the error if it meets the criteria
+        }
+      }
       if (val === "email" && form?.email && !isEmail(form?.email)) {
         errors.email = "Invalid email address";
       }
     });
+    
     if (form?.joining_date) {
       const selectedYear = new Date(form.joining_date).getFullYear();
       const currentYear = new Date().getFullYear();
@@ -228,6 +240,7 @@ const useUpperTabsHook = ({
         "manager",
       ];
 
+     
       fields.forEach((field) => {
         formData.append(field, form?.[field]);
       });
@@ -301,7 +314,6 @@ const useUpperTabsHook = ({
         shouldRemoveError = false;
       } else if (fieldName === "contact") {
        
-        // '+91'+
         t[fieldName] = text;
       } else if (fieldName === "joining_date") {
         console.log(text, "Text")

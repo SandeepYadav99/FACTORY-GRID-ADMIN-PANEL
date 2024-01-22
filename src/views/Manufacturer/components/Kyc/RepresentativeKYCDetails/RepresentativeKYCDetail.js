@@ -1,8 +1,8 @@
 import React from "react";
 import styles from "./Style.module.css";
-import { VerifiedUser } from "@material-ui/icons";
+
 const RepresentativeKYCDetail = ({ userProfile }) => {
-  console.log(userProfile, "Profile");
+ 
   const {
     name,
     pan_number,
@@ -13,7 +13,7 @@ const RepresentativeKYCDetail = ({ userProfile }) => {
     designation,
     member_type,
     pan_card,
-  } = userProfile;
+  } = userProfile || {};
   return (
     <div>
       <div className={styles.plainPaper}>
@@ -28,7 +28,7 @@ const RepresentativeKYCDetail = ({ userProfile }) => {
             <div>
               <div className={styles.title}>Name</div>
               <div>
-                <div>{name}</div>
+                <div>{name ? name :""}</div>
               </div>
             </div>
 

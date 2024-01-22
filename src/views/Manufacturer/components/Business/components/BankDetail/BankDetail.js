@@ -23,7 +23,7 @@ const BankDetail = ({ bankdetail , bakID}) => {
           <div>
             <div className={styles.key}>Account Holder Name</div>
             <div style={{ display: "flex" }}>
-              <div className={styles.val}>{bankdetail?.benificiery_name} </div>
+              <div className={styles.val}>{ bankdetail?.benificiery_name} </div>
               <div style={{ marginLeft: "10px" }}>
                 <SimplePopover
                   title={bankdetail?.accout_holder_status}

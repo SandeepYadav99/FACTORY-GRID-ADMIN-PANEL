@@ -15,14 +15,33 @@ const CustomPhoneContactField = ({
   isValid,
   ...rest
 }) => {
+  // const handleChange = useCallback(
+  //   (e) => {
+  //     onChange && onChange(e);
+  //     onTextChange && onTextChange(e);
+  //   },
+  //   [onChange, onTextChange]
+  // );
   const handleChange = useCallback(
-    (e) => {
-      onChange && onChange(e);
-      onTextChange && onTextChange(e);
+    (phoneNumber, country, e, formattedValue) => {
+    
+      const countryCodeRegex = /\+(\d+)/;
+      const match = formattedValue.match(countryCodeRegex);
+      const countryCode = match ? match[1] : null;
+      const restOfPhoneNumber = formattedValue.replace(countryCodeRegex, "").replace(/-/g, "");
+
+      // Format the phone number with a space
+      const formattedPhoneNumber = countryCode
+        ? `+${countryCode} ${restOfPhoneNumber}`
+        : formattedValue;
+
+     
+      onTextChange && onTextChange(formattedPhoneNumber);
+      onChange && onChange(formattedPhoneNumber, country, e, formattedValue);
     },
     [onChange, onTextChange]
   );
-  console.log(value, "Error Text");
+
   return (
     <div style={{ display: "flex", flexDirection: "column" }}>
       <PhoneInput
@@ -31,6 +50,7 @@ const CustomPhoneContactField = ({
           name: "Phone No",
         }}
         country={"in"}
+        // country={country_code ? country_code.toLowerCase() : 'us'}
         value={value}
         onChange={handleChange}
         inputStyle={{

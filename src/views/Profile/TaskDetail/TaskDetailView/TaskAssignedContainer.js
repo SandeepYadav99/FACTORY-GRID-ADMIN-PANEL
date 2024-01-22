@@ -3,6 +3,11 @@ import React, { memo } from "react";
 import RouteName from "../../../../routes/Route.name";
 
 const TaskAssignedContainer = ({ styles, details, classes }) => {
+  const generateUserProfileLink = (userDetails) => {
+    return userDetails?.id
+      ? `/profile/?id=${userDetails?.id}`
+      : "#";
+  };
   return (
     <div className={styles.mainFlex}>
       {/* <div className={styles.gaps} /> */}
@@ -37,11 +42,11 @@ const TaskAssignedContainer = ({ styles, details, classes }) => {
             <CardHeader
               title={<span className={classes.subTitle}>Associated User</span>}
               subheader={
-                <a  href={"#"} style={{fontWeight:"500"}}>
+                <a  href={ details?.associatedUser?.id ? `${"/profile/"}?id=${details?.associatedUser?.id}` : "#"} style={{fontWeight:"500"}}>
                   {/* `${"/profile/"}?id=${details?.associatedUser?.id}` */}
 
-                  {details?.associatedUser?.first_name
-                    ? `${details?.associatedUser?.first_name} ${details?.associatedUser?.last_name}`
+                  {details?.associatedUser?.name
+                    ? `${details?.associatedUser?.name} `
                     : "N/A"}
               
                 </a>

@@ -39,6 +39,17 @@ const ImageContainer = ({
   image_type,
   galleryTitle,
 }) => {
+  const formatDateTime = (dateString) => {
+    const options = {
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+    };
+    const date = new Date(dateString);
+    return date.toLocaleDateString(undefined, options);
+  };
   return (
     <div className={styles.imgContainer}>
       <div className={styles.imgBtn}>
@@ -87,7 +98,7 @@ const ImageContainer = ({
           <div className={styles.updated}>
             {url.image_title}
           </div>
-          <div className={styles.updated}>Updated On :{url?.updatedAt}</div>
+          <div className={styles.updated}>Updated On :{formatDateTime(url?.updatedAt)}</div>
         </div>
       ) : (
         <div className={styles.imgInfo}>
@@ -262,7 +273,7 @@ const ImageGalleryComponent = ({
     //   tempIndex++;
     // });
 
-    if (imagesArr.length > 0) {
+    if (imagesArr?.length > 0) {
       return (
         <div>
           <div className={styles.flexWrap}>{imagesArr}</div>
@@ -315,7 +326,7 @@ const ImageGalleryComponent = ({
   };
 
   const renderImageComponent = () => {
-    if (remoteImages.length < 10) {
+    if (remoteImages?.length < 10) {
       return (
         <File
           multiple={true}
@@ -328,10 +339,10 @@ const ImageGalleryComponent = ({
           type={["jpg", "png", "jpeg"]}
           placeholder={"Images"}
           max_count={
-            10 - remoteImages.length <= 0 ? -1 : 10 - remoteImages.length
+            10 - remoteImages?.length <= 0 ? -1 : 10 - remoteImages?.length
           }
           component={
-            localImages.length > 0 ? renderSaveButton() : renderAddButton()
+            localImages?.length > 0 ? renderSaveButton() : renderAddButton()
           }
         />
       );

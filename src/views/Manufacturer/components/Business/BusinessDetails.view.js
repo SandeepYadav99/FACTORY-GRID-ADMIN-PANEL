@@ -214,7 +214,7 @@ const BusinessDetails = ({ id, userProfile }) => {
                 Edit
               </a>
             </div>
-            {userProfile.bankdetail.benificiery_name ? (
+            {userProfile?.bankdetail?.benificiery_name ? (
               <BankDetail bankdetail={userProfile?.bankdetail} />
             ) : (
               <div style={{ textAlign: "center" }}>Not Available</div>

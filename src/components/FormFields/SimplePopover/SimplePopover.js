@@ -78,13 +78,15 @@ export default function SimplePopover({
   const handleVerify = () => {
     serviceResetUserStatusUpdate({
       user_id: id,
-      [type]: "ALERT",
+      [type]: "VERIFIED",
     }).then((res) => {
       if (!res.error) {
         SnackbarUtils.success("Verified Succesfully");
       }
     });
   };
+
+  const isVerifiedTitle = title && title.includes("VERIFIED");
 
   return (
     <div onMouseLeave={handleClose}>
@@ -98,7 +100,7 @@ export default function SimplePopover({
 
       <Popover
         ids={ids}
-        open={open}
+        open={open && !isVerifiedTitle}
         anchorEl={anchorEl}
         onClose={handleClose}
         anchorOrigin={{
@@ -110,6 +112,7 @@ export default function SimplePopover({
           horizontal: "top",
         }}
       >
+      
         {type ? (
           <div className={classes.bankDetail}>
             <ButtonBase>Cancel</ButtonBase>

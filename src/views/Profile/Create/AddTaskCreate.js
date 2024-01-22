@@ -225,7 +225,7 @@ const AddTaskCreate = ({
               }}
               value={form.associated_user || []}
               options={filteredUsers || []} // listData ||
-              getOptionLabel={(option) => option?.first_name}
+              getOptionLabel={(option) => option?.name}
               defaultValue={form?.associated_user || []}
               renderInput={(params) => (
                 <TextField

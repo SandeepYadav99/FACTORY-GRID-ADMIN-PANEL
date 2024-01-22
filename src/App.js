@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, useEffect} from 'react';
 import {Router, Route, Switch} from "react-router-dom";
 import {MuiThemeProvider, createMuiTheme, createTheme} from '@material-ui/core/styles';
 import RouteComponent from './routes/index.route';
