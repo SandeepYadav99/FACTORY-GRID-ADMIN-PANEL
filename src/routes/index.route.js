@@ -21,5 +21,5 @@ const RouteComponent =  () => (
         <Route path={'/reset/password'} component={ResetPassword} />
         <Route path={'/'} component={Dashboard} />
     </Switch>
-)
+);
 export default RouteComponent;
