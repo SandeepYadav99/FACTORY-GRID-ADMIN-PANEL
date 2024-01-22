@@ -15,7 +15,6 @@ import InfoIcon from "@material-ui/icons/Info";
 import CustomSwitch from "../../../FormFields/CustomSwitch";
 import CustomCheckbox from "../../../FormFields/CustomCheckbox";
 import { makeStyles } from "@material-ui/styles";
-
 import useServiceCreateHook from "./ServiceCreateHooks";
 import File from "../../../components/FileComponent/FileComponent.component";
 import CustomTextField from "../../../FormFields/TextField.component";

@@ -14,7 +14,8 @@ import CustomRadioLabel from "../../../../components/CustomRadioLabel/CustomRadi
 import Tooltip from "@material-ui/core/Tooltip";
 import InfoIcon from "@material-ui/icons/Info";
 import CustomSwitch from "../../../../FormFields/CustomSwitch";
-import CustomCheckbox from "../../../../FormFields/TextField.component";
+
+import CustomCheckbox from "../../../../FormFields/CustomCheckbox";
 import { makeStyles } from "@material-ui/styles";
 
 import File from "../../../../components/FileComponent/FileComponent.component";
@@ -199,16 +200,21 @@ const ServiceUpdateView = ({
         </div>
        
 
-        <div className={"formGroup"}>
+    
+
+          <div>
+          <div className={"formGroup"}>
             <CustomCheckbox
               color={"primary"}
               handleChange={() => {
                 changeTextData(!form?.is_featured, "is_featured");
               }}
-              label={"is_featured"}
+              label={"Featured"}
               checked={form?.is_featured}
             />
           </div>
+        </div>
+
 
         <div style={{ float: "right" }}>
           <Button
