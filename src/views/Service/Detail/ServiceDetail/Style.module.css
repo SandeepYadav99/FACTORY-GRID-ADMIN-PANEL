@@ -81,6 +81,10 @@
     width: 80%;
     /* margin: 0px 20rem 0px 0px; */
   }
+
+  .status{
+    text-align: end;
+  }
     .backgroundStatus1 {
     display: flex;
    
@@ -90,6 +94,7 @@
   
   .gaps {
     padding: 10px;
+    
   }
   .fieldContainer {
     display: flex;
@@ -192,7 +197,10 @@
 
 .headerTitle{
   display: flex;
-  justify-content: space-between;
+  justify-content: end;
+  text-align: end;
+  font-size: 20px;
+
 
 }
 

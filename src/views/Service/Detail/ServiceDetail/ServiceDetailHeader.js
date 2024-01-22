@@ -16,8 +16,8 @@ const ServiceDetailHeader = ({ details, styles }) => {
     <div>
       {" "}
       <div className={styles.headerTitle}>
-        <div className={styles.status} style={{ backgroundColor: getstatusColor(details?.status) }}>{details?.status}</div>
-        <div className={styles.section}>{details?.type}</div>
+        <div  style={{ backgroundColor: getstatusColor(details?.status) }}>{details?.status}</div>
+       
       </div>
       <div className={styles.gaps} />
     </div>
