@@ -3,7 +3,7 @@
   <component name="WebServers">
     <option name="servers">
       <webServer id="8e6f1ba2-535e-4e1f-b0a5-059083dba402" name="contabo_server (project level)">
-        <fileTransfer rootFolder="/var/nodeservers" accessType="SFTP" host="91.205.173.97" port="22" sshConfigId="bce10117-b9a1-4e73-82a4-e4c5fa97fcc9" sshConfig="root@91.205.173.97:22 password">
+        <fileTransfer rootFolder="/var/nodeservers" accessType="SFTP" host="91.205.173.97" port="22" sshConfigId="43e3a0ea-7507-4060-b9c0-36773773bf38" sshConfig="91server">
           <advancedOptions>
             <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
           </advancedOptions>
