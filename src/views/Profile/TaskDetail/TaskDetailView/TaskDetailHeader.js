@@ -1,6 +1,6 @@
 import { ButtonBase } from "@material-ui/core";
 import { Check } from "@material-ui/icons";
-import React from "react";
+import React, { useState } from "react";
 
 const TaskDetailHeader = ({
   details,
@@ -9,26 +9,29 @@ const TaskDetailHeader = ({
   styles,
   
 }) => {
+  const [isCompleted, setIsCompleted] = useState(details?.is_completed);
+
+  const handleButtonClick = () => {
+    if (isCompleted) {
+      completedHandler();
+    } else {
+      markAsCompleted();
+    }
+    setIsCompleted(!isCompleted);
+  };
   return (
   
       <div className={styles.headerTitle}>
         <div className={styles.subTitle}>{details?.title}</div>
         <div className={styles.complte}>
-          {details?.is_completed ? (
-            <div className={`${styles.complted} ${styles.transition}`}>
-              <ButtonBase onClick={completedHandler}>
-                <Check fontSize={"small"} />
-                <span> Completed</span>
-              </ButtonBase>
-            </div>
-          ) : (
-            <div className={`${styles.markComplte} ${styles.transition}`}>
-              <ButtonBase onClick={markAsCompleted}>
-                <Check fontSize={"small"} />
-                <span>Mark as Complete</span>
-              </ButtonBase>
-            </div>
-          )}
+        <div  className={`${styles.transition} ${
+          isCompleted ? styles.completed : styles.markComplete
+        }`}>
+        <ButtonBase onClick={handleButtonClick}>
+          <Check fontSize={"small"} />
+          <span>{isCompleted ? " Completed" : "Mark as Complete"}</span>
+        </ButtonBase>
+      </div>
         </div>
       </div>
    

@@ -192,27 +192,33 @@
 }
 .complte {
 }
+.transition {
+  transition: opacity 0.6s ease-in-out, transform 0.2s ease-in-out;
+ 
 
-.complted {
+}
+.completed {
   color: white !important;
   background-color: #02cc87 !important;
   border: 10px;
-  padding: 5px 8px;
+  padding: 5px 10px;
   border-radius: 3px;
-  transition: border-color 3s ease;
+  transform: scale(0.91) translateX(10px);
+  /* opacity: 1; */
 }
 
-.markComplte {
+.markComplete {
   border: 1px solid #02cc87 !important;
   color: #02cc87 !important;
   border: 10px;
   padding: 5px 8px;
   border-radius: 3px;
+  transform: scale(1) translateX(0);
+  /* opacity: 0.7; */
+ 
 }
-.transition {
-  transition: ease-out 0.4s; /* Adjust properties and duration as needed */
 
-}
+
 .editAction {
   background-color: #ffffff;
   color: #000000;

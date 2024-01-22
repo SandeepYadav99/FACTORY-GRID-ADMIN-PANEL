@@ -1,4 +1,5 @@
 import {
+  Avatar,
   Button,
   Chip,
   CircularProgress,
@@ -40,7 +41,7 @@ const AddTaskCreate = ({
     handleCreatedTask,
     profileDetails,
   });
-  const [tData, setTData] = useState(null);
+
   return (
     <div>
       <div className={styles.headerFlex}>
@@ -68,12 +69,14 @@ const AddTaskCreate = ({
             <Autocomplete
               id="tags-outlined"
               onChange={(e, value) => {
+                
                 changeTextData(value, "assigned_to");
               }}
               value={form.assigned_to || fetchedAssignedUser || []}
               options={filteredAssignedTo || []}
-              getOptionLabel={(option) => `${option?.name} (${option?.email})`}
+              getOptionLabel={(option) =>  `${option?.name} (${option?.email})`}
               defaultValue={form?.assigned_to || []}
+          
               renderInput={(params) => (
                 <TextField
                   {...params}
@@ -86,6 +89,14 @@ const AddTaskCreate = ({
                       <>
                         <Search
                           style={{ marginRight: -20, cursor: "pointer" }}
+                        />
+                      </>
+                    ),
+                    startAdornment: (
+                      <>
+                        <Avatar
+                          src={form?.assigned_to.image}
+                          style={{ marginRight: 8, cursor: "pointer" }}
                         />
                       </>
                     ),
