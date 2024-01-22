@@ -163,6 +163,9 @@
   margin-left: 0px;
   display: inline-block;
   margin-bottom: 5px;
+  display: flex;
+  text-align: center;
+  justify-content: flex-start;
 }
 .notesContainer {
   display: flex;

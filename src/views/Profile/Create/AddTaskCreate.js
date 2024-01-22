@@ -140,6 +140,7 @@ const AddTaskCreate = ({
               onChange={(date) => {
                 changeTextData(date, "due_date");
               }}
+              format={"dd-MM-yyyy  HH:mm"}
               value={form?.due_date}
               isError={errorData?.due_date}
             />

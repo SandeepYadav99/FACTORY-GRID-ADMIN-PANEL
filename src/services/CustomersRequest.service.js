@@ -19,6 +19,11 @@ export async function serviceGetUserSuspend(params) {
     return await postRequest('user/suspend', params);
 }
 
+export async function serviceGetUserActive(params) {
+    return await postRequest('user/active', params); // user/suspend
+}
+
+
 export async function serviceResetUserEmail(params) { // user/update/bank/status
     return await postRequest('user/send/email', params);
 }

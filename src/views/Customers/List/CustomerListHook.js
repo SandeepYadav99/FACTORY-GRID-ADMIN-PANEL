@@ -122,9 +122,10 @@ const useCustomerListHook = ({}) => {
 
   const handleEdit = useCallback((type) => {
     console.log(type, "Type")
+
     if (type.user_type === "MANUFACTURE") {
      return historyUtils.push(`${RouteName.CUSTOMERS_MANUFACTURES}${type.id}`);// /${type.id}
-    } else if (type.user_type === "CUSTOMER") {
+    } else if (type.user_type === "CUSTOMER" || "PENDING") {
     return  historyUtils.push(`${RouteName.CUSTOMERS_CUSTOMER}${type.id}`); // /${type.id}
     }
   }, []);

@@ -128,15 +128,28 @@ const ManufacturerTabs = ({ classes, theme }) => {
             >
               {renderStatus(userProfile?.status || "N/A")}
             </Button>
+            {userProfile?.status  === "SUSPENDED"  ? 
             <Button
               variant="contained"
-              className={classes.btnError}
-              onClick={toggleIsOpenDialog}
+              className={classes.btnSuccess}
+              onClick={ toggleIsOpenDialog}
               type="button"
             >
+              {/*     Make Active  */}
+              <Report />
+              Make Active
+            
+            </Button> : <Button
+              variant="contained"
+              className={classes.btnError}
+              onClick={ toggleIsOpenDialog}
+              type="button"
+            >
+              {/*     Make Active  */}
               <Report />
               Suspend
-            </Button>
+            
+            </Button>}
           </div>
         </div>
       </div>
@@ -223,6 +236,7 @@ const ManufacturerTabs = ({ classes, theme }) => {
         candidateId={userProfile?._id}
         isOpen={isOpenDialog}
         handleToggle={toggleIsOpenDialog}
+        status={userProfile?.status}
       />
     </div>
   );

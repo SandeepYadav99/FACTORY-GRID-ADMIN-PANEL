@@ -32,6 +32,7 @@
 .leftSection {
     /*margin-right: 30px;*/
     flex: 0.7;
+    margin: auto;
 }
 .rightSection{
     flex: 1;

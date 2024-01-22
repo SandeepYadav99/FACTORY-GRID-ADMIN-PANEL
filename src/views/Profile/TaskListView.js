@@ -41,7 +41,7 @@ const TaskListItem = ({ task, handleDetailPage , markAsCompleted, completedHandl
       <div className={styles.taskFlex} >
         <div className={styles.timeFlex}>
           <AccessTime className={styles.contactIcons} fontSize='small'/>
-          <span className={styles.info}>{task?.assignedOnText}</span>
+          <span className={styles.info}>{task?.dueDateListText}</span>
         </div>
         <div className={styles.priority} style={{ backgroundColor: getPriorityColor(task?.priority) }}>{task?.priority}</div>
         <div className={styles.section}>{task?.type}</div>
