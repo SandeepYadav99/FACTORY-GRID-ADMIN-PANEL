@@ -48,7 +48,6 @@ const ServiceDetailView = ({}) => {
   const [isAcceptPopUp, setIsAcceptPopUp] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [details, setDetails] = useState(null);
-  console.log(details, "details");
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const id = queryParams.get("id");
