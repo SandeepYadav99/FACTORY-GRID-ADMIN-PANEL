@@ -35,22 +35,42 @@ const AddNoteContainer = ({ details, styles, classes }) => {
               </ButtonBase>
             </div>
           </div>
-
-          <NotesDilog
-            isOpen={isAcceptPopUp}
-            handleToggle={toggleAcceptDialog}
-            form={form}
-            changeTextData={changeTextData}
-            handleSubmit={handleSubmit}
-          />
-
-          {noteDetails?.length > 0 ? (
-            noteDetails?.map((note, index) => (
-              <NoteItem
-                key={index}
-                note={note}
-                styles={styles}
-                classes={classes}
+          {!details?.notes > 0 ? (
+            <div className={styles.mainFlex}>
+              <div>
+                <div style={{ marginLeft: "15px" }}>
+                  Notes entered will be displayed here. Notes entered will be
+                  displayed here
+                </div>
+                <Card>
+                  <CardHeader
+                    avatar={<Avatar>R</Avatar>}
+                    title={<span className={classes.boldTitle}>Pranav</span>}
+                    subheader="September 14, 2016"
+                  />
+                </Card>
+              </div>
+              <div className={styles.gaps} />
+              <div>
+                <div style={{ marginLeft: "15px" }}>
+                  Notes entered will be displayed here. Notes entered will be
+                  displayed here
+                </div>
+                <Card>
+                  <CardHeader
+                    avatar={<Avatar>R</Avatar>}
+                    title={<span className={classes.boldTitle}>noteDetail</span>}
+                    subheader="September 14, 2016"
+                  />
+                </Card>
+              </div>
+              {/* Dilog Box nots */}
+              <NotesDilog
+                isOpen={isAcceptPopUp}
+                handleToggle={toggleAcceptDialog}
+                form={form}
+                changeTextData={changeTextData}
+                handleSubmit={handleSubmit}
               />
             ))
           ) : (

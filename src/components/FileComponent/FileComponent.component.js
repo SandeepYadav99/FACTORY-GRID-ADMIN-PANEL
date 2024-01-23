@@ -75,7 +75,7 @@ class File extends Component {
     const { default_image, user_image } = this.props;
     // console.log('_getImageUrl', value);
     if (value) {
-      return URL.createObjectURL(value);
+      return URL?.createObjectURL(value);
     } else if (default_image) {
       return default_image;
     } else if (user_image) {
