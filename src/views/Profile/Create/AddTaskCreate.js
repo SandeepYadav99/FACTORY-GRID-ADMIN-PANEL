@@ -92,14 +92,14 @@ const AddTaskCreate = ({
                         />
                       </>
                     ),
-                    startAdornment: (
-                      <>
-                        <Avatar
-                          src={form?.assigned_to.image}
-                          style={{ marginRight: 8, cursor: "pointer" }}
-                        />
-                      </>
-                    ),
+                    // startAdornment: (
+                    //   <>
+                    //     <Avatar
+                    //       src={form?.assigned_to.image}
+                    //       style={{ marginRight: 8, cursor: "pointer" }}
+                    //     />
+                    //   </>
+                    // ),
                   }}
                 />
               )}
