@@ -27,6 +27,7 @@ import AuthReducer from './Auth.reducer';
 import HubMasterReducer from './HubMaster.reducer';
 import CommonReducer from './Common.reducer';
 import AssociatedManufacturesReducer from './AssociatedManufactures.reducer';
+import ServiceReducer from './Service.reducer';
 
 
 const rootReducer = combineReducers({
@@ -52,6 +53,8 @@ const rootReducer = combineReducers({
     provider_user: ProviderUser,
     quotes: QuotesReducer,
     customers: Customers,
+    Service:ServiceReducer,
+
     // form: formReducer,
     hubMaster:HubMasterReducer,
     common: CommonReducer,
