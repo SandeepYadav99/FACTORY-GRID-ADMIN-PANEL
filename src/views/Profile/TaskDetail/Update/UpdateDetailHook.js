@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useCallback, useEffect, useState } from "react";
 import SnackbarUtils from "../../../../libs/SnackbarUtils";
-import { useDispatch, useSelector } from "react-redux";
+
 import {
   serviceSearchAssignto,
   serviceSearchTask,

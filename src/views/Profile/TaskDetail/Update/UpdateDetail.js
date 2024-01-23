@@ -1,4 +1,5 @@
 import {
+  Avatar,
   Button,
   Chip,
   CircularProgress,
@@ -42,7 +43,7 @@ const AddTaskUpdate = ({
     fetchedAssignedTo,
     fetchedTask,
     fetchedUser,
-    categoryLists
+    categoryLists,
   } = useAddTaskUpdate({
     handleSideToggle,
     isSidePanel,
@@ -80,8 +81,7 @@ const AddTaskUpdate = ({
       <div>
         <div className={"formFlex"}>
           <div className={"formGroup"}>
-          
-             <Autocomplete
+            <Autocomplete
               id="tags-outlined"
               onChange={(e, value) => {
                 changeTextData(value, "assigned_to");
@@ -89,6 +89,12 @@ const AddTaskUpdate = ({
               value={form.assigned_to || fetchedAssignedTo || []}
               options={filteredAssignedTo || []}
               getOptionLabel={(option) => `${option?.name} (${option?.email})`}
+              renderOption={(option) => (
+                <div style={{ display: "flex", alignItems: "center" }}>
+                  <Avatar src={option?.image} style={{ marginRight: 8 }} />
+                  <div>{`${option?.name} (${option?.email})`}</div>
+                </div>
+              )}
               defaultValue={form?.assigned_to || []}
               renderInput={(params) => (
                 <TextField
@@ -105,11 +111,66 @@ const AddTaskUpdate = ({
                         />
                       </>
                     ),
+                    startAdornment: (
+                      <>
+                        <Avatar
+                          src={
+                            form?.assigned_to.image || fetchedAssignedTo?.image
+                          }
+                          style={{ marginRight: 8, cursor: "pointer" }}
+                        />
+                      </>
+                    ),
                   }}
                 />
               )}
               disableClearable
             />
+            {/* <Autocomplete
+              id="tags-outlined"
+              onChange={(e, value) => {
+                changeTextData(value, "assigned_to");
+              }}
+              value={form.assigned_to || fetchedAssignedUser || []}
+              options={filteredAssignedTo || []}
+              // getOptionLabel={(option) =>  `${option?.name} (${option?.email})`}
+
+              defaultValue={form?.assigned_to || []}
+              getOptionLabel={(option) => `${option?.name} (${option?.email})`}
+              renderOption={(option) => (
+                <div style={{ display: "flex", alignItems: "center" }}>
+                  <Avatar src={option?.image} style={{ marginRight: 8 }} />
+                  <div>{`${option?.name} (${option?.email})`}</div>
+                </div>
+              )}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  variant="outlined"
+                  label="Assigned To"
+                  error={errorData?.assigned_to}
+                  InputProps={{
+                    ...params.InputProps,
+                    endAdornment: (
+                      <>
+                        <Search
+                          style={{ marginRight: -20, cursor: "pointer" }}
+                        />
+                      </>
+                    ),
+                    startAdornment: (
+                      <>
+                        <Avatar
+                          src={form?.assigned_to.image}
+                          style={{ marginRight: 8, cursor: "pointer" }}
+                        />
+                      </>
+                    ),
+                  }}
+                />
+              )}
+              disableClearable
+            /> */}
           </div>
         </div>
         <div className={"formFlex"}>
@@ -162,7 +223,7 @@ const AddTaskUpdate = ({
           </div>
         </div>
         <div className="formFlex">
-        <div className={"formGroup"}>
+          <div className={"formGroup"}>
             <Autocomplete
               multiple
               id="tags-outlined"
@@ -193,10 +254,11 @@ const AddTaskUpdate = ({
               )}
             />
           </div>
-          </div>
-          <label className={styles.enter}>
-            Please press enter to add a category if not found in the search results.
-          </label>
+        </div>
+        <label className={styles.enter}>
+          Please press enter to add a category if not found in the search
+          results.
+        </label>
         <div className={"formFlex"}>
           <div className={"formGroup"}>
             <CustomSelectField
@@ -240,7 +302,6 @@ const AddTaskUpdate = ({
               options={filteredUsers || []} // listData ||
               getOptionLabel={(option) => option?.name || ""}
               defaultValue={form?.associated_user || []}
-              
               renderInput={(params) => (
                 <TextField
                   {...params}
@@ -266,7 +327,6 @@ const AddTaskUpdate = ({
                   }}
                 />
               )}
-            
             />
           </div>
         </div>
@@ -278,10 +338,9 @@ const AddTaskUpdate = ({
                 changeTextData(value, "associated_task");
               }}
               value={form.associated_task || fetchedTask || []}
-              options={filteredTask  || []} // listData ||
+              options={filteredTask || []} // listData ||
               getOptionLabel={(option) => option?.title || ""}
               defaultValue={form?.associated_task || []}
-             
               renderInput={(params) => (
                 <TextField
                   {...params}

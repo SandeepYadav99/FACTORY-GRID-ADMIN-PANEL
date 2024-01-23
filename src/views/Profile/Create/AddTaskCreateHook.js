@@ -61,7 +61,7 @@ const useAddTaskCreate = ({
   useEffect(() => {
     setFetchedAssinedUser(profileDetails);
   }, [fetchedAssignedUser]);
-console.log(form?.assigned_to, "Assign")
+
   useEffect(() => {
     if (!isSidePanel) return;
     serviceSearchAssignto({
