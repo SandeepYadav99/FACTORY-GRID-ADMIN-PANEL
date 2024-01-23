@@ -18,7 +18,6 @@ const AddNoteContainer = ({ details, styles, classes }) => {
 
   return (
     <div>
-      {" "}
       <div className={styles.plainPaper}>
         <div className={styles.newContainer}>
           <div className={styles.notesContainer}>
@@ -64,7 +63,6 @@ const AddNoteContainer = ({ details, styles, classes }) => {
                   />
                 </Card>
               </div>
-              {/* Dilog Box nots */}
               <NotesDilog
                 isOpen={isAcceptPopUp}
                 handleToggle={toggleAcceptDialog}
@@ -72,10 +70,9 @@ const AddNoteContainer = ({ details, styles, classes }) => {
                 changeTextData={changeTextData}
                 handleSubmit={handleSubmit}
               />
-            ))
-          ) : (
-            <div className={styles.notFound}>Notes not available!</div>
-          )}
+            </div>
+            ) : (<div className={styles.notFound}>Notes not available!</div>)
+            }
         </div>
       </div>
     </div>
