@@ -39,7 +39,7 @@ const TaskListItem = ({
           onClick={handleCheckboxClick}
           
         />
-        <div>
+        <div onClick={() => handleDetailPage(task)} >
 
         {task?.title}
         </div>
@@ -60,6 +60,7 @@ const TaskListItem = ({
           </div>
           <div className={styles.section}>{task?.type}</div>
         </div>
+        <hr className={styles.lines}/>
       </div>
     </div>
   );

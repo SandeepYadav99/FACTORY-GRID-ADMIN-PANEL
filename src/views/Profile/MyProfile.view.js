@@ -22,7 +22,8 @@ import AddTaskCreate from "./Create/AddTaskCreate";
 import TaskListItem from "./TaskListView";
 import capitalizeFirstLetter from "../../hooks/CommonFunction";
 import AssociatedManufactures from "./AssociatedManufactures/AssociatedManufactures";
-
+import historyUtils from "../../libs/history.utils";
+import ArrowBackIosIcon from "@material-ui/icons/ArrowBackIos";
 const Profile = () => {
   const [open, setOpen] = useState(false);
   const userData = localStorage.getItem("user");
@@ -56,7 +57,16 @@ const Profile = () => {
       ) : (
         <div>
           <div className={styles.upperFlex}>
-            <div className={styles.profileHeading}>My Profile</div>
+          <ButtonBase onClick={() => historyUtils.push("/users")}>
+            <ArrowBackIosIcon fontSize={"small"} />{" "}
+            <span>
+              <b>My Profile</b>
+            </span>
+          </ButtonBase>
+          <div>
+       
+        </div>
+            <div className={styles.profileHeading}></div>
             <div>
               <ButtonBase className={styles.resetButton} onClick={handleClose}>
                 <div>

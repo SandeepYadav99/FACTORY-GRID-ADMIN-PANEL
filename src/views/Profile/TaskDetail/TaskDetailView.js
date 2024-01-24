@@ -26,10 +26,16 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: "normal",
     fontSize: "13px",
   },
+  avatar: {
+    backgroundColor: theme.palette.secondary.main,
+    marginRight: theme.spacing(1), 
+  },
   subHeadeer: {
     fontSize: "14px",
     color: "#000000",
     fontWeight: "600",
+    display: 'flex',
+    alignItems: 'center',
   },
   paragraph: {
     fontSize: "13px",

@@ -9,15 +9,14 @@ const TaskDetailHeader = ({
   styles,
   
 }) => {
-  const [isCompleted, setIsCompleted] = useState(details?.is_completed);
 
   const handleButtonClick = () => {
-    if (isCompleted) {
+    if (details?.is_completed) {
       completedHandler();
     } else {
       markAsCompleted();
     }
-    setIsCompleted(!isCompleted);
+    // setIsCompleted(!isCompleted);
   };
   return (
   
@@ -25,11 +24,11 @@ const TaskDetailHeader = ({
         <div className={styles.subTitle}>{details?.title}</div>
         <div className={styles.complte}>
         <div  className={`${styles.transition} ${
-          isCompleted ? styles.completed : styles.markComplete
+          details?.is_completed ? styles.completed : styles.markComplete
         }`}>
         <ButtonBase onClick={handleButtonClick}>
           <Check fontSize={"small"} />
-          <span>{isCompleted ? " Completed" : "Mark as Complete"}</span>
+          <span>{details?.is_completed ? " Completed" : "Mark as Complete"}</span>
         </ButtonBase>
       </div>
         </div>

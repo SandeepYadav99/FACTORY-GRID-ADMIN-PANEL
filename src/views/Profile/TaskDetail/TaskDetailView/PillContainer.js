@@ -31,8 +31,8 @@ const PillContainer = ({ details, styles }) => {
           <div className={styles.section}>{details?.type}</div>
         </div>
       </div>
-      <div className={styles.des}>Description:</div>
-      <div className={styles.paragraph}>{details?.description}</div>
+      <div className={styles.des}><strong>Description: </strong>{details?.description}</div>
+      <div className={styles.paragraph}></div>
       <div className={styles.gaps} />
     </div>
   );
