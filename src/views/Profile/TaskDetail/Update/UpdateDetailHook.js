@@ -29,7 +29,7 @@ const useAddTaskUpdate = ({
   isSidePanel,
   empId,
   handleCreatedTask,
-  details
+  details,
 }) => {
   const [errorData, setErrorData] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -42,22 +42,19 @@ const useAddTaskUpdate = ({
   const [fetchedAssignedTo, setFetchedAssignedTo] = useState(null);
   const [fetchedTask, setFetchedTask] = useState(null);
   const [fetchedUser, setFetchedUser] = useState(null);
- 
-  const [categoryLists, setCategoryLists] = useState(null);
- 
 
+  const [categoryLists, setCategoryLists] = useState(null);
 
   useEffect(() => {
     // setIsLoading(true);
     setForm({
       ...form,
       title: details?.title,
-      category:details?.category,
+      category: details?.category,
       description: details?.description,
       due_date: details?.due_date,
       priority: details?.priority,
       type: details?.type,
-     
     });
     setFetchedAssignedTo(details?.assignedTo);
     setFetchedUser(details?.associatedUser);
@@ -68,7 +65,7 @@ const useAddTaskUpdate = ({
     if (!isSidePanel) return;
     serviceSearchCategory().then((res) => {
       if (!res?.error) {
-        setCategoryLists(res?.data)
+        setCategoryLists(res?.data);
       }
     });
   }, [form?.assigned_to, isSidePanel]);
@@ -79,11 +76,10 @@ const useAddTaskUpdate = ({
       query: form?.assigned_to ? form?.assigned_to?.name : form?.assigned_to,
     }).then((res) => {
       if (!res?.error) {
-      
         setFilteredAssignedTo(res.data);
       }
     });
-  }, [ isSidePanel]);
+  }, [isSidePanel]);
 
   useEffect(() => {
     if (!isSidePanel) return;
@@ -96,7 +92,7 @@ const useAddTaskUpdate = ({
         setFilteredTask(res.data);
       }
     });
-  }, [ isSidePanel]);
+  }, [isSidePanel]);
 
   useEffect(() => {
     if (!isSidePanel) return;
@@ -111,9 +107,7 @@ const useAddTaskUpdate = ({
         setFilteredUsers(null);
       }
     });
-  }, [ isSidePanel]);
-
- 
+  }, [isSidePanel]);
 
   useEffect(() => {
     if (!isSidePanel) {
@@ -203,7 +197,7 @@ const useAddTaskUpdate = ({
     } finally {
       setIsSubmitting(false);
     }
-  }, [form, isSubmitting, setIsSubmitting, empId, handleSideToggle, ]);
+  }, [form, isSubmitting, setIsSubmitting, empId, handleSideToggle]);
 
   const handleSubmit = useCallback(async () => {
     const errors = checkFormValidation();
@@ -237,7 +231,17 @@ const useAddTaskUpdate = ({
       if (fieldName === "name") {
         t[fieldName] = text;
       } else if (fieldName === "category") {
-        t[fieldName] = text;
+        const newValues = text?.filter((item) => item.trim() !== "");
+        const uniqueValues = text
+          ? newValues?.filter(
+              (item, index, self) =>
+                self.findIndex(
+                  (t) => t.toLowerCase() === item.toLowerCase()
+                ) === index
+            )
+          : [];
+
+        t[fieldName] = uniqueValues;
       } else if (fieldName === "associated_task") {
         t[fieldName] = text;
       } else if (fieldName === "assigned_to") {
@@ -263,7 +267,7 @@ const useAddTaskUpdate = ({
   const suspendItem = useCallback(async () => {
     handleSideToggle();
     setIsAcceptPopUp((e) => !e);
-  }, [empId, isAcceptPopUp, ]);
+  }, [empId, isAcceptPopUp]);
 
   const handleReset = useCallback(() => {
     setForm({ ...initialForm });
@@ -291,7 +295,7 @@ const useAddTaskUpdate = ({
     fetchedAssignedTo,
     fetchedTask,
     fetchedUser,
-    categoryLists
+    categoryLists,
   };
 };
 

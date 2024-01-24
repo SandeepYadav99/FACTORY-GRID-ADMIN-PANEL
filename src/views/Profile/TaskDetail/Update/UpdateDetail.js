@@ -255,10 +255,14 @@ const AddTaskUpdate = ({
             />
           </div>
         </div>
+        <div className="formFlex">
+          <div className={"formGroup"}>
         <label className={styles.enter}>
           Please press enter to add a category if not found in the search
           results.
         </label>
+        </div>
+        </div>
         <div className={"formFlex"}>
           <div className={"formGroup"}>
             <CustomSelectField
@@ -285,8 +289,8 @@ const AddTaskUpdate = ({
                 changeTextData(value, "priority");
               }}
             >
-              <MenuItem value="MEDIUM">Medium</MenuItem>
               <MenuItem value="HIGH">High</MenuItem>
+              <MenuItem value="MEDIUM">Medium</MenuItem>
               <MenuItem value="LOW">Low</MenuItem>
             </CustomSelectField>
           </div>

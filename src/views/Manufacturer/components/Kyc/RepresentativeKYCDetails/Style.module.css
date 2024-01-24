@@ -18,13 +18,16 @@
   justify-content: space-between;
   width: 90%;
   flex-wrap: wrap;
+
+  
  
 }
 .kyc2{
   display: flex;
   justify-content: space-between;
-  width: 70%;
+  width: 90%;
   flex-wrap: wrap;
+
 }
 .title {
   color: #000000;

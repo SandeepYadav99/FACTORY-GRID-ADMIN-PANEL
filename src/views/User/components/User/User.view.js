@@ -118,6 +118,7 @@ const User = ({
                 errorText={errorData?.contact}
                 value={form?.contact}
                 onTextChange={(text) => {
+                  console.log(text)
                   changeTextData(text, "contact");
                 }}
                 // onBlur={() => {

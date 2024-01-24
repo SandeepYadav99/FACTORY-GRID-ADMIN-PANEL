@@ -185,12 +185,13 @@ const useUpperTabsHook = ({
       if (!form.contact) {
         errors.contact = "Contact cannot be empty";
       } else {
-        // Check if the contact field has at least 10 digits
-        const contactDigits = form.contact.replace(/\D/g, ''); // Remove non-digits
-        if (contactDigits.length < 10) {
+      
+        const contactDigits = form.contact.replace(/\D/g, ''); 
+        console.log(contactDigits, "Contact")
+        if (contactDigits.length <= 11) {
           errors.contact = "Contact must have at least 10 digits";
         } else {
-          delete errors.contact; // Remove the error if it meets the criteria
+          delete errors.contact; 
         }
       }
       if (val === "email" && form?.email && !isEmail(form?.email)) {
@@ -201,12 +202,15 @@ const useUpperTabsHook = ({
     if (form?.joining_date) {
       const selectedYear = new Date(form.joining_date).getFullYear();
       const currentYear = new Date().getFullYear();
+      const selectedDate = new Date(form.joining_date);
 
-      if (selectedYear > currentYear) {
+      if (isNaN(selectedDate.getTime()) || selectedYear > currentYear) {
         errors.joining_date = true;
       } else {
         delete errors.joining_date;
       }
+    }else {
+      errors.joining_date=true
     }
     Object.keys(errors).forEach((key) => {
       if (!errors[key]) {
@@ -313,15 +317,24 @@ const useUpperTabsHook = ({
       if (fieldName === "code") {
         shouldRemoveError = false;
       } else if (fieldName === "contact") {
-       
+     
         t[fieldName] = text;
       } else if (fieldName === "joining_date") {
-        console.log(text, "Text")
+      
         t[fieldName] = text;
       } else if (fieldName === "email") {
        
         // '+91'+
         t[fieldName] = text;
+      }else if (fieldName === "designation") {
+        t[fieldName] = text.replace(/^\s+/, '');
+      
+      }else if (fieldName === "name") {
+        t[fieldName] = text.replace(/^\s+/, '');
+      
+      }else if (fieldName === "employee_id") {
+        t[fieldName] = text.replace(/^\s+/, '');
+      
       } else {
         t[fieldName] = text;
       }

@@ -58,21 +58,24 @@ export default function SimplePopover({
   const handleClose = () => {
     setAnchorEl(null);
   };
-  useEffect(() => {
-    if (isClose) {
-      setAnchorEl(null);
-    }
-  }, [isClose]);
+  // useEffect(() => {
+  //   if (isClose) {
+  //     setAnchorEl(null);
+  //   }
+  // }, [isClose]);
 
   const open = Boolean(anchorEl);
   const ids = open ? "simple-popover" : undefined;
 
   const handleResend = () => {
-    serviceResetUserEmail({user_id:userProfile?._id, email:userProfile?.email}).then((res)=>{
-      if(!res.error){
-       SnackbarUtils.success("Resend Successfully")
+    serviceResetUserEmail({
+      user_id: userProfile?._id,
+      email: userProfile?.email,
+    }).then((res) => {
+      if (!res.error) {
+        SnackbarUtils.success("Resend Successfully");
       }
-    })
+    });
   };
   console.log(type);
   const handleVerify = () => {
@@ -85,34 +88,48 @@ export default function SimplePopover({
       }
     });
   };
+  let closeTimer;
+  const handleMouseLeave = () => {
+    // Add a delay before closing the Popover
+    closeTimer = setTimeout(() => {
+      handleClose();
+    }, 500); // Adjust the delay as needed
+  };
 
+  const handleMouseEnter = () => {
+    // Clear the close timer if the mouse enters before it closes
+    clearTimeout(closeTimer);
+  };
   const isVerifiedTitle = title && title.includes("VERIFIED");
 
   return (
-    <div onMouseLeave={handleClose}>
+    <div>
       <ButtonBase
         aria-describedby={ids}
-        onClick={handleClick}
-        onMouseEnter={handleClick}
+        onMouseLeave={handleMouseLeave}
+        onMouseEnter={handleMouseEnter}
       >
         {renderImagebyType(title)}
       </ButtonBase>
 
       <Popover
-        ids={ids}
+        id={ids}
+        sx={{
+          pointerEvents: "none",
+        }}
         open={open && !isVerifiedTitle}
         anchorEl={anchorEl}
         onClose={handleClose}
         anchorOrigin={{
-          vertical: "right",
-          horizontal: "top",
+          vertical: "bottom",
+          horizontal: "left",
         }}
         transformOrigin={{
-          vertical: "right",
-          horizontal: "top",
+          vertical: "top",
+          horizontal: "left",
         }}
+        disableRestoreFocus
       >
-      
         {type ? (
           <div className={classes.bankDetail}>
             <ButtonBase>Cancel</ButtonBase>

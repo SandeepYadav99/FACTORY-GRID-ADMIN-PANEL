@@ -74,6 +74,12 @@ const RepresentativeKYCDetail = ({ userProfile }) => {
                 <a href={aadhar_back}  target="_blank">Aadhar Back</a>
               </div>
             </div>
+            <div style={{visibility:"hidden"}}>
+              <div className={styles.title}>Aadhar Back</div>
+              <div>
+                <a href={aadhar_back}  target="_blank">Aadhar Back</a>
+              </div>
+            </div>
           </div>
         </div>
         <div className={styles.gaps} />

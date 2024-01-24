@@ -71,7 +71,7 @@ const useAddTaskCreate = ({
         setFilteredAssignedTo(res.data);
       }
     });
-  }, [ isSidePanel]);
+  }, [isSidePanel]);
 
   useEffect(() => {
     if (!isSidePanel) return;
@@ -99,7 +99,7 @@ const useAddTaskCreate = ({
         setFilteredUsers(null);
       }
     });
-  }, [ isSidePanel]);
+  }, [isSidePanel]);
 
   const handleSearchUsers = useCallback((searchText) => {}, []);
 
@@ -227,11 +227,20 @@ const useAddTaskCreate = ({
       if (fieldName === "name") {
         t[fieldName] = text;
       } else if (fieldName === "category") {
-        t[fieldName] = text;
+        const newValues = text?.filter((item) => item.trim() !== "");
+        const uniqueValues = text
+          ? newValues?.filter(
+              (item, index, self) =>
+                self.findIndex(
+                  (t) => t.toLowerCase() === item.toLowerCase()
+                ) === index
+            )
+          : [];
+
+        t[fieldName] = uniqueValues;
       } else if (fieldName === "associated_task") {
         t[fieldName] = text;
       } else if (fieldName === "assigned_to") {
-      
         t[fieldName] = text;
       } else {
         t[fieldName] = text;
