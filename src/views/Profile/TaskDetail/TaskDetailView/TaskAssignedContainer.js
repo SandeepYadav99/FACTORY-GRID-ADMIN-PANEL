@@ -4,9 +4,7 @@ import RouteName from "../../../../routes/Route.name";
 
 const TaskAssignedContainer = ({ styles, details, classes }) => {
   const generateUserProfileLink = (userDetails) => {
-    return userDetails?.id
-      ? `/profile/?id=${userDetails?.id}`
-      : "#";
+    return userDetails?.id ? `/profile/?id=${userDetails?.id}` : "#";
   };
   return (
     <div className={styles.mainFlex}>
@@ -42,14 +40,28 @@ const TaskAssignedContainer = ({ styles, details, classes }) => {
             <CardHeader
               title={<span className={classes.subTitle}>Associated User</span>}
               subheader={
-                <div style={{display:"flex", alignItems:"center"}}>
-                <Avatar className={classes.avatar} src={details?.associatedUser?.image}>
-                  {details?.associatedUser?.name ? details?.associatedUser?.name[0].toUpperCase() : 'N/A'}
-                </Avatar>
-                <a href={details?.associatedUser?.id ? `/profile/?id=${details?.associatedUser?.id}` : "#"}>
-                {details?.associatedUser?.name ? ` ${details?.associatedUser?.name}` : ' N/A'}
-              </a>
-              </div>
+                <div style={{ display: "flex", alignItems: "center" }}>
+                    {details?.associatedUser?.name ? 
+                    <>
+                  <Avatar
+                    className={classes.avatar}
+                    src={details?.associatedUser?.image}
+                  >
+                    {details?.associatedUser?.name
+                      ? details?.associatedUser?.name[0].toUpperCase()
+                      : "N/A"}
+                  </Avatar>
+                 <a
+                    href={ `/profile/?id=${details?.associatedUser?.id}`
+                        
+                    }
+                  >
+                    {details?.associatedUser?.name
+                     }
+                  </a>
+                    </> : "N/A"}
+                 
+                </div>
               }
             />
           </div>
@@ -62,12 +74,18 @@ const TaskAssignedContainer = ({ styles, details, classes }) => {
           <CardHeader
             title={<span className={classes.subTitle}>Associated Task</span>}
             subheader={
-              <a
-                href={`${RouteName.TASK_DETAIL}?id=${details?.associatedTask?._id}`}
-                style={{ fontSize: "13px" }}
-              >
-               {details?.associatedTask?.title || "N/A"}
-              </a>
+              <div>
+                {details?.associatedTask?.title ? (
+                  <a
+                    href={`${RouteName.TASK_DETAIL}?id=${details?.associatedTask?._id}`}
+                    style={{ fontSize: "13px" }}
+                  >
+                    {details?.associatedTask?.title}
+                  </a>
+                ) : (
+                  "N/A"
+                )}
+              </div>
             }
           />
         </div>
