@@ -225,6 +225,9 @@ const ManufacturerTabs = ({ classes, theme }) => {
             userProfile={userProfile}
             renderInterestArea={renderInterestArea}
             isLoading={isLoading}
+            isOpenDialog={isOpenDialog}
+            toggleIsOpenDialog={toggleIsOpenDialog}
+        
           />
         </TabPanel>
         <TabPanel value={value} index={2} dir={theme.direction}></TabPanel>

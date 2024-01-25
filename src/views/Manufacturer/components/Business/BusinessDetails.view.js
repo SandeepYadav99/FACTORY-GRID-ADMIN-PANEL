@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useState } from "react";
 import styles from "./Style.module.css";
 import { ButtonBase, Tooltip, withStyles } from "@material-ui/core";
 import VerifiedUserIcon from "@material-ui/icons/VerifiedUser";
@@ -12,29 +12,19 @@ import BankDetail from "./components/BankDetail/BankDetail";
 import CompanyRepresentative from "./components/CompanyRepresentative/CompanyRepresentative";
 import bankImage from "../../../../assets/img/sent_blue.svg";
 import { formatString } from "../../../../hooks/CommonFunction";
-
-const dummy = [
-  require("../../../../assets/img/cover.jpeg"),
-  require("../../../../assets/img/cover.jpeg"),
-];
+import BankDetailPopup from "./components/BankDetail/BankDetailPopup/BankDetailPopup";
 
 const BusinessDetails = ({ id, userProfile }) => {
-
-  const galleryImage = useCallback((images) => {
-    if (images && Array.isArray(images)) {
-      const imagesList = images.map((element) => element.gallery_image);
-
-      return imagesList;
-    } else {
-      return [];
-    }
-  }, []);
-
-  const CERTIFICATES = userProfile.certificate || [];
-  const certificateImages = CERTIFICATES.map(
-    (certificate) => certificate.certificate_file
-  );
-
+    const [isOpen, setIsOpen] = useState(false);
+ 
+    const toggleIsOpen = useCallback(
+      (data) => {
+        setIsOpen((e) => !e);
+        // setExpireLetter(data?.id)
+      },
+      []
+    );
+ 
   const openGoogleMaps = useCallback((company) => {
     const url = `https://www.google.com/maps/place?q=${company?.company_lat},${company?.company_long}`;
 
@@ -96,8 +86,8 @@ const BusinessDetails = ({ id, userProfile }) => {
             <div>
               <div className={styles.key}>Address</div>
               <div className={styles.value}>
-                {userProfile?.business?.company_address || "N/A"} 
-                <div className={styles.gaps}/>
+                {userProfile?.business?.company_address || "N/A"}
+                <div className={styles.gaps} />
                 Pincode: {userProfile?.business?.company_pincode || "N/A"}
                 <br />
                 {userProfile?.business?.company_city},{" "}
@@ -209,10 +199,11 @@ const BusinessDetails = ({ id, userProfile }) => {
           <div className={styles.plain}>
             <div className={styles.accountFlex}>
               <div className={styles.headings}>Banking Details</div>
-
-              <a href="#" className={styles.coord}>
-                Edit
-              </a>
+              <ButtonBase className={styles.coord} onClick={toggleIsOpen}>
+                {/* <a href="#" > */}
+                  Edit
+                {/* </a> */}
+              </ButtonBase>
             </div>
             {userProfile?.bankdetail?.benificiery_name ? (
               <BankDetail bankdetail={userProfile?.bankdetail} />
@@ -222,6 +213,12 @@ const BusinessDetails = ({ id, userProfile }) => {
           </div>
         </div>
       </div>
+      <BankDetailPopup
+        bankId={userProfile?._id}
+        isOpen={isOpen}
+        handleToggle={toggleIsOpen}
+        status={userProfile?.status}
+      />
     </div>
   );
 };

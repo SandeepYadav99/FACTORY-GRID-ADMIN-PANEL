@@ -276,7 +276,7 @@ const useUpperTabsHook = ({
       setErrorData(errors);
       SnackbarUtils.error("Please enter valid values");
     } else {
-      setValue(1);
+     await setValue(1);
     }
   }, [
     checkFormValidation,

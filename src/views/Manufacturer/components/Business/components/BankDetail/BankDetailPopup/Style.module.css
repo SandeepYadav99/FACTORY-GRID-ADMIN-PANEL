@@ -1,0 +1,15 @@
+.resetPasswordWrapper{
+  padding: 25px;
+}
+.printFlex{
+ text-align: center;
+
+}
+.createBtn{
+padding: 5px !important;
+  background-color: blue !important;
+  color: white !important;
+  border-radius: 5px !important;
+  font-size: large !important;
+  font-weight: 500 !important;
+}
