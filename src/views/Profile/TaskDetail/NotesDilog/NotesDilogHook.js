@@ -27,13 +27,12 @@ const useNotesDilogHook = () => {
     [isAcceptPopUp]
   );
 
-  useEffect(()=>{
-    handleReset()
-  },[ isAcceptPopUp])
-  
+  useEffect(() => {
+    handleReset();
+  }, [isAcceptPopUp]);
+
   useEffect(() => {
     const debounceTimeout = setTimeout(() => {
-      
       serviceTaskMnagmentNotesList({
         task_id: id ? id : "",
         index: 1,
@@ -66,9 +65,9 @@ const useNotesDilogHook = () => {
       let shouldRemoveError = true;
       const t = { ...form };
       if (fieldName === "descriptions") {
-        t[fieldName] = text.replace(/^\s+/, '');
+        t[fieldName] = text.replace(/^\s+/, "");
       }
-     
+
       setForm(t);
       shouldRemoveError && removeError(fieldName);
     },
@@ -78,18 +77,21 @@ const useNotesDilogHook = () => {
   const checkFormValidation = useCallback(() => {
     const errors = { ...errorData };
     let required = ["descriptions"];
-    
+    const maxLength = 500;
+
     required.forEach((val) => {
       if (
         !form?.[val] ||
-        (Array.isArray(form?.[val]) && form?.[val]?.length === 0)
+        (Array.isArray(form?.[val]) && form?.[val]?.length === 0) ||
+        form?.[val]?.length > maxLength
       ) {
         errors[val] = true;
-        SnackbarUtils.error("Please enter values");
-      } else if (["code"].indexOf(val) < 0) {
-        delete errors[val];
       }
     });
+   
+    if (form?.descriptions?.length > maxLength) {
+      SnackbarUtils.error("Max 500 Characters");
+    }
     Object.keys(errors).forEach((key) => {
       if (!errors[key]) {
         delete errors[key];
@@ -122,12 +124,11 @@ const useNotesDilogHook = () => {
         }).then((res) => {
           if (!res.error) {
             setNoteDetail(res.data);
-            toggleAcceptDialog()
+            toggleAcceptDialog();
           } else {
             SnackbarUtils.error(res.message);
           }
         });
-     
       } else {
         SnackbarUtils.error(res.message);
       }
@@ -144,7 +145,7 @@ const useNotesDilogHook = () => {
     } else {
       await submitToServer();
     }
-  }, [checkFormValidation, setErrorData, form, submitToServer, ]);
+  }, [checkFormValidation, setErrorData, form, submitToServer]);
 
   const handleReset = useCallback(() => {
     setForm({ ...initialForm });
@@ -152,6 +153,15 @@ const useNotesDilogHook = () => {
     setErrorData({});
   }, [form, setForm, setErrorData]);
 
+  const onBlurHandler = useCallback(
+    (type) => {
+      if (form?.[type]) {
+        changeTextData(form?.[type].trim(), type);
+      }
+    },
+    [changeTextData, errorData, setErrorData]
+  );
+  console.log(errorData, "Error Data ");
   return {
     form,
     toggleAcceptDialog,
@@ -159,7 +169,8 @@ const useNotesDilogHook = () => {
     changeTextData,
     handleSubmit,
     noteDetails,
-    errorData
+    errorData,
+    onBlurHandler,
   };
 };
 

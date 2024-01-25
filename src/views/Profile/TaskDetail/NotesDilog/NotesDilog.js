@@ -73,15 +73,15 @@ const NotesDilog = ({
           <div className={"formFlex"}>
             <div className={"formGroup"}>
               <CustomTextField
-                // isError={errorData?.description}
-                // errorText={errorData?.description}
+                 isError={errorData?.descriptions}
+                 errorText={errorData?.descriptions}
                 label={"Note (Max 500 Characters )"}
                 value={form?.descriptions}
                 onTextChange={(text) => {
                   changeTextData(text, "descriptions");
                 }}
                 // onBlur={() => {
-                //   onBlurHandler("description");
+                //   onBlurHandler("descriptions");
                 // }}
                 multiline
                 rows={4}
