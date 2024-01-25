@@ -155,8 +155,8 @@ const dashboardRoutes = [
   },
   {
     path: "/users",
-    sidebarName: "Users",
-    navbarName: "Users",
+    sidebarName: "Admin Users",
+    navbarName: "Admin Users",
     icon: SupervisedUserCircle,
     component: UserList,
     is_sidebar: true,

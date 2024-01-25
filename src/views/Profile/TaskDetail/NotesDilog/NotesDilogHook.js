@@ -33,6 +33,7 @@ const useNotesDilogHook = () => {
   
   useEffect(() => {
     const debounceTimeout = setTimeout(() => {
+      
       serviceTaskMnagmentNotesList({
         task_id: id ? id : "",
         index: 1,
@@ -65,8 +66,9 @@ const useNotesDilogHook = () => {
       let shouldRemoveError = true;
       const t = { ...form };
       if (fieldName === "descriptions") {
-        t[fieldName] = text;
+        t[fieldName] = text.replace(/^\s+/, '');
       }
+     
       setForm(t);
       shouldRemoveError && removeError(fieldName);
     },
@@ -76,8 +78,15 @@ const useNotesDilogHook = () => {
   const checkFormValidation = useCallback(() => {
     const errors = { ...errorData };
     let required = ["descriptions"];
+    
     required.forEach((val) => {
-      if (["code"].indexOf(val) < 0) {
+      if (
+        !form?.[val] ||
+        (Array.isArray(form?.[val]) && form?.[val]?.length === 0)
+      ) {
+        errors[val] = true;
+        SnackbarUtils.error("Please enter values");
+      } else if (["code"].indexOf(val) < 0) {
         delete errors[val];
       }
     });
@@ -149,7 +158,8 @@ const useNotesDilogHook = () => {
     isAcceptPopUp,
     changeTextData,
     handleSubmit,
-    noteDetails
+    noteDetails,
+    errorData
   };
 };
 

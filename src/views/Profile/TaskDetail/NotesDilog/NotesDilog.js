@@ -39,7 +39,8 @@ const NotesDilog = ({
   changeTextData,
   onBlurHandler,
   form,
-  handleSubmit
+  handleSubmit,
+  errorData
 }) => {
   const classes = useStyles();
 

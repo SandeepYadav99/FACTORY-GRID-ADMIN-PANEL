@@ -242,7 +242,7 @@ class ResetPasswordView extends Component {
 }
 
 ResetPasswordView = reduxForm({
-  form: "LoginPage", // a unique identifier for this form
+  form: "ResetPassword", // a unique identifier for this form
   validate,
   onSubmitFail: (errors) => {
     if (errors) {

@@ -14,6 +14,7 @@ const AddNoteContainer = ({ details, styles, classes }) => {
     changeTextData,
     handleSubmit,
     noteDetails,
+    errorData
   } = useNotesDilogHook();
 
   return (
@@ -69,6 +70,7 @@ const AddNoteContainer = ({ details, styles, classes }) => {
                 form={form}
                 changeTextData={changeTextData}
                 handleSubmit={handleSubmit}
+                errorData={errorData}
               />
             </div>
             ) : (<div className={styles.notFound}>Notes not available!</div>)

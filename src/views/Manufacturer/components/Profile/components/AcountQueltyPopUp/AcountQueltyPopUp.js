@@ -64,7 +64,7 @@ class AccountQualityDialog extends Component{
                             margin={"dense"}
                             label={"Assigned To"}>
                             {users.map(val => {
-                                return (<MenuItem value={val.id} key={val.id}>{val.name}</MenuItem>);
+                                return (<MenuItem value={val.id} key={val.id}>{val?.name} ({val?.employee_id})</MenuItem>);
                             })}
 
                         </Field>
