@@ -35,13 +35,32 @@ const CustomPhoneContactField = ({
         ? `+${countryCode} ${restOfPhoneNumber}`
         : formattedValue;
 
-     
-      onTextChange && onTextChange(formattedPhoneNumber);
-      onChange && onChange(formattedPhoneNumber, country, e, formattedValue);
+        onTextChange && onTextChange(formattedPhoneNumber);
+
+        // Validate phone number based on the selected country
+        const isValidPhoneNumber = validatePhoneNumber(formattedPhoneNumber, country);
+  
+        onChange && onChange(formattedPhoneNumber, country, e, formattedValue, isValidPhoneNumber);
     },
     [onChange, onTextChange]
   );
 
+  const validatePhoneNumber = (phoneNumber, country) => {
+    // Add your validation logic here based on the country
+    // For example, you can use regular expressions or a library like libphonenumber-js
+    // to validate the phone number format.
+
+    // Example validation for the US:
+    if (country === "us" || "in") {
+      const usPhoneNumberRegex = /^\+1 \d{10}$/;
+      return usPhoneNumberRegex.test(phoneNumber);
+    }
+
+    // Add more country-specific validation logic as needed
+
+    // Default to true if no validation is implemented for the country
+    return true;
+  };
   return (
     <div style={{ display: "flex", flexDirection: "column" }}>
       <PhoneInput

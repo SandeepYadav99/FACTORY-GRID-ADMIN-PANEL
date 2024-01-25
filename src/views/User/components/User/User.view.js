@@ -51,7 +51,7 @@ const User = ({
             <File
               // bannerLabel="Profile"
               max_size={2 * 1024 * 1024}
-              type={["jpg", "png", 'jpeg']}
+              type={["jpg", "png", "jpeg"]}
               fullWidth={true}
               name="image"
               accept={"image/*"}
@@ -113,12 +113,11 @@ const User = ({
           <div className={"formFlex"}>
             <div className={"formGroup"}>
               <CustomPhoneContactField
-              
                 isError={errorData?.contact}
                 errorText={errorData?.contact}
                 value={form?.contact}
                 onTextChange={(text) => {
-                  console.log(text)
+                
                   changeTextData(text, "contact");
                 }}
                 // onBlur={() => {

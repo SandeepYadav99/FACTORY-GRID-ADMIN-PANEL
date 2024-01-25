@@ -186,13 +186,13 @@ const useUpperTabsHook = ({
         errors.contact = "Contact cannot be empty";
       } else {
       
-        const contactDigits = form.contact.replace(/\D/g, ''); 
-        console.log(contactDigits, "Contact")
-        if (contactDigits.length <= 11) {
-          errors.contact = "Contact must have at least 10 digits";
-        } else {
-          delete errors.contact; 
-        }
+        // const contactDigits = form.contact.replace(/\D/g, ''); 
+        // console.log(contactDigits, "Contact")
+        // if (contactDigits.length <= 11) {
+        //   errors.contact = "Contact must have at least 10 digits";
+        // } else {
+        //   delete errors.contact; 
+        // }
       }
       if (val === "email" && form?.email && !isEmail(form?.email)) {
         errors.email = "Invalid email address";
