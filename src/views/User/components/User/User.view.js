@@ -7,8 +7,7 @@ import {
   FormControlLabel,
   Switch,
 } from "@material-ui/core";
-import PhoneInput from "react-phone-input-2";
-import startsWith from "lodash.startswith";
+
 import styles from "../../Style.module.css";
 
 // import {serviceProviderUserCheck} from "../../services/User.service";
@@ -40,6 +39,9 @@ const User = ({
   image,
   setPhoneContact,
   setTypeOf,
+  setIsValidContact,
+  setIsValid
+
 }) => {
   const classes = useStyles();
 
@@ -116,14 +118,22 @@ const User = ({
                 isError={errorData?.contact}
                 errorText={errorData?.contact}
                 value={form?.contact}
-                onTextChange={(text) => {
-                
+                onTextChange={(text, formattedPhoneNumber, country, e, formattedValue) => {
+              
                   changeTextData(text, "contact");
                 }}
                 // onBlur={() => {
                 //   onBlurHandler("contact");
                 // }}
+                // onMount={(value, data, formattedValue)=>{
+                 
+                //   setIsValidContact(data);
+                //      setIsValid(value)
+                // }}
+                
                 isValid={(value, country) => {
+                  setIsValidContact(country);
+                  setIsValid(value)
                   if (value.match(/12345/)) {
                     return "";
                   } else if (value.match(/1234/)) {

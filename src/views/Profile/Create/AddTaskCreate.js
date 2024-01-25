@@ -239,6 +239,7 @@ const AddTaskCreate = ({
         </div>
         <div className={"formFlex"}>
           <div className={"formGroup"}>
+        
             <Autocomplete
               id="tags-outlined"
               onChange={(e, value) => {
@@ -246,7 +247,13 @@ const AddTaskCreate = ({
               }}
               value={form.associated_user || []}
               options={filteredUsers || []} // listData ||
-              getOptionLabel={(option) => option?.name}
+              getOptionLabel={(option) =>`${option?.name || ""} ${option?.email ? ` (${option?.email})` : ""}`  }
+              renderOption={(option) => (
+                <div style={{ display: "flex", alignItems: "center" }}>
+                  <Avatar src={option?.image} style={{ marginRight: 8 }} />
+                  <div>{`${option?.name} (${option?.email})`}</div>
+                </div>
+              )}
               defaultValue={form?.associated_user || []}
               renderInput={(params) => (
                 <TextField
@@ -267,6 +274,15 @@ const AddTaskCreate = ({
                         ) : null}
                         <Search
                           style={{ marginRight: -40, cursor: "pointer" }}
+                        />
+                      </>
+                    ),
+                    startAdornment: (
+                      <>
+               
+                        <Avatar
+                          src={form?.associated_user?.image }
+                          style={{ marginRight: 8, cursor: "pointer" }}
                         />
                       </>
                     ),

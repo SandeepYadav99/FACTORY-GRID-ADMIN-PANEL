@@ -48,7 +48,7 @@ const useAddTaskCreate = ({
   const [categoryLists, setCategoryLists] = useState(null);
   const [taskTypes, setTaskTypes] = useState(["DISCUS"]);
   const dispatch = useDispatch();
-
+console.log(filteredUsers, "Users")
   useEffect(() => {
     if (!isSidePanel) return;
     serviceSearchCategory().then((res) => {

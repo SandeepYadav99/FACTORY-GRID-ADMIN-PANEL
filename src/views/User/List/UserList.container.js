@@ -46,14 +46,15 @@ const UserList = (props) => {
       <span style={{ textTransform: "lowercase" }}>{user.email}</span>
     ) : null;
     return (
-      <div className={styles.firstCellFlex}>
+      <div className={styles.firstCellFlex} >
         <div>
           <img src={user?.image} alt="" />
         </div>
         <div className={classNames(styles.firstCellInfo, "openSans")}>
-          <span>
-            <div>{`${capitalizeFirstLetter(user?.name)}`}</div>
-          </span>
+         
+            <div>{`${capitalizeFirstLetter(user?.name)}`} </div>
+            <div> {user?.employee_id}</div>
+        
           {/*<br/>*/}
           {/*{tempEmailRender}*/}
         </div>
@@ -102,9 +103,9 @@ const UserList = (props) => {
       {
         key: "name",
         label: "Info",
-        style: { width: "15%" },
+        style: { width: "18%" },
         sortable: true,
-        render: (value, all) => <div>{renderFirstCell(all)}</div>,
+        render: (value, all) => <div >{renderFirstCell(all)}</div>,
       },
       {
         key: "email",

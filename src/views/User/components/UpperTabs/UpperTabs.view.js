@@ -69,7 +69,9 @@ const ProfileView = () => {
     setTypeOf,
     setPhoneContact,
     handleSubmitToSave,
-    isSubmitting
+    isSubmitting,
+    setContery,
+    setIsValidContact
     
   } = useUpperTabsHook({});
 
@@ -126,6 +128,8 @@ const ProfileView = () => {
             setTypeOf={setTypeOf}
             setPhoneContact={setPhoneContact}
             setValidateContact={setValidateContact}
+            setIsValidContact={setContery}
+            setIsValid={setIsValidContact}
             
           />
         </TabPanel>

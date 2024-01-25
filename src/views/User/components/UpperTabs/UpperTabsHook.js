@@ -52,7 +52,8 @@ const useUpperTabsHook = ({
   const [typeOf, setTypeOf] = useState(""); // TypeOfTabs
   const [listData, setListData] = useState(null);
   const [value, setValue] = useState(0);
-
+  const [contery, setContery] = useState(null);
+  const [isValidContact, setIsValidContact] = useState(null);
   // access query params id in url
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
@@ -158,7 +159,7 @@ const useUpperTabsHook = ({
   //     handleReset();
   //   }
   // }, [isSidePanel]);
-
+  console.log(isValidContact, contery, "Contery");
   const checkFormValidation = useCallback(() => {
     const errors = { ...errorData };
     let required;
@@ -185,20 +186,19 @@ const useUpperTabsHook = ({
       if (!form.contact) {
         errors.contact = "Contact cannot be empty";
       } else {
-      
-        // const contactDigits = form.contact.replace(/\D/g, ''); 
-        // console.log(contactDigits, "Contact")
-        // if (contactDigits.length <= 11) {
-        //   errors.contact = "Contact must have at least 10 digits";
-        // } else {
-        //   delete errors.contact; 
-        // }
+        const contactDigits = form.contact.replace(/\D/g, "");
+        console.log(contactDigits, "Contact");
+        if (contactDigits.length <= 11) {
+          errors.contact = "Contact must have at least 10 digits";
+        } else {
+          delete errors.contact;
+        }
       }
       if (val === "email" && form?.email && !isEmail(form?.email)) {
         errors.email = "Invalid email address";
       }
     });
-    
+
     if (form?.joining_date) {
       const selectedYear = new Date(form.joining_date).getFullYear();
       const currentYear = new Date().getFullYear();
@@ -209,8 +209,8 @@ const useUpperTabsHook = ({
       } else {
         delete errors.joining_date;
       }
-    }else {
-      errors.joining_date=true
+    } else {
+      errors.joining_date = true;
     }
     Object.keys(errors).forEach((key) => {
       if (!errors[key]) {
@@ -244,7 +244,6 @@ const useUpperTabsHook = ({
         "manager",
       ];
 
-     
       fields.forEach((field) => {
         formData.append(field, form?.[field]);
       });
@@ -317,24 +316,18 @@ const useUpperTabsHook = ({
       if (fieldName === "code") {
         shouldRemoveError = false;
       } else if (fieldName === "contact") {
-     
         t[fieldName] = text;
       } else if (fieldName === "joining_date") {
-      
         t[fieldName] = text;
       } else if (fieldName === "email") {
-       
         // '+91'+
         t[fieldName] = text;
-      }else if (fieldName === "designation") {
-        t[fieldName] = text.replace(/^\s+/, '');
-      
-      }else if (fieldName === "name") {
-        t[fieldName] = text.replace(/^\s+/, '');
-      
-      }else if (fieldName === "employee_id") {
-        t[fieldName] = text.replace(/^\s+/, '');
-      
+      } else if (fieldName === "designation") {
+        t[fieldName] = text.replace(/^\s+/, "");
+      } else if (fieldName === "name") {
+        t[fieldName] = text.replace(/^\s+/, "");
+      } else if (fieldName === "employee_id") {
+        t[fieldName] = text.replace(/^\s+/, "");
       } else {
         t[fieldName] = text;
       }
@@ -385,6 +378,8 @@ const useUpperTabsHook = ({
 
     image,
     handleSubmitToSave,
+    setIsValidContact,
+    setContery,
   };
 };
 

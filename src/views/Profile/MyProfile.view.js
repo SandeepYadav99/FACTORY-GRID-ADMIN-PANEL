@@ -20,7 +20,7 @@ import WaitingComponent from "../../components/Waiting.component";
 import SidePanelComponent from "../../components/SidePanel/SidePanel.component";
 import AddTaskCreate from "./Create/AddTaskCreate";
 import TaskListItem from "./TaskListView";
-import capitalizeFirstLetter from "../../hooks/CommonFunction";
+import capitalizeFirstLetter, { formatString } from "../../hooks/CommonFunction";
 import AssociatedManufactures from "./AssociatedManufactures/AssociatedManufactures";
 import historyUtils from "../../libs/history.utils";
 import ArrowBackIosIcon from "@material-ui/icons/ArrowBackIos";
@@ -137,21 +137,21 @@ const Profile = () => {
                     <Group className={styles.contactIcons} />
 
                     <span className={styles.activity}>
-                      {capitalizeFirstLetter(profileDetails?.department)}
+                      {formatString(profileDetails?.department)}
                     </span>
                   </div>
                   <div className={styles.activityFlex}>
                     <Person className={styles.contactIcons} />
 
                     <span className={styles.activity}>
-                      {capitalizeFirstLetter(profileDetails?.designation)}
+                      {formatString(profileDetails?.designation)}
                     </span>
                   </div>
                   <div className={styles.activityFlex}>
                     <CalendarToday className={styles.contactIcons} />
 
                     <span className={styles.activity}>
-                      {capitalizeFirstLetter(
+                      {formatString(
                         profileDetails?.joiningDateText || "N/A"
                       )}
                     </span>
