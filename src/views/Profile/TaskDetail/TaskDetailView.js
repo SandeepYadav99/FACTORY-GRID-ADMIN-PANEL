@@ -17,6 +17,7 @@ import AddTaskUpdate from "./Update/UpdateDetail";
 
 import WaitingComponent from "../../../components/Waiting.component";
 import { serviceTaskManagementDetail } from "../../../services/ProviderUser.service";
+import { useParams } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   boldTitle: {
@@ -28,14 +29,14 @@ const useStyles = makeStyles((theme) => ({
   },
   avatar: {
     backgroundColor: theme.palette.secondary.main,
-    marginRight: theme.spacing(1), 
+    marginRight: theme.spacing(1),
   },
   subHeadeer: {
     fontSize: "14px",
     color: "#000000",
     fontWeight: "600",
-    display: 'flex',
-    alignItems: 'center',
+    display: "flex",
+    alignItems: "center",
   },
   paragraph: {
     fontSize: "13px",
@@ -45,12 +46,12 @@ const useStyles = makeStyles((theme) => ({
 
 const TaskDetailView = ({}) => {
   const [isAcceptPopUp, setIsAcceptPopUp] = useState(false);
-  const location = useLocation();
-  const queryParams = new URLSearchParams(location.search);
-  const id = queryParams.get("id");
+  // const location = useLocation();
+  // const queryParams = new URLSearchParams(location.search);
+  // const id = queryParams.get("id");
   const classes = useStyles();
   const [isSidePanel, setSidePanel] = useState(false);
-
+  const { id } = useParams();
   const [details, setDetails] = useState([]);
   // const { present: details } = useSelector((state) => state.common);
 

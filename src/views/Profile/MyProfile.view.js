@@ -84,7 +84,7 @@ const Profile = () => {
             </div>
           </div>
 
-          <div className={styles.profileFlex}>
+          <div className={styles.profileFlex} >
             <div className={styles.leftSection}>
               <div className={styles.plain}>
                 <ButtonBase
@@ -94,7 +94,7 @@ const Profile = () => {
                   Edit
                 </ButtonBase>
                 <div className={styles.profileContainer}>
-                  {profileDetails?.image &&   <img src={profileDetails?.image} alt="" height={250} width={250} />}
+                  {profileDetails?.image &&   <img src={profileDetails?.image} alt="" className={styles.proImage}/>}
                 
 
                   <div className={styles.name}>

@@ -46,7 +46,7 @@ const CustomPhoneContactField = ({
   return (
     <div style={{ display: "flex", flexDirection: "column" }}>
       <PhoneInput
-        defaultErrorMessage={isError}
+         defaultErrorMessage={isError}
         inputProps={{
           name: "Phone No",
         }}
@@ -60,7 +60,7 @@ const CustomPhoneContactField = ({
         }}
         specialLabel=""
         isValid={isValid}
-        onMount={onMount}
+      
         {...rest}
       />
       {errorText  ? (

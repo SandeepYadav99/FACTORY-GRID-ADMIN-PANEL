@@ -2,12 +2,16 @@ import React from 'react';
 import styles from './Style.module.css';
 import { ButtonBase } from "@material-ui/core";
 import { KeyboardArrowRight } from "@material-ui/icons";
+import history from '../../../../../../libs/history.utils';
 
 const Queries = ({queryLists}) => {
     console.log(queryLists, "Querylist is ");
 
   const renderTimeline = () => {
 
+    const customerSupport = (support_id)=>{
+      history.push(`${"/support/detail/"}${support_id}`)
+    }
     return queryLists?.map((queryList) => {
       const updatedAt = new Date(queryList?.createdAt);
       const updatedAtFormatted = updatedAt.toLocaleString('en-US', {
@@ -45,7 +49,7 @@ const Queries = ({queryLists}) => {
               <div>Last Updated: {queryList?.updatedAt || "N/A"}</div>
             </div>
           </div>
-          <div className={styles.rightArrow}>
+          <div className={styles.rightArrow} onClick={()=>customerSupport(queryList?._id)}>
             <KeyboardArrowRight fontSize={'large'}/>
           </div>
         </div>
@@ -67,7 +71,8 @@ const Queries = ({queryLists}) => {
         <ButtonBase className={styles.viewMore}>View All</ButtonBase>
       </div>
 
-      </div>:<div className={styles.query}>Not Available</div>}
+      </div>
+      :<div className={styles.query}>Not Available</div>}
     </div>
   );
 };

@@ -3,6 +3,7 @@
   /*align-items: center;*/
   flex-wrap: wrap;
   justify-content: space-between;
+  margin-top: 20px !important;
 }
 @media (max-width: 1115px) {
   .profileFlex {
@@ -253,4 +254,7 @@ img {
 .mainFlex {
   display: flex;
   /*align-items: center;*/
+}
+.proImage{
+  max-width: 100px;
 }

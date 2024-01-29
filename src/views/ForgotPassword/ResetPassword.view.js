@@ -138,9 +138,9 @@ class ResetPasswordView extends Component {
           //   type: "success",
           // });
           this.props.handleClose();
-          setTimeout(() => {
-            historyUtils.push("/login");
-          }, 1500);
+          // setTimeout(() => {
+          //   historyUtils.push("/login");
+          // }, 1500);
         } else {
           SnackbarUtils.error("Password must contain at least one letter and one number");
           //   EventEmitter.dispatch(EventEmitter.THROW_ERROR, {

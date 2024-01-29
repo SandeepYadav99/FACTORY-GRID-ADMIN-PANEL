@@ -237,7 +237,9 @@ const useAddTaskCreate = ({
             )
           : [];
 
-        t[fieldName] = uniqueValues;
+          if (uniqueValues.length <= 2) {
+            t[fieldName] = uniqueValues;
+          }
       } else if (fieldName === "associated_task") {
         t[fieldName] = text;
       } else if (fieldName === "assigned_to") {

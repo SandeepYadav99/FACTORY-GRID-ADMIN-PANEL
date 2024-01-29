@@ -67,7 +67,7 @@ const dashboardRoutes = [
     is_sidebar: true,
   },
   {
-    path: "/profile",
+    path: `${RouteName.PROFILE}:id`,
     sidebarName: "My Profile",
     navbarName: "My Profile",
     icon: Person,
@@ -76,7 +76,7 @@ const dashboardRoutes = [
     is_protect: true,
   },
   {
-    path: RouteName.TASK_DETAIL,
+    path: `${RouteName.TASK_DETAIL}:id`,
     sidebarName: "My Profile",
     navbarName: "My Profile",
     icon: Person,

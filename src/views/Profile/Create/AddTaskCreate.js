@@ -16,6 +16,7 @@ import CustomDatePicker from "../../../FormFields/DatePicker/CustomDatePicker";
 import { Autocomplete } from "@material-ui/lab";
 import { Clear, Search } from "@material-ui/icons";
 import CustomSelectField from "../../../FormFields/SelectField/SelectField.component";
+import CustomDateTimePicker from "../../../FormFields/DatePicker/CustomDateTimePicker";
 
 const AddTaskCreate = ({
   handleSideToggle,
@@ -150,16 +151,18 @@ const AddTaskCreate = ({
         </div>
         <div className={"formFlex"}>
           <div className={"formGroup"}>
-            <CustomDatePicker
+            <CustomDateTimePicker
               clearable
               label={"Due Date"}
               // maxDate={new Date()}
               onChange={(date) => {
                 changeTextData(date, "due_date");
               }}
-              format={"dd-MM-yyyy  HH:mm"}
+              // views={["month","year"]}
+              // format={"dd-MM-yyyy HH:mm"}
               value={form?.due_date}
               isError={errorData?.due_date}
+              
             />
           </div>
         </div>
@@ -197,12 +200,12 @@ const AddTaskCreate = ({
             />
           </div>
         </div>
-        <div className="formFlex">
-          <div className={"formGroup"}>
-        <label >
+        <label className={styles.paragraph}>
           Please press enter to add a category if not found in the search
           results.
         </label>
+        <div className="formFlex">
+          <div className={"formGroup"}>
         </div>
         </div>
         <div className={"formFlex"}>

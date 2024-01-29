@@ -28,8 +28,8 @@ const ProfileView = ({ userProfile, renderInterestArea, isLoading }) => {
               </div>
               <div className={styles.user}>
                 {" "}
-                {`${userProfile.first_name || " "} ${
-                  userProfile.last_name || " "
+                {`${userProfile?.first_name || " "} ${
+                  userProfile?.last_name || " "
                 }`}
               </div>
               <div className={styles.name}>
@@ -43,7 +43,7 @@ const ProfileView = ({ userProfile, renderInterestArea, isLoading }) => {
 
             <div>
               <div className={styles.key}>Industry </div>
-              <div className={styles.value}>{userProfile?.industry.name}</div>
+              <div className={styles.value}>{userProfile?.industry?.name}</div>
             </div>
             <br />
 
@@ -143,7 +143,7 @@ const ProfileView = ({ userProfile, renderInterestArea, isLoading }) => {
               <div className={styles.latest}>
                 <div>Last Message</div>{" "}
                 <div className={styles.msgDate}>
-                  {userProfile.last_active_at}
+                  {userProfile?.last_active_at}
                 </div>
                 {/* 12/12/2021 | 1:00 PM */}
               </div>
