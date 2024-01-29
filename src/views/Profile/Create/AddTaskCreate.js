@@ -102,7 +102,7 @@ const AddTaskCreate = ({
                     startAdornment: (
                       <>
                         <Avatar
-                          src={form?.assigned_to.image || fetchedAssignedUser?.image}
+                          src={form?.assigned_to?.image || fetchedAssignedUser?.image}
                           style={{ marginRight: 8, cursor: "pointer" }}
                         />
                       </>
@@ -248,9 +248,10 @@ const AddTaskCreate = ({
               onChange={(e, value) => {
                 changeTextData(value, "associated_user");
               }}
-              value={form.associated_user || []}
+              value={form?.associated_user || []}
               options={filteredUsers || []} // listData ||
-              getOptionLabel={(option) =>`${option?.name || ""} ${option?.email ? ` (${option?.email})` : ""}`  }
+             // getOptionLabel={(option) =>`${option?.name} (${option?.email})` }
+               getOptionLabel={(option) =>`${option?.name || ""} ${option?.email || ""}`  }
               renderOption={(option) => (
                 <div style={{ display: "flex", alignItems: "center" }}>
                   <Avatar src={option?.image} style={{ marginRight: 8 }} />
@@ -281,13 +282,13 @@ const AddTaskCreate = ({
                       </>
                     ),
                     startAdornment: (
-                      <>
+                     
                
                         <Avatar
-                          src={form?.associated_user?.image }
+                          src={form?.associated_user?.image || ""}
                           style={{ marginRight: 8, cursor: "pointer" }}
                         />
-                      </>
+                   
                     ),
                   }}
                 />

@@ -19,6 +19,7 @@ import { Autocomplete } from "@material-ui/lab";
 import { Clear, Search } from "@material-ui/icons";
 import CustomSelectField from "../../../../FormFields/SelectField/SelectField.component";
 import useAddTaskUpdate from "./UpdateDetailHook";
+import CustomDateTimePicker from "../../../../FormFields/DatePicker/CustomDateTimePicker";
 
 const AddTaskUpdate = ({
   handleSideToggle,
@@ -210,7 +211,7 @@ const AddTaskUpdate = ({
         </div>
         <div className={"formFlex"}>
           <div className={"formGroup"}>
-            <CustomDatePicker
+            <CustomDateTimePicker
               clearable
               label={"Due Date"}
               // maxDate={new Date()}
@@ -255,14 +256,10 @@ const AddTaskUpdate = ({
             />
           </div>
         </div>
-        <div className="formFlex">
-          <div className={"formGroup"}>
-        <label className={styles.enter}>
+        <label className={styles.paragraph}>
           Please press enter to add a category if not found in the search
           results.
         </label>
-        </div>
-        </div>
         <div className={"formFlex"}>
           <div className={"formGroup"}>
             <CustomSelectField
