@@ -127,51 +127,7 @@ const AddTaskUpdate = ({
               )}
               disableClearable
             />
-            {/* <Autocomplete
-              id="tags-outlined"
-              onChange={(e, value) => {
-                changeTextData(value, "assigned_to");
-              }}
-              value={form.assigned_to || fetchedAssignedUser || []}
-              options={filteredAssignedTo || []}
-              // getOptionLabel={(option) =>  `${option?.name} (${option?.email})`}
-
-              defaultValue={form?.assigned_to || []}
-              getOptionLabel={(option) => `${option?.name} (${option?.email})`}
-              renderOption={(option) => (
-                <div style={{ display: "flex", alignItems: "center" }}>
-                  <Avatar src={option?.image} style={{ marginRight: 8 }} />
-                  <div>{`${option?.name} (${option?.email})`}</div>
-                </div>
-              )}
-              renderInput={(params) => (
-                <TextField
-                  {...params}
-                  variant="outlined"
-                  label="Assigned To"
-                  error={errorData?.assigned_to}
-                  InputProps={{
-                    ...params.InputProps,
-                    endAdornment: (
-                      <>
-                        <Search
-                          style={{ marginRight: -20, cursor: "pointer" }}
-                        />
-                      </>
-                    ),
-                    startAdornment: (
-                      <>
-                        <Avatar
-                          src={form?.assigned_to.image}
-                          style={{ marginRight: 8, cursor: "pointer" }}
-                        />
-                      </>
-                    ),
-                  }}
-                />
-              )}
-              disableClearable
-            /> */}
+           
           </div>
         </div>
         <div className={"formFlex"}>
