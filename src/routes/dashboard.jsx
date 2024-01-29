@@ -50,6 +50,7 @@ import TaskDetailView from "../views/Profile/TaskDetail/TaskDetailView";
 import ServiceListContainer from "../views/Service/List/ServiceListContainer";
 import AssignedContainer from "../views/Profile/TaskDetail/TaskDetailView/AssignedContainer";
 import ServiceDetailView from "../views/Service/Detail/ServiceDetailView";
+import ProfileView from "../views/User/components/UpperTabs/UpperTabs.view";
 
 // import ServiceView from "../views/Service/Create/ServiceCreate.view";
 
@@ -182,6 +183,16 @@ const dashboardRoutes = [
     is_protect: true,
     parent: "admin",
   },
+  // {
+  //   path: RouteName.PROFILE,
+  //   sidebarName: "Profile",
+  //   navbarName: "UserRole",
+  //   icon: LibraryBooks,
+  //   component: ProfileView,
+  //   is_sidebar: true,
+  //   is_protect: true,
+  //   parent: "admin",
+  // },
   {
     path: "/badge",
     sidebarName: "Badge",
