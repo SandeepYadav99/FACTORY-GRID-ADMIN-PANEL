@@ -6,6 +6,7 @@ import {
   serviceTaskMnagmentNotesList,
 } from "../../../../services/TaskManage.service";
 import { useLocation } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 const initialForm = {
   descriptions: "",
@@ -15,9 +16,7 @@ const useNotesDilogHook = () => {
   const [isAcceptPopUp, setIsAcceptPopUp] = useState(false);
   const [errorData, setErrorData] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const location = useLocation();
-  const queryParams = new URLSearchParams(location.search);
-  const id = queryParams.get("id");
+  const { id } = useParams();
   const [noteDetails, setNoteDetail] = useState(null);
 
   const toggleAcceptDialog = useCallback(
@@ -88,7 +87,7 @@ const useNotesDilogHook = () => {
         errors[val] = true;
       }
     });
-   
+
     if (form?.descriptions?.length > maxLength) {
       SnackbarUtils.error("Max 500 Characters");
     }
