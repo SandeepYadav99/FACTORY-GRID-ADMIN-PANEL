@@ -12,7 +12,7 @@ import LoyaltyIcon from "@material-ui/icons/Loyalty";
 import FormatQuoteIcon from "@material-ui/icons/FormatQuote";
 import CreditCardIcon from "@material-ui/icons/CreditCard";
 import ShoppingBasketIcon from "@material-ui/icons/ShoppingBasket";
-import { Button } from "@material-ui/core";
+import { Button, ButtonBase } from "@material-ui/core";
 import { Report } from "@material-ui/icons";
 import MuiStyle from "../../libs/MuiStyle";
 import CustomerProfile from "./components/Profile/CustomerProfile.view";
@@ -21,7 +21,8 @@ import useCustomerProfileHook from "../../helper/CustomerProfileHook";
 import SuspendPopup from "./components/SuspendPopup/SuspendPopup";
 import WaitingComponent from "../../components/Waiting.component";
 import KYC from "./components/Kyc/KYC";
-
+import history from "../../libs/history.utils";
+import ArrowBackIosIcon from "@material-ui/icons/ArrowBackIos";
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -115,7 +116,13 @@ const ManufacturerTabs = ({ classes, theme }) => {
     <div>
       <div className={styles.upperFlex}>
         <div>
-          <strong>User Profile</strong>
+        <ButtonBase onClick={() => history.push("/app/users")}>
+            <ArrowBackIosIcon fontSize={"small"} />{" "}
+            <span>
+            <strong>User Profile</strong>
+            </span>
+          </ButtonBase>
+       
         </div>
 
         <div className={styles.buttonFlex}>

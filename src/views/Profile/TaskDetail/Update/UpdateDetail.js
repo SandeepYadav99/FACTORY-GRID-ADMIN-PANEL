@@ -302,7 +302,11 @@ const AddTaskUpdate = ({
               value={form.associated_user || fetchedUser || []}
               options={filteredUsers || []} // listData ||
               // getOptionLabel={(option) => option?.name || ""}
-              getOptionLabel={(option) =>`${option?.name || ""} ${option?.email ? ` (${option?.email})` : ""}`  }
+              getOptionLabel={(option) =>
+                `${option?.name || ""} ${
+                  option?.email ? ` (${option?.email})` : ""
+                }`
+              }
               renderOption={(option) => (
                 <div style={{ display: "flex", alignItems: "center" }}>
                   <Avatar src={option?.image} style={{ marginRight: 8 }} />
@@ -334,9 +338,10 @@ const AddTaskUpdate = ({
                     ),
                     startAdornment: (
                       <>
-               
                         <Avatar
-                          src={form?.associated_user?.image || fetchedUser?.image}
+                          src={
+                            form?.associated_user?.image || fetchedUser?.image
+                          }
                           style={{ marginRight: 8, cursor: "pointer" }}
                         />
                       </>
@@ -344,8 +349,8 @@ const AddTaskUpdate = ({
                   }}
                 />
               )}
+              disableClearable
             />
-              
           </div>
         </div>
         <div className={"formFlex"}>
