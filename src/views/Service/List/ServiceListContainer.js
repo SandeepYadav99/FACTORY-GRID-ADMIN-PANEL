@@ -1,6 +1,7 @@
 
 import React, { useCallback, useMemo } from "react";
 import { Button, IconButton } from "@material-ui/core";
+import {  Info as EditIcon } from "@material-ui/icons";
 import classNames from "classnames";
 import { useSelector } from "react-redux";
 import SidePanelComponent from "../../../components/SidePanel/SidePanel.component";
@@ -177,12 +178,23 @@ const ServiceListContainer = (props) => {
         render: (temp, all) => <div>{renderFeatured(all)}</div>,
       },
 
+     
+
       {
         key: "user_id",
         label: "Action",
         render: (temp, all) => (
           <div>
-            <Button onClick={() => handleEdit(all)}>Info</Button>
+            <IconButton
+              className={"tableActionBtn"}
+              color="secondary"
+              // disabled={all.status != 'ACTIVE'}
+              onClick={() => {
+                handleEdit(all);
+              }}
+            >
+              <EditIcon fontSize={"small"} className={styles.black} />
+            </IconButton>
           </div>
         ),
       },

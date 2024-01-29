@@ -48,7 +48,6 @@ const ServiceDetailView = ({}) => {
   const [isAcceptPopUp, setIsAcceptPopUp] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [details, setDetails] = useState(null);
-  console.log(details, "details");
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const id = queryParams.get("id");
@@ -106,7 +105,7 @@ const ServiceDetailView = ({}) => {
           </ButtonBase>
         </div>
 
-        <div>
+        <div style={{marginRight: "70px",marginTop: "0px",fontSize:"20px", color:"#000000"}}>
           <ButtonBase
             onClick={toggleAcceptDialog}
             className={styles.editAction}

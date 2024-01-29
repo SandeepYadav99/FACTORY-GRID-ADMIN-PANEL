@@ -19,7 +19,7 @@ import useServiceCreateHook from "./ServiceCreateHooks";
 import File from "../../../components/FileComponent/FileComponent.component";
 import CustomTextField from "../../../FormFields/TextField.component";
 import styles from "../Create/Style.module.css";
-
+import slugify from "slugify";
 import CustomSelectField from "../../../FormFields/SelectField/SelectField.component";
 
 
@@ -114,15 +114,16 @@ const ServiceView = ({ handleToggleSidePannel, isSidePanel, empId }) => {
         <div className={"formFlex"}>
             <div className={"formGroup"}>
               <CustomTextField
-                isError={errorData?.name}
-                errorText={errorData?.name}
+                isError={errorData?.slug}
+                errorText={errorData?.slug}
                 label={"Slug"}
-                value={form?.name}
+                value={form?.slug}
                 onTextChange={(text) => {
-                  changeTextData(text, "name");
+                  changeTextData(slugify(text.toLowerCase()), "slug");
                 }}
+                
                 onBlur={() => {
-                  onBlurHandler("name");
+                  onBlurHandler("slug");
                 }}
               />
             </div>
@@ -134,7 +135,7 @@ const ServiceView = ({ handleToggleSidePannel, isSidePanel, empId }) => {
               <CustomTextField
                 isError={errorData?.description}
                 errorText={errorData?.description}
-                label={"Discription"}
+                label={"Description"}
                 value={form?.description}
                 onTextChange={(text) => {
                   changeTextData(text, "description");
@@ -150,6 +151,7 @@ const ServiceView = ({ handleToggleSidePannel, isSidePanel, empId }) => {
           <div className={"formFlex"}>
             <div className={"formGroup"}>
               <CustomTextField
+             type={"number"}
                 isError={errorData?.priority}
                 errorText={errorData?.priority}
                 label={"Priority"}
