@@ -105,7 +105,7 @@ const ServiceDetailView = ({}) => {
           </ButtonBase>
         </div>
 
-        <div>
+        <div style={{marginRight: "70px",marginTop: "0px",fontSize:"20px", color:"#000000"}}>
           <ButtonBase
             onClick={toggleAcceptDialog}
             className={styles.editAction}

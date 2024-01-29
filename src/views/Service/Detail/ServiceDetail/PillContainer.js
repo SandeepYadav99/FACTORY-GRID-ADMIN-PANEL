@@ -7,12 +7,13 @@ const PillContainer = ({ details, styles }) => {
       {" "}
       <div className={styles.container} >
         <div>
-          <img src={details?.logo} height={30} alt="" />
+          <img src={details?.logo} height={40} alt="" />
         </div>
         <div className={classNames(styles.gaps, "openSans")}>
-          <span>
-            <strong>{`${details?.name}`}</strong>
-          </span>{" "}
+        <div>
+          <div style={{fontSize:"20px", color:"#000000"}}>{`${details?.name} `}</div>
+        </div>
+       
           <br />
          
         </div>
