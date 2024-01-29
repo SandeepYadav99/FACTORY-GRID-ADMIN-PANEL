@@ -18,6 +18,7 @@ import File from "../../../../components/FileComponent/FileComponent.component";
 import CustomTextField from "../../../../FormFields/TextField.component";
 import CustomSelectField from "../../../../FormFields/SelectField/SelectField.component";
 import CustomPhoneContactField from "../../../../FormFields/CustomPhoneContact.componet";
+import PhoneInput from "react-phone-input-2";
 
 const useStyles = makeStyles((theme) => ({
   iconBtnError: {
@@ -39,8 +40,7 @@ const User = ({
   image,
   setPhoneContact,
   setTypeOf,
-  setIsValidContact,
-  setIsValid
+  setCountry
 
 }) => {
   const classes = useStyles();
@@ -118,22 +118,17 @@ const User = ({
                 isError={errorData?.contact}
                 errorText={errorData?.contact}
                 value={form?.contact}
-                onTextChange={(text, formattedPhoneNumber, country, e, formattedValue) => {
+                onTextChange={(text) => {
               
                   changeTextData(text, "contact");
                 }}
                 // onBlur={() => {
                 //   onBlurHandler("contact");
                 // }}
-                // onMount={(value, data, formattedValue)=>{
-                 
-                //   setIsValidContact(data);
-                //      setIsValid(value)
-                // }}
+              
                 
-                isValid={(value, country) => {
-                  setIsValidContact(country);
-                  setIsValid(value)
+                isValid={(value, country, countries, hiddenAreaCodes) => {
+                //   setCountry(country)
                   if (value.match(/12345/)) {
                     return "";
                   } else if (value.match(/1234/)) {
@@ -141,7 +136,8 @@ const User = ({
                   } else {
                     return true;
                   }
-                }}
+              
+                  }}
               />
             </div>
           </div>

@@ -127,7 +127,8 @@ const useUserListHook = ({}) => {
   }, []);
   
   const handleProfile = useCallback((type) => {
-    historyUtils.push(`${"/profile/"}?id=${type?.id}`);
+    // historyUtils.push(`${"/profile/"}?id=${type?.id}`);
+    historyUtils.push(`${RouteName.PROFILE}${type?.id}`);
   }, []);
   const handleToggleSidePannel = useCallback(
     (data) => {

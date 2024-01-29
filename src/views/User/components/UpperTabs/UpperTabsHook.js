@@ -14,7 +14,7 @@ import SnackbarUtils from "../../../../libs/SnackbarUtils";
 import historyUtils from "../../../../libs/history.utils";
 import { isEmail } from "../../../../libs/RegexUtils";
 // import useContactDebounceHook from "../../../../hooks/ContactDebounceHook";
-
+import parsePhoneNumber from "libphonenumber-js";
 const initialForm = {
   name: "",
   image: "",
@@ -52,8 +52,8 @@ const useUpperTabsHook = ({
   const [typeOf, setTypeOf] = useState(""); // TypeOfTabs
   const [listData, setListData] = useState(null);
   const [value, setValue] = useState(0);
-  const [contery, setContery] = useState(null);
-  const [isValidContact, setIsValidContact] = useState(null);
+  const [contact, setContact] = useState(null);
+  const [country, setCountry] = useState(null);
   // access query params id in url
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
@@ -159,7 +159,8 @@ const useUpperTabsHook = ({
   //     handleReset();
   //   }
   // }, [isSidePanel]);
-  console.log(isValidContact, contery, "Contery");
+  console.log(form.contact);
+
   const checkFormValidation = useCallback(() => {
     const errors = { ...errorData };
     let required;
@@ -183,34 +184,39 @@ const useUpperTabsHook = ({
       ) {
         errors[val] = true;
       }
-      if (!form.contact) {
-        errors.contact = "Contact cannot be empty";
-      } else {
-        const contactDigits = form.contact.replace(/\D/g, "");
-        console.log(contactDigits, "Contact");
-        if (contactDigits.length <= 11) {
-          errors.contact = "Contact must have at least 10 digits";
-        } else {
-          delete errors.contact;
+      if (val === "contact" && form.contact) {
+        if (value === 0) {
+          const phoneNumber = parsePhoneNumber(form?.contact);
+          // console.log('phoneNumber', phoneNumber, (phoneNumber && phoneNumber.isValid()));
+          if (phoneNumber) {
+            if (phoneNumber.isValid() === false) {
+              errors.contact = "Invalid Number";
+            }
+          } else {
+            errors.contact = "Invalid Number";
+          }
         }
+        // errors.contact = "Contact cannot be empty";
       }
+
       if (val === "email" && form?.email && !isEmail(form?.email)) {
         errors.email = "Invalid email address";
       }
     });
+    if (value === 1) {
+      if (form?.joining_date) {
+        const selectedYear = new Date(form.joining_date).getFullYear();
+        const currentYear = new Date().getFullYear();
+        const selectedDate = new Date(form.joining_date);
 
-    if (form?.joining_date) {
-      const selectedYear = new Date(form.joining_date).getFullYear();
-      const currentYear = new Date().getFullYear();
-      const selectedDate = new Date(form.joining_date);
-
-      if (isNaN(selectedDate.getTime()) || selectedYear > currentYear) {
-        errors.joining_date = true;
+        if (isNaN(selectedDate.getTime()) || selectedYear > currentYear) {
+          errors.joining_date = true;
+        } else {
+          delete errors.joining_date;
+        }
       } else {
-        delete errors.joining_date;
+        errors.joining_date = true;
       }
-    } else {
-      errors.joining_date = true;
     }
     Object.keys(errors).forEach((key) => {
       if (!errors[key]) {
@@ -218,7 +224,7 @@ const useUpperTabsHook = ({
       }
     });
     return errors;
-  }, [form, errorData, setImage, value, setErrorData]);
+  }, [form, errorData, setImage, value, setErrorData, id, country, contact]);
 
   const submitToServer = useCallback(async () => {
     if (isSubmitting) {
@@ -233,8 +239,8 @@ const useUpperTabsHook = ({
       const fields = [
         "name",
         "image",
-        "contact",
         "email",
+        "contact",
         "role",
         // "password",
         "employee_id",
@@ -270,13 +276,12 @@ const useUpperTabsHook = ({
 
   const handleSubmit = useCallback(async () => {
     const errors = checkFormValidation();
-    console.log(errors, "Errors");
 
     if (Object.keys(errors).length > 0) {
       setErrorData(errors);
       SnackbarUtils.error("Please enter valid values");
     } else {
-     await setValue(1);
+      await setValue(1);
     }
   }, [
     checkFormValidation,
@@ -286,10 +291,10 @@ const useUpperTabsHook = ({
     setImage,
     errorData,
   ]);
-
+  console.log(errorData, "Error Dat ");
   const handleSubmitToSave = useCallback(async () => {
     const errors = checkFormValidation();
-
+    console.log(errors, "Error Dat 2");
     if (Object.keys(errors).length > 0) {
       setErrorData(errors);
       SnackbarUtils.error("Please enter valid  values");
@@ -316,7 +321,15 @@ const useUpperTabsHook = ({
       if (fieldName === "code") {
         shouldRemoveError = false;
       } else if (fieldName === "contact") {
+        //  const contactWithoutCountryCode = text.substring(country?.countryCode.length);
+        //  console.log(contactWithoutCountryCode, "Contact")
+        //  if ((country?.iso2 === "in" || country?.iso2 === "us") && contactWithoutCountryCode.length !== 10) {
+        //    SnackbarUtils.error("Contact must have at least 10 digits");
+        //  } else {
+
         t[fieldName] = text;
+        //  }
+        console.log(text, "Text");
       } else if (fieldName === "joining_date") {
         t[fieldName] = text;
       } else if (fieldName === "email") {
@@ -378,8 +391,8 @@ const useUpperTabsHook = ({
 
     image,
     handleSubmitToSave,
-    setIsValidContact,
-    setContery,
+    setCountry,
+    setContact,
   };
 };
 
