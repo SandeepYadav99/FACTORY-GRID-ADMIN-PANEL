@@ -133,7 +133,7 @@ const ProfileView = ({ userProfile, renderInterestArea, isLoading }) => {
           <div className={styles.plain}>
             <div className={styles.headings}>Support Queries</div>
             <div>
-              <Queries queryLists={userProfile?.supportBYEmail} />
+              <Queries queryLists={userProfile?.supportBYEmail} supportQueryCount={userProfile?.supportQueryCount}/>
             </div>
           </div>
 

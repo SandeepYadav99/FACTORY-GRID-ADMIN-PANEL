@@ -163,6 +163,18 @@ const dashboardRoutes = [
     is_sidebar: true,
     is_protect: true,
     parent: "admin",
+    
+  },
+  {
+    path: `${RouteName.PROFILE}:id`,
+    sidebarName: "Profile",
+    navbarName: "Profile",
+    icon: SupervisedUserCircle,
+    component: Profile,
+    is_sidebar: false,
+    is_protect: true,
+    // parent: "admin",
+    
   },
   {
     path: "/users/edit",
