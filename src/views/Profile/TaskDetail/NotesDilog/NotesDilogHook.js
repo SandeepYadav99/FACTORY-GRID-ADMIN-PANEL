@@ -58,6 +58,7 @@ const useNotesDilogHook = () => {
       setErrorData(temp);
     },
     [setErrorData, errorData]
+
   );
 
   const changeTextData = useCallback(
@@ -88,7 +89,7 @@ const useNotesDilogHook = () => {
         errors[val] = true;
       }
     });
-   
+
     if (form?.descriptions?.length > maxLength) {
       SnackbarUtils.error("Max 500 Characters");
     }
