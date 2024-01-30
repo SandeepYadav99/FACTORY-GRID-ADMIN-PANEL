@@ -60,7 +60,7 @@ const BankDetailPopup = ({ isOpen, handleToggle, bankId , status}) => {
         {/*<DialogTitle id="alert-dialog-title">*/}
         <div className={styles.resetPasswordWrapper}>
           <div className={styles.resetWrapper}>
-            {/* <div className={styles.upperFlex}>Update Status</div> */}
+             <div className={styles.upperFlex}>Please choose the status of the banking detail.</div> 
             <ButtonBase
               classes={{ root: classes.closeBtn }}
               onClick={handleToggle}
