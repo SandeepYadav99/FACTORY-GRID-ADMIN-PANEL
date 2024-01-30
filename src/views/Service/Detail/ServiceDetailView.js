@@ -105,13 +105,14 @@ const ServiceDetailView = ({}) => {
           </ButtonBase>
         </div>
 
-        <div style={{marginRight: "70px",marginTop: "0px",fontSize:"20px", color:"#000000"}}>
+        <div style={{marginRight: "70px",marginTop: "0px",fontSize: "35px", color: "#000000",background :"white"}}>
           <ButtonBase
             onClick={toggleAcceptDialog}
             className={styles.editAction}
           >
             <Edit fontSize={"small"} />
-            <span >Edit</span>
+
+            <span style={{marginRight: "50px",marginLeft:"10px",marginTop: "0px",fontSize: "20px", color: "#000000",background :"white"}}> Edit </span>
           </ButtonBase>
         </div>
       </div>
