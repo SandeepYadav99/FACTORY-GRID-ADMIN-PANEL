@@ -1,6 +1,4 @@
-/**
- * Created by charnjeetelectrovese@gmail.com on 10/30/2019.
- */
+
 export default {
   board_now: "/board/now",
   board_later: "/board/later",

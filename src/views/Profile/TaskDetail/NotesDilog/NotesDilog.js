@@ -7,7 +7,6 @@ import styles from "./Styles.module.css";
 import { makeStyles } from "@material-ui/styles";
 import CustomTextField from "../../../../FormFields/TextField.component";
 
-
 const useStyles = makeStyles((theme) => ({
   flex: {
     display: "flex",
@@ -40,11 +39,10 @@ const NotesDilog = ({
   onBlurHandler,
   form,
   handleSubmit,
-  errorData
+  errorData,
 }) => {
   const classes = useStyles();
 
- 
   return (
     <div>
       <Dialog
@@ -54,7 +52,7 @@ const NotesDilog = ({
         maxWidth={"sm"}
         TransitionComponent={Transition}
         open={isOpen}
-        onClose={()=>{}}
+        onClose={() => {}}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
@@ -73,16 +71,13 @@ const NotesDilog = ({
           <div className={"formFlex"}>
             <div className={"formGroup"}>
               <CustomTextField
-                 isError={errorData?.descriptions}
-                 errorText={errorData?.descriptions}
+                isError={errorData?.descriptions}
+                errorText={errorData?.descriptions}
                 label={"Note (Max 500 Characters )"}
                 value={form?.descriptions}
                 onTextChange={(text) => {
                   changeTextData(text, "descriptions");
                 }}
-                // onBlur={() => {
-                //   onBlurHandler("descriptions");
-                // }}
                 multiline
                 rows={4}
               />
@@ -90,19 +85,16 @@ const NotesDilog = ({
           </div>
 
           <div className={styles.printFlex}>
-          <div style={{ float: "right" }}>
-          <Button
-            variant={"contained"}
-            color={"primary"}
-            type={"submit"}
-            onClick={handleSubmit} // handleSubmit
-          >
-        
-              SAVE & SUBMIT
-          </Button>
-        </div>
-             
-            
+            <div style={{ float: "right" }}>
+              <Button
+                variant={"contained"}
+                color={"primary"}
+                type={"submit"}
+                onClick={handleSubmit} // handleSubmit
+              >
+                SAVE & SUBMIT
+              </Button>
+            </div>
           </div>
         </div>
       </Dialog>

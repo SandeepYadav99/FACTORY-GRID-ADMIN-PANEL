@@ -1,7 +1,6 @@
-import { Avatar, ButtonBase, Card, CardHeader } from "@material-ui/core";
+import {  ButtonBase} from "@material-ui/core";
 import { Add } from "@material-ui/icons";
 import React, { memo} from "react";
-
 import NotesDilog from "./NotesDilog";
 import useNotesDilogHook from "./NotesDilogHook";
 import NoteItem from "./NoteItems";
@@ -15,7 +14,7 @@ const AddNoteContainer = ({ details, styles, classes }) => {
     handleSubmit,
     noteDetails,
     errorData,
-    onBlurHandler
+   
   } = useNotesDilogHook();
 
   return (

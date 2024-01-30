@@ -5,18 +5,17 @@ import StatusPill from "../../../../components/Status/StatusPill.component";
 const AssignedContainer = ({ details, styles, classes }) => {
   return (
     <div className={styles.mainFlex}>
-      {/* <div className={styles.gaps} /> */}
       <div className={styles.backgroundStatus}>
         <div className={styles.getfiledSpace}>
           <div className={styles.titleFiledSpace}>Due Date:</div>{" "}
-          {/* Avator  */}
+        
           <div>
             <CardHeader subheader={details?.dueDateText} />
           </div>
         </div>
         <div className={styles.getfiledSpace}>
           <div className={styles.titleFiledSpace}>Assigned To:</div>{" "}
-          {/* Avator  */}
+        
           <div>
             <CardHeader
               avatar={
@@ -39,7 +38,7 @@ const AssignedContainer = ({ details, styles, classes }) => {
         </div>
         <div className={styles.getfiledSpace}>
           <div className={styles.titleFiledSpace}>Assigned By:</div>{" "}
-          {/* Avator  */}
+       
           <div>
             <CardHeader
               avatar={<Avatar src={details?.assignedBy?.image}></Avatar>}
@@ -56,7 +55,7 @@ const AssignedContainer = ({ details, styles, classes }) => {
         </div>
         <div className={styles.getfiledSpace}>
           <div className={styles.titleFiledSpace}>Task Category:</div>{" "}
-          {/* Avator  */}
+        
           <CardHeader
             subheader={
               <div

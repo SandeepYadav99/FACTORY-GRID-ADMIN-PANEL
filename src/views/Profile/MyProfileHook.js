@@ -20,13 +20,13 @@ const useMyProfileHook = () => {
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const id = queryParams.get("id");
-  // const {id}=useParams()
+ 
   const [taskLists, setTaskList] = useState(null);
   const [taskCreated, setTaskCreated] = useState(false);
   const userData = localStorage.getItem("user");
   const userObject = JSON.parse(userData);
   const [filterValue, setFilterValue] = useState("ALL"); // PENDING
-console.log(id, "ID")
+
   useEffect(() => {
     setIsLoading(true);
     serviceProfileDetail({ id: id ? id : userObject?.user?.id })
@@ -150,8 +150,6 @@ console.log(id, "ID")
   const filterCompltedTask = useCallback(
     (event) => {
       const newValue = event.target.value;
-      console.log(newValue, "all");
-
       setFilterValue(newValue);
       const queryValue = newValue === "PENDING" ? false : true;
       if (newValue === "ALL") {

@@ -1,11 +1,9 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { serviceTaskManagementCreate } from "../../../../services/ProviderUser.service";
 import SnackbarUtils from "../../../../libs/SnackbarUtils";
 import {
   serviceTaskMnagmentNotesCreate,
   serviceTaskMnagmentNotesList,
 } from "../../../../services/TaskManage.service";
-import { useLocation } from "react-router-dom";
 import { useParams } from "react-router-dom";
 
 const initialForm = {

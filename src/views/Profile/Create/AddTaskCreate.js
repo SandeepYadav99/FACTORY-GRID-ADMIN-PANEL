@@ -7,12 +7,11 @@ import {
   TextField,
   Tooltip,
 } from "@material-ui/core";
-import React, { useState } from "react";
+import React from "react";
 import CustomTextField from "../../../FormFields/TextField.component";
 import styles from "./Style.module.css";
 import useAddTaskCreate from "./AddTaskCreateHook";
 import InfoIcon from "@material-ui/icons/Info";
-import CustomDatePicker from "../../../FormFields/DatePicker/CustomDatePicker";
 import { Autocomplete } from "@material-ui/lab";
 import { Clear, Search } from "@material-ui/icons";
 import CustomSelectField from "../../../FormFields/SelectField/SelectField.component";
@@ -52,16 +51,7 @@ const AddTaskCreate = ({
             <InfoIcon fontSize={"small"} />
           </Tooltip>
         </h4>
-        {/* {empId && (
-        <IconButton
-          variant={"contained"}
-          className={classes.iconBtnError}
-          onClick={toggleAcceptDialog}
-          type="button"
-        >
-          <DeleteIcon />
-        </IconButton>
-      )} */}
+      
       </div>
 
       <div>
@@ -74,9 +64,7 @@ const AddTaskCreate = ({
               }}
               value={form.assigned_to || fetchedAssignedUser || []}
               options={filteredAssignedTo || []}
-              // getOptionLabel={(option) =>  `${option?.name} (${option?.email})`}
-
-              defaultValue={form?.assigned_to || []}
+            defaultValue={form?.assigned_to || []}
               getOptionLabel={(option) => `${option?.name} (${option?.email})`}
               renderOption={(option) => (
                 <div style={{ display: "flex", alignItems: "center" }}>
@@ -157,12 +145,11 @@ const AddTaskCreate = ({
             <CustomDateTimePicker
               clearable
               label={"Due Date"}
-              // maxDate={new Date()}
+           
               onChange={(date) => {
                 changeTextData(date, "due_date");
               }}
-              // views={["month","year"]}
-              // format={"dd-MM-yyyy HH:mm"}
+           
               value={form?.due_date}
               isError={errorData?.due_date}
             />
@@ -181,7 +168,6 @@ const AddTaskCreate = ({
               value={form?.category}
               freeSolo
               selectOnFocus={false}
-              // noOptionsText={this._renderNoText}
               renderTags={(value, getTagProps) =>
                 value.map((option, index) => (
                   <Chip
@@ -249,8 +235,7 @@ const AddTaskCreate = ({
                 changeTextData(value, "associated_user");
               }}
               value={form?.associated_user || []}
-              options={filteredUsers || []} // listData ||
-              // getOptionLabel={(option) =>`${option?.name} (${option?.email})` }
+              options={filteredUsers || []} 
               getOptionLabel={(option) =>
                 `${option?.name || ""} ${
                   option?.email ? `(${option?.email})` : ""
@@ -305,8 +290,6 @@ const AddTaskCreate = ({
               onChange={(e, value) => {
                 changeTextData(value, "associated_task");
               }}
-              // freeSolo
-              // selectOnFocus={false}
               value={form.associated_task || []}
               options={filteredTask || []} // listData ||
               getOptionLabel={(option) => option?.title}
@@ -341,17 +324,6 @@ const AddTaskCreate = ({
           </div>
         </div>
 
-        <div className={"headerFlex"}>
-          {/* <h4 className={"infoTitle"}>
-            {/* <div className={"heading"}>Completed?</div> */}
-          {/* <CustomSwitch
-              value={form?.status}
-              handleChange={() => {
-                changeTextData(!form?.status, "status");
-              }}
-              label={`Completed?`}
-            /> */}
-        </div>
 
         <div style={{ float: "right" }}>
           <Button

@@ -8,12 +8,10 @@ import {
   serviceUpdateProviderUser,
 } from "../../../../services/ProviderUser.service";
 import useDebounce from "../../../../hooks/DebounceHook";
-import { useLocation } from "react-router-dom";
 import { serviceProviderUserManager } from "../../../../services/ProviderUser.service";
 import SnackbarUtils from "../../../../libs/SnackbarUtils";
 import historyUtils from "../../../../libs/history.utils";
 import { isEmail } from "../../../../libs/RegexUtils";
-// import useContactDebounceHook from "../../../../hooks/ContactDebounceHook";
 import parsePhoneNumber from "libphonenumber-js";
 import { useParams } from "react-router-dom";
 const initialForm = {
@@ -55,11 +53,7 @@ const useUpperTabsHook = ({
   const [value, setValue] = useState(0);
   const [contact, setContact] = useState(null);
   const [country, setCountry] = useState(null);
-  // access query params id in url
-  // const location = useLocation();
-  // const queryParams = new URLSearchParams(location.search);
-  // const id = queryParams.get("id");
-  const {id}=useParams()
+  const { id } = useParams();
 
   useEffect(() => {
     serviceProviderUserManager().then((res) => {
@@ -189,7 +183,7 @@ const useUpperTabsHook = ({
       if (val === "contact" && form.contact) {
         if (value === 0) {
           const phoneNumber = parsePhoneNumber(form?.contact);
-          // console.log('phoneNumber', phoneNumber, (phoneNumber && phoneNumber.isValid()));
+
           if (phoneNumber) {
             if (phoneNumber.isValid() === false) {
               errors.contact = "Invalid Number";
@@ -198,7 +192,6 @@ const useUpperTabsHook = ({
             errors.contact = "Invalid Number";
           }
         }
-        // errors.contact = "Contact cannot be empty";
       }
 
       if (val === "email" && form?.email && !isEmail(form?.email)) {
@@ -323,19 +316,12 @@ const useUpperTabsHook = ({
       if (fieldName === "code") {
         shouldRemoveError = false;
       } else if (fieldName === "contact") {
-        //  const contactWithoutCountryCode = text.substring(country?.countryCode.length);
-        //  console.log(contactWithoutCountryCode, "Contact")
-        //  if ((country?.iso2 === "in" || country?.iso2 === "us") && contactWithoutCountryCode.length !== 10) {
-        //    SnackbarUtils.error("Contact must have at least 10 digits");
-        //  } else {
-
         t[fieldName] = text;
-        //  }
+
         console.log(text, "Text");
       } else if (fieldName === "joining_date") {
         t[fieldName] = text;
       } else if (fieldName === "email") {
-        // '+91'+
         t[fieldName] = text;
       } else if (fieldName === "designation") {
         t[fieldName] = text.replace(/^\s+/, "");

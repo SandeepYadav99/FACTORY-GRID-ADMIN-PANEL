@@ -1,14 +1,12 @@
 import React, { useState } from "react";
 import styles from "./Styles.module.css";
-import Checkbox from "@material-ui/core/Checkbox";
 import EmailIcon from "@material-ui/icons/Email";
 import CallIcon from "@material-ui/icons/Call";
 import { ButtonBase, FormControl, Select, MenuItem } from "@material-ui/core";
 import {
   Add,
-  Assignment,
   CalendarToday,
-  Details,
+
   Group,
   Lock,
   Person,
@@ -38,7 +36,6 @@ const Profile = () => {
     handleDetailPage,
     taskLists,
     filterValue,
-    setTaskCreated,
     handleCreatedTask,
     markAsCompleted,
     completedHandler,
@@ -174,12 +171,7 @@ const Profile = () => {
                         : "N/A"}
                     </span>
                   </div>
-                  {/* <div className={styles.activityFlex}>
-                    <CallIcon className={styles.contactIcons} />
-                    <span className={styles.activity}>
-                      {profileDetails?.current_ip || "N/A"}
-                    </span>
-                  </div> */}
+                
                 </div>
               </div>
             </div>
@@ -196,13 +188,12 @@ const Profile = () => {
                         disableUnderline
                         value={filterValue}
                         onChange={filterCompltedTask}
-                        // IconComponent={ExpandMore}
+                     
                       >
                         <MenuItem value={"PENDING"}>Pending</MenuItem>
                         <MenuItem value={"COMPLETED"}>Completed</MenuItem>
                         <MenuItem value={"ALL"}>All</MenuItem>
-                        {/*<MenuItem value={'PRICE_HIGH'}>Price (High to Low)</MenuItem>*/}
-                        {/*<MenuItem value={'RATING'}>Rating</MenuItem>*/}
+                     
                       </Select>
                     </FormControl>
                   </div>

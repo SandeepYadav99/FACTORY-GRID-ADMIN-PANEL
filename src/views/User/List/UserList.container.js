@@ -42,9 +42,7 @@ const UserList = (props) => {
   } = useSelector((state) => state.provider_user);
 
   const renderFirstCell = useCallback((user) => {
-    const tempEmailRender = user.email ? (
-      <span style={{ textTransform: "lowercase" }}>{user.email}</span>
-    ) : null;
+  
     return (
       <div className={styles.firstCellFlex} >
         <div>
@@ -55,8 +53,6 @@ const UserList = (props) => {
             <div>{`${capitalizeFirstLetter(user?.name)}`} </div>
             <div> {user?.employee_id}</div>
         
-          {/*<br/>*/}
-          {/*{tempEmailRender}*/}
         </div>
       </div>
     );
@@ -134,14 +130,7 @@ const UserList = (props) => {
         sortable: true,
         render: (temp, all) => <div>{all.role}</div>,
       },
-      // Uncomment the following block if needed
-      // {
-      //     key: 'join_date',
-      //     label: 'Join Date',
-      //     style: { width: '15%'},
-      //     sortable: true,
-      //     render: (temp, all) => <div>{all.createdAt}</div>,
-      // },
+   
       {
         key: "status",
         label: "Status",
