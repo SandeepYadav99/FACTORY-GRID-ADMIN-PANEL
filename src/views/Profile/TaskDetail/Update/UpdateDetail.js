@@ -19,6 +19,7 @@ import { Autocomplete } from "@material-ui/lab";
 import { Clear, Search } from "@material-ui/icons";
 import CustomSelectField from "../../../../FormFields/SelectField/SelectField.component";
 import useAddTaskUpdate from "./UpdateDetailHook";
+import CustomDateTimePicker from "../../../../FormFields/DatePicker/CustomDateTimePicker";
 
 const AddTaskUpdate = ({
   handleSideToggle,
@@ -126,51 +127,7 @@ const AddTaskUpdate = ({
               )}
               disableClearable
             />
-            {/* <Autocomplete
-              id="tags-outlined"
-              onChange={(e, value) => {
-                changeTextData(value, "assigned_to");
-              }}
-              value={form.assigned_to || fetchedAssignedUser || []}
-              options={filteredAssignedTo || []}
-              // getOptionLabel={(option) =>  `${option?.name} (${option?.email})`}
-
-              defaultValue={form?.assigned_to || []}
-              getOptionLabel={(option) => `${option?.name} (${option?.email})`}
-              renderOption={(option) => (
-                <div style={{ display: "flex", alignItems: "center" }}>
-                  <Avatar src={option?.image} style={{ marginRight: 8 }} />
-                  <div>{`${option?.name} (${option?.email})`}</div>
-                </div>
-              )}
-              renderInput={(params) => (
-                <TextField
-                  {...params}
-                  variant="outlined"
-                  label="Assigned To"
-                  error={errorData?.assigned_to}
-                  InputProps={{
-                    ...params.InputProps,
-                    endAdornment: (
-                      <>
-                        <Search
-                          style={{ marginRight: -20, cursor: "pointer" }}
-                        />
-                      </>
-                    ),
-                    startAdornment: (
-                      <>
-                        <Avatar
-                          src={form?.assigned_to.image}
-                          style={{ marginRight: 8, cursor: "pointer" }}
-                        />
-                      </>
-                    ),
-                  }}
-                />
-              )}
-              disableClearable
-            /> */}
+           
           </div>
         </div>
         <div className={"formFlex"}>
@@ -210,7 +167,7 @@ const AddTaskUpdate = ({
         </div>
         <div className={"formFlex"}>
           <div className={"formGroup"}>
-            <CustomDatePicker
+            <CustomDateTimePicker
               clearable
               label={"Due Date"}
               // maxDate={new Date()}
@@ -255,14 +212,10 @@ const AddTaskUpdate = ({
             />
           </div>
         </div>
-        <div className="formFlex">
-          <div className={"formGroup"}>
-        <label className={styles.enter}>
+        <label className={styles.paragraph}>
           Please press enter to add a category if not found in the search
           results.
         </label>
-        </div>
-        </div>
         <div className={"formFlex"}>
           <div className={"formGroup"}>
             <CustomSelectField
@@ -305,7 +258,11 @@ const AddTaskUpdate = ({
               value={form.associated_user || fetchedUser || []}
               options={filteredUsers || []} // listData ||
               // getOptionLabel={(option) => option?.name || ""}
-              getOptionLabel={(option) =>`${option?.name || ""} ${option?.email ? ` (${option?.email})` : ""}`  }
+              getOptionLabel={(option) =>
+                `${option?.name || ""} ${
+                  option?.email ? ` (${option?.email})` : ""
+                }`
+              }
               renderOption={(option) => (
                 <div style={{ display: "flex", alignItems: "center" }}>
                   <Avatar src={option?.image} style={{ marginRight: 8 }} />
@@ -337,9 +294,10 @@ const AddTaskUpdate = ({
                     ),
                     startAdornment: (
                       <>
-               
                         <Avatar
-                          src={form?.associated_user?.image || fetchedUser?.image}
+                          src={
+                            form?.associated_user?.image || fetchedUser?.image
+                          }
                           style={{ marginRight: 8, cursor: "pointer" }}
                         />
                       </>
@@ -347,8 +305,8 @@ const AddTaskUpdate = ({
                   }}
                 />
               )}
+              disableClearable
             />
-              
           </div>
         </div>
         <div className={"formFlex"}>

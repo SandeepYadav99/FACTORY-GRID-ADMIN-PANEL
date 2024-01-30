@@ -4,8 +4,8 @@ import { ButtonBase } from "@material-ui/core";
 import { KeyboardArrowRight } from "@material-ui/icons";
 import history from '../../../../../../libs/history.utils';
 
-const Queries = ({queryLists}) => {
-    console.log(queryLists, "Querylist is ");
+const Queries = ({queryLists, supportQueryCount}) => {
+    console.log(supportQueryCount, "Querylist is ");
 
   const renderTimeline = () => {
 
@@ -60,9 +60,9 @@ const Queries = ({queryLists}) => {
   return (
     <div className={styles.activityContainer}>
       <div className={styles.upperFlex}>
-        <div className={styles.total}>Total: 0</div>
-        <div className={styles.total}>Unresolved: 0</div>
-        <div className={styles.total}>Resolved: 0</div>
+        <div className={styles.total}>Total: {supportQueryCount?.tatalQuery}</div>
+        <div className={styles.total}>Unresolved: {supportQueryCount?.unResolved}</div>
+        <div className={styles.total}>Resolved: {supportQueryCount?.resolved}</div>
       </div>
       {queryLists?.length > 0 ? <div>
 

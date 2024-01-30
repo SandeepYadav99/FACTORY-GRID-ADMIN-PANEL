@@ -242,6 +242,8 @@ const useAddTaskCreate = ({
           }
       } else if (fieldName === "associated_task") {
         t[fieldName] = text;
+      } else if (fieldName === "associated_user") {
+        t[fieldName] = text;
       } else if (fieldName === "assigned_to") {
         t[fieldName] = text;
       } else {

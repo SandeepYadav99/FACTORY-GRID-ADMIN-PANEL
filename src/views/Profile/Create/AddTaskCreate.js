@@ -102,7 +102,10 @@ const AddTaskCreate = ({
                     startAdornment: (
                       <>
                         <Avatar
-                          src={form?.assigned_to.image || fetchedAssignedUser?.image}
+                          src={
+                            form?.assigned_to?.image ||
+                            fetchedAssignedUser?.image
+                          }
                           style={{ marginRight: 8, cursor: "pointer" }}
                         />
                       </>
@@ -162,7 +165,6 @@ const AddTaskCreate = ({
               // format={"dd-MM-yyyy HH:mm"}
               value={form?.due_date}
               isError={errorData?.due_date}
-              
             />
           </div>
         </div>
@@ -205,8 +207,7 @@ const AddTaskCreate = ({
           results.
         </label>
         <div className="formFlex">
-          <div className={"formGroup"}>
-        </div>
+          <div className={"formGroup"}></div>
         </div>
         <div className={"formFlex"}>
           <div className={"formGroup"}>
@@ -242,15 +243,19 @@ const AddTaskCreate = ({
         </div>
         <div className={"formFlex"}>
           <div className={"formGroup"}>
-        
             <Autocomplete
               id="tags-outlined"
               onChange={(e, value) => {
                 changeTextData(value, "associated_user");
               }}
-              value={form.associated_user || []}
+              value={form?.associated_user || []}
               options={filteredUsers || []} // listData ||
-              getOptionLabel={(option) =>`${option?.name || ""} ${option?.email ? ` (${option?.email})` : ""}`  }
+              // getOptionLabel={(option) =>`${option?.name} (${option?.email})` }
+              getOptionLabel={(option) =>
+                `${option?.name || ""} ${
+                  option?.email ? `(${option?.email})` : ""
+                }`
+              }
               renderOption={(option) => (
                 <div style={{ display: "flex", alignItems: "center" }}>
                   <Avatar src={option?.image} style={{ marginRight: 8 }} />
@@ -281,17 +286,15 @@ const AddTaskCreate = ({
                       </>
                     ),
                     startAdornment: (
-                      <>
-               
-                        <Avatar
-                          src={form?.associated_user?.image }
-                          style={{ marginRight: 8, cursor: "pointer" }}
-                        />
-                      </>
+                      <Avatar
+                        src={form?.associated_user?.image || ""}
+                        style={{ marginRight: 8, cursor: "pointer" }}
+                      />
                     ),
                   }}
                 />
               )}
+              disableClearable
             />
           </div>
         </div>

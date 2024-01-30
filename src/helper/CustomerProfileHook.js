@@ -45,28 +45,27 @@ const useCustomerProfileHook = () => {
     },
     [value]
   );
-
+  useEffect(() => {
+    const storedValue = localStorage.getItem("activeTabIndex");
+    if (storedValue !== null) {
+      setValue(parseInt(storedValue, 10));
+    }
+  }, []);
+  useEffect(() => {
+    return () => {
+  
+      localStorage.removeItem("activeTabIndex");
+    };
+  }, []);
   const handleSuspendBtn = () => {};
 
   const handleChange = useCallback(
     (event, newValue) => {
-      console.log(value, newValue, "New Value is ");
-      if (value === newValue) {
-        // The active tab is being closed, clear the stored value
-        localStorage.removeItem("activeTabIndex");
-      } else {
-        // The active tab is being changed, update the stored value
-        const routesToStore = ["/customers/manufacturer/"];
-     
-        if (routesToStore.some((route) => location.pathname.includes(route))) {
-          localStorage.setItem("activeTabIndex", newValue);
-          setValue(newValue);
-        } else {
-          localStorage.removeItem("activeTabIndex");
-        }
-      }
+  
+      setValue(newValue)
+      localStorage.setItem("activeTabIndex", newValue);
     },
-    [value, location.pathname]
+    [value]
   );
 
   return {
