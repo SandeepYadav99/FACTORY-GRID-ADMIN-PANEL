@@ -10,22 +10,23 @@ import RouteName from "../../routes/Route.name";
 import { serviceTaskMnagmentUpdateStatus } from "../../services/TaskManage.service";
 import SnackbarUtils from "../../libs/SnackbarUtils";
 import { useParams } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 const useMyProfileHook = () => {
   const [profileDetails, setProfileDetails] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [isSidePanel, setSidePanel] = useState(false);
   const [profileId, setProfileId] = useState(null);
-  // const location = useLocation();
-  // const queryParams = new URLSearchParams(location.search);
-  // const id = queryParams.get("id");
-  const {id}=useParams()
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const id = queryParams.get("id");
+  // const {id}=useParams()
   const [taskLists, setTaskList] = useState(null);
   const [taskCreated, setTaskCreated] = useState(false);
   const userData = localStorage.getItem("user");
   const userObject = JSON.parse(userData);
   const [filterValue, setFilterValue] = useState("ALL"); // PENDING
-
+console.log(id, "ID")
   useEffect(() => {
     setIsLoading(true);
     serviceProfileDetail({ id: id ? id : userObject?.user?.id })

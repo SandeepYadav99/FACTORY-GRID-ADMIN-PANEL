@@ -57,7 +57,7 @@ const Profile = () => {
       ) : (
         <div>
           <div className={styles.upperFlex}>
-          <ButtonBase onClick={() => historyUtils.push("/users")}>
+          <ButtonBase onClick={() => historyUtils.push("/admin/users")}>
             <ArrowBackIosIcon fontSize={"small"} />{" "}
             <span>
               <b>My Profile</b>

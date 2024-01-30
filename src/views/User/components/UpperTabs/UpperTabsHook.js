@@ -15,6 +15,7 @@ import historyUtils from "../../../../libs/history.utils";
 import { isEmail } from "../../../../libs/RegexUtils";
 // import useContactDebounceHook from "../../../../hooks/ContactDebounceHook";
 import parsePhoneNumber from "libphonenumber-js";
+import { useParams } from "react-router-dom";
 const initialForm = {
   name: "",
   image: "",
@@ -55,9 +56,10 @@ const useUpperTabsHook = ({
   const [contact, setContact] = useState(null);
   const [country, setCountry] = useState(null);
   // access query params id in url
-  const location = useLocation();
-  const queryParams = new URLSearchParams(location.search);
-  const id = queryParams.get("id");
+  // const location = useLocation();
+  // const queryParams = new URLSearchParams(location.search);
+  // const id = queryParams.get("id");
+  const {id}=useParams()
 
   useEffect(() => {
     serviceProviderUserManager().then((res) => {

@@ -21,7 +21,7 @@ const BusinessKYC = ({ userProfile }) => {
                   {userProfile?.gst_verified ? (
                     <VerifiedUser fontSize="small" style={{ color: "green" }} />
                   ) : (
-                    ""
+                    "N/A"
                   )}
                 </div>
               </div>
@@ -35,7 +35,7 @@ const BusinessKYC = ({ userProfile }) => {
                   {userProfile?.pan_verified ? (
                     <VerifiedUser fontSize="small" style={{ color: "green" }} />
                   ) : (
-                    ""
+                    "N/A"
                   )}
                 </div>
               </div>
@@ -44,7 +44,8 @@ const BusinessKYC = ({ userProfile }) => {
             <div>
               <div className={styles.title}>PAN File</div>
               <div>
-                <a href={userProfile?.pan_file} target="_blank">Pan File</a>
+                {userProfile?.gst_verified ?  <a href={userProfile?.pan_file} target="_blank">Pan File</a> : "N/A"}
+               
               </div>
             </div>
 
@@ -72,7 +73,7 @@ const BusinessKYC = ({ userProfile }) => {
                   {userProfile?.cin_verified ? (
                     <VerifiedUser fontSize="small" style={{ color: "green" }} />
                   ) : (
-                    ""
+                    "N/A"
                   )}
                 </div>
               </div>

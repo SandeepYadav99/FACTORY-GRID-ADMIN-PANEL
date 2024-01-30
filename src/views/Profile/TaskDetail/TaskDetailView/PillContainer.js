@@ -1,4 +1,5 @@
 import React, { memo } from "react";
+import { formattedDescription } from "../../../../hooks/CommonFunction";
 
 const PillContainer = ({ details, styles }) => {
   const getPriorityColor = (priority) => {
@@ -13,6 +14,14 @@ const PillContainer = ({ details, styles }) => {
         return "#FFFFFF";
     }
   };
+  // const formattedDescription = details?.description
+  // ? details.description.split('\n').map((line, index) => (
+  //     <React.Fragment key={index}>
+  //       {line}
+  //       <br />
+  //     </React.Fragment>
+  //   ))
+  // : null;
   return (
     <div>
       {" "}
@@ -31,7 +40,7 @@ const PillContainer = ({ details, styles }) => {
           <div className={styles.section}>{details?.type}</div>
         </div>
       </div>
-      <div className={styles.des}><strong>Description: </strong>{details?.description}</div>
+      <div className={styles.des} ><strong>Description: </strong>{formattedDescription(details)}</div>
       <div className={styles.paragraph}></div>
       <div className={styles.gaps} />
     </div>

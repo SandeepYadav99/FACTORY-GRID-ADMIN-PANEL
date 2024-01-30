@@ -25,10 +25,10 @@ export default {
 
   APP_USERS: "/app/users",
 
-  CUSTOMERS_CUSTOMER: "/customers/customer/",
-  CUSTOMERS_MANUFACTURES: "/customers/manufacturer/",
+  CUSTOMERS_CUSTOMER: "/app/users/customers/customer/",
+  CUSTOMERS_MANUFACTURES: "/app/users/customers/manufacturer/",
   PROFILE: "/profile/",
-  USER_PROFILE: "/users/edit/",
+  USER_PROFILE: "/admin/users/edit/",
   HUB_MASTERS: "/hub/master",
   TASK_DETAIL: "/task/detail/",
   SERVICE_DETAIL: "/service/detail/",
