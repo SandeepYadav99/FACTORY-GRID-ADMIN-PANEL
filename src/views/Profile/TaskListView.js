@@ -29,7 +29,14 @@ const TaskListItem = ({
       await completedHandler(task);
     }
   };
-
+  const formattedDescription = task?.description
+  ? task.description.split('\n').map((line, index) => (
+      <React.Fragment key={index}>
+        {line}
+        <br />
+      </React.Fragment>
+    ))
+  : null;
   return (
     <div>
       <div className={styles.check}>
@@ -45,7 +52,7 @@ const TaskListItem = ({
         </div>
       </div>
       <div onClick={() => handleDetailPage(task)} className={styles.detailView}>
-        <div className={styles.dummy}>{task?.description}</div>
+        <div className={styles.dummy}>{formattedDescription}</div>
 
         <div className={styles.taskFlex}>
           <div className={styles.timeFlex}>

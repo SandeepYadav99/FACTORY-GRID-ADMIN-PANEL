@@ -68,7 +68,7 @@ const dashboardRoutes = [
     is_sidebar: true,
   },
   {
-    path: `${RouteName.PROFILE}:id`,
+    path: `${RouteName.PROFILE}`,
     sidebarName: "My Profile",
     navbarName: "My Profile",
     icon: Person,
@@ -155,7 +155,7 @@ const dashboardRoutes = [
     // parent: 'masters',
   },
   {
-    path: "/users",
+    path: "/admin/users",
     sidebarName: "Admin Users",
     navbarName: "Admin Users",
     icon: SupervisedUserCircle,
@@ -163,27 +163,18 @@ const dashboardRoutes = [
     is_sidebar: true,
     is_protect: true,
     parent: "admin",
-    
+    should_regex:true
   },
+
   {
-    path: `${RouteName.PROFILE}:id`,
-    sidebarName: "Profile",
-    navbarName: "Profile",
-    icon: SupervisedUserCircle,
-    component: Profile,
-    is_sidebar: false,
-    is_protect: true,
-    // parent: "admin",
-    
-  },
-  {
-    path: "/users/edit",
+    path: `${RouteName.USER_PROFILE}:id`,
     sidebarName: "Users",
     navbarName: "Users",
     icon: Dashboard,
     component: UpperTabs,
     is_sidebar: false,
     is_protect: true,
+    should_regex:false
   },
   {
     path: "/role",
@@ -243,6 +234,7 @@ const dashboardRoutes = [
     component: CustomerList,
     is_sidebar: true,
     is_protect: true,
+    should_regex: true,
   },
 
   {
@@ -253,7 +245,7 @@ const dashboardRoutes = [
     component: ManufacturerTabs,
     is_sidebar: false,
     is_protect: true,
-    should_regex: true,
+    should_regex: false,
   },
   {
     path: `${RouteName.CUSTOMERS_CUSTOMER}:id`,
@@ -263,7 +255,7 @@ const dashboardRoutes = [
     component: CustomerTabs,
     is_sidebar: false,
     is_protect: true,
-    should_regex: true,
+    should_regex: false,
   },
   {
     path: "/blogs",

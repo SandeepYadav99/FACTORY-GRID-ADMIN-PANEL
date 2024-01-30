@@ -123,12 +123,12 @@ const useUserListHook = ({}) => {
   );
 
   const handleEdit = useCallback((type) => {
-    historyUtils.push(`${RouteName.USER_PROFILE}?id=${type?.id}`);
+    historyUtils.push(`${RouteName.USER_PROFILE}${type?.id}`);
   }, []);
   
   const handleProfile = useCallback((type) => {
-    // historyUtils.push(`${"/profile/"}?id=${type?.id}`);
-    historyUtils.push(`${RouteName.PROFILE}${type?.id}`);
+     historyUtils.push(`${"/profile/"}?id=${type?.id}`);
+   // historyUtils.push(`${RouteName.PROFILE}${type?.id}`);
   }, []);
   const handleToggleSidePannel = useCallback(
     (data) => {

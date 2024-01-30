@@ -28,56 +28,67 @@ const RepresentativeKYCDetail = ({ userProfile }) => {
             <div>
               <div className={styles.title}>Name</div>
               <div>
-                <div>{name ? name :""}</div>
+                <div>{name ? name :"N/A"}</div>
               </div>
             </div>
 
             <div>
               <div className={styles.title}>Designation</div>
               <div>
-                <div>{designation}</div>
+                <div>{designation || "N/A"}</div>
               </div>
             </div>
 
             <div>
               <div className={styles.title}>PAN No.</div>
               <div>
-                <div>{pan_number}</div>
+                <div>{pan_number || "N/A"}</div>
               </div>
             </div>
 
             <div>
               <div className={styles.title}>PAN File</div>
               <div>
-                <a href={pan_card}  target="_blank">Pan File</a>
+                {name ?  <a href={pan_card}  target="_blank">Pan File</a> :"N/A"}
+               
               </div>
             </div>
+            
           </div>
           <div className={styles.gaps} />
           <div className={styles.kyc2}>
             <div>
               <div className={styles.title}>Aadhar Number</div>
               <div>
-                <div>{aadhar_number}</div>
+                <div>{aadhar_number || "N/A"}</div>
               </div>
             </div>
 
-            <div>
+            <div style={{marginRight:"8%"}}>
               <div className={styles.title}  >Aadhar Front</div>
               <div>
-                <a href={aadhar_front} target="_blank">Adhar Front</a>
+                {name ? 
+                <a href={aadhar_front} target="_blank">Adhar Front</a> :"N/A"
+                
+              }
+          
               </div>
             </div>
-            <div>
+            <div style={{marginRight:"1%"}}>
               <div className={styles.title}>Aadhar Back</div>
               <div>
-                <a href={aadhar_back}  target="_blank">Aadhar Back</a>
+                {name ? 
+                <a href={aadhar_back}  target="_blank">Aadhar Back</a>:"N/A"
+                }
               </div>
             </div>
+           
             <div style={{visibility:"hidden"}}>
               <div className={styles.title}>Aadhar Back</div>
               <div>
-                <a href={aadhar_back}  target="_blank">Aadhar Back</a>
+                {name ? 
+                <a href={aadhar_back}  target="_blank">Aadhar Back</a> :"N/A"
+                }
               </div>
             </div>
           </div>
