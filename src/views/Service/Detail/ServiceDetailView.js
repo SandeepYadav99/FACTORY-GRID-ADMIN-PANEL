@@ -111,7 +111,7 @@ const ServiceDetailView = ({}) => {
             className={styles.editAction}
           >
             <Edit fontSize={"small"} />
-            <span>Edit</span>
+            <span >Edit</span>
           </ButtonBase>
         </div>
       </div>
