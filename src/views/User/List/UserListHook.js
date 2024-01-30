@@ -150,7 +150,7 @@ const useUserListHook = ({}) => {
   }, []);
 
   const handleCreate = useCallback(() => {
-     historyUtils.push(RouteName.USER_PROFILE);
+     historyUtils.push(RouteName.USER_PROFILE_CREATE);
   }, []);
 
   const handleFileView = useCallback((data) => {

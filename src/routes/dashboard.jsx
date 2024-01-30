@@ -177,6 +177,16 @@ const dashboardRoutes = [
     should_regex:false
   },
   {
+    path: `${RouteName.USER_PROFILE_CREATE}`,
+    sidebarName: "Users",
+    navbarName: "Users",
+    icon: Dashboard,
+    component: UpperTabs,
+    is_sidebar: false,
+    is_protect: true,
+    should_regex:false
+  },
+  {
     path: "/role",
     sidebarName: "UserRole",
     navbarName: "UserRole",

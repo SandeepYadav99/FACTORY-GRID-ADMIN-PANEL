@@ -265,7 +265,7 @@ const useUpperTabsHook = ({
       const res = await serviceFunction(formData);
 
       if (!res.error) {
-        historyUtils.push("/users");
+        historyUtils.push("/admin/users");
       } else {
         SnackbarUtils.error(res.message);
       }
