@@ -116,7 +116,7 @@ console.log(form,"form")
       //   formData.append(field, form?.[field]);
       // });
       formData.append("name", form?.name);
-       formData.append("slug", form?.name);
+       formData.append("slug", form?.slug);
       formData.append("logo", form?.logo);
       formData.append("apply_to", form?.apply_to);
       formData.append("description", form?.description);
