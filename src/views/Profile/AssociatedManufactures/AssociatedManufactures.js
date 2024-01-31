@@ -18,8 +18,6 @@ import RouteName from "../../../routes/Route.name";
 import historyUtils from "../../../libs/history.utils";
 import useAssociatedManufacturesHook from "./AssociatedManufacturesHook";
 import StatusPill from "../../../components/Status/StatusPill.component";
-import { useEffect } from "react";
-import { serviceAssociatedList } from "../../../services/AssociatedManufactures.sercice";
 
 const AssociatedManufactures = ({ listData, id }) => {
   const {
@@ -27,16 +25,8 @@ const AssociatedManufactures = ({ listData, id }) => {
     handleRowSize,
     handlePageChange,
     handleEdit,
-    handleFilterDataChange,
-    handleSearchValueChange,
     handleViewDetails,
-    editData,
     isCalling,
-    configFilter,
-    associatedManufactures,
-    handleToggleSidePannel,
-
-    handleToggleSend,
   } = useAssociatedManufacturesHook({ listData, id });
 
   const {
@@ -66,10 +56,6 @@ const AssociatedManufactures = ({ listData, id }) => {
     return null;
   }, []);
 
-  const handleViewEmployee = useCallback((data) => {
-    historyUtils.push(`${RouteName.EMPLOYEE_DETAIL}${data}`);
-  }, []);
-
   const tableStructure = useMemo(() => {
     return [
       {
@@ -80,8 +66,8 @@ const AssociatedManufactures = ({ listData, id }) => {
           <div className={styles.image}>
             <img src={all?.image} className={styles.imageContainer} />
 
-            <div style={{marginLeft:"3px"}}> {all?.first_name} </div>
-            <div style={{marginLeft:"5px"}}>{all?.last_name}</div>
+            <div style={{ marginLeft: "3px" }}> {all?.first_name} </div>
+            <div style={{ marginLeft: "5px" }}>{all?.last_name}</div>
           </div>
         ),
       },
@@ -115,11 +101,7 @@ const AssociatedManufactures = ({ listData, id }) => {
         key: "status",
         label: "Current Status",
         sortable: false,
-        render: (temp, all) => (
-         
-           <StatusPill status={all?.status}/>
-       
-        ),
+        render: (temp, all) => <StatusPill status={all?.status} />,
       },
     ];
   }, [renderStatus, renderFirstCell, handleViewDetails, handleEdit, isCalling]);
@@ -151,33 +133,11 @@ const AssociatedManufactures = ({ listData, id }) => {
 
   return (
     <div>
-      <div>
-        <div>
-          <div>
-            {/* <FilterComponent
-              is_progress={isFetching}
-              filters={configFilter}
-              handleSearchValueChange={handleSearchValueChange}
-              handleFilterDataChange={handleFilterDataChange}
-            /> */}
-          </div>
-
-          <div>
-            <br />
-            <div style={{ width: "100%" }}>
-              <DataTables
-                {...tableData.datatable}
-                {...tableData.datatableFunctions}
-              />
-            </div>
-          </div>
-        </div>
-        {/* <SendPopup
-          isOpen={isSend}
-          handleToggle={handleToggleSend}
-          handleSubmit={handleResend}
-          empId={empId}
-        /> */}
+      <div style={{ width: "100%" }}>
+        <DataTables
+          {...tableData.datatable}
+          {...tableData.datatableFunctions}
+        />
       </div>
     </div>
   );

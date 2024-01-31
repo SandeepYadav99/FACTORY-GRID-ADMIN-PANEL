@@ -44,7 +44,7 @@ const useAddTaskUpdate = ({
   const [fetchedUser, setFetchedUser] = useState(null);
 
   const [categoryLists, setCategoryLists] = useState(null);
-console.log(fetchedUser, "FeatfetchedUser")
+
   useEffect(() => {
     // setIsLoading(true);
     setForm({

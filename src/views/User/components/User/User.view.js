@@ -122,13 +122,9 @@ const User = ({
               
                   changeTextData(text, "contact");
                 }}
-                // onBlur={() => {
-                //   onBlurHandler("contact");
-                // }}
               
-                
-                isValid={(value, country, countries, hiddenAreaCodes) => {
-                //   setCountry(country)
+                isValid={(value) => {
+             
                   if (value.match(/12345/)) {
                     return "";
                   } else if (value.match(/1234/)) {
@@ -158,18 +154,6 @@ const User = ({
             </div>
           </div>
 
-          {/* <div className={"formFlex"}>
-          <div className={"formGroup"}>
-            <Field
-              fullWidth={true}
-              name="employee_id"
-              //type={'number'}
-              component={renderOutlinedTextField}
-              margin={"dense"}
-              label="Employee ID"
-            />
-          </div>
-        </div> */}
           <div className={"formFlex"}>
             <div className={"formGroup"}>
               <CustomTextField
@@ -205,17 +189,5 @@ const User = ({
   );
 };
 
-// const ReduxForm = reduxForm({
-//   form: "user", // a unique identifier for this form
-//   // validate,
-//   // asyncValidate,
-//   enableReinitialize: true,
-//   onSubmitFail: (errors) => {
-//     EventEmitter.dispatch(EventEmitter.THROW_ERROR, {
-//       error: "Please enter values",
-//       type: "error",
-//     });
-//   },
-// })(withStyles( { withTheme: true })(User));
 
 export default User;

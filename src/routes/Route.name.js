@@ -1,6 +1,4 @@
-/**
- * Created by charnjeetelectrovese@gmail.com on 10/30/2019.
- */
+
 export default {
   board_now: "/board/now",
   board_later: "/board/later",
@@ -29,6 +27,7 @@ export default {
   CUSTOMERS_MANUFACTURES: "/app/users/customers/manufacturer/",
   PROFILE: "/profile/",
   USER_PROFILE: "/admin/users/edit/",
+  USER_PROFILE_CREATE: "/admin/users/create/",
   HUB_MASTERS: "/hub/master",
   TASK_DETAIL: "/task/detail/",
   SERVICE_DETAIL: "/service/detail/",

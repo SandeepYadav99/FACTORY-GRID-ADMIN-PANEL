@@ -14,14 +14,7 @@ const PillContainer = ({ details, styles }) => {
         return "#FFFFFF";
     }
   };
-  // const formattedDescription = details?.description
-  // ? details.description.split('\n').map((line, index) => (
-  //     <React.Fragment key={index}>
-  //       {line}
-  //       <br />
-  //     </React.Fragment>
-  //   ))
-  // : null;
+
   return (
     <div>
       {" "}

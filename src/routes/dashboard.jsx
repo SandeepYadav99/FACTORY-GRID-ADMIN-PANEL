@@ -22,12 +22,7 @@ import SubCategoryList from "../views/SubCategory/SubCategoryList.container";
 import QuoteList from "../views/Quotes/QuoteList.container";
 import QuoteDetail from "../views/Quotes/Quote.view";
 import HubMasterList from "../views/HubMaster/List/HubMasterList";
-// import ServiceListContainer from "../views/Service/List/ServiceListContainer";
-// import TableList from "views/TableList/TableList.jsx";
-// import Typography from "views/Typography/Typography.jsx";
-// import Icons from "views/Icons/Icons.jsx";
-// import Maps from "views/Maps/Maps.jsx";
-// import NotificationsPage from "views/Notifications/Notifications.jsx";
+
 
 import {
   Dashboard,
@@ -38,25 +33,14 @@ import {
   VerifiedUser,
   LocalOffer,
   BubbleChart,
-  LocationOn,
-  Notifications,
   EventNote,
   ContactSupport,
   Settings,
 } from "@material-ui/icons";
 import RouteName from "./Route.name";
 import TaskDetailView from "../views/Profile/TaskDetail/TaskDetailView";
-// import ServiceView from "../views/Service/Create/ServiceCreate.view";
 import ServiceListContainer from "../views/Service/List/ServiceListContainer";
-import AssignedContainer from "../views/Profile/TaskDetail/TaskDetailView/AssignedContainer";
 import ServiceDetailView from "../views/Service/Detail/ServiceDetailView";
-import ProfileView from "../views/User/components/UpperTabs/UpperTabs.view";
-
-// import ServiceView from "../views/Service/Create/ServiceCreate.view";
-
-
-
-
 
 const dashboardRoutes = [
   {
@@ -85,15 +69,6 @@ const dashboardRoutes = [
     is_sidebar: false,
     is_protect: true,
   },
-  // {
-  //     path: "/categories",
-  //     sidebarName: "Categories",
-  //     navbarName: "Categories",
-  //     icon: Dashboard,
-  //     component: CategoryList,
-  //     is_sidebar: true,
-  //     is_protect: true,
-  // },
   {
     path: "null",
     sidebarName: "Masters",
@@ -134,16 +109,6 @@ const dashboardRoutes = [
     should_regex: true,
     // parent: 'masters',
   },
-  // {
-  //     path: "/industry/category/",
-  //     sidebarName: "Categories",
-  //     navbarName: "Categories",
-  //     icon: Dashboard,
-  //     component: CategoryList,
-  //     is_sidebar: true,
-  //     is_protect: true,
-  //      parent: 'masters',
-  // },
   {
     path: "/industry/category/subcategory/:id",
     sidebarName: "SubCategory",
@@ -177,6 +142,16 @@ const dashboardRoutes = [
     should_regex:false
   },
   {
+    path: `${RouteName.USER_PROFILE_CREATE}`,
+    sidebarName: "Users",
+    navbarName: "Users",
+    icon: Dashboard,
+    component: UpperTabs,
+    is_sidebar: false,
+    is_protect: true,
+    should_regex:false
+  },
+  {
     path: "/role",
     sidebarName: "UserRole",
     navbarName: "UserRole",
@@ -186,16 +161,6 @@ const dashboardRoutes = [
     is_protect: true,
     parent: "admin",
   },
-  // {
-  //   path: RouteName.PROFILE,
-  //   sidebarName: "Profile",
-  //   navbarName: "UserRole",
-  //   icon: LibraryBooks,
-  //   component: ProfileView,
-  //   is_sidebar: true,
-  //   is_protect: true,
-  //   parent: "admin",
-  // },
   {
     path: "/badge",
     sidebarName: "Badge",
@@ -382,25 +347,6 @@ const dashboardRoutes = [
     is_protect: true,
     should_regex: false,
   }
-  // ,
-  // {
-  //   path: "/service/update/",
-  //   sidebarName: "Service list",
-  //   navbarName: "service List",
-  //   icon: SupervisedUserCircle,
-  //   component: ServiceListContainer ,
-  //   is_sidebar: false,
-  //   is_protect: true,
-  //   should_regex: false,
-  // }
-  // {
-  //   path: "/notifications",
-  //   sidebarName: "Notifications",
-  //   navbarName: "Notifications",
-  //   icon: Notifications,
-  //   component: NotificationsPage
-  // },
-  // { redirect: true, path: "/", to: "/dashboard", navbarName: "Redirect" }
 ];
 
 export default dashboardRoutes;

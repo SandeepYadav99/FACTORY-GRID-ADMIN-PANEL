@@ -3,9 +3,7 @@ import React, { memo } from "react";
 import RouteName from "../../../../routes/Route.name";
 
 const TaskAssignedContainer = ({ styles, details, classes }) => {
-  const generateUserProfileLink = (userDetails) => {
-    return userDetails?.id ? `/profile/?id=${userDetails?.id}` : "#";
-  };
+
   return (
     <div className={styles.mainFlex}>
       {/* <div className={styles.gaps} /> */}
