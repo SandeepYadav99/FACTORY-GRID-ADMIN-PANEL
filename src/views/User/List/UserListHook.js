@@ -14,7 +14,7 @@ import {
 } from "../../../actions/ProviderUser.action";
 
 const useUserListHook = ({}) => {
-  const [isSidePanel, setSidePanel] = useState(false);
+  const [isSidePanel, setSidePanel] = useState(false);         
   const [isCalling, setIsCalling] = useState(false);
   const [editData, setEditData] = useState(null);
 

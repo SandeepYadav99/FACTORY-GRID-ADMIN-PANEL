@@ -10,6 +10,7 @@ import AccountQuality from "./components/AccountQuality";
 import Activity from "./components/Activity";
 
 import SimplePopover from "../../../../components/FormFields/SimplePopover/SimplePopover";
+import SimplePopovers from "./components/Popover/SimplePopovers";
 
 const ProfileView = ({ userProfile, renderInterestArea, isLoading }) => {
   return (
@@ -90,7 +91,7 @@ const ProfileView = ({ userProfile, renderInterestArea, isLoading }) => {
                 {userProfile.is_email_verified ? (
                   <VerifiedUserIcon className={styles.verified} />
                 ) : (
-                  <SimplePopover userProfile={userProfile} title={"Email"} />
+                  <SimplePopovers userProfile={userProfile} title={"Email"} />
                 )}
               </div>
               {/*{data.is_email_verified == true ? <span><VerifiedUserIcon className={styles.verified}/></span> : ''}*/}
@@ -107,7 +108,7 @@ const ProfileView = ({ userProfile, renderInterestArea, isLoading }) => {
               {userProfile?.is_contact_verified ? (
                 <VerifiedUserIcon className={styles.verified} />
               ) : (
-                <SimplePopover />
+                <SimplePopovers />
               )}
             </div>
             </div>
