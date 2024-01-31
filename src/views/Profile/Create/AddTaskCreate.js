@@ -319,7 +319,7 @@ const AddTaskCreate = ({
                   }}
                 />
               )}
-              // disableClearable
+               disableClearable
             />
           </div>
         </div>
