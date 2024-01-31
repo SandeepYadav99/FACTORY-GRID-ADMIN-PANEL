@@ -33,8 +33,8 @@ const PillContainer = ({ details, styles }) => {
           <div className={styles.section}>{details?.type}</div>
         </div>
       </div>
-      <div className={styles.des} ><strong>Description: </strong>{formattedDescription(details)}</div>
-      <div className={styles.paragraph}></div>
+      <div className={styles.des} ><strong>Description: </strong></div>
+      <div className={styles.des}>{formattedDescription(details)}</div>
       <div className={styles.gaps} />
     </div>
   );

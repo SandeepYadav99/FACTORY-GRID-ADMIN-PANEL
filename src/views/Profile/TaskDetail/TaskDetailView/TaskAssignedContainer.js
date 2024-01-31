@@ -1,13 +1,14 @@
 import { Avatar, CardHeader } from "@material-ui/core";
 import React, { memo } from "react";
 import RouteName from "../../../../routes/Route.name";
+import capitalizeFirstLetter from "../../../../hooks/CommonFunction";
 
 const TaskAssignedContainer = ({ styles, details, classes }) => {
-
+console.log(details?.completedOnText)
   return (
     <div className={styles.mainFlex}>
       {/* <div className={styles.gaps} /> */}
-      <div className={styles.backgroundStatus1}>
+      <div className={styles.backgroundStatus1} style={{ width: details?.completedOnText === 'N/A' ? '44%' : '50%' }}>
         <div className={styles.getfiledSpace}>
           {/* Avator  */}
           <div>
@@ -21,7 +22,7 @@ const TaskAssignedContainer = ({ styles, details, classes }) => {
         </div>
         <div className={styles.getfiledSpace}>
           {/* Avator  */}
-          <div>
+          <div >
             <CardHeader
               title={
                 <span className={classes.subTitle}>Task completed on:</span>
@@ -54,7 +55,7 @@ const TaskAssignedContainer = ({ styles, details, classes }) => {
                         
                     }
                   >
-                    {details?.associatedUser?.name
+                    {capitalizeFirstLetter(details?.associatedUser?.name)
                      }
                   </a>
                     </> : "N/A"}
@@ -75,7 +76,7 @@ const TaskAssignedContainer = ({ styles, details, classes }) => {
               <div>
                 {details?.associatedTask?.title ? (
                   <a
-                    href={`${RouteName.TASK_DETAIL}?id=${details?.associatedTask?._id}`}
+                    href={`${RouteName.TASK_DETAIL}${details?.associatedTask?._id}`}
                     style={{ fontSize: "13px" }}
                   >
                     {details?.associatedTask?.title}

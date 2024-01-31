@@ -273,8 +273,11 @@ const useUpperTabsHook = ({
     const errors = checkFormValidation();
 
     if (Object.keys(errors).length > 0) {
-      setErrorData(errors);
-      SnackbarUtils.error("Please enter valid values");
+    
+        setErrorData(errors);
+        // SnackbarUtils.error("Please enter valid values");
+
+      
     } else {
       await setValue(1);
     }
@@ -286,13 +289,13 @@ const useUpperTabsHook = ({
     setImage,
     errorData,
   ]);
-  console.log(errorData, "Error Dat ");
+
   const handleSubmitToSave = useCallback(async () => {
     const errors = checkFormValidation();
-    console.log(errors, "Error Dat 2");
+   
     if (Object.keys(errors).length > 0) {
       setErrorData(errors);
-      SnackbarUtils.error("Please enter valid  values");
+      // SnackbarUtils.error("Please enter valid  values");
     } else {
       await submitToServer();
     }

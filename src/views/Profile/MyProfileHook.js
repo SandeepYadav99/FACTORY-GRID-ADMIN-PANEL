@@ -133,7 +133,7 @@ const useMyProfileHook = () => {
     setTaskCreated(true);
   };
   const handleEdit = useCallback((profile) => {
-    historyUtils.push(`${RouteName.USER_PROFILE}?id=${profile?.id}`);
+    historyUtils.push(`${RouteName.USER_PROFILE}${profile?.id}`);
   });
 
   const handleSideToggle = useCallback(

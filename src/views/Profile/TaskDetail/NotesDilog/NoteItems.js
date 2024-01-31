@@ -1,5 +1,6 @@
 import React, { memo } from "react";
 import { Avatar, Card, CardHeader, Typography } from "@material-ui/core";
+import  capitalizeFirstLetter  from "../../../../hooks/CommonFunction";
 
 const NoteItem = ({ note, styles, classes }) => (
  
@@ -8,7 +9,7 @@ const NoteItem = ({ note, styles, classes }) => (
       <Typography style={{marginLeft: "15px", fontSize: "14px",marginTop:"8px", wordWrap: "break-word"}} >{note?.title}</Typography>
         <CardHeader
           avatar={<Avatar src={note?.userData?.image} />}
-          title={<span className={classes.boldTitle}>{note?.userData?.name}</span>}
+          title={<span className={classes.boldTitle}>{capitalizeFirstLetter(note?.userData?.name)}</span>}
           subheader={<span>{note?.createdAtText}</span>}
         />
       </Card>
