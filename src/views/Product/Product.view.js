@@ -242,7 +242,7 @@ class Product extends Component {
         <br />
         <Field
           color={"primary"}
-          name="is_featured"
+          name="is_featured_industry"
           component={renderCheckbox}
           label={"Feature on Industry Page"}
           onChange={this._handleChange}
@@ -522,8 +522,8 @@ class Product extends Component {
 
           <div className={"formFlex"}>
             <div className={"formGroup"}>{this._renderFeatured()}</div>
-
-            <div className={"formGroup"}>{this._renderActive()}</div>
+{/* 
+            <div className={"formGroup"}>{this._renderActive()}</div> */}
           </div>
 
           <div style={{ float: "right" }}>
