@@ -153,7 +153,7 @@ const useAddTaskUpdate = ({
     });
     return errors;
   }, [form, errorData]);
-
+console.log(fetchedTask, form?.associated_user, "Fetched Task ")
   const submitToServer = useCallback(async () => {
     if (isSubmitting) {
       return;
@@ -172,8 +172,8 @@ const useAddTaskUpdate = ({
       category: industryID,
       type: form?.type,
       priority: form?.priority,
-      associated_user: form?.associated_user?._id || fetchedUser?._id,
-      associated_task: form?.associated_task?._id || fetchedTask?._id,
+      associated_user: form?.associated_user?._id ,  // || fetchedUser?._id
+      associated_task: form?.associated_task?._id , // || fetchedTask?._id
       comment: "Task",
       // is_completed: form?.status ? true : false,
       assigned_to: form?.assigned_to?._id || fetchedAssignedTo.id,
@@ -298,6 +298,7 @@ const useAddTaskUpdate = ({
     fetchedTask,
     fetchedUser,
     categoryLists,
+    setFetchedUser
   };
 };
 

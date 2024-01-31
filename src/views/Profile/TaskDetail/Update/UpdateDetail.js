@@ -45,6 +45,7 @@ const AddTaskUpdate = ({
     fetchedTask,
     fetchedUser,
     categoryLists,
+    setFetchedUser
   } = useAddTaskUpdate({
     handleSideToggle,
     isSidePanel,
@@ -280,11 +281,12 @@ const AddTaskUpdate = ({
                     ...params.InputProps,
                     endAdornment: (
                       <>
-                        {form?.associated_user ? (
+                        {form?.associated_user || fetchedUser ? (
                           <Clear
-                            onClick={() =>
+                            onClick={() =>{
                               changeTextData(null, "associated_user")
-                            }
+                              setFetchedUser(null)
+                            }}
                           />
                         ) : null}
                         <Search
@@ -330,7 +332,7 @@ const AddTaskUpdate = ({
                     ...params.InputProps,
                     endAdornment: (
                       <>
-                        {form?.associated_task ? (
+                        {form?.associated_task || fetchedTask ? (
                           <Clear
                             onClick={() =>
                               changeTextData(null, "associated_task")
