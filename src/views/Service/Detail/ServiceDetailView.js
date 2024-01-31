@@ -3,6 +3,7 @@ import {
   ButtonBase,
   Card,
   CardHeader,
+  Button,
   makeStyles,
 } from "@material-ui/core";
 import React, { useCallback, useEffect, useState } from "react";
@@ -106,14 +107,17 @@ const ServiceDetailView = ({}) => {
         </div>
 
         <div style={{marginRight: "70px",marginTop: "0px",fontSize: "35px", color: "#000000",background :"white"}}>
-          <ButtonBase
-            onClick={toggleAcceptDialog}
-            className={styles.editAction}
-          >
-            <Edit fontSize={"small"} />
 
-            <span style={{marginRight: "50px",marginLeft:"10px",marginTop: "0px",fontSize: "20px", color: "#000000",background :"white"}}> Edit </span>
-          </ButtonBase>
+        <Button
+            onClick={toggleAcceptDialog}
+            variant={"contained"}
+            color={"primary"}
+            font={"35px"}
+          >
+            <Edit> </Edit> EDIT 
+
+          </Button>
+         
         </div>
       </div>
       {/* <CandidateInfor empId={details?.emp_code} /> */}

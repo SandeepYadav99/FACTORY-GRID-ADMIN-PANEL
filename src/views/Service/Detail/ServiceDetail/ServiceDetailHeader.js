@@ -16,7 +16,12 @@ const ServiceDetailHeader = ({ details, styles }) => {
     <div>
       {" "}
       <div className={styles.headerTitle}>
-        <div  style={{ backgroundColor: getstatusColor(details?.status), color: "#32de84" }}>{details?.status}</div>
+        <div  style={{ backgroundColor: getstatusColor(details?.status),  fontSize: "20px",
+      color: "#20c997",
+      background: "rgba(32,201,151,.1)",
+      padding: "3px 10px",
+      borderRadius: "20px",
+      textTransform: "capitalize", }}>{details?.status}</div>
        
       </div>
       <div className={styles.gaps} />
