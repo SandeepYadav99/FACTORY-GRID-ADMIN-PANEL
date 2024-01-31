@@ -64,11 +64,11 @@ const RepresentativeKYCDetail = ({ userProfile }) => {
               </div>
             </div>
 
-            <div style={{marginRight:"8%"}}>
-              <div className={styles.title}  >Aadhar Front</div>
+            <div style={{marginRight:"5%"}}>
+              <div className={styles.title}>Aadhar Front</div>
               <div>
                 {name ? 
-                <a href={aadhar_front} target="_blank">Adhar Front</a> :"N/A"
+                <a href={aadhar_front} target="_blank">Aadhar Front</a> : <div>N/A</div>
                 
               }
           
@@ -78,7 +78,7 @@ const RepresentativeKYCDetail = ({ userProfile }) => {
               <div className={styles.title}>Aadhar Back</div>
               <div>
                 {name ? 
-                <a href={aadhar_back}  target="_blank">Aadhar Back</a>:"N/A"
+                <a href={aadhar_back}  target="_blank">Aadhar Back</a>:<div>N/A</div>
                 }
               </div>
             </div>

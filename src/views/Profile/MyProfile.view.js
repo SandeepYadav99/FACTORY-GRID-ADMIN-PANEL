@@ -44,6 +44,7 @@ const Profile = () => {
 
   const handleClose = () => {
     setOpen(!open);
+    
   };
 
  

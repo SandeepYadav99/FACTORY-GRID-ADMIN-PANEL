@@ -35,6 +35,7 @@ const AddNoteContainer = ({ details, styles, classes }) => {
               </ButtonBase>
             </div>
           </div>
+          <div className={styles.gaps}/>
           <NotesDilog
              isOpen={isAcceptPopUp}
             handleToggle={toggleAcceptDialog}

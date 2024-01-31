@@ -113,7 +113,15 @@ class ResetPasswordView extends Component {
   _handleLoginClick() {
     historyUtils.push("/login");
   }
-
+  _resetForm = () => {
+    const { reset } = this.props;
+    reset("ResetPassword"); // Replace "ResetPassword" with your form name
+  
+  };
+  _handleCloseDialog = () => {
+    this._resetForm(); 
+    this.props.handleClose();
+  };
   _handleSubmit(data) {
     console.log(data, "Data");
     this.setState({
@@ -137,7 +145,8 @@ class ResetPasswordView extends Component {
           //   error: "Password Changed Successfully",
           //   type: "success",
           // });
-          this.props.handleClose();
+          // this.props.handleClose();
+          this._handleCloseDialog()
           // setTimeout(() => {
           //   historyUtils.push("/login");
           // }, 1500);
@@ -156,32 +165,27 @@ class ResetPasswordView extends Component {
     this.setState({
       open: !this.state.open,
     });
+    this._resetForm(); 
   }
 
   _handleReturn() {
     this.props.history.push("/login");
   }
 
-  _resetForm = () => {
-    const { reset } = this.props;
-    reset("ResetPassword"); // Replace "ResetPassword" with your form name
   
-  };
-  _handleCloseDialog = () => {
-    this._resetForm(); 
-    this.props.handleClose();
-  };
 
   _togglePasswordVisibility = () => {
     this.setState((prevState) => ({
       showPassword: !prevState.showPassword,
     }));
+  
   };
 
   _toggleConfirmPasswordVisibility = () => {
     this.setState((prevState) => ({
       showConfirmPassword: !prevState.showConfirmPassword,
     }));
+   
   };
 
   _renderForm() {
@@ -238,12 +242,12 @@ class ResetPasswordView extends Component {
           </div>
           <br />
           <Button
-            disabled={this.state.is_calling || this.state.success}
+            // disabled={this.state.is_calling || this.state.success}
             variant={"contained"}
             color={"primary"}
             type="submit"
           >
-            {this.state.is_calling ? (
+            {/* {this.state.is_calling ? (
               <div style={{ padding: "5px 20px", display: "flex" }}>
                 <CircularProgress size={"18px"} color={"primary"} />
               </div>
@@ -251,7 +255,8 @@ class ResetPasswordView extends Component {
               "Redirecting"
             ) : (
               "Change Password"
-            )}
+            )} */}
+            Change Password
           </Button>
         </div>
       </form>
@@ -271,7 +276,7 @@ class ResetPasswordView extends Component {
         {/*</div>*/}
         <Dialog
           open={this.props.open}
-          onClose={this.props.handleClose}
+          onClose={this._handleCloseDialog}
           TransitionComponent={Transition}
           fullWidth={true}
         >
