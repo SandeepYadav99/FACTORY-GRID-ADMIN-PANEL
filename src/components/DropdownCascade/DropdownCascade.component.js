@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-// import DropdownCascade from 'react-dropdown-cascade';
+ import DropdownCascade from 'react-dropdown-cascade';
 
 const items = [
     {
+        value: 'placeholder',
         value: '1',
         label: 'Menu 1',
         children: [
@@ -56,22 +57,29 @@ export default function App() {
 
     return (
         <>
-            <h1 style={{ margin: 15 }}>react-dropdown-cascade</h1>
-            {/*<DropdownCascade*/}
-            {/*    customStyles={{*/}
-            {/*        dropdown: {*/}
-            {/*            style: {*/}
-            {/*                margin: '5px 20px 15px 20px'*/}
-            {/*            }*/}
-            {/*        }*/}
-            {/*    }}*/}
-            {/*    items={items}*/}
-            {/*    onSelect={(value, selectedItems) => {*/}
-            {/*        console.log(value, selectedItems);*/}
-            {/*        setDropdownValue(value);*/}
-            {/*    }}*/}
-            {/*    value={dropdownValue}*/}
-            {/*/>*/}
+            <h5 style={{ margin: 15 }}>select Industry</h5>
+          
+            <DropdownCascade
+            
+            customStyles={{
+                   dropdown: {
+                        style: {
+                            margin: '5px 20px 15px 20px',
+                            
+                      }
+                    }
+                    
+                }}
+               
+               items={items}
+                onSelect={(value, selectedItems) => {
+                    console.log(value, selectedItems);
+                    setDropdownValue(value);
+               }}
+                value={dropdownValue}
+            />
+
+           
         </>
     );
 }

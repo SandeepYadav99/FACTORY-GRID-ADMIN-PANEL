@@ -1,7 +1,9 @@
 import React from "react";
 import styles from "./Style.module.css";
 import { VerifiedUser } from "@material-ui/icons";
+import Review from "../../../../../assets/img/sent_blue.svg"
 const BusinessKYC = ({ userProfile }) => {
+  console.log(userProfile, "KYC")
   return (
     <div>
       <div className={styles.plainPaper}>
@@ -18,10 +20,10 @@ const BusinessKYC = ({ userProfile }) => {
               <div>
                 <div>
                   {userProfile?.gst_number}{" "}
-                  {userProfile?.gst_verified ? (
+                  {userProfile?.cin_number_status === "VERIFIED" ? (
                     <VerifiedUser fontSize="small" style={{ color: "green" }} />
                   ) : (
-                    "N/A"
+                   <img src={Review} height={15}/>
                   )}
                 </div>
               </div>
@@ -32,10 +34,10 @@ const BusinessKYC = ({ userProfile }) => {
               <div>
                 <div>
                   {userProfile?.pan_number}{" "}
-                  {userProfile?.pan_verified ? (
+                  {userProfile?.gst_number_status === "VERIFIED" ? (
                     <VerifiedUser fontSize="small" style={{ color: "green" }} />
                   ) : (
-                    "N/A"
+                    <img src={Review} height={15}/>
                   )}
                 </div>
               </div>
@@ -54,10 +56,10 @@ const BusinessKYC = ({ userProfile }) => {
               <div>
                 <div>
                   {userProfile?.msme_number || "N/A"}{" "}
-                  {userProfile?.msme_verified ? (
+                  {userProfile?.pan_file_status === "VERIFIED" ? (
                     <VerifiedUser fontSize="small" style={{ color: "green" }} />
                   ) : (
-                    ""
+                    <img src={Review} height={15}/>
                   )}
                 </div>
               </div>
@@ -70,10 +72,10 @@ const BusinessKYC = ({ userProfile }) => {
               <div>
                 <div>
                   {userProfile?.cin_number}{" "}
-                  {userProfile?.cin_verified ? (
+                  {userProfile?.cin_number_status === "VERIFIED"? (
                     <VerifiedUser fontSize="small" style={{ color: "green" }} />
                   ) : (
-                    "N/A"
+                    <img src={Review} height={15}/>
                   )}
                 </div>
               </div>
