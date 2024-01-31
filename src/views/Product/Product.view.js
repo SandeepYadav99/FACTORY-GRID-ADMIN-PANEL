@@ -411,11 +411,11 @@ class Product extends Component {
             <div className={"formGroup"}>
               <Field
                 fullWidth={true}
-                name="name"
+                name="product"
                 component={renderOutlinedTextField}
                 margin={"dense"}
                 normalize={nameNormalize}
-                label="Type Name"
+                label="Product Type"
               />
             </div>
           </div>
