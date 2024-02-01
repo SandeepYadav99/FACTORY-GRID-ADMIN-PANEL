@@ -177,6 +177,7 @@ const AddTaskUpdate = ({
               }}
               value={form?.due_date}
               isError={errorData?.due_date}
+              // errorMessage="Invalid date/time format"
             />
           </div>
         </div>
