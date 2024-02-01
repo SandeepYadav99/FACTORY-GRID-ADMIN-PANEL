@@ -8,7 +8,9 @@ import CompanyRepresentative from "./components/CompanyRepresentative/CompanyRep
 import { formatString } from "../../../../hooks/CommonFunction";
 import BankDetailPopup from "./components/BankDetail/BankDetailPopup/BankDetailPopup";
 
-const BusinessDetails = ({ id, userProfile }) => {
+const BusinessDetails = ({ id, userProfile ,  handleVerify,
+  handleUnVerify,
+  handleErrorVerify}) => {
     const [isOpen, setIsOpen] = useState(false);
  
     const toggleIsOpen = useCallback(
@@ -200,7 +202,9 @@ const BusinessDetails = ({ id, userProfile }) => {
               </ButtonBase>
             </div>
             {userProfile?.bankdetail?.benificiery_name ? (
-              <BankDetail bankdetail={userProfile?.bankdetail} />
+              <BankDetail bankdetail={userProfile?.bankdetail}  handleVerify={handleVerify}
+              handleUnVerify={handleUnVerify}
+              handleErrorVerify={handleErrorVerify}/>
             ) : (
               <div style={{ textAlign: "center" }}>Not Available</div>
             )}

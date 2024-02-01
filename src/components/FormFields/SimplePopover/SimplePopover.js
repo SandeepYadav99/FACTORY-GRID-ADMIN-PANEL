@@ -96,6 +96,7 @@ export default function SimplePopover({
     }).then((res) => {
       if (!res.error) {
         SnackbarUtils.success("Verified Succesfully");
+        window.location.reload()
       }
     });
   };
@@ -107,6 +108,7 @@ export default function SimplePopover({
     }).then((res) => {
       if (!res.error) {
         SnackbarUtils.success("Verified Succesfully");
+        window.location.reload()
       }
     });
   };
@@ -118,6 +120,7 @@ export default function SimplePopover({
     }).then((res) => {
       if (!res.error) {
         SnackbarUtils.success("Verified Succesfully");
+        window.location.reload()
       }
     });
   };

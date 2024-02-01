@@ -1,7 +1,8 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { serviceGetCustomersProfile } from "../services/CustomersRequest.service";
+import { serviceGetCustomersProfile, serviceResetUserStatusUpdate } from "../services/CustomersRequest.service";
 import { useLocation } from "react-router-dom";
+import SnackbarUtils from "../libs/SnackbarUtils";
 
 const useCustomerProfileHook = () => {
   const [userProfile, setUserProfile] = useState([]);
@@ -68,6 +69,38 @@ const useCustomerProfileHook = () => {
     [value]
   );
 
+  const handleVerify = (type) => {
+    serviceResetUserStatusUpdate({
+      user_id: id,
+      [type]:"VERIFIED",
+    }).then((res) => {
+      if (!res.error) {
+        SnackbarUtils.success("Verified Succesfully");
+      }
+    });
+  };
+
+  const handleUnVerify = (type) => {
+    serviceResetUserStatusUpdate({
+      user_id: id,
+      [type]:"ALERT",
+    }).then((res) => {
+      if (!res.error) {
+        SnackbarUtils.success("Verified Succesfully");
+      }
+    });
+  };
+  
+  const handleErrorVerify = (type) => {
+    serviceResetUserStatusUpdate({
+      user_id: id,
+      [type]:"ERROR",
+    }).then((res) => {
+      if (!res.error) {
+        SnackbarUtils.success("Verified Succesfully");
+      }
+    });
+  };
   return {
     userProfile,
     renderInterestArea,
@@ -77,6 +110,9 @@ const useCustomerProfileHook = () => {
     toggleIsOpenDialog,
     handleChange,
     handleSuspendBtn,
+    handleVerify,
+    handleUnVerify,
+    handleErrorVerify
   };
 };
 
