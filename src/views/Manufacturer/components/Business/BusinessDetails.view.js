@@ -1,20 +1,16 @@
 import React, { useCallback, useState } from "react";
 import styles from "./Style.module.css";
 import { ButtonBase, Tooltip, withStyles } from "@material-ui/core";
-import VerifiedUserIcon from "@material-ui/icons/VerifiedUser";
-import Rating from "@material-ui/lab/Rating";
-
 import ImageGalleryComponent from "./components/ImageGallery/ImageGallery.component";
-
 import CompanyProfile from "./components/CompanyProfile/CompanyProfile";
-
 import BankDetail from "./components/BankDetail/BankDetail";
 import CompanyRepresentative from "./components/CompanyRepresentative/CompanyRepresentative";
-import bankImage from "../../../../assets/img/sent_blue.svg";
 import { formatString } from "../../../../hooks/CommonFunction";
 import BankDetailPopup from "./components/BankDetail/BankDetailPopup/BankDetailPopup";
 
-const BusinessDetails = ({ id, userProfile }) => {
+const BusinessDetails = ({ id, userProfile ,  handleVerify,
+  handleUnVerify,
+  handleErrorVerify}) => {
     const [isOpen, setIsOpen] = useState(false);
  
     const toggleIsOpen = useCallback(
@@ -206,7 +202,9 @@ const BusinessDetails = ({ id, userProfile }) => {
               </ButtonBase>
             </div>
             {userProfile?.bankdetail?.benificiery_name ? (
-              <BankDetail bankdetail={userProfile?.bankdetail} />
+              <BankDetail bankdetail={userProfile?.bankdetail}  handleVerify={handleVerify}
+              handleUnVerify={handleUnVerify}
+              handleErrorVerify={handleErrorVerify}/>
             ) : (
               <div style={{ textAlign: "center" }}>Not Available</div>
             )}

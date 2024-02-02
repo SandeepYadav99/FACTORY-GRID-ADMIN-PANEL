@@ -73,7 +73,10 @@ const ManufacturerTabs = ({ classes, theme }) => {
     isOpenDialog,
     toggleIsOpenDialog,
     handleChange,
-    handleSuspendBtn
+    handleSuspendBtn,
+    handleVerify,
+    handleUnVerify,
+    handleErrorVerify
   } = useCustomerProfileHook();
 
  
@@ -234,6 +237,9 @@ const ManufacturerTabs = ({ classes, theme }) => {
             isLoading={isLoading}
             isOpenDialog={isOpenDialog}
             toggleIsOpenDialog={toggleIsOpenDialog}
+            handleVerify={handleVerify}
+            handleUnVerify={handleUnVerify}
+            handleErrorVerify={handleErrorVerify}
         
           />
         </TabPanel>

@@ -237,9 +237,11 @@ const useAddTaskCreate = ({
             )
           : [];
 
-          if (uniqueValues.length <= 2) {
-            t[fieldName] = uniqueValues;
-          }
+        if (uniqueValues.length <= 2) {
+          t[fieldName] = uniqueValues;
+        } else {
+          SnackbarUtils.error("Maximum 2 Task category");
+        }
       } else if (fieldName === "associated_task") {
         t[fieldName] = text;
       } else if (fieldName === "associated_user") {
