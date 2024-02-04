@@ -133,14 +133,14 @@ const useNotesDilogHook = () => {
     } finally {
       setIsSubmitting(false);
     }
-  }, [form, isSubmitting, setIsSubmitting, isAcceptPopUp, id]);
+  }, [isSubmitting, form?.descriptions, id, toggleAcceptDialog]);
 
   const handleSubmit = useCallback(async () => {
     const errors = checkFormValidation();
     if (Object.keys(errors)?.length > 0) {
       setErrorData(errors);
     } else {
-      await submitToServer();
+       submitToServer();
     }
   }, [checkFormValidation, setErrorData, form, submitToServer]);
 
@@ -158,7 +158,7 @@ const useNotesDilogHook = () => {
     },
     [changeTextData, errorData, setErrorData]
   );
-  console.log(errorData, "Error Data ");
+ 
   return {
     form,
     toggleAcceptDialog,
@@ -168,6 +168,7 @@ const useNotesDilogHook = () => {
     noteDetails,
     errorData,
     onBlurHandler,
+    isSubmitting
   };
 };
 

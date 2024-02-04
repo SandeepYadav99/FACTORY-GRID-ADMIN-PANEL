@@ -45,7 +45,8 @@ const AddTaskUpdate = ({
     fetchedTask,
     fetchedUser,
     categoryLists,
-    setFetchedUser
+    setFetchedUser,
+    setFetchedTask
   } = useAddTaskUpdate({
     handleSideToggle,
     isSidePanel,
@@ -281,9 +282,10 @@ const AddTaskUpdate = ({
                   InputProps={{
                     ...params.InputProps,
                     endAdornment: (
-                      <>
+                      < >
                         {form?.associated_user || fetchedUser ? (
                           <Clear
+                          style={{cursor:"pointer"}}
                             onClick={() =>{
                               changeTextData(null, "associated_user")
                               setFetchedUser(null)
@@ -291,7 +293,7 @@ const AddTaskUpdate = ({
                           />
                         ) : null}
                         <Search
-                          style={{ marginRight: -40, cursor: "pointer" }}
+                          style={{ marginRight: -30, cursor: "pointer" }}
                         />
                       </>
                     ),
@@ -335,8 +337,10 @@ const AddTaskUpdate = ({
                       <>
                         {form?.associated_task || fetchedTask ? (
                           <Clear
-                            onClick={() =>
+                          style={{cursor:"pointer"}}
+                            onClick={() =>{
                               changeTextData(null, "associated_task")
+                              setFetchedTask("")}
                             }
                           />
                         ) : null}
@@ -369,6 +373,7 @@ const AddTaskUpdate = ({
           <Button
             variant={"contained"}
             color={"primary"}
+            style={{marginBottom:"10px" }}
             type={"submit"}
             onClick={() => {
               handleSubmit();

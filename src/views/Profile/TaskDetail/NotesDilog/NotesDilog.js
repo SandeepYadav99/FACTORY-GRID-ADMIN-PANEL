@@ -1,5 +1,5 @@
 import React, { memo } from "react";
-import { Button, ButtonBase } from "@material-ui/core";
+import { Button, ButtonBase, CircularProgress } from "@material-ui/core";
 import { Close } from "@material-ui/icons";
 import Slide from "@material-ui/core/Slide";
 import Dialog from "@material-ui/core/Dialog";
@@ -40,6 +40,7 @@ const NotesDilog = ({
   form,
   handleSubmit,
   errorData,
+  isSubmitting,
 }) => {
   const classes = useStyles();
 
@@ -92,7 +93,12 @@ const NotesDilog = ({
                 type={"submit"}
                 onClick={handleSubmit} // handleSubmit
               >
-                SAVE & SUBMIT
+       
+                {isSubmitting ? (
+                  <CircularProgress color="success" size="20px" />
+                ) : (
+                  " SAVE & SUBMIT"
+                )}
               </Button>
             </div>
           </div>

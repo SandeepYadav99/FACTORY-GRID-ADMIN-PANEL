@@ -14,7 +14,7 @@ const AddNoteContainer = ({ details, styles, classes }) => {
     handleSubmit,
     noteDetails,
     errorData,
-   
+    isSubmitting
   } = useNotesDilogHook();
 
   return (
@@ -40,6 +40,7 @@ const AddNoteContainer = ({ details, styles, classes }) => {
              isOpen={isAcceptPopUp}
             handleToggle={toggleAcceptDialog}
             form={form}
+            isSubmitting={isSubmitting}
              changeTextData={changeTextData}
              handleSubmit={handleSubmit}
              errorData={errorData}

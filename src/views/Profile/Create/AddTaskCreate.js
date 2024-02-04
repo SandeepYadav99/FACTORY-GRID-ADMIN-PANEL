@@ -215,7 +215,7 @@ const AddTaskCreate = ({
             <CustomSelectField
               isError={errorData?.priority}
               errorText={errorData?.priority}
-              label={"Task Priority"}
+              label={"Category "}
               value={form?.priority}
               handleChange={(value) => {
                 changeTextData(value, "priority");
@@ -263,10 +263,11 @@ const AddTaskCreate = ({
                             onClick={() =>
                               changeTextData(null, "associated_user")
                             }
+                            style={{ cursor: "pointer" }}
                           />
                         ) : null}
                         <Search
-                          style={{ marginRight: -40, cursor: "pointer" }}
+                          style={{ marginRight: -20, cursor: "pointer" }}
                         />
                       </>
                     ),
@@ -309,10 +310,11 @@ const AddTaskCreate = ({
                             onClick={() =>
                               changeTextData(null, "associated_task")
                             }
+                            style={{ cursor: "pointer" }}
                           />
                         ) : null}
                         <Search
-                          style={{ marginRight: -40, cursor: "pointer" }}
+                          style={{ marginRight: -20, cursor: "pointer" }}
                         />
                       </>
                     ),
@@ -325,11 +327,12 @@ const AddTaskCreate = ({
         </div>
 
 
-        <div style={{ float: "right" }}>
+        <div style={{ float: "right", }}>
           <Button
             variant={"contained"}
             color={"primary"}
             type={"submit"}
+            style={{marginBottom:"10px" }}
             onClick={() => {
               handleSubmit();
             }}
