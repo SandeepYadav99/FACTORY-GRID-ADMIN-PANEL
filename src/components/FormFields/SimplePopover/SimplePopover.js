@@ -33,13 +33,13 @@ const useStyles = makeStyles((theme) => ({
     textDecoration: "underline",
   },
   unVerify: {
-    // color: "#2196F3",
+     color: "#2196F3",
     fontSize: "0.7rem !important",
     marginLeft: "10px !important",
     textDecoration: "underline",
   },
   errorVerify: {
-    // color: "#2196F3",
+     color: "#2196F3",
     fontSize: "0.7rem !important",
     marginLeft: "10px !important",
     textDecoration: "underline",
