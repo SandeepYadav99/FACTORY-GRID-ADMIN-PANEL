@@ -46,7 +46,8 @@ const AddTaskUpdate = ({
     fetchedUser,
     categoryLists,
     setFetchedUser,
-    setFetchedTask
+    setFetchedTask,
+    helperText
   } = useAddTaskUpdate({
     handleSideToggle,
     isSidePanel,
@@ -178,7 +179,7 @@ const AddTaskUpdate = ({
               }}
               value={form?.due_date}
               isError={errorData?.due_date}
-              // errorMessage="Invalid date/time format"
+              helperText={helperText}
             />
           </div>
         </div>

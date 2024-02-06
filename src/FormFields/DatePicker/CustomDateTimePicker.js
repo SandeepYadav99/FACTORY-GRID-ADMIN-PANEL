@@ -12,11 +12,12 @@ import {
 } from '@material-ui/pickers';
 import DateFnsUtils from "@date-io/date-fns";
 
-const CustomDateTimePicker = ({onChange, minDate, isError, maxDate, value, label, clearable}) => {
+const CustomDateTimePicker = ({onChange, minDate, isError, maxDate, value, label, clearable, helperText}) => {
     const handleOnChange = (e, d) => {
         // const tempDate  = new Date(e);
         // const formattedDate = tempDate.getDate() + "-" + (tempDate.getMonth() + 1) + "-" + tempDate.getFullYear();
         // console.log(formattedDate);
+        
         onChange && onChange(e);
     }
 
@@ -29,6 +30,7 @@ const CustomDateTimePicker = ({onChange, minDate, isError, maxDate, value, label
     return (
         <MuiPickersUtilsProvider utils={DateFnsUtils}>
             <KeyboardDateTimePicker
+             helperText={ helperText}
                 clearable
                 margin="dense"
                 variant="inline"

@@ -7,7 +7,7 @@ import {
   TextField,
   Tooltip,
 } from "@material-ui/core";
-import React from "react";
+import React, { useState } from "react";
 import CustomTextField from "../../../FormFields/TextField.component";
 import styles from "./Style.module.css";
 import useAddTaskCreate from "./AddTaskCreateHook";
@@ -35,12 +35,14 @@ const AddTaskCreate = ({
     filteredTask,
     filteredAssignedTo,
     fetchedAssignedUser,
+    helperText
   } = useAddTaskCreate({
     handleSideToggle,
     isSidePanel,
     handleCreatedTask,
     profileDetails,
   });
+
 
   return (
     <div>
@@ -145,13 +147,24 @@ const AddTaskCreate = ({
             <CustomDateTimePicker
               clearable
               label={"Due Date"}
-           
+              // errorText={errorData?.due_date}
               onChange={(date) => {
-                changeTextData(date, "due_date");
+                 changeTextData(date, "due_date");
+                // if (date && !isNaN(date)) {
+                //   // Date is valid
+                //   changeTextData(date, "due_date");
+                //   setHelperText("");
+                // } else {
+                //   // Date is invalid
+                //   setHelperText("Invalid date/time format.");
+                // }
               }}
-           
+              // onBlur={() => {
+              //   onBlurHandler("due_date");
+              // }}
               value={form?.due_date}
               isError={errorData?.due_date}
+               helperText={helperText}
             />
           </div>
         </div>

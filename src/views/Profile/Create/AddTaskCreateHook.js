@@ -47,6 +47,7 @@ const useAddTaskCreate = ({
   const [fetchedAssignedUser, setFetchedAssinedUser] = useState(null);
   const [categoryLists, setCategoryLists] = useState(null);
   const [taskTypes, setTaskTypes] = useState(["DISCUS"]);
+  const [helperText, setHelperText] = useState("");
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -141,14 +142,20 @@ const useAddTaskCreate = ({
         delete errors[val];
       }
     });
-
+    if (!form.due_date || isNaN(new Date(form?.due_date))) {
+      setHelperText("Invalid date/time format.");
+      errors.due_date = true;
+    } else {
+      // delete form?.due_date;
+      setHelperText("");
+    }
     Object.keys(errors).forEach((key) => {
       if (!errors[key]) {
         delete errors[key];
       }
     });
     return errors;
-  }, [form, errorData]);
+  }, [form, errorData, helperText]);
 
   const submitToServer = useCallback(async () => {
     if (isSubmitting) {
@@ -248,6 +255,15 @@ const useAddTaskCreate = ({
         t[fieldName] = text;
       } else if (fieldName === "assigned_to") {
         t[fieldName] = text;
+      } else if (fieldName === "due_date") {
+        // // if(text && isNaN(text)){
+        //    shouldRemoveError=true;
+        //   setHelperText("Invalid date/time format.");
+        // }else{
+
+        //   // setHelperText("");
+        // }
+        t[fieldName] = text;
       } else {
         t[fieldName] = text;
       }
@@ -300,6 +316,7 @@ const useAddTaskCreate = ({
     filteredAssignedTo,
     fetchedAssignedUser,
     taskTypes,
+    helperText,
   };
 };
 

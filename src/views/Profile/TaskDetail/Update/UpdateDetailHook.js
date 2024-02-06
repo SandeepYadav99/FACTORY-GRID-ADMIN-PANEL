@@ -42,7 +42,7 @@ const useAddTaskUpdate = ({
   const [fetchedAssignedTo, setFetchedAssignedTo] = useState(null);
   const [fetchedTask, setFetchedTask] = useState(null);
   const [fetchedUser, setFetchedUser] = useState(null);
-
+const[helperText, setHelperText]=useState("")
   const [categoryLists, setCategoryLists] = useState(null);
 
   useEffect(() => {
@@ -147,6 +147,13 @@ const useAddTaskUpdate = ({
         delete errors[val];
       }
     });
+    if (!form.due_date || isNaN(new Date(form?.due_date))) {
+      setHelperText("Invalid date/time format.");
+      errors.due_date = true;
+    } else {
+      // delete form?.due_date;
+      setHelperText("");
+    }
     Object.keys(errors).forEach((key) => {
       if (!errors[key]) {
         delete errors[key];
@@ -249,6 +256,8 @@ const useAddTaskUpdate = ({
         t[fieldName] = text;
       } else if (fieldName === "assigned_to") {
         t[fieldName] = text;
+      }else if (fieldName === "due_date") {
+        t[fieldName] = text;
       } else {
         t[fieldName] = text;
       }
@@ -300,7 +309,8 @@ const useAddTaskUpdate = ({
     fetchedUser,
     categoryLists,
     setFetchedUser,
-    setFetchedTask
+    setFetchedTask,
+    helperText
   };
 };
 
