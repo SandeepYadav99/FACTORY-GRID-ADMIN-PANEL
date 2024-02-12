@@ -68,9 +68,7 @@ const useNotesDilogHook = () => {
 
       setForm(t);
       shouldRemoveError && removeError(fieldName);
-    },
-    [removeError, form, setForm]
-  );
+    }, [removeError, form, setForm]);
 
   const checkFormValidation = useCallback(() => {
     const errors = { ...errorData };
