@@ -204,7 +204,7 @@ const useUpperTabsHook = ({
         const currentYear = new Date().getFullYear();
         const selectedDate = new Date(form.joining_date);
 
-        if (isNaN(selectedDate.getTime()) || selectedYear > currentYear) {
+        if (isNaN(selectedDate.getTime()) || selectedYear > currentYear) { // 
           errors.joining_date = true;
         } else {
           delete errors.joining_date;

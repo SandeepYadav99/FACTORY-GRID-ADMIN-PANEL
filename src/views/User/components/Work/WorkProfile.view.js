@@ -46,12 +46,12 @@ const WorkProfile = ({
               <CustomDatePicker
                 clearable
                 label={"Joining Date"}
-                // maxDate={new Date()}
-                maxDate={new Date(new Date().getFullYear(), 11, 31)}
+                 maxDate={new Date()}
+                // maxDate={new Date(new Date().getFullYear(), 11, 31)}
                 onChange={(value) => {
                   changeTextData(value, "joining_date");
                 }}
-                // views={["month","dd","year"]}
+              
                 format={"dd-MM-yyyy"}
                 value={form?.joining_date}
                 isError={errorData?.joining_date}

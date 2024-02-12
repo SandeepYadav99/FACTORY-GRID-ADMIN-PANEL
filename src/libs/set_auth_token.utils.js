@@ -6,7 +6,7 @@ import axios from 'axios';
 
 export function setAuthorizationToken(token) {
     if (token) {
-        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+        axios.defaults.headers.common['Authorization'] = `${token}`;// Bearer
     } else {
         delete axios.defaults.headers.common['Authorization'];
     }
