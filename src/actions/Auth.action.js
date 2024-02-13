@@ -17,7 +17,7 @@ export const GET_PROFILE_INIT = 'GET_PROFILE_INIT';
 export function actionLoginUser(data) {
     return (dispatch) => {
         if (data) {
-            const token = data.tokens.access.token;
+            const token = data.token;
             localStorage.setItem('jwt_token', token);
             localStorage.setItem('user', JSON.stringify(data));
             setAuthorizationToken(token);
