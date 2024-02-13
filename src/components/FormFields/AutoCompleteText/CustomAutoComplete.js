@@ -2,6 +2,7 @@ import React from 'react';
 import useAutocomplete from '@material-ui/lab/useAutocomplete';
 import { makeStyles } from '@material-ui/core/styles';
 import {TextField} from "@material-ui/core";
+import LogUtils from "../../../libs/LogUtils";
 
 const useStyles = makeStyles((theme) => ({
     relative: {
@@ -40,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-const CustomAutoComplete = ({isError, errorText, icon, label, onChange, onTextChange, inputProps, dataset, ...rest }) => {
+const CustomAutoComplete = ({isError, errorText, icon, label, onChange, onTextChange, inputProps, dataset, datasetKey, value, autoCompleteProps,disabledList=false, ...rest }) => {
     const classes = useStyles();
     const {
         getRootProps,
@@ -49,26 +50,24 @@ const CustomAutoComplete = ({isError, errorText, icon, label, onChange, onTextCh
         getListboxProps,
         getOptionProps,
         groupedOptions,
-
     } = useAutocomplete({
-        id: 'use-autocomplete-demo',
+        id: 'use-autocomplete-demo'+Date.now(),
         options: dataset,
-        freeSolo: true,
+        value: value,
+       // freeSolo: true,
+        defaultValue: value,
         getOptionLabel: (option) => option,
         onChange: (event, value) => {
             onChange && onChange(event);
             onTextChange && onTextChange(value);
-        }
+        },
+        ...(autoCompleteProps ? autoCompleteProps : {}),
     });
 
-    console.log('groupedOptions', rest.value);
 
     return (
         <div className={classes.relative}>
             <div {...getRootProps()}>
-                <label className={classes.label} {...getInputLabelProps()}>
-                    useAutocomplete
-                </label>
                 <TextField
                     {...rest}
                     fullWidth
@@ -79,12 +78,13 @@ const CustomAutoComplete = ({isError, errorText, icon, label, onChange, onTextCh
                     variant="outlined"
                     // InputProps={{ ...params.InputProps, type: 'search' }}
                     {...getInputProps()}
+
                 />
             </div>
-            {(groupedOptions.length > 0 ) ? (
+            {(groupedOptions?.length > 0 && !disabledList ) ? (
                 <ul className={classes.listbox} {...getListboxProps()}>
                     {groupedOptions.map((option, index) => (
-                        <li {...getOptionProps({ option, index })}>{option}</li>
+                        <li {...getOptionProps({ option, index })}>{datasetKey ? option[datasetKey] : option }</li>
                     ))}
                 </ul>
             ) : null}

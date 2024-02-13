@@ -14,6 +14,9 @@ import Constants from "../../../config/constants";
 import FilterComponent from "../../../components/Filter/Filter.component";
 import useCustomerListHook from "./CustomerListHook";
 
+import { renderStatus } from "../../../hooks/StatusHook";
+
+
 const CustomerList = (props) => {
   const {
     handleSortOrderChange,
@@ -52,39 +55,6 @@ const CustomerList = (props) => {
   }, []);
 
 
-  const renderStatus = useCallback((status) => {
-    if (status === "ACTIVE") {
-      return (
-        <span
-          style={{
-            fontSize: "12px",
-            color: "white",
-            background: "green",
-            padding: "3px 10px",
-            borderRadius: "20px",
-            textTransform: "capitalize",
-          }}
-        >
-          {status}
-        </span>
-      );
-    }
-    return (
-      <span
-        style={{
-          ...styles.spanFont,
-          fontSize: "12px",
-          color: "white",
-          background: `${status == "NEW" ? "orange" : "orange"}`,
-          padding: "3px 10px",
-          borderRadius: "20px",
-          textTransform: "capitalize",
-        }}
-      >
-        {status}
-      </span>
-    );
-  }, []);
 
   const renderContact = useCallback((all) => {
     return (

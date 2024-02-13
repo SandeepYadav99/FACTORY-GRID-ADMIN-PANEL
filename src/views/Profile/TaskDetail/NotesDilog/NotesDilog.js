@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import { Button, ButtonBase } from "@material-ui/core";
 import { Close } from "@material-ui/icons";
 import Slide from "@material-ui/core/Slide";
@@ -6,7 +6,6 @@ import Dialog from "@material-ui/core/Dialog";
 import styles from "./Styles.module.css";
 import { makeStyles } from "@material-ui/styles";
 import CustomTextField from "../../../../FormFields/TextField.component";
-
 
 const useStyles = makeStyles((theme) => ({
   flex: {
@@ -39,11 +38,11 @@ const NotesDilog = ({
   changeTextData,
   onBlurHandler,
   form,
-  handleSubmit
+  handleSubmit,
+  errorData,
 }) => {
   const classes = useStyles();
 
- 
   return (
     <div>
       <Dialog
@@ -53,7 +52,7 @@ const NotesDilog = ({
         maxWidth={"sm"}
         TransitionComponent={Transition}
         open={isOpen}
-        onClose={()=>{}}
+        onClose={() => {}}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
@@ -72,16 +71,13 @@ const NotesDilog = ({
           <div className={"formFlex"}>
             <div className={"formGroup"}>
               <CustomTextField
-                // isError={errorData?.description}
-                // errorText={errorData?.description}
+                isError={errorData?.descriptions}
+                errorText={errorData?.descriptions}
                 label={"Note (Max 500 Characters )"}
                 value={form?.descriptions}
                 onTextChange={(text) => {
                   changeTextData(text, "descriptions");
                 }}
-                // onBlur={() => {
-                //   onBlurHandler("description");
-                // }}
                 multiline
                 rows={4}
               />
@@ -89,27 +85,16 @@ const NotesDilog = ({
           </div>
 
           <div className={styles.printFlex}>
-          <div style={{ float: "right" }}>
-          <Button
-            variant={"contained"}
-            color={"primary"}
-            type={"submit"}
-            onClick={handleSubmit} // handleSubmit
-          >
-            {/* {isSubmitting ? (
-              <CircularProgress color="success" size="20px" />
-            ) : empId ? (
-              "UPDATE"
-            ) : (
-              "Submit"
-            )} */}
-              SAVE & SUBMIT
-          </Button>
-        </div>
-              {/* <Button onClick={suspendItem} color="primary">
+            <div style={{ float: "right" }}>
+              <Button
+                variant={"contained"}
+                color={"primary"}
+                type={"submit"}
+                onClick={handleSubmit} // handleSubmit
+              >
                 SAVE & SUBMIT
-              </Button> */}
-            
+              </Button>
+            </div>
           </div>
         </div>
       </Dialog>
@@ -117,4 +102,4 @@ const NotesDilog = ({
   );
 };
 
-export default NotesDilog;
+export default memo(NotesDilog);

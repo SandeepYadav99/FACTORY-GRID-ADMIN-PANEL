@@ -4,7 +4,7 @@
 .mainLoginView {
     display: flex;
     width: 100vw;
-    height: 100vh;
+    /* height: 100vh; */
    
     /*background-image: url('../../assets/img/background.jpg');*/
     /*background-size: cover;*/

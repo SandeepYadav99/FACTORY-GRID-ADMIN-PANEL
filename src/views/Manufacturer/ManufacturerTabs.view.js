@@ -1,37 +1,28 @@
 import React, { useCallback, useEffect, useState } from "react";
 import styles from "./styles.module.css";
 import PropTypes from "prop-types";
-import SwipeableViews from "react-swipeable-views";
-import {
-  makeStyles,
-  useTheme,
-  withStyles,
-  withTheme,
-} from "@material-ui/core/styles";
+import { makeStyles, withStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import PersonOutlineIcon from "@material-ui/icons/PersonOutline";
 import WorkOutlineIcon from "@material-ui/icons/WorkOutline";
-import ShareIcon from "@material-ui/icons/Share";
 import DetailsIcon from "@material-ui/icons/Details";
 import LoyaltyIcon from "@material-ui/icons/Loyalty";
 import FormatQuoteIcon from "@material-ui/icons/FormatQuote";
 import CreditCardIcon from "@material-ui/icons/CreditCard";
 import ShoppingBasketIcon from "@material-ui/icons/ShoppingBasket";
-import { Button, ButtonBase, Paper } from "@material-ui/core";
-import CustomerView from "../Customers/components/Info/Customer.view";
+import { Button, ButtonBase } from "@material-ui/core";
 import { Report } from "@material-ui/icons";
 import MuiStyle from "../../libs/MuiStyle";
 import CustomerProfile from "./components/Profile/CustomerProfile.view";
 import BusinessDetails from "./components/Business/BusinessDetails.view";
 import useCustomerProfileHook from "../../helper/CustomerProfileHook";
-import SimplePopover from "../../components/FormFields/SimplePopover/SimplePopover";
 import SuspendPopup from "./components/SuspendPopup/SuspendPopup";
 import WaitingComponent from "../../components/Waiting.component";
-
-
-
+import KYC from "./components/Kyc/KYC";
+import history from "../../libs/history.utils";
+import ArrowBackIosIcon from "@material-ui/icons/ArrowBackIos";
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -72,32 +63,23 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const ManufacturerTabs = ({ classes, theme }) => {
-  const [value, setValue] = useState(0);
-  const { userProfile, renderInterestArea , isLoading} = useCustomerProfileHook();
-  
-
-  const [isOpenDialog, setIsOpenDialog] = useState(false);
- 
-  const toggleIsOpenDialog = useCallback(
-    (data) => {
-      setIsOpenDialog((e) => !e);
-      // setExpireLetter(data?.id)
-    },
-    [isOpenDialog]
-  );
-
-
-  useEffect(() => {
-    // ComponentDidMount logic can go here
-  }, []);
+  // const [value, setValue] = useState(0);
+  // const [isOpenDialog, setIsOpenDialog] = useState(false);
+  const {
+    userProfile,
+    renderInterestArea,
+    isLoading,
+    value,
+    isOpenDialog,
+    toggleIsOpenDialog,
+    handleChange,
+    handleSuspendBtn,
+    handleVerify,
+    handleUnVerify,
+    handleErrorVerify
+  } = useCustomerProfileHook();
 
  
-
-  const handleSuspendBtn = () => {};
-
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
 
   const renderStatus = useCallback((status) => {
     if (status === "ACTIVE") {
@@ -137,7 +119,13 @@ const ManufacturerTabs = ({ classes, theme }) => {
     <div>
       <div className={styles.upperFlex}>
         <div>
-          <strong>User Profile</strong>
+        <ButtonBase onClick={() => history.push("/app/users")}>
+            <ArrowBackIosIcon fontSize={"small"} />{" "}
+            <span>
+            <strong>User Profile</strong>
+            </span>
+          </ButtonBase>
+       
         </div>
 
         <div className={styles.buttonFlex}>
@@ -147,20 +135,31 @@ const ManufacturerTabs = ({ classes, theme }) => {
               // className={`${classes.btnError} `}
               onClick={handleSuspendBtn}
               type="button"
-              
             >
-          
               {renderStatus(userProfile?.status || "N/A")}
             </Button>
+            {userProfile?.status  === "SUSPENDED"  ? 
             <Button
               variant="contained"
-              className={classes.btnError}
-              onClick={toggleIsOpenDialog}
+              className={classes.btnSuccess}
+              onClick={ toggleIsOpenDialog}
               type="button"
             >
+              {/*     Make Active  */}
+              <Report />
+              Make Active
+            
+            </Button> : <Button
+              variant="contained"
+              className={classes.btnError}
+              onClick={ toggleIsOpenDialog}
+              type="button"
+            >
+              {/*     Make Active  */}
               <Report />
               Suspend
-            </Button>
+            
+            </Button>}
           </div>
         </div>
       </div>
@@ -221,25 +220,39 @@ const ManufacturerTabs = ({ classes, theme }) => {
 
       <div className={styles.paperBackground}>
         <TabPanel value={value} index={0} dir={theme.direction}>
-        {isLoading ? <WaitingComponent/> : 
-          <CustomerProfile
+          {isLoading ? (
+            <WaitingComponent />
+          ) : (
+            <CustomerProfile
+              userProfile={userProfile}
+              renderInterestArea={renderInterestArea}
+              isLoading={isLoading}
+            />
+          )}
+        </TabPanel>
+        <TabPanel value={value} index={1} dir={theme.direction}>
+          <BusinessDetails
             userProfile={userProfile}
             renderInterestArea={renderInterestArea}
             isLoading={isLoading}
-          />}
-        </TabPanel>
-        <TabPanel value={value} index={1} dir={theme.direction}>
-          <BusinessDetails  userProfile={userProfile} renderInterestArea={renderInterestArea}
-            isLoading={isLoading}/>
-          
+            isOpenDialog={isOpenDialog}
+            toggleIsOpenDialog={toggleIsOpenDialog}
+            handleVerify={handleVerify}
+            handleUnVerify={handleUnVerify}
+            handleErrorVerify={handleErrorVerify}
+        
+          />
         </TabPanel>
         <TabPanel value={value} index={2} dir={theme.direction}></TabPanel>
-        <TabPanel value={value} index={3} dir={theme.direction}></TabPanel>
+        <TabPanel value={value} index={3} dir={theme.direction}>
+          <KYC userProfile={userProfile} />
+        </TabPanel>
       </div>
-      <SuspendPopup 
+      <SuspendPopup
         candidateId={userProfile?._id}
         isOpen={isOpenDialog}
         handleToggle={toggleIsOpenDialog}
+        status={userProfile?.status}
       />
     </div>
   );

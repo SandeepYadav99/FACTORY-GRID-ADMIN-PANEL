@@ -16,7 +16,8 @@ import DataTables from "../../../Datatables/Datatable.table";
 import Constants from "../../../config/constants";
 import FilterComponent from "../../../components/Filter/Filter.component";
 import useUserListHook from "./UserListHook";
-import capitalizeFirstLetter from "../../../hooks/CapsFirstLetter";
+import capitalizeFirstLetter from "../../../hooks/CommonFunction";
+
 
 const UserList = (props) => {
   const {
@@ -41,20 +42,17 @@ const UserList = (props) => {
   } = useSelector((state) => state.provider_user);
 
   const renderFirstCell = useCallback((user) => {
-    const tempEmailRender = user.email ? (
-      <span style={{ textTransform: "lowercase" }}>{user.email}</span>
-    ) : null;
+  
     return (
-      <div className={styles.firstCellFlex}>
+      <div className={styles.firstCellFlex} >
         <div>
           <img src={user?.image} alt="" />
         </div>
         <div className={classNames(styles.firstCellInfo, "openSans")}>
-          <span>
-            <div>{`${capitalizeFirstLetter(user?.name)}`}</div>
-          </span>
-          {/*<br/>*/}
-          {/*{tempEmailRender}*/}
+         
+            <div>{`${capitalizeFirstLetter(user?.name)}`} </div>
+            <div> {user?.employee_id}</div>
+        
         </div>
       </div>
     );
@@ -101,9 +99,9 @@ const UserList = (props) => {
       {
         key: "name",
         label: "Info",
-        style: { width: "15%" },
+        style: { width: "18%" },
         sortable: true,
-        render: (value, all) => <div>{renderFirstCell(all)}</div>,
+        render: (value, all) => <div >{renderFirstCell(all)}</div>,
       },
       {
         key: "email",
@@ -132,14 +130,7 @@ const UserList = (props) => {
         sortable: true,
         render: (temp, all) => <div>{all.role}</div>,
       },
-      // Uncomment the following block if needed
-      // {
-      //     key: 'join_date',
-      //     label: 'Join Date',
-      //     style: { width: '15%'},
-      //     sortable: true,
-      //     render: (temp, all) => <div>{all.createdAt}</div>,
-      // },
+   
       {
         key: "status",
         label: "Status",

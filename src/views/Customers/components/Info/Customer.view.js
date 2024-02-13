@@ -85,7 +85,7 @@ const CustomerComponent = () => {
           </div>
         </div>
 
-        <ActivityInfo userProfileActivity={userProfile}/>
+        {/* <ActivityInfo userProfileActivity={userProfile}/> */}
       </div>
     </div>
   );

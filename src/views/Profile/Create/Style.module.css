@@ -57,3 +57,26 @@
 .heading{
     margin-right: 5px;
 }
+
+.serchImage{
+    display: flex;
+    justify-content: flex-start;
+    font-size: 13px;
+    text-align: justify;
+    align-items: flex-start;
+   
+}
+.serchImage img{
+    width: 30px;
+    height: 30px;
+    border-radius: 20px;
+}
+.serchImage span{
+    margin-left: 5px;
+
+}
+.paragraph{
+    font-size: 0.6rem;
+    font-weight: 400;
+    margin-left: 14px;
+}

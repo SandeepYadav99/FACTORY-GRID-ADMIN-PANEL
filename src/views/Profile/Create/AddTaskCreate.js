@@ -1,23 +1,28 @@
 import {
+  Avatar,
   Button,
+  Chip,
   CircularProgress,
   MenuItem,
   TextField,
   Tooltip,
 } from "@material-ui/core";
 import React from "react";
-
 import CustomTextField from "../../../FormFields/TextField.component";
 import styles from "./Style.module.css";
 import useAddTaskCreate from "./AddTaskCreateHook";
 import InfoIcon from "@material-ui/icons/Info";
-import CustomDatePicker from "../../../FormFields/DatePicker/CustomDatePicker";
 import { Autocomplete } from "@material-ui/lab";
-
-import { Search } from "@material-ui/icons";
+import { Clear, Search } from "@material-ui/icons";
 import CustomSelectField from "../../../FormFields/SelectField/SelectField.component";
+import CustomDateTimePicker from "../../../FormFields/DatePicker/CustomDateTimePicker";
 
-const AddTaskCreate = ({ handleSideToggle, isSidePanel , handleCreatedTask}) => {
+const AddTaskCreate = ({
+  handleSideToggle,
+  isSidePanel,
+  handleCreatedTask,
+  profileDetails,
+}) => {
   const {
     form,
     errorData,
@@ -25,14 +30,17 @@ const AddTaskCreate = ({ handleSideToggle, isSidePanel , handleCreatedTask}) => 
     onBlurHandler,
     changeTextData,
     isSubmitting,
-    listData,
-    handleSearchUsers,
+    categoryLists,
     filteredUsers,
     filteredTask,
     filteredAssignedTo,
-  } = useAddTaskCreate({ handleSideToggle, isSidePanel , handleCreatedTask});
-
-  const COMENTs = [{ id: 1, name: "Task" }];
+    fetchedAssignedUser,
+  } = useAddTaskCreate({
+    handleSideToggle,
+    isSidePanel,
+    handleCreatedTask,
+    profileDetails,
+  });
 
   return (
     <div>
@@ -43,16 +51,7 @@ const AddTaskCreate = ({ handleSideToggle, isSidePanel , handleCreatedTask}) => 
             <InfoIcon fontSize={"small"} />
           </Tooltip>
         </h4>
-        {/* {empId && (
-        <IconButton
-          variant={"contained"}
-          className={classes.iconBtnError}
-          onClick={toggleAcceptDialog}
-          type="button"
-        >
-          <DeleteIcon />
-        </IconButton>
-      )} */}
+      
       </div>
 
       <div>
@@ -63,18 +62,16 @@ const AddTaskCreate = ({ handleSideToggle, isSidePanel , handleCreatedTask}) => 
               onChange={(e, value) => {
                 changeTextData(value, "assigned_to");
               }}
-              value={form.assigned_to || []}
-              options={filteredAssignedTo || []} // listData ||
-              getOptionLabel={(option) => option?.name || ""}
-              defaultValue={form?.assigned_to || []}
-              filterOptions={(options, { inputValue }) => {
-                // Implement your custom search logic here
-                return options?.filter((option) =>
-                  option?.name
-                    ?.toLowerCase()
-                    ?.includes(inputValue?.toLowerCase() || "")
-                );
-              }}
+              value={form.assigned_to || fetchedAssignedUser || []}
+              options={filteredAssignedTo || []}
+            defaultValue={form?.assigned_to || []}
+              getOptionLabel={(option) => `${option?.name} (${option?.email})`}
+              renderOption={(option) => (
+                <div style={{ display: "flex", alignItems: "center" }}>
+                  <Avatar src={option?.image} style={{ marginRight: 8 }} />
+                  <div>{`${option?.name} (${option?.email})`}</div>
+                </div>
+              )}
               renderInput={(params) => (
                 <TextField
                   {...params}
@@ -83,7 +80,24 @@ const AddTaskCreate = ({ handleSideToggle, isSidePanel , handleCreatedTask}) => 
                   error={errorData?.assigned_to}
                   InputProps={{
                     ...params.InputProps,
-                    endAdornment: <Search />,
+                    endAdornment: (
+                      <>
+                        <Search
+                          style={{ marginRight: -20, cursor: "pointer" }}
+                        />
+                      </>
+                    ),
+                    startAdornment: (
+                      <>
+                        <Avatar
+                          src={
+                            form?.assigned_to?.image ||
+                            fetchedAssignedUser?.image
+                          }
+                          style={{ marginRight: 8, cursor: "pointer" }}
+                        />
+                      </>
+                    ),
                   }}
                 />
               )}
@@ -128,30 +142,41 @@ const AddTaskCreate = ({ handleSideToggle, isSidePanel , handleCreatedTask}) => 
         </div>
         <div className={"formFlex"}>
           <div className={"formGroup"}>
-            <CustomDatePicker
+            <CustomDateTimePicker
               clearable
               label={"Due Date"}
-              // maxDate={new Date()}
+           
               onChange={(date) => {
                 changeTextData(date, "due_date");
               }}
+           
               value={form?.due_date}
               isError={errorData?.due_date}
             />
           </div>
         </div>
-        <div className={"formFlex"}>
+
+        <div className="formFlex">
           <div className={"formGroup"}>
             <Autocomplete
+              multiple
               id="tags-outlined"
               onChange={(e, value) => {
                 changeTextData(value, "category");
               }}
-              value={form.category || []}
-              options={COMENTs || []} // listData ||
-              getOptionLabel={(option) => option.name || ""}
-              defaultValue={form?.category || []}
-              //  getOptionSelected={(option, value) => option.id === value.id}
+              options={categoryLists}
+              value={form?.category}
+              freeSolo
+              selectOnFocus={false}
+              renderTags={(value, getTagProps) =>
+                value.map((option, index) => (
+                  <Chip
+                    variant="outlined"
+                    label={option}
+                    {...getTagProps({ index })}
+                  /> // disabled={option.length < 2}
+                ))
+              }
               renderInput={(params) => (
                 <TextField
                   {...params}
@@ -162,6 +187,13 @@ const AddTaskCreate = ({ handleSideToggle, isSidePanel , handleCreatedTask}) => 
               )}
             />
           </div>
+        </div>
+        <label className={styles.paragraph}>
+          Please press enter to add a category if not found in the search
+          results.
+        </label>
+        <div className="formFlex">
+          <div className={"formGroup"}></div>
         </div>
         <div className={"formFlex"}>
           <div className={"formGroup"}>
@@ -189,8 +221,8 @@ const AddTaskCreate = ({ handleSideToggle, isSidePanel , handleCreatedTask}) => 
                 changeTextData(value, "priority");
               }}
             >
-              <MenuItem value="MEDIUM">Medium</MenuItem>
               <MenuItem value="HIGH">High</MenuItem>
+              <MenuItem value="MEDIUM">Medium</MenuItem>
               <MenuItem value="LOW">Low</MenuItem>
             </CustomSelectField>
           </div>
@@ -202,18 +234,20 @@ const AddTaskCreate = ({ handleSideToggle, isSidePanel , handleCreatedTask}) => 
               onChange={(e, value) => {
                 changeTextData(value, "associated_user");
               }}
-              value={form.associated_user || []}
-              options={filteredUsers || []} // listData ||
-              getOptionLabel={(option) => option?.first_name || ""}
+              value={form?.associated_user || []}
+              options={filteredUsers || []} 
+              getOptionLabel={(option) =>
+                `${option?.name || ""} ${
+                  option?.email ? `(${option?.email})` : ""
+                }`
+              }
+              renderOption={(option) => (
+                <div style={{ display: "flex", alignItems: "center" }}>
+                  <Avatar src={option?.image} style={{ marginRight: 8 }} />
+                  <div>{`${option?.name} (${option?.email})`}</div>
+                </div>
+              )}
               defaultValue={form?.associated_user || []}
-              filterOptions={(options, { inputValue }) => {
-                // Implement your custom search logic here
-                return options?.filter((option) =>
-                  option?.first_name
-                    ?.toLowerCase()
-                    ?.includes(inputValue?.toLowerCase() || "")
-                );
-              }}
               renderInput={(params) => (
                 <TextField
                   {...params}
@@ -222,7 +256,26 @@ const AddTaskCreate = ({ handleSideToggle, isSidePanel , handleCreatedTask}) => 
                   error={errorData?.associated_user}
                   InputProps={{
                     ...params.InputProps,
-                    endAdornment: <Search />,
+                    endAdornment: (
+                      <>
+                        {form?.associated_user ? (
+                          <Clear
+                            onClick={() =>
+                              changeTextData(null, "associated_user")
+                            }
+                          />
+                        ) : null}
+                        <Search
+                          style={{ marginRight: -40, cursor: "pointer" }}
+                        />
+                      </>
+                    ),
+                    startAdornment: (
+                      <Avatar
+                        src={form?.associated_user?.image || ""}
+                        style={{ marginRight: 8, cursor: "pointer" }}
+                      />
+                    ),
                   }}
                 />
               )}
@@ -239,16 +292,8 @@ const AddTaskCreate = ({ handleSideToggle, isSidePanel , handleCreatedTask}) => 
               }}
               value={form.associated_task || []}
               options={filteredTask || []} // listData ||
-              getOptionLabel={(option) => option?.title || ""}
+              getOptionLabel={(option) => option?.title}
               defaultValue={form?.associated_task || []}
-              filterOptions={(options, { inputValue }) => {
-                // Implement your custom search logic here
-                return options?.filter((option) =>
-                  option?.title
-                    ?.toLowerCase()
-                    ?.includes(inputValue?.toLowerCase() || "")
-                );
-              }}
               renderInput={(params) => (
                 <TextField
                   {...params}
@@ -257,33 +302,37 @@ const AddTaskCreate = ({ handleSideToggle, isSidePanel , handleCreatedTask}) => 
                   error={errorData?.associated_task}
                   InputProps={{
                     ...params.InputProps,
-                    endAdornment: <Search />,
+                    endAdornment: (
+                      <>
+                        {form?.associated_task ? (
+                          <Clear
+                            onClick={() =>
+                              changeTextData(null, "associated_task")
+                            }
+                          />
+                        ) : null}
+                        <Search
+                          style={{ marginRight: -40, cursor: "pointer" }}
+                        />
+                      </>
+                    ),
                   }}
                 />
               )}
-              disableClearable
+               disableClearable
             />
           </div>
         </div>
 
-        <div className={"headerFlex"}>
-          {/* <h4 className={"infoTitle"}>
-            {/* <div className={"heading"}>Completed?</div> */}
-          {/* <CustomSwitch
-              value={form?.status}
-              handleChange={() => {
-                changeTextData(!form?.status, "status");
-              }}
-              label={`Completed?`}
-            /> */}
-        </div>
 
         <div style={{ float: "right" }}>
           <Button
             variant={"contained"}
             color={"primary"}
             type={"submit"}
-            onClick={()=>{handleSubmit()}}
+            onClick={() => {
+              handleSubmit();
+            }}
           >
             {isSubmitting ? (
               <CircularProgress color="success" size="20px" />

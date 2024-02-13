@@ -1,12 +1,11 @@
 import React from "react";
 import styles from "../../Style.module.css";
-import { ButtonBase, Tooltip, withStyles } from "@material-ui/core";
+import { ButtonBase } from "@material-ui/core";
 import SimplePopover from "../../../../../../components/FormFields/SimplePopover/SimplePopover";
 import bankImage from "../../../../../../assets/img/sent_blue.svg";
-const BankDetail = ({ bankdetail , bakID}) => {
-
-
- 
+const BankDetail = ({ bankdetail ,  handleVerify,
+  handleUnVerify,
+  handleErrorVerify}) => {
 
   const viewFile = () => {
     const fileUrl = bankdetail?.bank_canceled_cheque;
@@ -16,6 +15,7 @@ const BankDetail = ({ bankdetail , bakID}) => {
     } else {
     }
   };
+
   return (
     <div>
       <div className={styles.bankdetailContainer}>
@@ -23,7 +23,7 @@ const BankDetail = ({ bankdetail , bakID}) => {
           <div>
             <div className={styles.key}>Account Holder Name</div>
             <div style={{ display: "flex" }}>
-              <div className={styles.val}>{bankdetail?.benificiery_name} </div>
+              <div className={styles.val}>{ bankdetail?.benificiery_name} </div>
               <div style={{ marginLeft: "10px" }}>
                 <SimplePopover
                   title={bankdetail?.accout_holder_status}

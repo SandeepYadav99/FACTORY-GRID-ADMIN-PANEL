@@ -23,12 +23,7 @@ import SubCategoryList from "../views/SubCategory/SubCategoryList.container";
 import QuoteList from "../views/Quotes/QuoteList.container";
 import QuoteDetail from "../views/Quotes/Quote.view";
 import HubMasterList from "../views/HubMaster/List/HubMasterList";
-// import ServiceListContainer from "../views/Service/List/ServiceListContainer";
-// import TableList from "views/TableList/TableList.jsx";
-// import Typography from "views/Typography/Typography.jsx";
-// import Icons from "views/Icons/Icons.jsx";
-// import Maps from "views/Maps/Maps.jsx";
-// import NotificationsPage from "views/Notifications/Notifications.jsx";
+
 
 import {
   Dashboard,
@@ -39,24 +34,14 @@ import {
   VerifiedUser,
   LocalOffer,
   BubbleChart,
-  LocationOn,
-  Notifications,
   EventNote,
   ContactSupport,
   Settings,
 } from "@material-ui/icons";
 import RouteName from "./Route.name";
 import TaskDetailView from "../views/Profile/TaskDetail/TaskDetailView";
-// import ServiceView from "../views/Service/Create/ServiceCreate.view";
 import ServiceListContainer from "../views/Service/List/ServiceListContainer";
-import AssignedContainer from "../views/Profile/TaskDetail/TaskDetailView/AssignedContainer";
 import ServiceDetailView from "../views/Service/Detail/ServiceDetailView";
-
-// import ServiceView from "../views/Service/Create/ServiceCreate.view";
-
-
-
-
 
 const dashboardRoutes = [
   {
@@ -68,7 +53,7 @@ const dashboardRoutes = [
     is_sidebar: true,
   },
   {
-    path: "/profile",
+    path: `${RouteName.PROFILE}`,
     sidebarName: "My Profile",
     navbarName: "My Profile",
     icon: Person,
@@ -77,7 +62,7 @@ const dashboardRoutes = [
     is_protect: true,
   },
   {
-    path: RouteName.TASK_DETAIL,
+    path: `${RouteName.TASK_DETAIL}:id`,
     sidebarName: "My Profile",
     navbarName: "My Profile",
     icon: Person,
@@ -85,15 +70,6 @@ const dashboardRoutes = [
     is_sidebar: false,
     is_protect: true,
   },
-  // {
-  //     path: "/categories",
-  //     sidebarName: "Categories",
-  //     navbarName: "Categories",
-  //     icon: Dashboard,
-  //     component: CategoryList,
-  //     is_sidebar: true,
-  //     is_protect: true,
-  // },
   {
     path: "null",
     sidebarName: "Masters",
@@ -146,16 +122,6 @@ const dashboardRoutes = [
     should_regex: true,
     // parent: 'masters',
   },
-  // {
-  //     path: "/industry/category/",
-  //     sidebarName: "Categories",
-  //     navbarName: "Categories",
-  //     icon: Dashboard,
-  //     component: CategoryList,
-  //     is_sidebar: true,
-  //     is_protect: true,
-  //      parent: 'masters',
-  // },
   {
     path: "/industry/category/subcategory/:id",
     sidebarName: "SubCategory",
@@ -167,23 +133,36 @@ const dashboardRoutes = [
     // parent: 'masters',
   },
   {
-    path: "/users",
-    sidebarName: "Users",
-    navbarName: "Users",
+    path: "/admin/users",
+    sidebarName: "Admin Users",
+    navbarName: "Admin Users",
     icon: SupervisedUserCircle,
     component: UserList,
     is_sidebar: true,
     is_protect: true,
     parent: "admin",
+    should_regex:true
   },
+
   {
-    path: "/users/edit",
+    path: `${RouteName.USER_PROFILE}:id`,
     sidebarName: "Users",
     navbarName: "Users",
     icon: Dashboard,
     component: UpperTabs,
     is_sidebar: false,
     is_protect: true,
+    should_regex:false
+  },
+  {
+    path: `${RouteName.USER_PROFILE_CREATE}`,
+    sidebarName: "Users",
+    navbarName: "Users",
+    icon: Dashboard,
+    component: UpperTabs,
+    is_sidebar: false,
+    is_protect: true,
+    should_regex:false
   },
   {
     path: "/role",
@@ -233,6 +212,7 @@ const dashboardRoutes = [
     component: CustomerList,
     is_sidebar: true,
     is_protect: true,
+    should_regex: true,
   },
 
   {
@@ -243,7 +223,7 @@ const dashboardRoutes = [
     component: ManufacturerTabs,
     is_sidebar: false,
     is_protect: true,
-    should_regex: true,
+    should_regex: false,
   },
   {
     path: `${RouteName.CUSTOMERS_CUSTOMER}:id`,
@@ -253,7 +233,7 @@ const dashboardRoutes = [
     component: CustomerTabs,
     is_sidebar: false,
     is_protect: true,
-    should_regex: true,
+    should_regex: false,
   },
   {
     path: "/blogs",
@@ -380,25 +360,6 @@ const dashboardRoutes = [
     is_protect: true,
     should_regex: false,
   }
-  // ,
-  // {
-  //   path: "/service/update/",
-  //   sidebarName: "Service list",
-  //   navbarName: "service List",
-  //   icon: SupervisedUserCircle,
-  //   component: ServiceListContainer ,
-  //   is_sidebar: false,
-  //   is_protect: true,
-  //   should_regex: false,
-  // }
-  // {
-  //   path: "/notifications",
-  //   sidebarName: "Notifications",
-  //   navbarName: "Notifications",
-  //   icon: Notifications,
-  //   component: NotificationsPage
-  // },
-  // { redirect: true, path: "/", to: "/dashboard", navbarName: "Redirect" }
 ];
 
 export default dashboardRoutes;

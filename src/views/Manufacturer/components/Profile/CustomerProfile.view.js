@@ -10,6 +10,7 @@ import AccountQuality from "./components/AccountQuality";
 import Activity from "./components/Activity";
 
 import SimplePopover from "../../../../components/FormFields/SimplePopover/SimplePopover";
+import SimplePopovers from "./components/Popover/SimplePopovers";
 
 const ProfileView = ({ userProfile, renderInterestArea, isLoading }) => {
   return (
@@ -28,8 +29,8 @@ const ProfileView = ({ userProfile, renderInterestArea, isLoading }) => {
               </div>
               <div className={styles.user}>
                 {" "}
-                {`${userProfile.first_name || " "} ${
-                  userProfile.last_name || " "
+                {`${userProfile?.first_name || " "} ${
+                  userProfile?.last_name || " "
                 }`}
               </div>
               <div className={styles.name}>
@@ -43,7 +44,7 @@ const ProfileView = ({ userProfile, renderInterestArea, isLoading }) => {
 
             <div>
               <div className={styles.key}>Industry </div>
-              <div className={styles.value}>{userProfile?.industry.name}</div>
+              <div className={styles.value}>{userProfile?.industry?.name}</div>
             </div>
             <br />
 
@@ -90,7 +91,7 @@ const ProfileView = ({ userProfile, renderInterestArea, isLoading }) => {
                 {userProfile.is_email_verified ? (
                   <VerifiedUserIcon className={styles.verified} />
                 ) : (
-                  <SimplePopover userProfile={userProfile} title={"Email"} />
+                  <SimplePopovers userProfile={userProfile} title={"Email"} />
                 )}
               </div>
               {/*{data.is_email_verified == true ? <span><VerifiedUserIcon className={styles.verified}/></span> : ''}*/}
@@ -107,11 +108,12 @@ const ProfileView = ({ userProfile, renderInterestArea, isLoading }) => {
               {userProfile?.is_contact_verified ? (
                 <VerifiedUserIcon className={styles.verified} />
               ) : (
-                <SimplePopover />
+                <SimplePopovers />
               )}
             </div>
             </div>
           </div>
+       
           <AccountQuality
             userProfileAccountQuality={userProfile?.accountQualityManager}
           />
@@ -132,7 +134,7 @@ const ProfileView = ({ userProfile, renderInterestArea, isLoading }) => {
           <div className={styles.plain}>
             <div className={styles.headings}>Support Queries</div>
             <div>
-              <Queries queryLists={userProfile?.supportBYEmail} />
+              <Queries queryLists={userProfile?.supportBYEmail} supportQueryCount={userProfile?.supportQueryCount}/>
             </div>
           </div>
 
@@ -142,7 +144,7 @@ const ProfileView = ({ userProfile, renderInterestArea, isLoading }) => {
               <div className={styles.latest}>
                 <div>Last Message</div>{" "}
                 <div className={styles.msgDate}>
-                  {userProfile.last_active_at}
+                  {userProfile?.last_active_at}
                 </div>
                 {/* 12/12/2021 | 1:00 PM */}
               </div>

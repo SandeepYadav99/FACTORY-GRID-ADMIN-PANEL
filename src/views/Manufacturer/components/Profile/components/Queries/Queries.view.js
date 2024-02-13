@@ -2,12 +2,16 @@ import React from 'react';
 import styles from './Style.module.css';
 import { ButtonBase } from "@material-ui/core";
 import { KeyboardArrowRight } from "@material-ui/icons";
+import history from '../../../../../../libs/history.utils';
 
-const Queries = ({queryLists}) => {
-    console.log(queryLists, "Querylist is ");
+const Queries = ({queryLists, supportQueryCount}) => {
+    console.log(supportQueryCount, "Querylist is ");
 
   const renderTimeline = () => {
 
+    const customerSupport = (support_id)=>{
+      history.push(`${"/support/detail/"}${support_id}`)
+    }
     return queryLists?.map((queryList) => {
       const updatedAt = new Date(queryList?.createdAt);
       const updatedAtFormatted = updatedAt.toLocaleString('en-US', {
@@ -45,7 +49,7 @@ const Queries = ({queryLists}) => {
               <div>Last Updated: {queryList?.updatedAt || "N/A"}</div>
             </div>
           </div>
-          <div className={styles.rightArrow}>
+          <div className={styles.rightArrow} onClick={()=>customerSupport(queryList?._id)}>
             <KeyboardArrowRight fontSize={'large'}/>
           </div>
         </div>
@@ -56,9 +60,9 @@ const Queries = ({queryLists}) => {
   return (
     <div className={styles.activityContainer}>
       <div className={styles.upperFlex}>
-        <div className={styles.total}>Total: 0</div>
-        <div className={styles.total}>Unresolved: 0</div>
-        <div className={styles.total}>Resolved: 0</div>
+        <div className={styles.total}>Total: {supportQueryCount?.tatalQuery}</div>
+        <div className={styles.total}>Unresolved: {supportQueryCount?.unResolved}</div>
+        <div className={styles.total}>Resolved: {supportQueryCount?.resolved}</div>
       </div>
       {queryLists?.length > 0 ? <div>
 
@@ -67,7 +71,8 @@ const Queries = ({queryLists}) => {
         <ButtonBase className={styles.viewMore}>View All</ButtonBase>
       </div>
 
-      </div>:<div className={styles.query}>Not Available</div>}
+      </div>
+      :<div className={styles.query}>Not Available</div>}
     </div>
   );
 };

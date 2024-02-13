@@ -1,21 +1,18 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useCallback, useEffect, useState } from "react";
 import SnackbarUtils from "../../../libs/SnackbarUtils";
-
 import { useDispatch } from "react-redux";
 import {
   actionDeleteMasterDelete,
   actionFetchHubMaster,
 } from "../../../actions/HubMaster.action";
 import {
- 
   serviceSearchAssignto,
   serviceSearchTask,
   serviceSearchUser,
   serviceTaskManagementCreate,
-  serviceTaskMnagment,
 } from "../../../services/ProviderUser.service";
-
+import { serviceSearchCategory } from "../../../services/TaskManage.service";
 
 const initialForm = {
   title: "",
@@ -29,66 +26,82 @@ const initialForm = {
   // comment:"",
   // status: true,
   assigned_to: "",
+  // taskType:""
 };
 
-const useAddTaskCreate = ({ handleSideToggle, isSidePanel, empId , handleCreatedTask}) => {
+const useAddTaskCreate = ({
+  handleSideToggle,
+  isSidePanel,
+  empId,
+  handleCreatedTask,
+  profileDetails,
+}) => {
   const [errorData, setErrorData] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [form, setForm] = useState({ ...initialForm });
-  const [geofenceCoordinates, setGeofenceCoordinates] = useState([]);
   const [listData, setListData] = useState(null);
   const [isAcceptPopUp, setIsAcceptPopUp] = useState(false);
   const [filteredUsers, setFilteredUsers] = useState(null);
-  const [filteredTask,setFilteredTask] =useState(null);
-  const [filteredAssignedTo,setFilteredAssignedTo] =useState(null)
+  const [filteredTask, setFilteredTask] = useState(null);
+  const [filteredAssignedTo, setFilteredAssignedTo] = useState(null);
+  const [fetchedAssignedUser, setFetchedAssinedUser] = useState(null);
+  const [categoryLists, setCategoryLists] = useState(null);
+  const [taskTypes, setTaskTypes] = useState(["DISCUS"]);
   const dispatch = useDispatch();
 
- 
-
   useEffect(() => {
-    if(!isSidePanel) return;
-    serviceSearchAssignto({ query: form?.assigned_to ? form?.assigned_to?.name : form?.assigned_to })
-      .then((res) => {
-        if (!res.error) {
-          setFilteredAssignedTo(res.data);
-        }
-      });
-  
+    if (!isSidePanel) return;
+    serviceSearchCategory().then((res) => {
+      if (!res.error) {
+        setCategoryLists(res?.data);
+      }
+    });
   }, [form?.assigned_to, isSidePanel]);
 
+  useEffect(() => {
+    setFetchedAssinedUser(profileDetails);
+  }, [fetchedAssignedUser]);
 
+  useEffect(() => {
+    if (!isSidePanel) return;
+    serviceSearchAssignto({
+      query: form?.assigned_to ? form?.assigned_to?.name : form?.assigned_to,
+    }).then((res) => {
+      if (!res.error) {
+        setFilteredAssignedTo(res.data);
+      }
+    });
+  }, [isSidePanel]);
 
-useEffect(() => {
-  if(!isSidePanel) return;
-  serviceSearchTask({ query: form?.associated_task ? form?.associated_task?.title : form?.associated_task })
-    .then((res) => {
+  useEffect(() => {
+    if (!isSidePanel) return;
+    serviceSearchTask({
+      query: form?.associated_task
+        ? form?.associated_task?.title
+        : form?.associated_task,
+    }).then((res) => {
       if (!res.error) {
         setFilteredTask(res.data);
       }
     });
+  }, [isSidePanel]);
 
-}, [form?.associated_task, isSidePanel]);
-
-useEffect(() => {
-  if(!isSidePanel) return;
-  serviceSearchUser({ query: form?.associated_user ? form?.associated_user?.first_name : form?.associated_user })
-    .then((res) => {
+  useEffect(() => {
+    if (!isSidePanel) return;
+    serviceSearchUser({
+      query: form?.associated_user
+        ? form?.associated_user?.first_name
+        : form?.associated_user,
+    }).then((res) => {
       if (!res.error) {
         setFilteredUsers(res.data);
-      }else{
-        setFilteredUsers(null)
+      } else {
+        setFilteredUsers(null);
       }
     });
+  }, [isSidePanel]);
 
-}, [form?.associated_user, isSidePanel]);
-
-  const handleSearchUsers = useCallback(
-    (searchText) => {
-    
-    },
-    []
-  );
- 
+  const handleSearchUsers = useCallback((searchText) => {}, []);
 
   useEffect(() => {
     if (!isSidePanel) {
@@ -105,11 +118,22 @@ useEffect(() => {
 
   const checkFormValidation = useCallback(() => {
     const errors = { ...errorData };
-    let required = ["assigned_to", "type", "title", "description", "priority", "due_date", "category"]; // "name", "description", "due_date", "task_type", "comment"
+    let required = [
+      "type",
+      "title",
+      "description",
+      "priority",
+      "due_date",
+      "category",
+      // "taskType"
+    ]; // "name", "description", "due_date", "task_type", "comment"
+    if (!fetchedAssignedUser) {
+      required.push("assigned_to");
+    }
     required.forEach((val) => {
       if (
         !form?.[val] ||
-        (Array.isArray(form?.[val]) && form?.[val].length === 0)
+        (Array.isArray(form?.[val]) && form?.[val]?.length === 0)
       ) {
         errors[val] = true;
         SnackbarUtils.error("Please enter values");
@@ -117,6 +141,7 @@ useEffect(() => {
         delete errors[val];
       }
     });
+
     Object.keys(errors).forEach((key) => {
       if (!errors[key]) {
         delete errors[key];
@@ -132,8 +157,8 @@ useEffect(() => {
     setIsSubmitting(true);
 
     const industryID =
-      Array.isArray(form.category) && form.category.length > 0
-        ? form.category.map((item) => item.id || item._id)
+      Array.isArray(form.category) && form?.category?.length > 0
+        ? form?.category?.map((item) => item) // item.id || item._id
         : [];
 
     const updateData = {
@@ -147,7 +172,7 @@ useEffect(() => {
       associated_task: form?.associated_task?._id,
       comment: "Task",
       // is_completed: form?.status ? true : false,
-      assigned_to: form?.assigned_to?._id,
+      assigned_to: form?.assigned_to?._id || fetchedAssignedUser?.id,
     };
 
     if (empId) {
@@ -160,8 +185,7 @@ useEffect(() => {
 
       if (!res.error) {
         handleSideToggle();
-        handleCreatedTask()
-       
+        handleCreatedTask();
       } else {
         SnackbarUtils.error(res.message);
       }
@@ -169,20 +193,11 @@ useEffect(() => {
     } finally {
       setIsSubmitting(false);
     }
-  }, [
-    form,
-    isSubmitting,
-    setIsSubmitting,
-    empId,
-    handleSideToggle,
-    geofenceCoordinates,
-    dispatch,
-   
-  ]);
+  }, [form, isSubmitting, setIsSubmitting, empId, handleSideToggle, dispatch]);
 
   const handleSubmit = useCallback(async () => {
     const errors = checkFormValidation();
-    if (Object.keys(errors).length > 0) {
+    if (Object.keys(errors)?.length > 0) {
       setErrorData(errors);
     } else {
       await submitToServer();
@@ -194,7 +209,6 @@ useEffect(() => {
     submitToServer,
     empId,
     errorData,
-    geofenceCoordinates,
   ]);
 
   const removeError = useCallback(
@@ -213,8 +227,26 @@ useEffect(() => {
       if (fieldName === "name") {
         t[fieldName] = text;
       } else if (fieldName === "category") {
-        t[fieldName] = text.id;
-      }else if (fieldName === 'associated_task') {
+        const newValues = text?.filter((item) => item.trim() !== "");
+        const uniqueValues = text
+          ? newValues?.filter(
+              (item, index, self) =>
+                self.findIndex(
+                  (t) => t.toLowerCase() === item.toLowerCase()
+                ) === index
+            )
+          : [];
+
+        if (uniqueValues.length <= 2) {
+          t[fieldName] = uniqueValues;
+        } else {
+          SnackbarUtils.error("Maximum 2 Task category");
+        }
+      } else if (fieldName === "associated_task") {
+        t[fieldName] = text;
+      } else if (fieldName === "associated_user") {
+        t[fieldName] = text;
+      } else if (fieldName === "assigned_to") {
         t[fieldName] = text;
       } else {
         t[fieldName] = text;
@@ -225,13 +257,6 @@ useEffect(() => {
     [removeError, form, setForm, listData]
   );
 
-  // else if (fieldName === "industry_id") {
-
-  //   t[fieldName] = text?.filter((item, index, self) => {
-  //     return  index === self.findIndex((i) => i.id === item.id && i._id === item._id)
-
-  //   });
-  // }
   const onBlurHandler = useCallback(
     (type) => {
       if (form?.[type]) {
@@ -265,15 +290,16 @@ useEffect(() => {
     errorData,
     handleReset,
     empId,
-    geofenceCoordinates,
-    setGeofenceCoordinates,
+    categoryLists,
     handleSearchUsers,
     toggleAcceptDialog,
     isAcceptPopUp,
     suspendItem,
     filteredUsers,
     filteredTask,
-    filteredAssignedTo
+    filteredAssignedTo,
+    fetchedAssignedUser,
+    taskTypes,
   };
 };
 

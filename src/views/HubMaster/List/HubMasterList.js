@@ -12,7 +12,8 @@ import { Add, Create } from "@material-ui/icons";
 import useHubMasterHook from "./HubMasterHook";
 import HubMasterCreate from "../Create/HubMasterCreate";
 import StatusPill from "../../../FormFields/Status/StatusPill.component";
-import capitalizeFirstLetter from "../../../hooks/CapsFirstLetter";
+import capitalizeFirstLetter from "../../../hooks/CommonFunction";
+
 
 const HubMasterList = (props) => {
   const {

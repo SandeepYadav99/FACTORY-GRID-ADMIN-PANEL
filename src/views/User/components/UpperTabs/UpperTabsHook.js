@@ -8,13 +8,12 @@ import {
   serviceUpdateProviderUser,
 } from "../../../../services/ProviderUser.service";
 import useDebounce from "../../../../hooks/DebounceHook";
-import { useLocation } from "react-router-dom";
 import { serviceProviderUserManager } from "../../../../services/ProviderUser.service";
 import SnackbarUtils from "../../../../libs/SnackbarUtils";
 import historyUtils from "../../../../libs/history.utils";
 import { isEmail } from "../../../../libs/RegexUtils";
-// import useContactDebounceHook from "../../../../hooks/ContactDebounceHook";
-
+import parsePhoneNumber from "libphonenumber-js";
+import { useParams } from "react-router-dom";
 const initialForm = {
   name: "",
   image: "",
@@ -24,7 +23,7 @@ const initialForm = {
   type: "",
   employee_id: "",
   // password: "1231231admin",
-  joining_date: "",
+  joining_date: null,
   department: "",
   designation: "",
   manager: "",
@@ -52,11 +51,9 @@ const useUpperTabsHook = ({
   const [typeOf, setTypeOf] = useState(""); // TypeOfTabs
   const [listData, setListData] = useState(null);
   const [value, setValue] = useState(0);
-
-  // access query params id in url
-  const location = useLocation();
-  const queryParams = new URLSearchParams(location.search);
-  const id = queryParams.get("id");
+  const [contact, setContact] = useState(null);
+  const [country, setCountry] = useState(null);
+  const { id } = useParams();
 
   useEffect(() => {
     serviceProviderUserManager().then((res) => {
@@ -158,6 +155,7 @@ const useUpperTabsHook = ({
   //     handleReset();
   //   }
   // }, [isSidePanel]);
+  console.log(form.contact);
 
   const checkFormValidation = useCallback(() => {
     const errors = { ...errorData };
@@ -182,18 +180,46 @@ const useUpperTabsHook = ({
       ) {
         errors[val] = true;
       }
+      if (val === "contact" && form.contact) {
+        if (value === 0) {
+          const phoneNumber = parsePhoneNumber(form?.contact);
+
+          if (phoneNumber) {
+            if (phoneNumber.isValid() === false) {
+              errors.contact = "Invalid Number";
+            }
+          } else {
+            errors.contact = "Invalid Number";
+          }
+        }
+      }
+
       if (val === "email" && form?.email && !isEmail(form?.email)) {
         errors.email = "Invalid email address";
       }
     });
+    if (value === 1) {
+      if (form?.joining_date) {
+        const selectedYear = new Date(form.joining_date).getFullYear();
+        const currentYear = new Date().getFullYear();
+        const selectedDate = new Date(form.joining_date);
 
+        if (isNaN(selectedDate.getTime()) || selectedYear > currentYear) {
+          errors.joining_date = true;
+        } else {
+          delete errors.joining_date;
+        }
+      } else {
+        errors.joining_date = true;
+      }
+    }
     Object.keys(errors).forEach((key) => {
       if (!errors[key]) {
         delete errors[key];
       }
     });
     return errors;
-  }, [form, errorData, setImage, value, setErrorData]);
+  }, [form, errorData, setImage, value, setErrorData, id, country, contact]);
 
   const submitToServer = useCallback(async () => {
     if (isSubmitting) {
@@ -208,8 +234,8 @@ const useUpperTabsHook = ({
       const fields = [
         "name",
         "image",
-        "contact",
         "email",
+        "contact",
         "role",
         // "password",
         "employee_id",
@@ -232,7 +258,7 @@ const useUpperTabsHook = ({
       const res = await serviceFunction(formData);
 
       if (!res.error) {
-        historyUtils.push("/users");
+        historyUtils.push("/admin/users");
       } else {
         SnackbarUtils.error(res.message);
       }
@@ -245,13 +271,15 @@ const useUpperTabsHook = ({
 
   const handleSubmit = useCallback(async () => {
     const errors = checkFormValidation();
-    console.log(errors, "Errors");
 
     if (Object.keys(errors).length > 0) {
-      setErrorData(errors);
-      SnackbarUtils.error("Please enter valid values");
+    
+        setErrorData(errors);
+        // SnackbarUtils.error("Please enter valid values");
+
+      
     } else {
-      setValue(1);
+      await setValue(1);
     }
   }, [
     checkFormValidation,
@@ -264,10 +292,10 @@ const useUpperTabsHook = ({
 
   const handleSubmitToSave = useCallback(async () => {
     const errors = checkFormValidation();
-
+   
     if (Object.keys(errors).length > 0) {
       setErrorData(errors);
-      SnackbarUtils.error("Please enter valid  values");
+      // SnackbarUtils.error("Please enter valid  values");
     } else {
       await submitToServer();
     }
@@ -291,13 +319,19 @@ const useUpperTabsHook = ({
       if (fieldName === "code") {
         shouldRemoveError = false;
       } else if (fieldName === "contact") {
-        console.log(text, "Contact");
-        // '+91'+
+        t[fieldName] = text;
+
+        console.log(text, "Text");
+      } else if (fieldName === "joining_date") {
         t[fieldName] = text;
       } else if (fieldName === "email") {
-        console.log(text, "Contact");
-        // '+91'+
         t[fieldName] = text;
+      } else if (fieldName === "designation") {
+        t[fieldName] = text.replace(/^\s+/, "");
+      } else if (fieldName === "name") {
+        t[fieldName] = text.replace(/^\s+/, "");
+      } else if (fieldName === "employee_id") {
+        t[fieldName] = text.replace(/^\s+/, "");
       } else {
         t[fieldName] = text;
       }
@@ -348,6 +382,8 @@ const useUpperTabsHook = ({
 
     image,
     handleSubmitToSave,
+    setCountry,
+    setContact,
   };
 };
 

@@ -1,16 +1,17 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Popover from "@material-ui/core/Popover";
-import Typography from "@material-ui/core/Typography";
+
 import { ButtonBase } from "@material-ui/core";
-import { ReportProblem } from "@material-ui/icons";
+
 import {
-  serviceResetUserEmail,
+
   serviceResetUserStatusUpdate,
 } from "../../../services/CustomersRequest.service";
 import renderImagebyType from "../../../libs/Helper";
 import { useParams } from "react-router-dom";
 import SnackbarUtils from "../../../libs/SnackbarUtils";
+
 const useStyles = makeStyles((theme) => ({
   typography: {
     padding: theme.spacing(2),
@@ -31,6 +32,18 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: "10px !important",
     textDecoration: "underline",
   },
+  unVerify: {
+    // color: "#2196F3",
+    fontSize: "0.7rem !important",
+    marginLeft: "10px !important",
+    textDecoration: "underline",
+  },
+  errorVerify: {
+    // color: "#2196F3",
+    fontSize: "0.7rem !important",
+    marginLeft: "10px !important",
+    textDecoration: "underline",
+  },
   bankDetail: {
     display: "flex",
     justifyContent: "spaceBetween",
@@ -39,13 +52,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function SimplePopover({
-  val,
-
-  isClose,
-  userProfile,
   type,
   title,
-  bankDetailId,
 }) {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -53,85 +61,114 @@ export default function SimplePopover({
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
+    
   };
 
   const handleClose = () => {
+    // setTimeout(() => {
     setAnchorEl(null);
+  // }, 1000);
   };
-  useEffect(() => {
-    if (isClose) {
-      setAnchorEl(null);
-    }
-  }, [isClose]);
+  // useEffect(() => {
+  //   if (isClose) {
+  //     setAnchorEl(null);
+  //   }
+  // }, [isClose]);
 
   const open = Boolean(anchorEl);
   const ids = open ? "simple-popover" : undefined;
 
-  const handleResend = () => {
-    // serviceResetUserEmail({user_id:userProfile._id, email:userProfile.email}).then((res)=>{
-    //   if(!res.error){
-    //    SnackbarUtils.success("Resend Successfully")
-    //   }
-    // })
-  };
-  console.log(type);
+  // const handleResend = () => {
+  //   serviceResetUserEmail({
+  //     user_id: userProfile?._id,
+  //     email: userProfile?.email,
+  //   }).then((res) => {
+  //     if (!res.error) {
+  //       SnackbarUtils.success("Resend Successfully");
+  //     }
+  //   });
+  // };
+
   const handleVerify = () => {
     serviceResetUserStatusUpdate({
       user_id: id,
-      [type]: "VERIFIED",
+      [type]:"VERIFIED",
     }).then((res) => {
       if (!res.error) {
         SnackbarUtils.success("Verified Succesfully");
+        window.location.reload()
       }
     });
   };
 
+  const handleUnVerify = () => {
+    serviceResetUserStatusUpdate({
+      user_id: id,
+      [type]:"ALERT",
+    }).then((res) => {
+      if (!res.error) {
+        SnackbarUtils.success("Verified Succesfully");
+        window.location.reload()
+      }
+    });
+  };
+  
+  const handleErrorVerify = () => {
+    serviceResetUserStatusUpdate({
+      user_id: id,
+      [type]:"ERROR",
+    }).then((res) => {
+      if (!res.error) {
+        SnackbarUtils.success("Verified Succesfully");
+        window.location.reload()
+      }
+    });
+  };
+  let closeTimer;
+  const handleMouseLeave = () => {
+    // Add a delay before closing the Popover
+
+    handleClose();
+  };
+
+  const isVerifiedTitle = title && title.includes("VERIFIED");
+  console.log(title, "Title ");
   return (
-    <div onMouseLeave={handleClose}>
+    <div onMouseLeave={handleMouseLeave}>
       <ButtonBase
         aria-describedby={ids}
-        onClick={handleClick}
+        onClickCapture={handleMouseLeave}
         onMouseEnter={handleClick}
+        
       >
         {renderImagebyType(title)}
       </ButtonBase>
 
       <Popover
-        ids={ids}
-        open={open}
+        id={ids}
+        sx={{
+          pointerEvents: "none",
+        }}
+        open={open && !isVerifiedTitle}
         anchorEl={anchorEl}
         onClose={handleClose}
         anchorOrigin={{
-          vertical: "right",
-          horizontal: "top",
+          vertical: "bottom",
+          horizontal: "left",
         }}
         transformOrigin={{
-          vertical: "right",
-          horizontal: "top",
+          vertical: "top",
+          horizontal: "left",
         }}
+        disableRestoreFocus
       >
-        {type ? (
-          <div className={classes.bankDetail}>
-            <ButtonBase>Cancel</ButtonBase>
-            <ButtonBase className={classes.verify} onClick={handleVerify}>
-              Verify
-            </ButtonBase>
-          </div>
-        ) : (
-          <>
-            <Typography className={classes.typography}>
-              <div className={classes.mainText}>
-                Your email is currently not verified ?
-              </div>
-              <div>
-                <ButtonBase className={classes.email}>Change Email</ButtonBase>
-                <ButtonBase className={classes.verify} onClick={handleResend}>
-                  Verify Now
-                </ButtonBase>
-              </div>
-            </Typography>
-          </>
-        )}
+        <div className={classes.bankDetail}>
+        <ButtonBase onClick={handleErrorVerify} style={{marginLeft:"5px"}} className={classes.errorVerify}>Error</ButtonBase>
+          <ButtonBase onClick={handleUnVerify} style={{marginLeft:"5px"}} className={classes.unVerify}>Cancel</ButtonBase>
+          <ButtonBase className={classes.verify} onClick={handleVerify}>
+            Verify
+          </ButtonBase>
+        </div>
       </Popover>
     </div>
   );

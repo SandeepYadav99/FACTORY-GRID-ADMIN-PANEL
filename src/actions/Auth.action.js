@@ -23,7 +23,7 @@ export function actionLoginUser(data) {
             setAuthorizationToken(token);
             dispatch({ type: AUTH_USER, payload: { token: token, name: data.name, id: data.user_id } });
             // dispatch(actionGetProfile());
-            history.push(`/dashboard`);
+            history.push(`/`);
         }
     };
     // return ({type: AUTH_USER, payload: data});

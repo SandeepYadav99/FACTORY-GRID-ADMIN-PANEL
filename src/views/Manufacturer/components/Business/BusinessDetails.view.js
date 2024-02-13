@@ -1,55 +1,44 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useState } from "react";
 import styles from "./Style.module.css";
 import { ButtonBase, Tooltip, withStyles } from "@material-ui/core";
-import VerifiedUserIcon from "@material-ui/icons/VerifiedUser";
-import Rating from "@material-ui/lab/Rating";
-
 import ImageGalleryComponent from "./components/ImageGallery/ImageGallery.component";
-
 import CompanyProfile from "./components/CompanyProfile/CompanyProfile";
-import useCustomerProfileHook from "../../../../helper/CustomerProfileHook";
 import BankDetail from "./components/BankDetail/BankDetail";
 import CompanyRepresentative from "./components/CompanyRepresentative/CompanyRepresentative";
-import bankImage from "../../../../assets/img/sent_blue.svg";
-const dummy = [
-  require("../../../../assets/img/cover.jpeg"),
-  require("../../../../assets/img/cover.jpeg"),
-];
+import { formatString } from "../../../../hooks/CommonFunction";
+import BankDetailPopup from "./components/BankDetail/BankDetailPopup/BankDetailPopup";
 
-const BusinessDetails = ({ id, userProfile }) => {
-  // const { userProfile, renderInterestArea } = useCustomerProfileHook();
-
-  const galleryImage = useCallback((images) => {
-   
-    if (images && Array.isArray(images)) {
-      const imagesList = images.map((element) => element.gallery_image);
-
-      return imagesList;
-    } else {
-      return [];
-    }
-  }, []);
-
+const BusinessDetails = ({ id, userProfile ,  handleVerify,
+  handleUnVerify,
+  handleErrorVerify}) => {
+    const [isOpen, setIsOpen] = useState(false);
  
-
-  const CERTIFICATES = userProfile.certificate || [];
-  const certificateImages = CERTIFICATES.map(
-    (certificate) => certificate.certificate_file
-  );
-
-  const openGoogleMaps = useCallback((company_lat) => {
-    const url = `https://www.google.com/maps/place?q=${company_lat[0]},${company_lat[1] || 0}`;
+    const toggleIsOpen = useCallback(
+      (data) => {
+        setIsOpen((e) => !e);
+        // setExpireLetter(data?.id)
+      },
+      []
+    );
+ 
+  const openGoogleMaps = useCallback((company) => {
+    const url = `https://www.google.com/maps/place?q=${company?.company_lat},${company?.company_long}`;
 
     window.open(url, "_blank");
   }, []);
 
   const CustomTooltip = withStyles((theme) => ({
     tooltip: {
-      backgroundColor: "#e3f2fd", 
-      color: "black", 
+      backgroundColor: "#e3f2fd",
+      color: "black",
       fontSize: theme.typography.fontSize,
     },
   }))(Tooltip);
+  const clickWebsite = () => {
+    if (userProfile?.business?.company_website) {
+      window.open(userProfile?.business?.company_website, "_blank");
+    }
+  };
   return (
     <div>
       <div className={styles.upperFlex}>
@@ -65,12 +54,15 @@ const BusinessDetails = ({ id, userProfile }) => {
                 <ButtonBase className={styles.removeBtn}> Remove it</ButtonBase>
               </div> */}
               <div className={styles.user}>
-                Company Name{" "}
+                <a
+                  className={styles.coord}
+                  href={"#"}
+                  onClick={() => openGoogleMaps(userProfile?.business)}
+                >
+                  {userProfile?.business?.company_name || "N/A"}
+                  {/* FG Coordinates */}
+                </a>
               </div>
-              <a className={styles.coord} href={"#"}  onClick={()=>openGoogleMaps(userProfile?.business?.company_fg_lat)}>
-             {userProfile?.business?.company_name || "N/A"} 
-                {/* FG Coordinates */}
-              </a>
               <div className={styles.member}>
                 {/* <Rating
                   name="read-only"
@@ -90,7 +82,8 @@ const BusinessDetails = ({ id, userProfile }) => {
             <div>
               <div className={styles.key}>Address</div>
               <div className={styles.value}>
-                {userProfile?.business?.company_address || "N/A"} <br />
+                {userProfile?.business?.company_address || "N/A"}
+                <div className={styles.gaps} />
                 Pincode: {userProfile?.business?.company_pincode || "N/A"}
                 <br />
                 {userProfile?.business?.company_city},{" "}
@@ -103,20 +96,33 @@ const BusinessDetails = ({ id, userProfile }) => {
               <div className={styles.key}>Manufacture Hub</div>
               <div className={styles.value}>
                 {" "}
-                <a className={styles.coord} href={"/"}>
-                  Baddi Nalagarh
-                </a>
+                {userProfile?.hubMasters?.name ? (
+                  <a
+                    className={styles.coord}
+                    href={"#"}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    {userProfile?.hubMasters?.name}
+                  </a>
+                ) : (
+                  "N/A"
+                )}
               </div>
             </div>
 
             <div className={styles.ageFlex}>
               <div className={styles.gender}>
                 <div className={styles.key}>Company Type</div>
-                <div>Private Limited</div>
+                <div>
+                  {formatString(userProfile?.kyc?.business_type) || "N/A"}
+                </div>
               </div>
               <div className={styles.gender}>
                 <div className={styles.key}>Incorporation Date</div>
-                <div>10/10/2022</div>
+                <div>
+                  {userProfile?.business?.date_of_incorporation || "N/A"}
+                </div>
               </div>
             </div>
 
@@ -134,10 +140,8 @@ const BusinessDetails = ({ id, userProfile }) => {
               <div className={styles.head}>Website</div>
               {/*{data.is_email_verified == true ? <span><VerifiedUserIcon className={styles.verified}/></span> : ''}*/}
               {/* <div className={styles.website}>www.morepen.com</div> */}
-              <div className={styles.website}>
-                {userProfile &&
-                  userProfile.business &&
-                  userProfile.business.company_website}
+              <div className={styles.website} onClick={clickWebsite}>
+                {userProfile?.business?.company_website}
               </div>
             </div>
           </div>
@@ -187,21 +191,32 @@ const BusinessDetails = ({ id, userProfile }) => {
               imageList={userProfile?.certificate}
             />
           </div>
-          
+
           <div className={styles.plain}>
             <div className={styles.accountFlex}>
               <div className={styles.headings}>Banking Details</div>
-
-              <a href="#" className={styles.coord}>Edit</a>
+              <ButtonBase className={styles.coord} onClick={toggleIsOpen}>
+                {/* <a href="#" > */}
+                  Edit
+                {/* </a> */}
+              </ButtonBase>
             </div>
-            { userProfile.bankdetail.benificiery_name ? (
-              <BankDetail bankdetail={userProfile?.bankdetail} />
+            {userProfile?.bankdetail?.benificiery_name ? (
+              <BankDetail bankdetail={userProfile?.bankdetail}  handleVerify={handleVerify}
+              handleUnVerify={handleUnVerify}
+              handleErrorVerify={handleErrorVerify}/>
             ) : (
-              <div style={{textAlign:"center"}}>Not Available</div>
+              <div style={{ textAlign: "center" }}>Not Available</div>
             )}
           </div>
         </div>
       </div>
+      <BankDetailPopup
+        bankId={userProfile?._id}
+        isOpen={isOpen}
+        handleToggle={toggleIsOpen}
+        status={userProfile?.status}
+      />
     </div>
   );
 };

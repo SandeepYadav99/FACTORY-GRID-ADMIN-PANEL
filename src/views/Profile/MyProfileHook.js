@@ -1,15 +1,16 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+
 import {
   serviceProfileDetail,
   serviceTaskFilterByUser,
-  serviceTaskMnagment,
   serviceTaskMnagmentByUser,
 } from "../../services/ProviderUser.service";
 import historyUtils from "../../libs/history.utils";
 import RouteName from "../../routes/Route.name";
 import { serviceTaskMnagmentUpdateStatus } from "../../services/TaskManage.service";
 import SnackbarUtils from "../../libs/SnackbarUtils";
+import { useParams } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 const useMyProfileHook = () => {
   const [profileDetails, setProfileDetails] = useState(null);
@@ -19,10 +20,12 @@ const useMyProfileHook = () => {
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const id = queryParams.get("id");
+ 
   const [taskLists, setTaskList] = useState(null);
   const [taskCreated, setTaskCreated] = useState(false);
   const userData = localStorage.getItem("user");
   const userObject = JSON.parse(userData);
+  const [filterValue, setFilterValue] = useState("ALL"); // PENDING
 
   useEffect(() => {
     setIsLoading(true);
@@ -37,22 +40,8 @@ const useMyProfileHook = () => {
       });
   }, [id]);
 
-  // const updateTaskManagement = () => {
-  //   serviceTaskMnagment({
-  //     index: 1,
-  //     row: null,
-  //     order: null,
-  //     query: "",
-  //     query_data: null,
-  //   })
-  //     .then((res) => {
-  //       if (!res?.error) {
-  //         setTaskList(res?.data);
-  //       }
-  //     })
-  //     .finally(() => {});
-  // };
   const updateTaskManagement = () => {
+    // setTimeout(() => {
     serviceTaskMnagmentByUser({
       id: id ? id : userObject?.user?.id,
     })
@@ -62,38 +51,89 @@ const useMyProfileHook = () => {
         }
       })
       .finally(() => {});
+    // }, 3000);
   };
   useEffect(() => {
     updateTaskManagement();
-  }, [taskCreated]);
+  }, [taskCreated, id]);
 
-  const markAsCompleted = (data) => {
-    serviceTaskMnagmentUpdateStatus({
-      is_completed: true,
-      id: data?.id ? data?.id : "",
-    }).then((res) => {
-      if (!res.error) {
-        updateTaskManagement();
-      }
-    });
-  };
+  const markAsCompleted = useCallback(
+    (data) => {
+      serviceTaskMnagmentUpdateStatus({
+        is_completed: true,
+        id: data?.id ? data?.id : "",
+      }).then((res) => {
+        if (!res.error) {
+          if (filterValue !== "ALL") {
+            serviceTaskFilterByUser({
+              is_completed: false,
+              user_id: id ? id : userObject?.user?.id,
+            })
+              .then((res) => {
+                if (!res?.error) {
+                  // updateTaskManagement();
+                  setTaskList(res?.data);
+                  SnackbarUtils.success("Task is marked as completed");
+                } else {
+                  SnackbarUtils.error(res.message);
+                }
+              })
+              .finally(() => {});
+          } else {
+            setTaskList((tasks) => {
+              return tasks.map((task) =>
+                task.id === data.id ? { ...task, is_completed: true } : task
+              );
+            });
+            SnackbarUtils.success("Task is marked as completed");
+          }
+        }
+      });
+    },
+    [taskCreated, filterValue]
+  );
 
-  const completedHandler = (data) => {
-    serviceTaskMnagmentUpdateStatus({
-      is_completed: false,
-      id: data?.id ? data?.id : "",
-    }).then((res) => {
-      if (!res.error) {
-        updateTaskManagement();
-      }
-    });
-  };
+  const completedHandler = useCallback(
+    (data) => {
+      serviceTaskMnagmentUpdateStatus({
+        is_completed: false,
+        id: data?.id ? data?.id : "",
+      }).then((res) => {
+        if (!res.error) {
+          if (filterValue !== "ALL") {
+            serviceTaskFilterByUser({
+              is_completed: true,
+              user_id: id ? id : userObject?.user?.id,
+            })
+              .then((res) => {
+                if (!res?.error) {
+                  // updateTaskManagement();
+                  setTaskList(res?.data);
+                  SnackbarUtils.success("Task is marked as incomplete");
+                } else {
+                  SnackbarUtils.error(res.message);
+                }
+              })
+              .finally(() => {});
+          } else {
+            setTaskList((tasks) => {
+              return tasks.map((task) =>
+                task.id === data.id ? { ...task, is_completed: false } : task
+              );
+            });
+            SnackbarUtils.success("Task is marked as incomplete");
+          }
+        }
+      });
+    },
+    [taskCreated, filterValue]
+  );
 
   const handleCreatedTask = () => {
     setTaskCreated(true);
   };
   const handleEdit = useCallback((profile) => {
-    historyUtils.push(`${RouteName.USER_PROFILE}?id=${profile?.id}`);
+    historyUtils.push(`${RouteName.USER_PROFILE}${profile?.id}`);
   });
 
   const handleSideToggle = useCallback(
@@ -104,26 +144,34 @@ const useMyProfileHook = () => {
   );
 
   const handleDetailPage = useCallback((data) => {
-    historyUtils.push(`${RouteName.TASK_DETAIL}?id=${data?.id}`);
+    historyUtils.push(`${RouteName.TASK_DETAIL}${data?.id}`);
   }, []);
 
-  const filterCompltedTask = (event) => {
-    const newValue = event.target.value;
-    const queryValue = newValue === "PENDING" ? false : true;
-    serviceTaskFilterByUser({
-      is_completed: queryValue,
-      user_id: id ? id : userObject?.user?.id,
-    })
-      .then((res) => {
-
-        if (!res?.error) {
-          updateTaskManagement();
-        }else{
-          SnackbarUtils.error(res.message)
-        }
-      })
-      .finally(() => {});
-  };
+  const filterCompltedTask = useCallback(
+    (event) => {
+      const newValue = event.target.value;
+      setFilterValue(newValue);
+      const queryValue = newValue === "PENDING" ? false : true;
+      if (newValue === "ALL") {
+        updateTaskManagement();
+      } else {
+        serviceTaskFilterByUser({
+          is_completed: queryValue,
+          user_id: id ? id : userObject?.user?.id,
+        })
+          .then((res) => {
+            if (!res?.error) {
+              // updateTaskManagement();
+              setTaskList(res?.data);
+            } else {
+              SnackbarUtils.error(res.message);
+            }
+          })
+          .finally(() => {});
+      }
+    },
+    [filterValue]
+  );
 
   return {
     profileDetails,
@@ -140,6 +188,8 @@ const useMyProfileHook = () => {
     markAsCompleted,
     completedHandler,
     filterCompltedTask,
+    filterValue,
+    id,
   };
 };
 

@@ -69,19 +69,18 @@ const ProfileView = () => {
     setTypeOf,
     setPhoneContact,
     handleSubmitToSave,
-    isSubmitting
+    isSubmitting,
+    setContery,
+    setIsValidContact,
+    setCountry
     
   } = useUpperTabsHook({});
 
   const classes = useStyles();
 
-
-
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
-
-
 
   return (
     <div>
@@ -120,12 +119,14 @@ const ProfileView = () => {
             errorData={errorData}
             changeTextData={changeTextData}
             onBlurHandler={onBlurHandler}
-            // handleSubmit={handleSubmit}
             handleSubmit={handleSubmit}
             image={image}
             setTypeOf={setTypeOf}
             setPhoneContact={setPhoneContact}
             setValidateContact={setValidateContact}
+            setIsValidContact={setContery}
+            setIsValid={setIsValidContact}
+            setCountry={setCountry}
             
           />
         </TabPanel>
@@ -140,7 +141,7 @@ const ProfileView = () => {
             setPhoneContact={setPhoneContact}
             isSubmitting={isSubmitting}/>
         </TabPanel>
-        {/* <TabPanel value={value} index={2}></TabPanel> */}
+      
       </div>
     </div>
   );

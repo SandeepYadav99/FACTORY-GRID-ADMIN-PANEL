@@ -4,26 +4,22 @@
 import React, { Component } from "react";
 import { Field, reduxForm } from "redux-form";
 import { connect } from "react-redux";
-
 import styles from "./Forgot.module.css";
 import { renderTextField } from "../../libs/redux-material.utils";
 import {
+  ButtonBase,
   CircularProgress,
   Dialog,
-
+  IconButton,
 } from "@material-ui/core";
 import { Button, withStyles } from "@material-ui/core";
-import {
-
-  serviceResetProfilePassword,
-} from "../../services/index.services";
+import { serviceResetProfilePassword } from "../../services/index.services";
 import DashboardSnackbar from "../../components/Snackbar.component";
-
 import Slide from "@material-ui/core/Slide";
 import EventEmitter from "../../libs/Events.utils";
-
 import SnackbarUtils from "../../libs/SnackbarUtils";
 import historyUtils from "../../libs/history.utils";
+import { Close, Visibility, VisibilityOff } from "@material-ui/icons";
 
 function Transition(props) {
   return <Slide direction="up" {...props} />;
@@ -91,6 +87,8 @@ class ResetPasswordView extends Component {
       token: null,
       is_calling: false,
       success: false,
+      showPassword: false,
+      showConfirmPassword: false,
     };
     this._handleSubmit = this._handleSubmit.bind(this);
     this._handleLoginClick = this._handleLoginClick.bind(this);
@@ -113,10 +111,19 @@ class ResetPasswordView extends Component {
   }
 
   _handleLoginClick() {
-    historyUtils.push('/login');
+    historyUtils.push("/login");
   }
-
+  _resetForm = () => {
+    const { reset } = this.props;
+    reset("ResetPassword"); // Replace "ResetPassword" with your form name
+  
+  };
+  _handleCloseDialog = () => {
+    this._resetForm(); 
+    this.props.handleClose();
+  };
   _handleSubmit(data) {
+    console.log(data, "Data");
     this.setState({
       is_calling: true,
     });
@@ -124,6 +131,7 @@ class ResetPasswordView extends Component {
       serviceResetProfilePassword({
         ...data,
         // token: this.state.token,
+        email: this.props.email,
       }).then((val) => {
         this.setState({
           is_calling: false,
@@ -137,12 +145,13 @@ class ResetPasswordView extends Component {
           //   error: "Password Changed Successfully",
           //   type: "success",
           // });
-          this.props.handleClose();
-          setTimeout(() => {
-            historyUtils.push("/login");
-          }, 1500);
+          // this.props.handleClose();
+          this._handleCloseDialog()
+          // setTimeout(() => {
+          //   historyUtils.push("/login");
+          // }, 1500);
         } else {
-          SnackbarUtils.error("Invalid Token");
+          SnackbarUtils.error("Password must contain at least one letter and one number");
           //   EventEmitter.dispatch(EventEmitter.THROW_ERROR, {
           //     error: "Invalid Token",
           //     type: "error",
@@ -156,54 +165,89 @@ class ResetPasswordView extends Component {
     this.setState({
       open: !this.state.open,
     });
+    this._resetForm(); 
   }
 
   _handleReturn() {
     this.props.history.push("/login");
   }
 
+  
+
+  _togglePasswordVisibility = () => {
+    this.setState((prevState) => ({
+      showPassword: !prevState.showPassword,
+    }));
+  
+  };
+
+  _toggleConfirmPasswordVisibility = () => {
+    this.setState((prevState) => ({
+      showConfirmPassword: !prevState.showConfirmPassword,
+    }));
+   
+  };
+
   _renderForm() {
     const { handleSubmit } = this.props;
+    const { showPassword, showConfirmPassword } = this.state;
     return (
       <form onSubmit={handleSubmit(this._handleSubmit)}>
-        <div
-          className={styles.loginSignupText}
-          style={{ fontWeight: "700", fontSize: "24px" }}
-        >
-          Change Password
+        <div style={{ display: "flex", justifyContent: "space-between" }}>
+          <div
+            className={styles.loginSignupText}
+            style={{ fontWeight: "700", fontSize: "24px" }}
+          >
+            Change Password
+          </div>
+          <ButtonBase onClick={this._handleCloseDialog}>
+            <Close fontSize="small" />
+          </ButtonBase>
         </div>
         <p className={styles.bottomLine}>
           Enter your new password to reset the password.
         </p>
         <div>
           <br />
-          <div>
+          <div style={{ display: "flex" }}>
             <Field
-              type={"password"}
+              type={showPassword ? "text" : "password"}
               fullWidth={true}
               name="password"
               component={renderTextField}
               label="Password*"
             />
+            <IconButton
+              style={{ marginLeft: "-30px" }}
+              onClick={this._togglePasswordVisibility}
+            >
+              {!showPassword ? <VisibilityOff /> : <Visibility />}
+            </IconButton>
           </div>
           <br />
-          <div>
+          <div style={{ display: "flex" }}>
             <Field
-              type={"password"}
+              type={showConfirmPassword ? "text" : "password"}
               fullWidth={true}
               name="confirm_password"
               component={renderTextField}
               label="Confirm Password*"
             />
+            <IconButton
+              style={{ marginLeft: "-30px" }}
+              onClick={this._toggleConfirmPasswordVisibility}
+            >
+              {!showConfirmPassword ? <VisibilityOff /> : <Visibility />}
+            </IconButton>
           </div>
           <br />
           <Button
-            disabled={this.state.is_calling || this.state.success}
+            // disabled={this.state.is_calling || this.state.success}
             variant={"contained"}
             color={"primary"}
             type="submit"
           >
-            {this.state.is_calling ? (
+            {/* {this.state.is_calling ? (
               <div style={{ padding: "5px 20px", display: "flex" }}>
                 <CircularProgress size={"18px"} color={"primary"} />
               </div>
@@ -211,7 +255,8 @@ class ResetPasswordView extends Component {
               "Redirecting"
             ) : (
               "Change Password"
-            )}
+            )} */}
+            Change Password
           </Button>
         </div>
       </form>
@@ -231,7 +276,7 @@ class ResetPasswordView extends Component {
         {/*</div>*/}
         <Dialog
           open={this.props.open}
-          onClose={this.props.handleClose}
+          onClose={this._handleCloseDialog}
           TransitionComponent={Transition}
           fullWidth={true}
         >
@@ -244,7 +289,7 @@ class ResetPasswordView extends Component {
 }
 
 ResetPasswordView = reduxForm({
-  form: "LoginPage", // a unique identifier for this form
+  form: "ResetPassword", // a unique identifier for this form
   validate,
   onSubmitFail: (errors) => {
     if (errors) {
@@ -255,7 +300,6 @@ ResetPasswordView = reduxForm({
           type: "error",
         });
       } else if (tempErrors.length == 1) {
-       
         const temp = errors[tempErrors[0]];
         EventEmitter.dispatch(EventEmitter.THROW_ERROR, {
           error: temp,

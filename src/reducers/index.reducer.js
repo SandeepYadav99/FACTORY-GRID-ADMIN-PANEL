@@ -25,6 +25,8 @@ import QuotesReducer from './Quotes.reducer';
 import ProviderUser from './ProviderUser.reducer';
 import AuthReducer from './Auth.reducer';
 import HubMasterReducer from './HubMaster.reducer';
+import CommonReducer from './Common.reducer';
+import AssociatedManufacturesReducer from './AssociatedManufactures.reducer';
 import ServiceReducer from './Service.reducer';
 import MilestoneReducer from './Milestone.reducer';
 
@@ -55,6 +57,8 @@ const rootReducer = combineReducers({
     Milestone:MilestoneReducer,
     // form: formReducer,
     hubMaster:HubMasterReducer,
+    common: CommonReducer,
+    associatedManufactures:AssociatedManufacturesReducer
 
 });
 

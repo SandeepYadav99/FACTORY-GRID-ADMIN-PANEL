@@ -1,17 +1,24 @@
-import { Avatar, ButtonBase, Card, CardHeader } from "@material-ui/core";
+import {  ButtonBase} from "@material-ui/core";
 import { Add } from "@material-ui/icons";
-import React, { memo, useEffect, useState } from "react";
-import WaitingComponent from "../../../../components/Waiting.component";
+import React, { memo} from "react";
 import NotesDilog from "./NotesDilog";
 import useNotesDilogHook from "./NotesDilogHook";
-
+import NoteItem from "./NoteItems";
 
 const AddNoteContainer = ({ details, styles, classes }) => {
-  const { form, toggleAcceptDialog, isAcceptPopUp, changeTextData , handleSubmit, noteDetail} = useNotesDilogHook();
-console.log(noteDetail, "dETAIL")
+  const {
+    form,
+    toggleAcceptDialog,
+    isAcceptPopUp,
+    changeTextData,
+    handleSubmit,
+    noteDetails,
+    errorData,
+   
+  } = useNotesDilogHook();
+
   return (
     <div>
-      {" "}
       <div className={styles.plainPaper}>
         <div className={styles.newContainer}>
           <div className={styles.notesContainer}>
@@ -28,49 +35,28 @@ console.log(noteDetail, "dETAIL")
               </ButtonBase>
             </div>
           </div>
-          {!details?.notes > 0 ? (
-            <div className={styles.mainFlex}>
-              <div>
-                <div style={{ marginLeft: "15px" }}>
-                  Notes entered will be displayed here. Notes entered will be
-                  displayed here
-                </div>
-                <Card>
-                  <CardHeader
-                    avatar={<Avatar>R</Avatar>}
-                    title={<span className={classes.boldTitle}>Pranav</span>}
-                    subheader="September 14, 2016"
-                  />
-                </Card>
-              </div>
-              <div className={styles.gaps} />
-              <div>
-                <div style={{ marginLeft: "15px" }}>
-                  Notes entered will be displayed here. Notes entered will be
-                  displayed here
-                </div>
-                <Card>
-                  <CardHeader
-                    avatar={<Avatar>R</Avatar>}
-                    title={<span className={classes.boldTitle}>noteDetail</span>}
-                    subheader="September 14, 2016"
-                  />
-                </Card>
-              </div>
-              {/* Dilog Box nots */}
-              <NotesDilog
-                isOpen={isAcceptPopUp}
-                handleToggle={toggleAcceptDialog}
-                form={form}
-                changeTextData={changeTextData}
-                handleSubmit={handleSubmit}
-              />
-              {/*  empId={empId}
-    suspendItem={suspendItem} */}
-            </div>
-          ) : (
-            <WaitingComponent />
-          )}
+          <div className={styles.gaps}/>
+          <NotesDilog
+             isOpen={isAcceptPopUp}
+            handleToggle={toggleAcceptDialog}
+            form={form}
+             changeTextData={changeTextData}
+             handleSubmit={handleSubmit}
+             errorData={errorData}
+             onBlurHandler
+           />
+ 
+           { noteDetails?.length > 0 ? 
+            noteDetails?.map((note, index) => (
+              <NoteItem              
+                 key={index}
+                 note={note}
+                 styles={styles}
+                 classes={classes}
+                 />
+           
+            )) : <div className={styles.notFound}>Notes not available!</div>
+            }
         </div>
       </div>
     </div>

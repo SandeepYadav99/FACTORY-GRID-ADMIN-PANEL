@@ -1,16 +1,16 @@
 import React, { useState } from "react";
 import styles from "./Styles.module.css";
-import Checkbox from "@material-ui/core/Checkbox";
 import EmailIcon from "@material-ui/icons/Email";
 import CallIcon from "@material-ui/icons/Call";
 import { ButtonBase, FormControl, Select, MenuItem } from "@material-ui/core";
 import {
   Add,
-  Assignment,
   CalendarToday,
-  Description,
-  Details,
+
+  Group,
   Lock,
+  Person,
+  WatchLaterRounded,
 } from "@material-ui/icons";
 import ResetPasswordDialog from "../ForgotPassword/ResetPassword.view";
 import useMyProfileHook from "./MyProfileHook";
@@ -18,20 +18,24 @@ import WaitingComponent from "../../components/Waiting.component";
 import SidePanelComponent from "../../components/SidePanel/SidePanel.component";
 import AddTaskCreate from "./Create/AddTaskCreate";
 import TaskListItem from "./TaskListView";
-
+import capitalizeFirstLetter, { formatString } from "../../hooks/CommonFunction";
+import AssociatedManufactures from "./AssociatedManufactures/AssociatedManufactures";
+import historyUtils from "../../libs/history.utils";
+import ArrowBackIosIcon from "@material-ui/icons/ArrowBackIos";
 const Profile = () => {
   const [open, setOpen] = useState(false);
+  const userData = localStorage.getItem("user");
+  const userObject = JSON.parse(userData);
   const {
     profileDetails,
     handleEdit,
     isLoading,
     isSidePanel,
     handleSideToggle,
-    profileId,
+    id,
     handleDetailPage,
     taskLists,
-    taskCreated,
-    setTaskCreated,
+    filterValue,
     handleCreatedTask,
     markAsCompleted,
     completedHandler,
@@ -40,8 +44,10 @@ const Profile = () => {
 
   const handleClose = () => {
     setOpen(!open);
+    
   };
 
+ 
   return (
     <div>
       {isLoading ? (
@@ -49,7 +55,16 @@ const Profile = () => {
       ) : (
         <div>
           <div className={styles.upperFlex}>
-            <div className={styles.profileHeading}>My Profile</div>
+          <ButtonBase onClick={() => historyUtils.push("/admin/users")}>
+            <ArrowBackIosIcon fontSize={"small"} />{" "}
+            <span>
+              <b>My Profile</b>
+            </span>
+          </ButtonBase>
+          <div>
+       
+        </div>
+            <div className={styles.profileHeading}></div>
             <div>
               <ButtonBase className={styles.resetButton} onClick={handleClose}>
                 <div>
@@ -67,7 +82,7 @@ const Profile = () => {
             </div>
           </div>
 
-          <div className={styles.profileFlex}>
+          <div className={styles.profileFlex} >
             <div className={styles.leftSection}>
               <div className={styles.plain}>
                 <ButtonBase
@@ -77,9 +92,12 @@ const Profile = () => {
                   Edit
                 </ButtonBase>
                 <div className={styles.profileContainer}>
-                  <img src={profileDetails?.image} alt="" />
-             
-                  <div className={styles.name}>{profileDetails?.name}</div>
+                  {profileDetails?.image &&   <img src={profileDetails?.image} alt="" className={styles.proImage}/>}
+                
+
+                  <div className={styles.name}>
+                    {capitalizeFirstLetter(profileDetails?.name)}
+                  </div>
                   <div className={styles.position}>
                     Emp. ID : {profileDetails?.employee_id || "N/A"}
                   </div>
@@ -114,29 +132,31 @@ const Profile = () => {
                 <h5 className={styles.heading}>Work Info</h5>
                 <div>
                   <div className={styles.activityFlex}>
-                    <Description className={styles.contactIcons} />
-                 
+                    <Group className={styles.contactIcons} />
+
                     <span className={styles.activity}>
-                      {profileDetails?.department}
+                      {formatString(profileDetails?.department)}
                     </span>
                   </div>
                   <div className={styles.activityFlex}>
-                    <Details className={styles.contactIcons} />
-                
+                    <Person className={styles.contactIcons} />
+
                     <span className={styles.activity}>
-                      {profileDetails?.designation}
+                      {formatString(profileDetails?.designation)}
                     </span>
                   </div>
                   <div className={styles.activityFlex}>
                     <CalendarToday className={styles.contactIcons} />
-                
+
                     <span className={styles.activity}>
-                      {profileDetails?.joiningDateText || "N/A"}
+                      {formatString(
+                        profileDetails?.joiningDateText || "N/A"
+                      )}
                     </span>
                   </div>
                   <div className={styles.activityFlex}>
-                    <Assignment className={styles.contactIcons} />
-               
+                    <Person className={styles.contactIcons} />
+
                     <span className={styles.activity}>Manager</span>
                   </div>
                 </div>
@@ -144,20 +164,15 @@ const Profile = () => {
                 <h5 className={styles.heading}>Activity Info</h5>
                 <div>
                   <div className={styles.activityFlex}>
-                    <EmailIcon className={styles.contactIcons} />
-            
+                    <WatchLaterRounded className={styles.contactIcons} />
+
                     <span className={styles.activity}>
                       {profileDetails?.lastLoginText !== "Invalid date"
                         ? profileDetails?.lastLoginText
                         : "N/A"}
                     </span>
                   </div>
-                  <div className={styles.activityFlex}>
-                    <CallIcon className={styles.contactIcons} />
-                    <span className={styles.activity}>
-                      {profileDetails?.current_ip || "N/A"}
-                    </span>
-                  </div>
+                
                 </div>
               </div>
             </div>
@@ -172,14 +187,14 @@ const Profile = () => {
                     >
                       <Select
                         disableUnderline
-                        // value={''}
+                        value={filterValue}
                         onChange={filterCompltedTask}
-                        // IconComponent={ExpandMore}
+                     
                       >
                         <MenuItem value={"PENDING"}>Pending</MenuItem>
                         <MenuItem value={"COMPLETED"}>Completed</MenuItem>
-                        {/*<MenuItem value={'PRICE_HIGH'}>Price (High to Low)</MenuItem>*/}
-                        {/*<MenuItem value={'RATING'}>Rating</MenuItem>*/}
+                        <MenuItem value={"ALL"}>All</MenuItem>
+                     
                       </Select>
                     </FormControl>
                   </div>
@@ -198,10 +213,29 @@ const Profile = () => {
                   <p className={styles.notfound}> Tasks is not available!</p>
                 )}
               </div>
+              <div>
+                <div className={styles.plainPaper}>
+                  <div className={styles.headingWrap}>
+                    <div className={styles.newLineWrap}>
+                      <span>
+                        <b>Associated Manufacturers</b>
+                      </span>
+                      <div className={styles.newLine2} />
+                    </div>
+                  </div>
+                  <AssociatedManufactures id={id ? id : userObject?.user?.id}/>
+
+                  {/* listData={listData} */}
+                </div>
+              </div>
             </div>
           </div>
 
-          <ResetPasswordDialog open={open} handleClose={handleClose} />
+          <ResetPasswordDialog
+            open={open}
+            handleClose={handleClose}
+            email={profileDetails?.email}
+          />
           {/* Side Pannel for Add Task management  */}
           <SidePanelComponent
             handleToggle={handleSideToggle}
@@ -213,7 +247,7 @@ const Profile = () => {
               handleSideToggle={handleSideToggle}
               isSidePanel={isSidePanel}
               // empId={profileId}
-
+              profileDetails={profileDetails}
               handleCreatedTask={handleCreatedTask}
             />
           </SidePanelComponent>

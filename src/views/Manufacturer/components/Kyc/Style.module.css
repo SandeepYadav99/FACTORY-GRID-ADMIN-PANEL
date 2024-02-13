@@ -1,0 +1,11 @@
+.plainPaper {
+    border-radius: 10px;
+    padding: 0.7rem;
+    margin-bottom: 20px;
+    background-color: #fff;
+    box-shadow: 0px 20px 80px #00000011;
+  }
+
+  .newContainer {
+    font-size: 0.7rem;
+  }
