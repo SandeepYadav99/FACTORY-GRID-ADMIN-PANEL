@@ -158,7 +158,7 @@ const MILESTONECreate = ({ handleSideToggle, isSidePanel, empId }) => {
           <div className={"formGroup"}>
             <QuestionaireChild
               questionnaire={questionnaire}
-              key={questionnaire.length > 0}
+          
                handleQuestionnaire={handleQuestionnaire}
             />
           </div>

@@ -96,7 +96,7 @@ const useMILESTONECreateHook = ({ handleSideToggle, isSidePanel, empId }) => {
       setQuestionnaire(data)
     
      console.log(questionnaire,"Questionnaire")
-    },[setQuestionnaire]
+    },[questionnaire]
    
   );
   
