@@ -18,20 +18,23 @@ const initialForm = {
   name: "",
   title: "",
   description: "",
-  geofence: "",
+  form_action:[],
+  manufacturer_action:[],
   industry_id: [],
-  
   is_publically: false,
   status: false,
+
 };
 
 const useMILESTONECreateHook = ({ handleSideToggle, isSidePanel, empId }) => {
   const [errorData, setErrorData] = useState({});
+  const [state, setState] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [form, setForm] = useState({ ...initialForm });
   const [geofenceCoordinates, setGeofenceCoordinates] = useState([]);
   const [listData, setListData] = useState(null);
   const [isAcceptPopUp, setIsAcceptPopUp] = useState(false);
+   const [questionnaire, setQuestionnaire] = useState([]);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -55,13 +58,13 @@ const useMILESTONECreateHook = ({ handleSideToggle, isSidePanel, empId }) => {
             description: data?.description,
             title: data?.title,
             industry_id: data?.industryData,
+            questionnaire: data?.form_action,
+            // questionnaire: data?.manufacturer_action,
             is_publically: data?.is_publically === true,
             status: data?.status === constants.GENERAL_STATUS.ACTIVE,
           });
-          setGeofenceCoordinates(data?.geofence);
-        } else {
-          setGeofenceCoordinates([]);
-        }
+        
+        } 
       });
     }
   }, [empId, listData]);
@@ -87,10 +90,20 @@ const useMILESTONECreateHook = ({ handleSideToggle, isSidePanel, empId }) => {
     [isAcceptPopUp, empId]
   );
 
+  const handleQuestionnaire = useCallback(
+    (data) => {
+      setQuestionnaire(data)
+      if (!isSidePanel) {
+        handleReset();
+      } 
+     
+    },[setQuestionnaire,isSidePanel]
+   
+  );
   
   const checkFormValidation = useCallback(() => {
     const errors = { ...errorData };
-    let required = ["name", "industry_id"];
+    let required = ["name", "industry_id","title","description"];
     required.forEach((val) => {
       if (
         !form?.[val] ||
@@ -126,7 +139,8 @@ const useMILESTONECreateHook = ({ handleSideToggle, isSidePanel, empId }) => {
       title: form?.title,
       description: form?.description,
       industry_id: industryID,
-      // ? geofenceCoordinates : []
+      form_action:questionnaire ? questionnaire :"",
+      manufacturer_action: form?.manufacturer_action,
       is_publically: form?.is_publically ? true : false,
       status: form?.status ? "ACTIVE" : "INACTIVE",
     };
@@ -187,21 +201,33 @@ const useMILESTONECreateHook = ({ handleSideToggle, isSidePanel, empId }) => {
     [setErrorData, errorData]
   );
 
+
   const changeTextData = useCallback(
     (text, fieldName) => {
-      console.log(text, "Text")
+
       let shouldRemoveError = true;
       const t = { ...form };
       if (fieldName === "name") {
         t[fieldName] = text;
-      } if (fieldName === "title") {
+      }else if (fieldName === "title") {
         t[fieldName] = text;
       } 
-      if (fieldName === "description") {
+      else if (fieldName === "description") {
         t[fieldName] = text;
       } 
+      else if (fieldName === "form_action") {
+        t[fieldName] = text;
+      } 
+     else if (fieldName === "manufacturer_action") {
+        t[fieldName] = text;
+      } 
+      else if (fieldName === "questionnaire") {
+        t[fieldName] = text;
+        console.log(text,"text")
+      } 
+      
        else if (fieldName === "industry_id") {
-        console.log(text, "Text")
+     
         t[fieldName] = text?.filter((item, index, self) => {
           return  index === self.findIndex((i) => i.id === item.id && i._id === item._id)
           
@@ -254,6 +280,8 @@ const useMILESTONECreateHook = ({ handleSideToggle, isSidePanel, empId }) => {
     toggleAcceptDialog,
     isAcceptPopUp,
     suspendItem,
+    questionnaire,
+    handleQuestionnaire
   };
 };
 

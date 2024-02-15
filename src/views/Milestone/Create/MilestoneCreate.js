@@ -41,6 +41,8 @@ const MILESTONECreate = ({ handleSideToggle, isSidePanel, empId }) => {
     toggleAcceptDialog,
     isAcceptPopUp,
     suspendItem,
+    questionnaire,
+    handleQuestionnaire
   } = useMILESTONECreateHook({ handleSideToggle, isSidePanel, empId });
   const classes = useStyles();
 
@@ -146,7 +148,20 @@ const MILESTONECreate = ({ handleSideToggle, isSidePanel, empId }) => {
             />
           </div>
         </div>
-        
+     
+        <div className={"headerFlex"}>
+          <h4 className={"infoTitle"}>
+            <div className={"heading"}>Form Action</div>
+          </h4>
+        </div>
+        <div className={"formFlex"} style={{ position: "relative" }}>
+          <div className={"formGroup"}>
+            <QuestionaireChild
+              questionnaire={questionnaire}
+               handleQuestionnaire={handleQuestionnaire}
+            />
+          </div>
+        </div>
         <div className={"headerFlex"}>
           <h4 className={"infoTitle"}>
             <div className={"heading"}>Status</div>

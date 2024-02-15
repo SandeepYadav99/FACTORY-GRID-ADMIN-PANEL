@@ -12,7 +12,7 @@ import { Add, Create } from "@material-ui/icons";
 import useMilestoneHook from "./MilestoneHook";
 import MILESTONECreate from "../Create/MilestoneCreate";
 import StatusPill from "../../../FormFields/Status/StatusPill.component";
-import capitalizeFirstLetter from "../../../hooks/CapsFirstLetter";
+import capitalizeFirstLetter from "../../../hooks/CommonFunction";
 
 const MilestoneList = (props) => {
   const {

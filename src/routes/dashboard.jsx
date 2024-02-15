@@ -101,8 +101,8 @@ const dashboardRoutes = [
   },
   {
     path: "/master/milestone",
-    sidebarName: "MasterMilestone",
-    navbarName: "MasterMilestone",
+    sidebarName: "Master Milestone",
+    navbarName: "Master Milestone",
     icon: MeetingRoom,
     component: MilestoneList,
     is_sidebar: true,
