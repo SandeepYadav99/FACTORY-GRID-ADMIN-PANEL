@@ -35,6 +35,7 @@ const useMILESTONECreateHook = ({ handleSideToggle, isSidePanel, empId }) => {
   const [listData, setListData] = useState(null);
   const [isAcceptPopUp, setIsAcceptPopUp] = useState(false);
    const [questionnaire, setQuestionnaire] = useState([]);
+   
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -93,11 +94,9 @@ const useMILESTONECreateHook = ({ handleSideToggle, isSidePanel, empId }) => {
   const handleQuestionnaire = useCallback(
     (data) => {
       setQuestionnaire(data)
-      if (!isSidePanel) {
-        handleReset();
-      } 
-     
-    },[setQuestionnaire,isSidePanel]
+    
+     console.log(questionnaire,"Questionnaire")
+    },[setQuestionnaire]
    
   );
   
@@ -114,6 +113,7 @@ const useMILESTONECreateHook = ({ handleSideToggle, isSidePanel, empId }) => {
       } else if (["code"].indexOf(val) < 0) {
         delete errors[val];
       }
+   
     });
     Object.keys(errors).forEach((key) => {
       if (!errors[key]) {
@@ -121,7 +121,7 @@ const useMILESTONECreateHook = ({ handleSideToggle, isSidePanel, empId }) => {
       }
     });
     return errors;
-  }, [form, errorData]);
+  }, [form, errorData,questionnaire]);
 
   const submitToServer = useCallback(async () => {
     if (isSubmitting) {
@@ -259,9 +259,9 @@ const useMILESTONECreateHook = ({ handleSideToggle, isSidePanel, empId }) => {
 
   const handleReset = useCallback(() => {
     setForm({ ...initialForm });
-    setGeofenceCoordinates([]);
+    setQuestionnaire([]);
     setErrorData({});
-  }, [form, setForm, geofenceCoordinates, setErrorData]);
+  }, [form, setForm, questionnaire, setErrorData]);
 
   return {
     form,
