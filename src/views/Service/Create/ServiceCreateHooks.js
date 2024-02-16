@@ -116,7 +116,7 @@ console.log(form,"form")
       //   formData.append(field, form?.[field]);
       // });
       formData.append("name", form?.name);
-       formData.append("slug", form?.name);
+       formData.append("slug", form?.slug);
       formData.append("logo", form?.logo);
       formData.append("apply_to", form?.apply_to);
       formData.append("description", form?.description);
@@ -168,7 +168,9 @@ console.log(form,"form")
       let shouldRemoveError = true;
       const t = { ...form };
       if (fieldName === "name") {
+        
         t[fieldName] = text;
+        t["slug"] = text.toLowerCase().replace(/ /g, "-");
       } else if (fieldName === "logo") {
         t[fieldName] = text;
       } else if (fieldName === "description") {
@@ -184,9 +186,7 @@ console.log(form,"form")
       else if (fieldName === "is_featured") {
         t[fieldName] = text;
       }
-      else if (fieldName === "slug") {
-        t[fieldName] = text;
-      }
+    
       
       else {
         t[fieldName] = text;

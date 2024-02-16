@@ -102,7 +102,7 @@ const useServiceUpdateHook = ({
       //   formData.append(field, form?.[field]);
       // });
       formData.append("name", form?.name);
-      formData.append("slug", form?.name);
+      formData.append("slug", form?.slug);
       formData.append("logo", form?.logo);
       formData.append("apply_to", form?.apply_to);
       formData.append("description", form?.description);
@@ -150,6 +150,7 @@ const useServiceUpdateHook = ({
       const t = { ...form };
       if (fieldName === "name") {
         t[fieldName] = text;
+        t["slug"] = text.toLowerCase().replace(/ /g, "-");
       } else if (fieldName === "logo") {
         t[fieldName] = text;
       } else if (fieldName === "description") {
@@ -163,9 +164,7 @@ const useServiceUpdateHook = ({
         else if (fieldName === "status") {
           t[fieldName] = text;
         
-      } else if (fieldName === "slug") {
-        t[fieldName] = text;
-      } else {
+      }  else {
         t[fieldName] = text;
       }
 

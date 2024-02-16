@@ -1,27 +1,24 @@
-
 import React, { useCallback, useMemo } from "react";
 import { Button, IconButton } from "@material-ui/core";
-import {  Info as EditIcon } from "@material-ui/icons";
 import classNames from "classnames";
 import { useSelector } from "react-redux";
 import SidePanelComponent from "../../../components/SidePanel/SidePanel.component";
-import styles from "../List/Style.module.css";
+import styles from "./Style.module.css";
 import PageBox from "../../../components/PageBox/PageBox.component";
-
 import DataTables from "../../../Datatables/Datatable.table";
 import Constants from "../../../config/constants";
 import FilterComponent from "../../../components/Filter/Filter.component";
+import { Add, Create } from "@material-ui/icons";
+import useMilestoneHook from "./MilestoneHook";
+import MILESTONECreate from "../Create/MilestoneCreate";
+import StatusPill from "../../../FormFields/Status/StatusPill.component";
+import capitalizeFirstLetter from "../../../hooks/CommonFunction";
 
-import useServiceListHook from "./ServiceList.Hook";
-import { Add } from "@material-ui/icons";
-import ServiceView from "../Create/ServiceCreate.view";
-
-const ServiceListContainer = (props) => {
+const MilestoneList = (props) => {
   const {
     handleSortOrderChange,
     handleRowSize,
     handlePageChange,
-    handleEdit,
     handleFilterDataChange,
     handleSearchValueChange,
     handleViewDetails,
@@ -29,21 +26,19 @@ const ServiceListContainer = (props) => {
     configFilter,
     handleSideToggle,
     isSidePanel,
-    editData,
     editId,
-    handleOpenSidePanel,
-     handleToggleSidePannel
-  } = useServiceListHook({});
+    handleEditMILESTONE,
+  } = useMilestoneHook({});
 
   const {
     present,
     all: allData,
     currentPage,
     is_fetching: isFetching,
-  } = useSelector((state) => state?.Service);
+  } = useSelector((state) => state.Milestone);
 
   const renderFirstCell = useCallback((user) => {
-    console.log(present, "present ");
+    console.log(user, "User ");
     const tempEmailRender = user?.email ? (
       <span style={{ textTransform: "lowercase" }}>{user?.email}</span>
     ) : null;
@@ -64,121 +59,57 @@ const ServiceListContainer = (props) => {
     );
   }, []);
 
-  const renderStatus = useCallback(({ status }) => {
-    const activeStyle = {
-      fontSize: "12px",
-      color: "#20c997",
-      background: "rgba(32,201,151,.1)",
-      padding: "3px 10px",
-      borderRadius: "20px",
-      textTransform: "capitalize",
-    };
+  const renderAssociatedIndustriesName = useCallback((industryData) => (
+    <div>
+      {industryData?.map((industry, index) => (
+        <React.Fragment key={index}>
+          {industry.name}
+          {index < industryData.length - 1 && ", "}
+        </React.Fragment>
+      ))}
+    </div>
+  ),[])
 
-    const inactiveStyle = {
-      fontSize: "12px",
-      color: "#fa8b0c",
-      background: `rgba(250,139,12,.1)`,
-      padding: "3px 10px",
-      borderRadius: "20px",
-      textTransform: "capitalize",
-    };
-
-    return (
-      <span style={status === "ACTIVE" ? activeStyle : inactiveStyle}>
-        {status}
-        {/* Hi */}
-      </span>
-    );
-  }, []);
-
-
-  const renderPriority = useCallback(({ priority }) => {
-    const activeStyle = {
-      fontSize: "12px",
-      color: "#20c997",
-      background: "rgba(32,201,151,.1)",
-      padding: "3px 10px",
-      borderRadius: "20px",
-      textTransform: "capitalize",
-    };
-
-    const inactiveStyle = {
-      fontSize: "12px",
-      color: "#fa8b0c",
-      background: `rgba(250,139,12,.1)`,
-      padding: "3px 10px",
-      borderRadius: "20px",
-      textTransform: "capitalize",
-    };
-
-    return (
-      <span style={priority === "ACTIVE" ? activeStyle : inactiveStyle}>
-        {priority}
-        {/* Hi */}
-      </span>
-    );
-  }, []);
-
-
-  const renderFeatured = useCallback(({ is_featured }) => {
-    console.log(is_featured,"is_featured")
-    const activeStyle = {
-      fontSize: "12px",
-      color: "#20c997",
-      background: "rgba(32,201,151,.1)",
-      padding: "3px 10px",
-      borderRadius: "20px",
-      textTransform: "capitalize",
-    };
-
-    const inactiveStyle = {
-      fontSize: "12px",
-      color: "#fa8b0c",
-      background: `rgba(250,139,12,.1)`,
-      padding: "3px 10px",
-      borderRadius: "20px",
-      textTransform: "capitalize",
-    };
-
-    return (
-      <span >
-        {is_featured?"YES":"NO"}
-        {/* Hi */}
-      </span>
-    );
-  }, []);
-
+//   Milestone Title
+// Milstone Name
+// Description
+// Created At
+// Upadated At
+  
   const tableStructure = useMemo(() => {
     return [
-      {
-        key: "name",
-        label: "Service",
-        sortable: true,
-        render: (value, all) => <div>{renderFirstCell(all)} </div>, //renderFirstCell(all)
-      },
-      {
-        key: "priority",
-        label: "Priority",
-        sortable: true,
-        render: (temp, all) => <div>{renderPriority(all)}</div>,
-      },
-      {
-        key: "status",
-        label: "Status",
-        sortable: true,
-        render: (temp, all) => <div>{renderStatus(all)}</div>,
-      },
-
       
-
       {
-        key: "is_featured",
-        label: "Featured",
+        key: "hub",
+        label: "Name",
         sortable: true,
-        render: (temp, all) => <div>{renderFeatured(all)}</div>,
+        render: (value, all) => <div>{capitalizeFirstLetter(all?.name)} </div>, 
       },
-
+      {
+        key: "hub",
+        label: "Title",
+        sortable: true,
+        render: (value, all) => <div>{capitalizeFirstLetter(all?.title)} </div>, 
+      },
+      {
+        key: "hub",
+        label: "Description",
+        sortable: true,
+        render: (value, all) => <div>{capitalizeFirstLetter(all?.description)} </div>, 
+      },
+      {
+        key: "hub",
+        label: "Created At",
+        sortable: true,
+        render: (value, all) => <div>{capitalizeFirstLetter(all?.createdAtText)} </div>, 
+      },
      
+      {
+        key: "hub",
+        label: "Upadated At",
+        sortable: true,
+        render: (value, all) => <div>{capitalizeFirstLetter(all?.updatedAtText)} </div>, 
+      },
 
       {
         key: "user_id",
@@ -188,26 +119,19 @@ const ServiceListContainer = (props) => {
             <IconButton
               className={"tableActionBtn"}
               color="secondary"
-              // disabled={all.status != 'ACTIVE'}
+              disabled={isCalling}
               onClick={() => {
-                handleEdit(all);
+                // handleSideToggle(all?.id);
+                handleEditMILESTONE(all)
               }}
             >
-              <EditIcon fontSize={"small"} className={styles.black} />
+              <Create fontSize={"small"} />
             </IconButton>
           </div>
         ),
       },
     ];
-  }, [
-    handleViewDetails,
-    handleEdit,
-    isCalling,
-    // renderContact,
-    renderFirstCell,
-    renderStatus,
-    handleEdit
-  ]);
+  }, [renderAssociatedIndustriesName, isCalling, handleEditMILESTONE]);
 
   const tableData = useMemo(() => {
     const datatableFunctions = {
@@ -232,15 +156,16 @@ const ServiceListContainer = (props) => {
     handleRowSize,
     present,
     currentPage,
+ 
   ]);
 
   return (
     <div>
       <PageBox>
         <div className={styles.headerContainer}>
-          <span className={styles.title}>Services List</span>
+          <span className={styles.title}>Master Milestone</span>
           <Button
-            onClick={handleOpenSidePanel}
+            onClick={handleSideToggle}
             variant={"contained"}
             color={"primary"}
           >
@@ -255,25 +180,28 @@ const ServiceListContainer = (props) => {
             handleSearchValueChange={handleSearchValueChange}
             handleFilterDataChange={handleFilterDataChange}
           />
+
           <div>
             <br />
+
             <div style={{ width: "100%" }}>
               <DataTables
                 {...tableData.datatable}
                 {...tableData.datatableFunctions}
               />
             </div>
+            
           </div>
         </div>
       </PageBox>
       <SidePanelComponent
-        handleToggle={handleOpenSidePanel}
-        title={editId ? "Update Service" : "New Service"}
+        handleToggle={handleSideToggle}
+        title={editId ? "Update Milestone" : "Milestone"}
         open={isSidePanel}
         side={"right"}
       >
-        <ServiceView
-          handleToggleSidePannel={handleOpenSidePanel}
+        <MILESTONECreate
+          handleSideToggle={handleSideToggle}
           isSidePanel={isSidePanel}
           empId={editId}
         />
@@ -282,4 +210,4 @@ const ServiceListContainer = (props) => {
   );
 };
 
-export default ServiceListContainer;
+export default MilestoneList;

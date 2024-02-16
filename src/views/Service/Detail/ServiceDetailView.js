@@ -3,6 +3,7 @@ import {
   ButtonBase,
   Card,
   CardHeader,
+  Button,
   makeStyles,
 } from "@material-ui/core";
 import React, { useCallback, useEffect, useState } from "react";
@@ -48,7 +49,6 @@ const ServiceDetailView = ({}) => {
   const [isAcceptPopUp, setIsAcceptPopUp] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [details, setDetails] = useState(null);
-  console.log(details, "details");
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const id = queryParams.get("id");
@@ -106,14 +106,18 @@ const ServiceDetailView = ({}) => {
           </ButtonBase>
         </div>
 
-        <div>
-          <ButtonBase
+        <div style={{marginRight: "70px",marginTop: "0px",fontSize: "35px", color: "#000000",background :"white"}}>
+
+        <Button
             onClick={toggleAcceptDialog}
-            className={styles.editAction}
+            variant={"contained"}
+            color={"primary"}
+            font={"35px"}
           >
-            <Edit fontSize={"small"} />
-            <span>Edit</span>
-          </ButtonBase>
+            <Edit> </Edit> EDIT 
+
+          </Button>
+         
         </div>
       </div>
       {/* <CandidateInfor empId={details?.emp_code} /> */}

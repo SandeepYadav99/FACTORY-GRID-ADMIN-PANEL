@@ -16,7 +16,7 @@ const ServiceDetailContainer = ({details, styles, classes}) => {
         <div className={styles.titleFiledSpace}>Featured</div>{" "}
         {/* Avator  */}
         <div>
-          <CardHeader subheader={<div style={{fontSize:"15px", color:"#000000"}}>{details?.is_featured?"YES":"NO"}</div>} />
+          <CardHeader subheader={<div style={{fontSize:"20px", color:"#000000"}}>{details?.is_featured?"YES":"NO"}</div>} />
         </div>
       </div>
       
@@ -24,7 +24,7 @@ const ServiceDetailContainer = ({details, styles, classes}) => {
         <div className={styles.titleFiledSpace}>Priority</div>{" "}
         {/* Avator  */}
         <div>
-          <CardHeader subheader={<div style={{fontSize:"15px", color:"#000000"}}>{details?.priority}</div>} />
+          <CardHeader subheader={<div style={{fontSize:"20px", color:"#000000"}}>{details?.priority}</div>} />
         </div>
       </div>
 
@@ -33,7 +33,7 @@ const ServiceDetailContainer = ({details, styles, classes}) => {
         <div className={styles.titleFiledSpace}>Applies To:</div>{" "}
         {/* Avator  */}
         <div>
-          <CardHeader subheader={<div style={{fontSize:"15px", color:"#000000"}}>{details?.apply_to}</div>} />
+          <CardHeader subheader={<div style={{fontSize:"20px", color:"#000000"}}>{details?.apply_to}</div>} />
         </div>
       </div>
 
@@ -43,7 +43,7 @@ const ServiceDetailContainer = ({details, styles, classes}) => {
         <div className={styles.titleFiledSpace}>Slug</div>{" "}
         {/* Avator  */}
         <div>
-          <CardHeader subheader={<div style={{fontSize:"15px", color:"#000000"}}>{details?.slug}</div>} />
+          <CardHeader subheader={<div style={{fontSize:"20px", color:"#000000"}}>{details?.slug}</div>} />
         </div>
       </div>
     </div>

@@ -183,12 +183,13 @@ class Industry extends Component {
           this.props.change(val, temp);
         }
       });
-      console.log(data.tages);
+      console.log(data.kyc,"data.kycc");
       this.setState({
         // is_active: data.status == 'ACTIVE',
         is_featured: data.is_featured,
         // coming_soon: data.is_coming_soon,
         questionnaire: data.kyc ? data.kyc : [],
+
         searchKeyword: data.tages ? data.tages : [],
         //  industryTags:data.tags
       });

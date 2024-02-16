@@ -4,9 +4,9 @@ const ServiceDetailHeader = ({ details, styles }) => {
   const getstatusColor = (status) => {
     switch (status) {
       case 'ACTIVE':
-        return '#008000';
+        return 'white';
       case 'INACTIVE':
-        return '#FF0000';
+        return 'white';
     
       default:
         return '#FFFFFF'; 
@@ -16,7 +16,12 @@ const ServiceDetailHeader = ({ details, styles }) => {
     <div>
       {" "}
       <div className={styles.headerTitle}>
-        <div  style={{ backgroundColor: getstatusColor(details?.status) }}>{details?.status}</div>
+        <div  style={{ backgroundColor: getstatusColor(details?.status),  fontSize: "20px",
+      color: "#20c997",
+      background: "rgba(32,201,151,.1)",
+      padding: "3px 10px",
+      borderRadius: "20px",
+      textTransform: "capitalize", }}>{details?.status}</div>
        
       </div>
       <div className={styles.gaps} />

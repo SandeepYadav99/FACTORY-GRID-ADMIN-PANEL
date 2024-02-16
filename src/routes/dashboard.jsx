@@ -3,6 +3,7 @@ import UserList from "../views/User/List/UserList.container";
 import CustomerList from "../views/Customers/List/CustomerList.container";
 import AppSettings from "../views/AppSettings/AppSettings.container";
 import IndustryList from "../views/Industry/IndustryList.container";
+import MilestoneList from "../views/Milestone/List/MilestoneList";
 import CategoryList from "../views/Category/CategoryList.container";
 import Rolelist from "../views/Role/RoleList.container";
 import BadgeList from "../views/Badge/List/BadgeList.container";
@@ -98,6 +99,18 @@ const dashboardRoutes = [
     should_regex: true,
     parent: "masters",
   },
+  {
+    path: "/master/milestone",
+    sidebarName: "Master Milestone",
+    navbarName: "Master Milestone",
+    icon: MeetingRoom,
+    component: MilestoneList,
+    is_sidebar: true,
+    is_protect: true,
+    should_regex: true,
+    parent: "masters",
+  },
+  
   {
     path: "/industry/category/:id",
     sidebarName: "Categories",

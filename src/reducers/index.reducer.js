@@ -28,7 +28,7 @@ import HubMasterReducer from './HubMaster.reducer';
 import CommonReducer from './Common.reducer';
 import AssociatedManufacturesReducer from './AssociatedManufactures.reducer';
 import ServiceReducer from './Service.reducer';
-
+import MilestoneReducer from './Milestone.reducer';
 
 const rootReducer = combineReducers({
     state: (state = {}) => state,
@@ -54,7 +54,7 @@ const rootReducer = combineReducers({
     quotes: QuotesReducer,
     customers: Customers,
     Service:ServiceReducer,
-
+    Milestone:MilestoneReducer,
     // form: formReducer,
     hubMaster:HubMasterReducer,
     common: CommonReducer,

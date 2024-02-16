@@ -81,7 +81,12 @@
     width: 80%;
     /* margin: 0px 20rem 0px 0px; */
   }
-
+  .pillContainer{
+    text-align: left;
+    margin-top: 8px;
+    margin-left: 0px;
+    display: inline-block;
+  }
   .status{
     text-align: end;
   }
@@ -112,7 +117,7 @@
   .container{
     display:flex;
     align-items: center;
-    margin-top: 10px;
+    margin-top: 15px;
   }
 
   .margin{
@@ -165,9 +170,9 @@
 .paragraph{
     opacity: 1;
     text-align: left;
-    color: #5F5151;
-    font-family: normal normal normal 13px/16px Inter;
-    font-size: 13px;
+    color: #0f0303;
+    font-family: normal normal normal 20px/20px Inter;
+    font-size: 20px;
     margin-top: 5px;
 }
 
@@ -225,8 +230,10 @@
 }
 
 .editAction{
-  background-color: #FFFFFF;
+
+  background-color: 	#ffffff;
   color: #000000;
   padding: 3px 5px;
   border-radius: 5px;
+  font-weight: bold;
 }
