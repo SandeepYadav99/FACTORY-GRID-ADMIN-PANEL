@@ -45,7 +45,7 @@ const MILESTONECreate = ({ handleSideToggle, isSidePanel, empId }) => {
     handleQuestionnaire
   } = useMILESTONECreateHook({ handleSideToggle, isSidePanel, empId });
   const classes = useStyles();
-
+  console.log(questionnaire, "Question QueryMile")
   return (
     <div>
       <div className={styles.headerFlex}>
@@ -158,8 +158,7 @@ const MILESTONECreate = ({ handleSideToggle, isSidePanel, empId }) => {
           <div className={"formGroup"}>
             <QuestionaireChild
               questionnaire={questionnaire}
-          
-               handleQuestionnaire={handleQuestionnaire}
+              handleQuestionnaire={handleQuestionnaire}
             />
           </div>
         </div>

@@ -23,6 +23,7 @@ import WaitingComponent from "../../components/Waiting.component";
 import KYC from "./components/Kyc/KYC";
 import history from "../../libs/history.utils";
 import ArrowBackIosIcon from "@material-ui/icons/ArrowBackIos";
+import Badges from "./components/Badges/Badges";
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -246,6 +247,9 @@ const ManufacturerTabs = ({ classes, theme }) => {
         <TabPanel value={value} index={2} dir={theme.direction}></TabPanel>
         <TabPanel value={value} index={3} dir={theme.direction}>
           <KYC userProfile={userProfile} />
+        </TabPanel>
+        <TabPanel value={value} index={4} dir={theme.direction}>
+          <Badges userProfile={userProfile} />
         </TabPanel>
       </div>
       <SuspendPopup

@@ -499,6 +499,7 @@ class Industry extends Component {
   render() {
     const { handleSubmit, data } = this.props;
     const { included } = this.state;
+    console.log(this.state.questionnaire, "Question Query")
     return (
       <div>
         <div className={styles.headerFlex}>

@@ -44,7 +44,7 @@ const useMILESTONECreateHook = ({ handleSideToggle, isSidePanel, empId }) => {
         setListData(res.data);
       }
     });
-  }, []);
+  }, [empId]);
 
 
   useEffect(() => {
@@ -52,7 +52,7 @@ const useMILESTONECreateHook = ({ handleSideToggle, isSidePanel, empId }) => {
       serviceMilestoneDetail({ id: empId }).then((res) => {
         if (!res.error) {
           const data = res.data;
-          
+          console.log(data, "Data")
           setForm({
             ...form,
             name: data?.name,
@@ -64,11 +64,11 @@ const useMILESTONECreateHook = ({ handleSideToggle, isSidePanel, empId }) => {
             is_publically: data?.is_publically === true,
             status: data?.status === constants.GENERAL_STATUS.ACTIVE,
           });
-        
+        setQuestionnaire(data?.form_action)
         } 
       });
     }
-  }, [empId, listData]);
+  }, [empId]);
 
 
   
@@ -93,9 +93,8 @@ const useMILESTONECreateHook = ({ handleSideToggle, isSidePanel, empId }) => {
 
   const handleQuestionnaire = useCallback(
     (data) => {
-      setQuestionnaire(data)
+      setQuestionnaire([...data])
     
-     console.log(questionnaire,"Questionnaire")
     },[questionnaire]
    
   );
