@@ -39,6 +39,21 @@ export async function serviceBadgeDetail(params) { // badges/create
     return await formDataRequest('badges/details', params);
 }
 
-export async function serviceBadgeIndustry(params) { // badges/industry
+export async function serviceBadgeIndustry(params) { 
     return await postRequest('badges/industry', params);
+}
+
+export async function serviceBadgeByUser(params) { 
+    return await postRequest('badges/by/user', params); // manufacture/badges
+}
+
+export async function serviceBadgeLists(params) { 
+    return await postRequest('manufacture/badges', params); // manufacture/badges/assign
+}
+
+export async function serviceManufactureAssign(params) { 
+    return await postRequest('manufacture/badges/assign', params); // manufacture/badges/assign
+}
+export async function serviceManufactureAssignDelete(params) { 
+    return await postRequest('manufacture/badges/delete', params); // manufacture/badges/assign
 }

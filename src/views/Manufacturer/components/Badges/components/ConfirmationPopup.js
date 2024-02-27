@@ -36,15 +36,19 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 const ConfirmationPopup = ({
   isOpen,
   handleToggle,
-  candidateId,
+  badgeId,
   status,
   types,
+  badgeIds
 }) => {
   const classes = useStyles();
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const { errorData, fileds, changeTextData, handleSubmit, addMoreBadge, deleteBadges } =
-    useConfirmationHook();
+  const {
+  
+    handleSubmit,
+   
+  } = useConfirmationHook({ isOpen, handleToggle , badgeId, badgeIds});
 
   return (
     <div>
@@ -59,7 +63,7 @@ const ConfirmationPopup = ({
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
-        {types === "Delete" ? (
+        
           <div className={styles.resetPasswordWrapper}>
             <div className={styles.resetWrapper1}>
               {/* <div className={styles.upperFlex}>Update Status</div> */}
@@ -71,12 +75,12 @@ const ConfirmationPopup = ({
             </div>
             <div className={styles.headingWrapper}>
               <div className={styles.heading}>
-                {status === "SUSPENDED" ? "Active User" : "Suspend User"}{" "}
+               Delete Badge
               </div>
               <div className={styles.newLine}></div>
               <div className={styles.des}>
-                Please confirm you wish to mark user as{" "}
-                {status === "SUSPENDED" ? "active" : "suspend"} .
+                Please confirm you wish to mark user as Delete Badge
+               
               </div>
             </div>
 
@@ -90,61 +94,7 @@ const ConfirmationPopup = ({
               </ButtonBase>
             </div>
           </div>
-        ) : (
-          <>
-            <div className={styles.resetPasswordWrapper}>
-              <div className={styles.closeAction}>
-                <ButtonBase onClick={handleToggle}>
-                  <Close />
-                </ButtonBase>
-              </div>
-              <div className={styles.resetWrapper}>
-                <div className={styles.upperFlex}>Add Badge</div>
-              </div>
-              {fileds?.map((form, index) => (
-                <div key={index}>
-                 
-                  <div className={"formFlex"}>
-                    <div className={"formGroup"}>
-                      <CustomSelectField
-                        isError={errorData?.type}
-                        errorText={errorData?.type}
-                        label={"Choose Badge"}
-                        value={form?.chooseTopBadge}
-                        handleChange={(value) => {
-                          changeTextData(value, "type");
-                        }}
-                      >
-                        <MenuItem value="TOP_SELLER">Top 10 Seller</MenuItem>
-                      </CustomSelectField>
-                    </div>
-                    {index > 0 && (
-                      <ButtonBase className={styles.deletebase} onClick={()=>deleteBadges(index)}>
-                        <Delete />
-                      </ButtonBase>
-                    )}
-                  </div>
-                </div>
-              ))}
-
-              <div className={styles.printFlex}>
-                <ButtonBase className={styles.addAction} onClick={addMoreBadge}>
-                  <Add />
-                  Add More
-                </ButtonBase>
-              </div>
-              <div className={styles.printFlex}>
-                <ButtonBase onClick={handleSubmit} className={styles.createBtn}>
-                  {isSubmitting ? (
-                    <CircularProgress color="success" size="20px" />
-                  ) : (
-                    " CONFIRM"
-                  )}
-                </ButtonBase>
-              </div>
-            </div>
-          </>
-        )}
+       
       </Dialog>
     </div>
   );

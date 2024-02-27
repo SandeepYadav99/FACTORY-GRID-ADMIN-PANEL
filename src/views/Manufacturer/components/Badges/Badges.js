@@ -6,8 +6,20 @@ import ic_add from "../../../../assets/img/ic_add.png";
 import { ButtonBase } from "@material-ui/core";
 import ConfirmationPopup from "./components/ConfirmationPopup";
 import useBadgesHook from "./BadgesHook";
+import AssignBadge from "./components/AssignBadge/AssignBadge";
 const Badges = ({ userProfile }) => {
-  const { toggleIsOpenDialog, isOpenDialog , types} = useBadgesHook();
+  const {
+    toggleIsOpenDialog,
+    isOpenDialog,
+    types,
+    badges,
+    isOpen,
+    toggleIsOpen,
+    setBadgeId,
+    badgeId,
+    badgeIds
+  } = useBadgesHook();
+  console.log(badgeId, "Badge Id");
   return (
     <div>
       <div className={styles.plainPaper}>
@@ -16,130 +28,58 @@ const Badges = ({ userProfile }) => {
             <span>
               <b>Badge Details</b>
             </span>
-          
-              <ButtonBase className={styles.addTask} onClick={()=>toggleIsOpenDialog("Assign Badge")}>
-                <Add/> ASSIGN BADGE
-              </ButtonBase>
-          
+
+            <ButtonBase className={styles.addTask} onClick={toggleIsOpen}>
+              <Add /> ASSIGN BADGE
+            </ButtonBase>
           </div>
           <div className={styles.gaps} />
-         
+
           <div className={styles.kycContainer}>
-            <div className={styles.card_badges}>
-              <div>
-                <img src={ic_add} alt="..." />
-                <p>
-                  <b> Top Manufacturer</b>
-                  <br />
-                  Abhishek Singh | 11/10/2023
-                </p>
-              </div>
-              <ButtonBase
-                className={styles.action_button}
-                onClick={()=>toggleIsOpenDialog("Delete")}
-              >
-                <Delete fontSize="small" />
-                Delete
-              </ButtonBase>
-            </div>
-            <div className={styles.card_badges}>
-              <div>
-                <img src={ic_add} alt="..." />
-                <p>
-                  <b> Top Manufacturer</b>
-                  <br />
-                  Abhishek Singh | 11/10/2023
-                </p>
-              </div>
-              <ButtonBase
-                className={styles.action_button}
-                onClick={()=>toggleIsOpenDialog("Delete")}
-              >
-                <Delete fontSize="small" />
-                Delete
-              </ButtonBase>
-            </div>
-            <div className={styles.card_badges}>
-              <div>
-                <img src={ic_add} alt="..." />
-                <p>
-                  <b> Top Manufacturer</b>
-                  <br />
-                  Abhishek Singh | 11/10/2023
-                </p>
-              </div>
-              <ButtonBase
-                className={styles.action_button}
-                onClick={()=>toggleIsOpenDialog("Delete")}
-              >
-                <Delete fontSize="small" />
-                Remove
-              </ButtonBase>
-            </div>
-
-          </div>
-          <div className={styles.kycContainer1}>
-            <div className={styles.card_badges}>
-              <div>
-                <img src={ic_add} alt="..." />
-                <p>
-                  <b> Top Manufacturer</b>
-                  <br />
-                  Abhishek Singh | 11/10/2023
-                </p>
-              </div> 
-              <ButtonBase
-                className={styles.action_button}
-                onClick={()=>toggleIsOpenDialog("Delete")}
-              >
-                <Delete fontSize="small" />
-                Delete
-              </ButtonBase>
-            </div>
-            <div className={styles.card_badges}>
-              <div>
-                <img src={ic_add} alt="..." />
-                <p>
-                  <b> Top Manufacturer</b>
-                  <br />
-                  Abhishek Singh | 11/10/2023
-                </p>
-              </div>
-              <ButtonBase
-                className={styles.action_button}
-                onClick={()=>toggleIsOpenDialog("Delete")}
-              >
-                <Delete fontSize="small" />
-                Delete
-              </ButtonBase>
-            </div>
-            <div className={styles.card_badges}>
-              <div>
-                <img src={ic_add} alt="..." />
-                <p>
-                  <b> Top Manufacturer</b>
-                  <br />
-                  Abhishek Singh | 11/10/2023
-                </p>
-              </div>
-              <ButtonBase
-                className={styles.action_button}
-                onClick={()=>toggleIsOpenDialog("Delete")}
-              >
-                <Delete fontSize="small" />
-                Remove
-              </ButtonBase>
-            </div>
-
+            {badges?.map((badge, index) => (
+              <React.Fragment key={index}>
+                {badge.badges?.map((badsub, index) => (
+                  <div className={styles.card_badges} key={index}>
+                    <div>
+                      <img src={badsub?.logo} alt="..." />
+                      <p>
+                        <b>{badsub?.name}</b>
+                        <br />
+                        {badge?.admins?.name} | {badge?.createdAtText}
+                      </p>
+                    </div>
+                    <ButtonBase
+                      className={styles.action_button}
+                      onClick={() => {
+                        toggleIsOpenDialog(badsub?.id, badge?.id);
+                      }}
+                    >
+                      <Delete fontSize="small" />
+                      Delete
+                    </ButtonBase>
+                    <div className={styles.gaps} />
+                  </div>
+                ))}
+              </React.Fragment>
+            ))}
           </div>
         </div>
       </div>
+
       <ConfirmationPopup
-        candidateId={userProfile?._id}
+        badgeId={badgeId}
+        badgeIds={badgeIds}
         isOpen={isOpenDialog}
         handleToggle={toggleIsOpenDialog}
         status={userProfile?.status}
         types={types}
+      />
+
+      <AssignBadge
+        candidateId={badges?._id}
+        isOpen={isOpen}
+        handleToggle={toggleIsOpen}
+        status={userProfile?.status}
       />
     </div>
   );

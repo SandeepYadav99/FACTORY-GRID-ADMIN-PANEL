@@ -10,7 +10,7 @@ const CustomSelectField = ({ isError, errorText, label, handleChange, icon, chil
     const [labelWidth, setLabelWidth] = useState(0);
     const inputLabelRef = useRef(null);
 
-
+console.log(isError, "ERROR", errorText)
     const id = useMemo(() => {
         return Date.now()+'SELECTED_LABEL'+label;
     }, [label]);

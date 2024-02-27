@@ -44,10 +44,13 @@
   margin-bottom: 2px;
 }
 .gaps {
-  margin-bottom: 1.3rem;
+  margin-bottom: 1.8rem;
 }
 .card_badges {
   margin-top: 5px !important;
+
+  /* display: grid;
+  grid-template-columns: repeat(3, 1fr); */
 }
 .card_badges img {
   float: left !important;
