@@ -103,23 +103,7 @@ const ConfirmationPopup = ({
               </div>
               {fileds?.map((form, index) => (
                 <div key={index}>
-                  <div className={"formFlex"}>
-                    <div className={"formGroup"}>
-                      <CustomSelectField
-                        isError={errorData?.type}
-                        errorText={errorData?.type}
-                        label={"Choose Badge"}
-                        value={form?.chooseBadge}
-                        handleChange={(value) => {
-                          changeTextData(value, "type");
-                        }}
-                      >
-                        <MenuItem value="TOP_MANUFACTURER">
-                          Top Manufacturer
-                        </MenuItem>
-                      </CustomSelectField>
-                    </div>
-                  </div>
+                 
                   <div className={"formFlex"}>
                     <div className={"formGroup"}>
                       <CustomSelectField
