@@ -14,30 +14,35 @@ const useAssignBadgeHook = ({ isOpen, handleToggle }) => {
   const [chooseBadges, setChooseBadges] = useState([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { id } = useParams();
-
+  console.log(isOpen, "Is Oepn");
   useEffect(() => {
-    serviceBadgeByUser({
-      id: id,
-      row: null,
-      order: null,
-      query: "",
-      query_data: null,
-    }).then((res) => {
-    
-      if (!res?.error) {
-        setChooseBadges(res?.data);
-      }
-    });
-  }, [id]);
+    if (isOpen) {
+      serviceBadgeByUser({
+        id: id,
+        row: null,
+        order: null,
+        query: "",
+        query_data: null,
+      }).then((res) => {
+        if (!res?.error) {
+          setChooseBadges(res?.data);
+        }
+      });
+    }
+  }, [isOpen]);
 
   const checkFormValidation = useCallback(() => {
     const errors = {};
     fileds.forEach((field, index) => {
-      console.log(field, "Filed")
-      if (!field.chooseTopBadge || field.chooseTopBadge.length === 0) {
+      console.log(field, "Filed");
+      if (
+        !field.chooseTopBadge ||
+        field.chooseTopBadge.length === 0 ||
+        field.chooseTopBadge === ""
+      ) {
         errors[`chooseTopBadge${index}`] = true;
       } else {
-        delete errors[`chooseTopBadge${index}`];
+        delete errors[`chooseTopBadge`];
       }
     });
     return errors;
@@ -48,9 +53,9 @@ const useAssignBadgeHook = ({ isOpen, handleToggle }) => {
       return;
     }
     setIsSubmitting(true);
-   
+
     const badgs_id = fileds?.map((f) => f.chooseTopBadge);
-  
+
     serviceManufactureAssign({ user_id: id, badges_id: badgs_id }).then(
       (res) => {
         if (!res?.error) {
@@ -58,14 +63,14 @@ const useAssignBadgeHook = ({ isOpen, handleToggle }) => {
         }
       }
     );
-    setIsSubmitting(false)
+    setIsSubmitting(false);
   }, [fileds, id]);
 
   const handleSubmit = useCallback(async () => {
     const errors = checkFormValidation();
 
     if (Object.keys(errors).length > 0) {
-     await setErrorData(errors);
+      await setErrorData(errors);
     } else {
       await submitToServer();
     }
@@ -86,10 +91,8 @@ const useAssignBadgeHook = ({ isOpen, handleToggle }) => {
       console.log(index, fieldName, text, "Index");
       const t = [...fileds];
       if (fieldName === "chooseTopBadge") {
-        if(text.length > 0){
-          t[index].chooseTopBadge = text;
-
-        }
+        t[index].chooseTopBadge = text;
+        delete errorData[`chooseTopBadge${index}`];
       } else {
         t[fieldName] = text;
       }
@@ -111,34 +114,36 @@ const useAssignBadgeHook = ({ isOpen, handleToggle }) => {
   // );
   // const onBlurHandler = useCallback(
   //   (text, fieldName, index) => {
-  //     changeTextData(text, fieldName, index); 
+  //     changeTextData(text, fieldName, index);
   //   },
   //   [changeTextData]
   // );
 
-  const addMoreBadge = () => {
+  const addMoreBadge = useCallback(() => {
     setFileds([...fileds, { chooseTopBadge: "" }]);
-  };
-  const deleteBadges = (index) => {
+  }, []);
+
+  const deleteBadges = useCallback((index) => {
     if (fileds.length === 1) {
       return;
     }
     const values = [...fileds];
     values.splice(index, 1);
     setFileds(values);
-  };
+  }, []);
 
   useEffect(() => {
     if (!isOpen) {
       handleReset();
     }
-  }, [isOpen, handleToggle]);
+  }, [isOpen]);
 
   const handleReset = useCallback(() => {
     setFileds([initialForm]);
     setErrorData({});
-  }, [fileds]);
-
+    setChooseBadges([]);
+  }, []);
+  console.log(fileds, "Fieled");
   return {
     fileds,
     addMoreBadge,
@@ -146,7 +151,7 @@ const useAssignBadgeHook = ({ isOpen, handleToggle }) => {
     changeTextData,
     handleSubmit,
     chooseBadges,
-    errorData
+    errorData,
   };
 };
 

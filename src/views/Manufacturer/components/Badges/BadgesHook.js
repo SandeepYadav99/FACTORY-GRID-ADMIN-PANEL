@@ -22,7 +22,7 @@ const useBadgesHook = () => {
       query_data: null,
       index: 1,
     }).then((res) => {
-      console.log(res, "Res");
+     
       if (!res?.error) {
         setBadges(res?.data);
       }
@@ -31,14 +31,14 @@ const useBadgesHook = () => {
 
   const toggleIsOpenDialog = useCallback(
     (data, badgeId) => {
-      console.log(data, "Data")
+     
       setIsOpenDialog((e) => !e);
       // setExpireLetter(data?.id)
       // setTypes(data);
       setBadgeId(data);
       setBadgeIds(badgeId)
     },
-    [setIsOpenDialog, setBadgeId]
+    [setIsOpenDialog, setBadgeId, setBadgeIds]
   );
 
   const toggleIsOpen = useCallback(
