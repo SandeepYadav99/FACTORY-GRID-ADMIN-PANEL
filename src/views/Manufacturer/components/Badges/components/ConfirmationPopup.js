@@ -43,7 +43,7 @@ const ConfirmationPopup = ({
   const classes = useStyles();
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const { errorData, form, changeTextData, handleSubmit } =
+  const { errorData, fileds, changeTextData, handleSubmit, addMoreBadge, deleteBadges } =
     useConfirmationHook();
 
   return (
@@ -101,45 +101,50 @@ const ConfirmationPopup = ({
               <div className={styles.resetWrapper}>
                 <div className={styles.upperFlex}>Add Badge</div>
               </div>
-              <div>
-                <div className={"formFlex"}>
-                  <div className={"formGroup"}>
-                    <CustomSelectField
-                      isError={errorData?.type}
-                      errorText={errorData?.type}
-                      label={"Choose Badge"}
-                      value={form?.type}
-                      handleChange={(value) => {
-                        changeTextData(value, "type");
-                      }}
-                    >
-                      <MenuItem value="TOP_MANUFACTURER">
-                        Top Manufacturer
-                      </MenuItem>
-                    </CustomSelectField>
+              {fileds?.map((form, index) => (
+                <div key={index}>
+                  <div className={"formFlex"}>
+                    <div className={"formGroup"}>
+                      <CustomSelectField
+                        isError={errorData?.type}
+                        errorText={errorData?.type}
+                        label={"Choose Badge"}
+                        value={form?.chooseBadge}
+                        handleChange={(value) => {
+                          changeTextData(value, "type");
+                        }}
+                      >
+                        <MenuItem value="TOP_MANUFACTURER">
+                          Top Manufacturer
+                        </MenuItem>
+                      </CustomSelectField>
+                    </div>
+                  </div>
+                  <div className={"formFlex"}>
+                    <div className={"formGroup"}>
+                      <CustomSelectField
+                        isError={errorData?.type}
+                        errorText={errorData?.type}
+                        label={"Choose Badge"}
+                        value={form?.chooseTopBadge}
+                        handleChange={(value) => {
+                          changeTextData(value, "type");
+                        }}
+                      >
+                        <MenuItem value="TOP_SELLER">Top 10 Seller</MenuItem>
+                      </CustomSelectField>
+                    </div>
+                    {index > 0 && (
+                      <ButtonBase className={styles.deletebase} onClick={()=>deleteBadges(index)}>
+                        <Delete />
+                      </ButtonBase>
+                    )}
                   </div>
                 </div>
-                <div className={"formFlex"}>
-                  <div className={"formGroup"}>
-                    <CustomSelectField
-                      isError={errorData?.type}
-                      errorText={errorData?.type}
-                      label={"Choose Badge"}
-                      value={form?.type}
-                      handleChange={(value) => {
-                        changeTextData(value, "type");
-                      }}
-                    >
-                      <MenuItem value="TOP_SELLER">Top 10 Seller</MenuItem>
-                    </CustomSelectField>
-                  </div>
-                  <ButtonBase className={styles.deletebase}>
-                    <Delete />
-                  </ButtonBase>
-                </div>
-              </div>
+              ))}
+
               <div className={styles.printFlex}>
-                <ButtonBase className={styles.addAction}>
+                <ButtonBase className={styles.addAction} onClick={addMoreBadge}>
                   <Add />
                   Add More
                 </ButtonBase>
