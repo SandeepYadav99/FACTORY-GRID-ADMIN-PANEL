@@ -17,7 +17,7 @@ const Badges = ({ userProfile }) => {
     toggleIsOpen,
     setBadgeId,
     badgeId,
-    badgeIds
+    badgeIds,
   } = useBadgesHook();
   console.log(badgeId, "Badge Id");
   return (
@@ -40,26 +40,27 @@ const Badges = ({ userProfile }) => {
               <React.Fragment key={index}>
                 {badge.badges?.map((badsub, index) => (
                   <div className={styles.card_badges} key={index}>
-                    <div>
+                    <div className={styles.sub_card_badges}>
                       <img src={badsub?.logo} alt="..." />
-                      <p>
-                        <b>{badsub?.name}</b>
-                        <br />
-                        {badge?.admins?.name} | {badge?.createdAtText}
-                      </p>
+                      <ButtonBase
+                        className={styles.action_button}
+                        onClick={() => {
+                          toggleIsOpenDialog(badsub?.id, badge?.id);
+                        }}
+                      >
+                        <Delete fontSize="small" />
+                        Delete
+                      </ButtonBase>
                     </div>
-                    <ButtonBase
-                      className={styles.action_button}
-                      onClick={() => {
-                        toggleIsOpenDialog(badsub?.id, badge?.id);
-                      }}
-                    >
-                      <Delete fontSize="small" />
-                      Delete
-                    </ButtonBase>
-                    <div className={styles.gaps} />
+                    <div className={styles.paragraph}>
+                      <b>{badsub?.name}</b>
+                      <br />
+                      {badge?.admins?.name} | {badge?.createdAtText}
+                    </div>
+                   
                   </div>
                 ))}
+               <div className={styles.gaps} />
               </React.Fragment>
             ))}
           </div>

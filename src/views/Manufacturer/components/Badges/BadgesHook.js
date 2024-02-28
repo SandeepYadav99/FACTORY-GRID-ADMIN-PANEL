@@ -29,6 +29,7 @@ const useBadgesHook = () => {
     });
   }, [isOpen, isOpenDialog, setBadges]);
 
+  
   const toggleIsOpenDialog = useCallback(
     (data, badgeId) => {
      
@@ -46,6 +47,7 @@ const useBadgesHook = () => {
       setIsOpen((e) => !e);
       // setExpireLetter(data?.id)
       // setTypes(data);
+    
     },
     [setIsOpenDialog]
   );

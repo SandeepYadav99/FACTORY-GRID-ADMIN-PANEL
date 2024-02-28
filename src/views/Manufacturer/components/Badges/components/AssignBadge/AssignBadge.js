@@ -34,16 +34,16 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 
 const AssignBadge = ({ isOpen, handleToggle, candidateId, status, types }) => {
   const classes = useStyles();
-  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const {
     errorData,
-    fileds,
+    form,
     changeTextData,
     handleSubmit,
     addMoreBadge,
     deleteBadges,
     chooseBadges,
+    handleReset,
   } = useAssignBadgeHook({ isOpen, handleToggle });
 
   return (
@@ -55,21 +55,29 @@ const AssignBadge = ({ isOpen, handleToggle, candidateId, status, types }) => {
         maxWidth={"sm"}
         TransitionComponent={Transition}
         open={isOpen}
-        onClose={() => {}}
+        onClose={() => {
+          handleToggle();
+          handleReset();
+        }}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
         <>
           <div className={styles.resetPasswordWrapper}>
             <div className={styles.closeAction}>
-              <ButtonBase onClick={handleToggle}>
+              <ButtonBase
+                onClick={() => {
+                  handleToggle();
+                  window.location.reload();
+                }}
+              >
                 <Close />
               </ButtonBase>
             </div>
             <div className={styles.resetWrapper}>
               <div className={styles.upperFlex}>Add Badge</div>
             </div>
-            {fileds?.map((form, index) => (
+            {form?.map((form, index) => (
               <div key={index}>
                 <div className={"formFlex"}>
                   <div className={"formGroup"}>

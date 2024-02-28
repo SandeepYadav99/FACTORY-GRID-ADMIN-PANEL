@@ -47,21 +47,28 @@
   margin-bottom: 1.8rem;
 }
 .card_badges {
-  margin-top: 5px !important;
-
-  /* display: grid;
-  grid-template-columns: repeat(3, 1fr); */
+  margin-top: 10px !important;
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  flex-wrap: wrap !important;
+}
+.sub_card_badges {
+  display: flex !important;
+  flex-direction: column !important;
+  padding: 10px !important;
 }
 .card_badges img {
-  float: left !important;
+  /* float: left !important; */
   margin-right: 10px !important;
   border: none !important;
   height: 50px !important;
   width: 50px !important;
   border-radius: 50px !important;
 }
-.card_badges p {
-  float: right !important;
+.card_badges .paragraph {
+  /* float: right !important; */
+  margin-bottom: 15px !important;
 }
 .action_button {
   color: #ee0101 !important;
