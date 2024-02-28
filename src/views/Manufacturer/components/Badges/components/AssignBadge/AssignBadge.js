@@ -57,7 +57,7 @@ const AssignBadge = ({ isOpen, handleToggle, candidateId, status, types }) => {
         open={isOpen}
         onClose={() => {
           handleToggle();
-          handleReset();
+         
         }}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
@@ -68,7 +68,7 @@ const AssignBadge = ({ isOpen, handleToggle, candidateId, status, types }) => {
               <ButtonBase
                 onClick={() => {
                   handleToggle();
-                  window.location.reload();
+                  // window.location.reload();
                 }}
               >
                 <Close />

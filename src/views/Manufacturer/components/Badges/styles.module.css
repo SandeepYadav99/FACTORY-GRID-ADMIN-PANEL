@@ -68,7 +68,8 @@
 }
 .card_badges .paragraph {
   /* float: right !important; */
-  margin-bottom: 15px !important;
+  margin-bottom: 30px !important;
+  margin-right: 25px !important;
 }
 .action_button {
   color: #ee0101 !important;

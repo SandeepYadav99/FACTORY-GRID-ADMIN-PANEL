@@ -14,6 +14,13 @@ const useAssignBadgeHook = ({ isOpen, handleToggle }) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [chooseBadges, setChooseBadges] = useState([]);
   const { id } = useParams();
+  console.log(form, "Form1");
+
+  useEffect(() => {
+    if (!isOpen) {
+      setForm([{ chooseTopBadge: [] }]);
+    }
+  }, [isOpen]);
 
   useEffect(() => {
     if (isOpen) {
@@ -52,14 +59,12 @@ const useAssignBadgeHook = ({ isOpen, handleToggle }) => {
       return;
     }
     setIsSubmitting(true);
-
     const badgs_id = form?.length > 0 && form?.map((f) => f.chooseTopBadge);
-
     serviceManufactureAssign({ user_id: id, badges_id: badgs_id }).then(
       (res) => {
         if (!res?.error) {
           handleToggle();
-          window.location.reload();
+          // window.location.reload();
         }
       }
     );
@@ -135,17 +140,7 @@ const useAssignBadgeHook = ({ isOpen, handleToggle }) => {
     [form]
   );
 
-  useEffect(() => {
-    if (!isOpen) {
-      handleReset();
-    }
-  }, [isOpen]);
-
-  const handleReset = useCallback(() => {
-    setForm([initialForm]);
-    setErrorData({});
-    setChooseBadges([]);
-  }, [form]);
+  const handleReset = useCallback(() => {}, []);
 
   return {
     form,
