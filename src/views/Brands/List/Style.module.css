@@ -38,6 +38,7 @@
 .subKycContainer .content {
   display: flex !important;
   flex-direction: column !important;
+  margin-top: -10px !important;
 }
 .content p {
   font-size: 14px !important;

@@ -17,6 +17,7 @@ const BrandView = ({ userProfile }) => {
                   <p>Pharmacy Brand</p>
 
                   <a href="#">View Authority Letter</a>
+                  <div className={styles.gaps1}></div>
                   <a href="#">View Trademark Certficate</a>
                 </div>
               </div>
@@ -60,6 +61,7 @@ const BrandView = ({ userProfile }) => {
                   <p>Health Logo</p>
 
                   <a href="#">View Authority Letter</a>
+                  <div className={styles.gaps1}></div>
                   <a href="#">View Trademark Certficate</a>
                 </div>
               </div>
@@ -103,6 +105,7 @@ const BrandView = ({ userProfile }) => {
                   <p>Brand Name</p>
 
                   <a href="#">View Authority Letter</a>
+                  <div className={styles.gaps1}></div>
                   <a href="#">View Trademark Certficate</a>
                 </div>
               </div>
