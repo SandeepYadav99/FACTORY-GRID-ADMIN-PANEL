@@ -19,8 +19,8 @@ class ReduxDatePicker extends Component {
     _handleOnChange(e, d) {
         const hours = e.getHours();
         const minutes = e.getMinutes();
-        console.log(e);
-        console.log(hours, minutes);
+      
+       
         this.props.onChange(e);
     }
 

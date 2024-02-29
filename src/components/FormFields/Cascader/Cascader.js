@@ -129,12 +129,7 @@ const Cascader = ({
       const width = e.currentTarget.offsetWidth;
       const height = e.currentTarget.offsetHeight;
       setPos([rec.left + window.scrollX, rec.top + height + window.scrollY]);
-      console.log(
-        rec.left + window.scrollX,
-        rec.top + window.scrollY,
-        width,
-        height
-      );
+    
       setIsOpen((e) => !e);
     },
     [setIsOpen, setPos]

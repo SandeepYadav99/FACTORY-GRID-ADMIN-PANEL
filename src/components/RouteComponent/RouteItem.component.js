@@ -41,12 +41,12 @@ class DescriptionChild extends React.Component {
     }
 
     _handleIsFeatured(e) {
-        // console.log()
+       
         this.props.changeData(this.props.index, {[e.target.name]: !this.props.data.is_featured});
     }
 
     _handleSelect = selected => {
-        console.log('Route Item', selected);
+    
         this.setState({isGeocoding: true});
         geocodeByAddress(selected)
             .then(res => getLatLng(res[0]))
@@ -67,12 +67,12 @@ class DescriptionChild extends React.Component {
             })
             .catch(error => {
                 this.setState({isGeocoding: false});
-                console.log('error', error); // eslint-disable-line no-console
+              
             });
     };
 
     _handleError = (status, clearSuggestions) => {
-        console.log('Error from Google Maps API', status); // eslint-disable-line no-console
+    
         this.setState({errorMessage: status}, () => {
             clearSuggestions();
         });

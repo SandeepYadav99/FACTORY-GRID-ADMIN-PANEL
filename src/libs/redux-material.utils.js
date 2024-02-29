@@ -256,7 +256,7 @@ export  class renderAutoComplete extends React.Component {
 
     render() {
         const {input, label, margin, meta: {touched, error}, dataObj, data, children, ...custom} = this.props;
-        console.log(input.value);
+    
         return (
             <div>
                 <Autocomplete

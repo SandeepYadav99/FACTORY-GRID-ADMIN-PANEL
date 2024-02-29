@@ -42,7 +42,7 @@ const BadgeListContainer = (props) => {
   } = useSelector((state) => state.badge);
 
   const renderFirstCell = useCallback((user) => {
-    console.log(user, "User ");
+  
     const tempEmailRender = user?.email ? (
       <span style={{ textTransform: "lowercase" }}>{user?.email}</span>
     ) : null;

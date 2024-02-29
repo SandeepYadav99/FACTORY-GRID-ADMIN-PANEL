@@ -35,7 +35,7 @@ class ResizablePanels extends React.Component {
     }
 
     startResize = (event, index) => {
-        console.log('startResizer', event.clientX);
+
         this.setState({
             isDragging: true,
             currentPanel: true,
@@ -44,7 +44,7 @@ class ResizablePanels extends React.Component {
     }
 
     stopResize = (e) => {
-        // console.log('stopResize', e);
+      
         if (this.state.isDragging) {
             this.setState(({panels, currentPanel, delta}) => ({
                 isDragging: false,
@@ -61,7 +61,7 @@ class ResizablePanels extends React.Component {
                 // this.stopResize();
             } else {
                 // const delta = event.clientX - this.state.initialPos;
-                //console.log('resizePanel', delta);
+      
                 this.setState({
                     delta: event.clientX
                 }, () => {

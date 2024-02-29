@@ -99,7 +99,7 @@ class DashboardSnackbar extends Component {
     }
 
     _handleError(t) {
-        console.log(t)
+       
         const data = (t);
         data.type = data.type ? data.type : 'none';
         this.setState({

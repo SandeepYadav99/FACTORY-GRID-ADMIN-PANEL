@@ -83,7 +83,7 @@ class GooglePlaceSignup extends React.Component {
     }
 
     _handleAddress(data) {
-        console.log(data);
+    
         const tempCity = this._extractCity(['administrative_area_level_2'], data);
         const tempCountry = this._extractCity(['country'], data);
 
@@ -91,12 +91,12 @@ class GooglePlaceSignup extends React.Component {
     }
 
     _handleSelect = selected => {
-        console.log('Route Item', selected);
+      
         const prop = this;
         this.setState({isGeocoding: true});
         geocodeByAddress(selected)
             .then(res => {
-                console.log('handleSelect', res);
+               
                 prop._handleAddress(res);
                 return getLatLng(res[0]);
             })
@@ -108,12 +108,12 @@ class GooglePlaceSignup extends React.Component {
             })
             .catch(error => {
                 this.setState({isGeocoding: false});
-                console.log('error', error); // eslint-disable-line no-console
+             
             });
     };
 
     _handleError = (status, clearSuggestions) => {
-        console.log('Error from Google Maps API', status); // eslint-disable-line no-console
+     
         this.setState({errorMessage: status}, () => {
             clearSuggestions();
         });
@@ -207,7 +207,7 @@ class GooglePlaceSignup extends React.Component {
 
 function loadScript(url) {
     var index = window.document.getElementsByTagName("script")[0];
-    console.log(index);
+
     var script = window.document.createElement("script");
     script.src = url
     script.async = true

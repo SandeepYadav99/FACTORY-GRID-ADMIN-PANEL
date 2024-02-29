@@ -82,7 +82,7 @@ class GoogleMapsUtils {
 
 
     getCityCountryFromAddress(address) {
-        console.log('address', address);
+     
         // const tempLocality = this._extractMapData(['sublocality_level_1', 'sublocality_level_2', 'sublocality_level_3', 'sublocality_level_4', 'sublocality_level_5', 'sublocality', 'locality'], data);
 
         const city = this._extractCity(['administrative_area_level_2'], [address]);

@@ -78,7 +78,7 @@ const headCells = [
 function EnhancedTableHead(props) {
     const {classes, onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort, columns} = props;
     const createSortHandler = (property) => event => {
-        console.log('createSortHandler', event, property);
+ 
         onRequestSort(event, property);
     };
 

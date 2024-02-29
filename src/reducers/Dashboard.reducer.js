@@ -22,7 +22,7 @@ export default function (state = JSON.parse(JSON.stringify(initialState)), actio
             return {...state, is_calling: true };
         }
         case DASHBOARD_DONE: {
-            console.log(action, "Action");
+          
         const dashboardData = {...action?.payload}
             return {
                 ...state,

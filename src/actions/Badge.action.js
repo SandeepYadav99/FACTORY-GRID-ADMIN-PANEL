@@ -144,7 +144,7 @@ export function actionSetPageBadgeRequests(page) {
             // this.props.fetchNextUsers(this.props.serverPage + 1, this.props.sorting_data.row, this.props.sorting_data.order, { query: this.props.query, query_data: this.props.query_data });
         }
 
-    console.log(currentPage, totalLength);
+   
     return {
         type: CHANGE_PAGE,
         payload: page,

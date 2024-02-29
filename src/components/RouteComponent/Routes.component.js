@@ -55,7 +55,7 @@ class RoutesList extends Component {
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        // console.log(this.state);
+   
         if (JSON.stringify(prevProps.data) != JSON.stringify(this.props.data)) {
             this._initializeData();
         }
@@ -67,7 +67,7 @@ class RoutesList extends Component {
 
     _initializeData () {
         const {data} = this.props;
-        console.log('RoutesDID',data);
+    
         if (data) {
             if (data.routes.length > 0) {
                 this.setState({
@@ -199,7 +199,7 @@ class RoutesList extends Component {
         });
         if (tempEndLoc && tempStartLoc) {
             // const waypoints = document.querySelectorAll('input[name="waypoint"]')
-            // console.log('waypoints', waypoints);
+        
             // waypoints.forEach(function (item) {
             //     if (item.value !== '') {
             //         locations.push({
@@ -220,7 +220,7 @@ class RoutesList extends Component {
             this.directionsService.route(request, function (response, status) {
                 if (status == google.maps.DirectionsStatus.OK) {
                     prop.directionsDisplay.setDirections(response);
-                    console.log('its dragged')
+                
                     //document.getElementById('Gresponse').innerHTML = JSON.stringify(response);
                     prop._createPolyline(response);
                 }
@@ -229,7 +229,7 @@ class RoutesList extends Component {
     };
 
     _createPolyline(directionResult) {
-        console.log(directionResult);
+      
 
         const google = window.google;
         this.routeLocations = [];
@@ -253,7 +253,7 @@ class RoutesList extends Component {
             }]
         });
         var legs = directionResult.routes[0].legs;
-        console.log(legs);
+      
         let mapDistance = 0;
         let mapDuration = 0;
         legs.forEach((val) => {
@@ -273,7 +273,7 @@ class RoutesList extends Component {
             distance: mapDistance
         })
         for (let i = 0; i < legs.length; i++) {
-            // console.log(legs[i].start_location.lat());
+        
             var steps = legs[i].steps;
             for (let j = 0; j < steps.length; j++) {
                 var nextSegment = steps[j].path;
@@ -299,7 +299,7 @@ class RoutesList extends Component {
 
 
         function createMarker(map, latlng, title) {
-            // console.log('LATLNG', latlng);
+          
             if (latlng) {
                 this.routeLocations.push([latlng.lat(), latlng.lng()]);
             }
@@ -327,7 +327,7 @@ class RoutesList extends Component {
     }
 
     _callCenter(data) {
-        console.log('Google map', data);
+     
         if (window.google && this.map) {
             var location = new window.google.maps.LatLng(data[0], data[1]);
             // this.map.setZoom(14);
@@ -467,7 +467,7 @@ class RoutesList extends Component {
 
 function loadScript(url) {
     var index = window.document.getElementsByTagName("script")[0];
-    console.log(index);
+
     var script = window.document.createElement("script")
     script.src = url
     script.async = true

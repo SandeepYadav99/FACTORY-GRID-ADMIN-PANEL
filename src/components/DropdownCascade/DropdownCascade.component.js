@@ -73,7 +73,7 @@ export default function App() {
                
                items={items}
                 onSelect={(value, selectedItems) => {
-                    console.log(value, selectedItems);
+              
                     setDropdownValue(value);
                }}
                 value={dropdownValue}

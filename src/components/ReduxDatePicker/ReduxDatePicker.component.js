@@ -21,7 +21,7 @@ class ReduxDatePicker extends Component {
     _handleOnChange(e, d) {
         // const tempDate  = new Date(e);
         // const formattedDate = tempDate.getDate() + "-" + (tempDate.getMonth() + 1) + "-" + tempDate.getFullYear();
-        // console.log(formattedDate);
+    
         this.props.onChange(e);
     }
 

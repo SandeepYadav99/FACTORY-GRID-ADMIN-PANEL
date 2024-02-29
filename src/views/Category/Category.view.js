@@ -93,7 +93,7 @@ const asyncValidate = (values, dispatch, props) => {
             } else {
                 const data = props.data;
                 serviceCategoryCheck({name: value, id: data ? data.id : null }).then((data) => {
-                    console.log(data);
+                  
                     lastValue = value;
                     if (!data.error) {
                         if (data.data.is_exists) {

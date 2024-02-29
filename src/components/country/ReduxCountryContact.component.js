@@ -16,13 +16,13 @@ class ReduxCountryContact extends Component {
     }
 
     _handleChange(phone) {
-        console.log('redux country contact', phone);
+       
         this.props.onChange(phone);
     }
 
     render() {
         const {value, error, label, country_code, input, helperText} = this.props;
-        console.log('contact props', this.props);
+      
         return (
             <div style={{
                 marginTop: '8px',

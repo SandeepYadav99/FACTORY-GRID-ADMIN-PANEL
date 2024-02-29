@@ -46,7 +46,7 @@ export function actionGetProfile() {
     return (dispatch) => {
         dispatch({ type: GET_PROFILE_INIT, payload: null });
         request.then((data) => {
-            console.log(data)
+          
             if (!data.error) {
                 dispatch({ type: SET_PROFILE, payload: data.data })
             }

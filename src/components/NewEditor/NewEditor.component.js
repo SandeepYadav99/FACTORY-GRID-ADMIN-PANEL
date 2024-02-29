@@ -3,10 +3,10 @@ import SunEditor from 'suneditor-react';
 import 'suneditor/dist/css/suneditor.min.css';
 
 const NewEditor = ({editorData,handleChangeEditor,type, value}) => {
-    // console.log(editorData);
+  
     const handleChange = (content) => {
-        // console.log(editorData);
-        handleChangeEditor(content);//Get Content Inside Editor
+      
+        handleChangeEditor(content);
     }
 
     if (!editorData) {

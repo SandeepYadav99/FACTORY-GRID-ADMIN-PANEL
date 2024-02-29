@@ -129,7 +129,7 @@ export default function SimplePopover({ type, title }) {
   };
 
   const isVerifiedTitle = title && title.includes("VERIFIED");
-  console.log(title, "Title ");
+
   return (
     <div onMouseLeave={handleMouseLeave}>
       <ButtonBase

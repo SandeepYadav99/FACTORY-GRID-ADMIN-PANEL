@@ -47,7 +47,7 @@ class GooglePlaceComponent extends Component {
     }
 
     callCenter(data) {
-        console.log('Google map', data);
+    
         if(window.google && this.map) {
             var location = new window.google.maps.LatLng(data[0], data[1]);
             // this.map.setZoom(14);
@@ -146,7 +146,7 @@ class GooglePlaceComponent extends Component {
             })
             .catch(error => {
                 this.setState({ isGeocoding: false });
-                console.log('error', error); // eslint-disable-line no-console
+           
             });
     };
 
@@ -159,7 +159,7 @@ class GooglePlaceComponent extends Component {
     };
 
     handleError = (status, clearSuggestions) => {
-        console.log('Error from Google Maps API', status); // eslint-disable-line no-console
+      
         this.setState({ errorMessage: status }, () => {
             clearSuggestions();
         });
@@ -284,7 +284,7 @@ class GooglePlaceComponent extends Component {
 
 function loadScript(url) {
     var index  = window.document.getElementsByTagName("script")[0];
-    console.log(index);
+
     var script = window.document.createElement("script")
     script.src = url
     script.async = true

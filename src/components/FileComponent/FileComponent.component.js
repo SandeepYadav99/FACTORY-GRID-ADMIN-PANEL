@@ -22,7 +22,7 @@ class File extends Component {
     let totalValid = 0;
     e.preventDefault();
     if (e.target.files[0]) {
-      console.log(e.target.files, "FILECOMPONENT");
+    
       const tempFiles = [];
       Object.keys(e.target.files).forEach((key) => {
         if (multiple && maxCount != 0 && maxCount <= tempTotal) {
@@ -41,7 +41,7 @@ class File extends Component {
             ? allowedArr.indexOf(sFileExtension) > -1
             : true)
         ) {
-          console.log(this.props);
+       
           tempFiles.push(tempFile);
           totalValid++;
         } else {
@@ -51,7 +51,7 @@ class File extends Component {
               this?.props?.max_size / (1024 * 1024)
             } MB`
           );
-          console.log("error");
+       
         }
         tempTotal++;
       });
@@ -73,7 +73,7 @@ class File extends Component {
 
   _getImageUrl(value) {
     const { default_image, user_image } = this.props;
-    // console.log('_getImageUrl', value);
+
     if (value) {
       return URL?.createObjectURL(value);
     } else if (default_image) {

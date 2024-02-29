@@ -66,7 +66,7 @@ class FilterComponent extends Component {
 
     detailhandleChange(i, event, index, val) {
 
-        console.log('detailhandleChange', i, event, index, val);
+      
         const value = this.state.filter;
         if ((value[i]).type == 'text') {
             (value[i]).value = event.target.value;
@@ -208,7 +208,7 @@ class FilterComponent extends Component {
         return null;
     }
     handleMenuClick(val) {
-        console.log('handleMenuClick',val);
+       
         const index = (this.state.selectedFilters.indexOf(val.name))
         const filter = this.state.filter;
         const selectedFilters = this.state.selectedFilters;

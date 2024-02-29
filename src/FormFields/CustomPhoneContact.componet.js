@@ -25,7 +25,7 @@ const CustomPhoneContactField = ({
   // );
   const handleChange = useCallback(
     (value, country, e, formattedValue) => {
-      console.log(value, country, e, formattedValue);
+
       const countryCodeRegex = /\+(\d+)/;
       const match = formattedValue.match(countryCodeRegex);
       const countryCode = match ? match[1] : null;
