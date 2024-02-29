@@ -8,19 +8,20 @@ import CompanyRepresentative from "./components/CompanyRepresentative/CompanyRep
 import { formatString } from "../../../../hooks/CommonFunction";
 import BankDetailPopup from "./components/BankDetail/BankDetailPopup/BankDetailPopup";
 
-const BusinessDetails = ({ id, userProfile ,  handleVerify,
+const BusinessDetails = ({
+  id,
+  userProfile,
+  handleVerify,
   handleUnVerify,
-  handleErrorVerify}) => {
-    const [isOpen, setIsOpen] = useState(false);
- 
-    const toggleIsOpen = useCallback(
-      (data) => {
-        setIsOpen((e) => !e);
-        // setExpireLetter(data?.id)
-      },
-      []
-    );
- 
+  handleErrorVerify,
+}) => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggleIsOpen = useCallback((data) => {
+    setIsOpen((e) => !e);
+    // setExpireLetter(data?.id)
+  }, []);
+
   const openGoogleMaps = useCallback((company) => {
     const url = `https://www.google.com/maps/place?q=${company?.company_lat},${company?.company_long}`;
 
@@ -166,13 +167,7 @@ const BusinessDetails = ({ id, userProfile ,  handleVerify,
             <ImageGalleryComponent
               title={"GALLERY"}
               image_type={"GALLERY"}
-              // images={
-              //   (
-              //     userProfile?.galleries.map(
-              //       (element) => element.gallery_image
-              //     )) ||
-              //   []
-              // }
+              key={userProfile?.galleries?.length > 0}
               thumbnail={0}
               userId={id}
               imageList={userProfile?.galleries}
@@ -185,7 +180,7 @@ const BusinessDetails = ({ id, userProfile ,  handleVerify,
             <ImageGalleryComponent
               title={"CERTIFICATES"}
               image_type={"CERTIFICATES"}
-              // images={certificateImages || []}
+              key={userProfile?.certificate?.length > 0}
               thumbnail={0}
               userId={id}
               imageList={userProfile?.certificate}
@@ -197,14 +192,17 @@ const BusinessDetails = ({ id, userProfile ,  handleVerify,
               <div className={styles.headings}>Banking Details</div>
               <ButtonBase className={styles.coord} onClick={toggleIsOpen}>
                 {/* <a href="#" > */}
-                  Edit
+                Edit
                 {/* </a> */}
               </ButtonBase>
             </div>
             {userProfile?.bankdetail?.benificiery_name ? (
-              <BankDetail bankdetail={userProfile?.bankdetail}  handleVerify={handleVerify}
-              handleUnVerify={handleUnVerify}
-              handleErrorVerify={handleErrorVerify}/>
+              <BankDetail
+                bankdetail={userProfile?.bankdetail}
+                handleVerify={handleVerify}
+                handleUnVerify={handleUnVerify}
+                handleErrorVerify={handleErrorVerify}
+              />
             ) : (
               <div style={{ textAlign: "center" }}>Not Available</div>
             )}
