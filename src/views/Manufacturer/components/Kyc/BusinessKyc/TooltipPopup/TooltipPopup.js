@@ -48,9 +48,9 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(2),
     flexDirection: "column",
   },
-  mainText:{
-    fontSize:"0.9rem"
-  }
+  mainText: {
+    fontSize: "0.9rem",
+  },
 }));
 
 export default function TooltipPopup({ type, title, id }) {
@@ -79,6 +79,8 @@ export default function TooltipPopup({ type, title, id }) {
       if (!res.error) {
         SnackbarUtils.success("Verified Succesfully");
         window.location.reload();
+      } else {
+        SnackbarUtils.error("Somthing went worng!");
       }
     });
   };
@@ -91,6 +93,8 @@ export default function TooltipPopup({ type, title, id }) {
       if (!res.error) {
         SnackbarUtils.success("Verified Succesfully");
         window.location.reload();
+      } else {
+        SnackbarUtils.error("Somthing went worng!");
       }
     });
   };
@@ -103,6 +107,8 @@ export default function TooltipPopup({ type, title, id }) {
       if (!res.error) {
         SnackbarUtils.success("Verified Succesfully");
         window.location.reload();
+      } else {
+        SnackbarUtils.error("Somthing went worng!");
       }
     });
   };
