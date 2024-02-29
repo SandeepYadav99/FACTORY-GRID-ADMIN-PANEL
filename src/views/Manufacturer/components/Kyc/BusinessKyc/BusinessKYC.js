@@ -23,8 +23,8 @@ const BusinessKYC = ({ userProfile, toggleIsOpenDialog, isOpenDialog }) => {
                   {userProfile?.gst_number}{" "}
                   <div style={{ marginLeft: "10px" }}>
                     <TooltipPopup
-                      title={userProfile?.cin_number_status}
-                      type={"cin_number_status"}
+                      title={userProfile?.gst_number_status}
+                      type={"gst_number_status"}
                       id={userProfile?.id}
                     ></TooltipPopup>
                   </div>
