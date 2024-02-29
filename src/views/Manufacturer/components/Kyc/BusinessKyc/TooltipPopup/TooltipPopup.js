@@ -4,10 +4,11 @@ import Popover from "@material-ui/core/Popover";
 
 import { ButtonBase } from "@material-ui/core";
 
-import { serviceResetUserStatusUpdate } from "../../../services/CustomersRequest.service";
-import renderImagebyType from "../../../libs/Helper";
 import { useParams } from "react-router-dom";
-import SnackbarUtils from "../../../libs/SnackbarUtils";
+
+import { serviceResetKycStatusUpdate } from "../../../../../../services/CustomersRequest.service";
+import SnackbarUtils from "../../../../../../libs/SnackbarUtils";
+import renderImagebyType from "../../../../../../libs/Helper";
 
 const useStyles = makeStyles((theme) => ({
   typography: {
@@ -45,17 +46,17 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     justifyContent: "spaceBetween",
     padding: theme.spacing(2),
-    flexDirection:"column"
+    flexDirection: "column",
   },
   mainText:{
     fontSize:"0.9rem"
   }
 }));
 
-export default function SimplePopover({ type, title }) {
+export default function TooltipPopup({ type, title, id }) {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
-  const { id } = useParams();
+  // const { id } = useParams();
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -66,29 +67,13 @@ export default function SimplePopover({ type, title }) {
     setAnchorEl(null);
     // }, 1000);
   };
-  // useEffect(() => {
-  //   if (isClose) {
-  //     setAnchorEl(null);
-  //   }
-  // }, [isClose]);
 
   const open = Boolean(anchorEl);
   const ids = open ? "simple-popover" : undefined;
 
-  // const handleResend = () => {
-  //   serviceResetUserEmail({
-  //     user_id: userProfile?._id,
-  //     email: userProfile?.email,
-  //   }).then((res) => {
-  //     if (!res.error) {
-  //       SnackbarUtils.success("Resend Successfully");
-  //     }
-  //   });
-  // };
-
   const handleVerify = () => {
-    serviceResetUserStatusUpdate({
-      user_id: id,
+    serviceResetKycStatusUpdate({
+      id: id,
       [type]: "VERIFIED",
     }).then((res) => {
       if (!res.error) {
@@ -99,8 +84,8 @@ export default function SimplePopover({ type, title }) {
   };
 
   const handleUnVerify = () => {
-    serviceResetUserStatusUpdate({
-      user_id: id,
+    serviceResetKycStatusUpdate({
+      id: id,
       [type]: "ALERT",
     }).then((res) => {
       if (!res.error) {
@@ -111,8 +96,8 @@ export default function SimplePopover({ type, title }) {
   };
 
   const handleErrorVerify = () => {
-    serviceResetUserStatusUpdate({
-      user_id: id,
+    serviceResetKycStatusUpdate({
+      id: id,
       [type]: "ERROR",
     }).then((res) => {
       if (!res.error) {

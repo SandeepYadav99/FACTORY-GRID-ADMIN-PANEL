@@ -34,3 +34,6 @@ export async function serviceResetUserEmail(params) { // user/update/bank/status
 export async function serviceResetUserStatusUpdate(params) { // user/update/bank/status
     return await postRequest('user/update/bank/status', params);
 }
+export async function serviceResetKycStatusUpdate(params) { // user/update/bank/status
+    return await postRequest('user/update/kyc/status', params);
+}
