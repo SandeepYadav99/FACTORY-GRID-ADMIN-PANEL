@@ -5,12 +5,12 @@ import { useLocation } from "react-router-dom";
 import SnackbarUtils from "../libs/SnackbarUtils";
 
 const useCustomerProfileHook = () => {
-  const [userProfile, setUserProfile] = useState([]);
   const { id } = useParams();
   const location = useLocation();
   const [isLoading, setIsLoading] = useState(true);
   const [value, setValue] = useState(0);
   const [isOpenDialog, setIsOpenDialog] = useState(false);
+  const [userProfile, setUserProfile] = useState([]);
 
   useEffect(() => {
     setIsLoading(true);

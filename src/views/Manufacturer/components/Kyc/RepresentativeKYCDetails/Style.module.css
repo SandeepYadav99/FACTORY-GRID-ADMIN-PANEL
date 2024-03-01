@@ -10,24 +10,22 @@
   font-size: 0.7rem;
 }
 
-.headerTitle{
+.headerTitle {
   font-size: 15px;
 }
-.kycContainer{
-  display: flex;
-  justify-content: space-between;
+.kycContainer {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
   width: 90%;
-  flex-wrap: wrap;
-
-  
- 
+  /* flex-wrap: wrap; */
 }
-.kyc2{
-  display: flex;
-  justify-content: space-between;
-  width: 85%;
-  flex-wrap: wrap;
-
+.sub_kycContainer {
+  display: flex !important;
+}
+.kyc2 {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  width: 90%;
 }
 .title {
   color: #000000;
@@ -35,6 +33,6 @@
   font-size: 13px;
   margin-bottom: 2px;
 }
-.gaps{
+.gaps {
   margin-bottom: 1.3rem;
 }

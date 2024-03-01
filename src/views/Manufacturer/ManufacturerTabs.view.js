@@ -253,7 +253,11 @@ const ManufacturerTabs = ({ classes, theme }) => {
         </TabPanel>
         <TabPanel value={value} index={2} dir={theme.direction}></TabPanel>
         <TabPanel value={value} index={3} dir={theme.direction}>
-          <KYC userProfile={userProfile} />
+        {isLoading ? (
+            <WaitingComponent />
+          ) : (
+          <KYC userProfile={userProfile} isLoading={isLoading} value={value}/>
+          )}
         </TabPanel>
         <TabPanel value={value} index={4} dir={theme.direction}>
           <Badges userProfile={userProfile} />

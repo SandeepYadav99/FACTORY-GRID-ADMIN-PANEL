@@ -20,6 +20,9 @@
     flex-wrap: wrap;
    
   }
+  .sub_kycContainer{
+    display: flex !important;
+  }
   .title {
     color: #000000;
     font-weight: bold;

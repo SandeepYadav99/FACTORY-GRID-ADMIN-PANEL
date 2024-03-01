@@ -1,12 +1,9 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Popover from "@material-ui/core/Popover";
-
 import { ButtonBase } from "@material-ui/core";
-
 import { useParams } from "react-router-dom";
-
-import { serviceGetCustomersProfile, serviceResetKycStatusUpdate } from "../../../../../../services/CustomersRequest.service";
+import {  serviceResetKycStatusUpdate } from "../../../../../../services/CustomersRequest.service";
 import SnackbarUtils from "../../../../../../libs/SnackbarUtils";
 import renderImagebyType from "../../../../../../libs/Helper";
 
@@ -53,7 +50,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function TooltipPopup({ type, title, id , isLoading}) {
+export default function RepresentativeTooltip({ type, title, id , isLoading}) {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
    const { id:pId } = useParams();

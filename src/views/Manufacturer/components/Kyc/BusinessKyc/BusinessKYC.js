@@ -1,10 +1,14 @@
 import React from "react";
 import styles from "./Style.module.css";
-import { VerifiedUser } from "@material-ui/icons";
-import Review from "../../../../../assets/img/sent_blue.svg";
+
 import TooltipPopup from "./TooltipPopup/TooltipPopup";
-const BusinessKYC = ({ userProfile, toggleIsOpenDialog, isOpenDialog }) => {
-  console.log(userProfile, "KYC");
+const BusinessKYC = ({
+  userProfile,
+  toggleIsOpenDialog,
+  isOpenDialog,
+  isLoading,
+  value,
+}) => {
   return (
     <div>
       <div className={styles.plainPaper}>
@@ -18,37 +22,36 @@ const BusinessKYC = ({ userProfile, toggleIsOpenDialog, isOpenDialog }) => {
           <div className={styles.kycContainer}>
             <div>
               <div className={styles.title}>GST No.</div>
-              <div>
-                <div>
-                  {userProfile?.gst_number}{" "}
-                  <div style={{ marginLeft: "10px" }}>
-                    <TooltipPopup
-                      title={userProfile?.gst_number_status}
-                      type={"gst_number_status"}
-                      id={userProfile?.id}
-                    ></TooltipPopup>
-                  </div>
-                  {/* {userProfile?.cin_number_status === "VERIFIED" ? (
+
+              <div className={styles.sub_kycContainer}>
+                <div>{userProfile?.gst_number} </div>
+                <div style={{ marginLeft: "10px" }}>
+                  <TooltipPopup
+                    title={userProfile?.gst_number_status}
+                    type={"gst_number_status"}
+                    id={userProfile?.id}
+                    isLoading={isLoading}
+                  ></TooltipPopup>
+                </div>
+                {/* {userProfile?.cin_number_status === "VERIFIED" ? (
                     <VerifiedUser fontSize="small" style={{ color: "green" }} />
                   ) : (
                    <img src={Review} height={15}/>
                   )} */}
-                </div>
               </div>
             </div>
 
             <div>
               <div className={styles.title}>PAN No.</div>
-              <div>
-                <div>
-                  {userProfile?.pan_number}{" "}
-                  <div style={{ marginLeft: "10px" }}>
-                    <TooltipPopup
-                      title={userProfile?.gst_number_status}
-                      type={"gst_number_status"}
-                      id={userProfile?.id}
-                    ></TooltipPopup>
-                  </div>
+              <div className={styles.sub_kycContainer}>
+                <div>{userProfile?.pan_number} </div>
+                <div style={{ marginLeft: "10px" }}>
+                  <TooltipPopup
+                    title={userProfile?.gst_number_status}
+                    type={"gst_number_status"}
+                    id={userProfile?.id}
+                    isLoading={isLoading}
+                  ></TooltipPopup>
                 </div>
               </div>
             </div>
@@ -68,17 +71,15 @@ const BusinessKYC = ({ userProfile, toggleIsOpenDialog, isOpenDialog }) => {
 
             <div>
               <div className={styles.title}>MSME No.</div>
-              <div>
-                <div>
-                  {userProfile?.msme_number || "N/A"}{" "}
-                  <div style={{ marginLeft: "10px" }}>
-                    <TooltipPopup
-                      title={userProfile?.pan_file_status}
-                      type={"pan_file_status"}
-                      id={userProfile?.id}
-                    ></TooltipPopup>
-                  </div>
-               
+              <div className={styles.sub_kycContainer}>
+                <div>{userProfile?.msme_number || "N/A"} </div>
+                <div style={{ marginLeft: "10px" }}>
+                  <TooltipPopup
+                    title={userProfile?.pan_file_status}
+                    type={"pan_file_status"}
+                    id={userProfile?.id}
+                    isLoading={isLoading}
+                  ></TooltipPopup>
                 </div>
               </div>
             </div>
@@ -87,24 +88,20 @@ const BusinessKYC = ({ userProfile, toggleIsOpenDialog, isOpenDialog }) => {
           <div>
             <div className={styles.title}>CIN No.</div>
             <div>
-              <div>
-                <div>
-                  {userProfile?.cin_number}{" "}
-                  <div style={{ marginLeft: "10px" }}>
-                    <TooltipPopup
-                      title={userProfile?.cin_number_status}
-                      type={"cin_number_status"}
-                      id={userProfile?.id}
-                    ></TooltipPopup>
-                  </div>
-                
+              <div className={styles.sub_kycContainer}>
+                <div>{userProfile?.cin_number} </div>
+                <div style={{ marginLeft: "10px" }}>
+                  <TooltipPopup
+                    title={userProfile?.cin_number_status}
+                    type={"cin_number_status"}
+                    id={userProfile?.id}
+                  ></TooltipPopup>
                 </div>
               </div>
             </div>
           </div>
         </div>
         <div className={styles.gaps} />
-     
       </div>
     </div>
   );

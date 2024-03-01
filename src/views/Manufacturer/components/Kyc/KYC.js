@@ -5,7 +5,8 @@ import IndustrySpecific from "./IndustrySpecific/IndustrySpecific";
 import RepresentativeKYCDetail from "./RepresentativeKYCDetails/RepresentativeKYCDetail";
 
 
-const KYC = ({userProfile}) => {
+const KYC = ({userProfile, isLoading, value}) => {
+
   const [isOpenDialog, setIsOpenDialog] = useState(false);
   const toggleIsOpenDialog = useCallback(
     (data) => {
@@ -14,12 +15,13 @@ const KYC = ({userProfile}) => {
     },
     []
   );
+
   return (
-    <div>
-      <BusinessKYC userProfile={userProfile?.kyc} isOpenDialog={isOpenDialog} toggleIsOpenDialog={toggleIsOpenDialog}/>
+    <>
+      <BusinessKYC userProfile={userProfile?.kyc} isOpenDialog={isOpenDialog} value={value} toggleIsOpenDialog={toggleIsOpenDialog} isLoading={isLoading}/>
       <RepresentativeKYCDetail userProfile={userProfile?.representativekycs}/>
       <IndustrySpecific/>
-    </div>
+    </>
   );
 };
 
