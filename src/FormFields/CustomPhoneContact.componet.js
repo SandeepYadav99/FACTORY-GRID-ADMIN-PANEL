@@ -71,7 +71,7 @@ const CustomPhoneContactField = ({
         isValid={isValid}
         {...rest}
       />
-      {errorText ? (
+     {errorText ? (
         <span style={{ color: "red", textAlign: "right", fontSize: "12px" }}>
           {errorText}
         </span>

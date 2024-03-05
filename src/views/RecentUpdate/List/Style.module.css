@@ -1,0 +1,113 @@
+.plainPaper {
+  border-radius: 10px;
+  padding: 0.9rem;
+  margin-bottom: 20px;
+  background-color: #fff;
+  box-shadow: 0px 20px 80px #00000011;
+}
+
+.newContainer {
+  font-size: 0.7rem;
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  grid-gap: 10px !important;
+  border: 1px solid #ededed !important;
+  padding: 10px !important;
+  border-radius: 4px !important;
+}
+@media screen and (max-width: 1075px) {
+  .newContainer {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
+.headerTitle {
+  font-size: 15px;
+}
+.footerSub {
+  display: flex !important;
+  justify-content: space-between !important;
+}
+.container {
+  /* border: 1px solid #ededed !important;
+  
+    max-width: 95% !important;
+    padding: 10px !important; */
+}
+.kycContainer {
+  display: flex;
+  justify-content: space-between;
+}
+.subKycContainer {
+}
+.subKycContainer img {
+  float: left !important;
+  margin-right: 5px !important;
+}
+.subKycContainer .content {
+  display: flex !important;
+  flex-direction: column !important;
+  margin-top: -10px !important;
+  width: 80% !important;
+  column-gap: 1px !important;
+}
+.content .contentTitle {
+  font-size: 14px !important;
+  font-weight: bold !important;
+}
+.links {
+  margin-top: 10px !important;
+}
+.links a {
+  color: #5b4aff !important;
+  font-size: 0.9rem !important;
+  text-decoration: none !important;
+  background-color: #edf9fe !important;
+  padding: 5px !important;
+  border-radius: 4px !important;
+}
+.contentTitle1 {
+  font-size: 14px !important;
+  margin-top: 5px !important;
+}
+.contentGap {
+  gap: 10px !important;
+}
+.footer_time {
+}
+.footer_content {
+  text-align: right !important;
+}
+.footer_content .addon_footer {
+  float: left !important;
+}
+.addon_footer_text {
+  margin-top: 5px !important;
+  margin-left: 6px !important;
+}
+.title {
+  color: #000000;
+  font-weight: bold;
+  font-size: 13px;
+  margin-bottom: 2px;
+}
+.gaps {
+  margin-bottom: 1.3rem;
+}
+.gaps1 {
+  margin-bottom: 5px !important;
+}
+.footer_date {
+  font-weight: bold !important;
+  font-size: 13px !important;
+}
+.footer_right {
+  margin-left: 20px !important;
+}
+.action_button {
+  color: #0f49a0 !important;
+  text-decoration: underline !important;
+  margin-top: -10px !important;
+}
+.action_verified {
+  /* background-color: ; */
+}

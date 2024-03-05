@@ -13,7 +13,7 @@ import FormatQuoteIcon from "@material-ui/icons/FormatQuote";
 import CreditCardIcon from "@material-ui/icons/CreditCard";
 import ShoppingBasketIcon from "@material-ui/icons/ShoppingBasket";
 import { Button, ButtonBase } from "@material-ui/core";
-import { BrandingWatermark, Report } from "@material-ui/icons";
+import { Assessment, AssessmentOutlined, BrandingWatermark, Report, TextsmsTwoTone } from "@material-ui/icons";
 import MuiStyle from "../../libs/MuiStyle";
 import CustomerProfile from "./components/Profile/CustomerProfile.view";
 import BusinessDetails from "./components/Business/BusinessDetails.view";
@@ -25,6 +25,7 @@ import history from "../../libs/history.utils";
 import ArrowBackIosIcon from "@material-ui/icons/ArrowBackIos";
 import Badges from "./components/Badges/Badges";
 import BrandView from "../Brands/List/BrandView";
+import RecentUpdate from "../RecentUpdate/List/RecentUpdate";
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -223,6 +224,12 @@ const ManufacturerTabs = ({ classes, theme }) => {
             label="Brands"
             {...a11yProps(7)}
           />
+          <Tab
+            className={"iconTabs"}
+            icon=<AssessmentOutlined fontSize={"small"} />
+            label="RECENT UPDATES"
+            {...a11yProps(8)}
+          />
         </Tabs>
       </AppBar>
 
@@ -264,6 +271,9 @@ const ManufacturerTabs = ({ classes, theme }) => {
         </TabPanel>
         <TabPanel value={value} index={7} dir={theme.direction}>
           <BrandView userProfile={[]} />
+        </TabPanel>
+        <TabPanel value={value} index={8} dir={theme.direction}>
+          <RecentUpdate userProfile={[]} />
         </TabPanel>
       </div>
       <SuspendPopup
