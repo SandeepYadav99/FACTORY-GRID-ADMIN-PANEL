@@ -1,16 +1,23 @@
 import React from "react";
 import styles from "./Style.module.css";
 import {
-  AccessAlarm,
+
   CachedOutlined,
-  Delete,
-  VerifiedUser,
-  Watch,
+
 } from "@material-ui/icons";
 import Review from "../../../assets/img/sent_blue.svg";
 import { ButtonBase } from "@material-ui/core";
 import StatusPill from "../../../FormFields/Status/StatusPill.component";
-const RecentUpdate = ({ userProfile }) => {
+import StatusPopUp from "./Components/StatusPopUp";
+import useRecentUpdateHook from "./RecentUpdateHook";
+const RecentUpdate = ({ isOpen, handleToggle, formValue }) => {
+  const {
+    
+    toggleRejectDialog,
+    isRejectPopUp,
+
+  } = useRecentUpdateHook({ isOpen, handleToggle, formValue });
+
   return (
     <div>
       <div className={styles.plainPaper}>
@@ -46,19 +53,17 @@ const RecentUpdate = ({ userProfile }) => {
               <div>
                 <StatusPill status={"VISIBLE"} style={{ color: "#20C997" }} />
                 <div className={styles.gaps}></div>
-                <div>
-                  <span className={styles.footer_date}>09-01-2024</span>
-                </div>
+                <span className={styles.footer_date}>09-01-2024</span>
+                
               </div>
             </div>
 
             <div className={styles.footer_content}>
-              <ButtonBase className={styles.action_button} onClick={() => {}}>
+              <ButtonBase className={styles.action_button} onClick={() => toggleRejectDialog()}>
                 <CachedOutlined fontSize="small" /> Update Status
               </ButtonBase>
             </div>
           </div>
-          
         </div>
         <div className={styles.gaps} />
         <div className={styles.newContainer}>
@@ -100,16 +105,18 @@ const RecentUpdate = ({ userProfile }) => {
             </div>
 
             <div className={styles.footer_content}>
-              <ButtonBase className={styles.action_button} onClick={() => {}}>
+              <ButtonBase className={styles.action_button} onClick={() => toggleRejectDialog()}>
                 <CachedOutlined fontSize="small" /> Update Status
               </ButtonBase>
             </div>
           </div>
-          
         </div>
-       
       </div>
-      
+      <StatusPopUp
+        // handleConfirm={handleRejectApi}
+        handleDialog={toggleRejectDialog}
+        isOpen={isRejectPopUp}
+      />
     </div>
   );
 };
