@@ -17,9 +17,8 @@ import InfoIcon from "@material-ui/icons/Info";
 
 import { makeStyles } from "@material-ui/styles";
 import useTopManufactureHook from "./TopManufactureHook";
-import CustomSelectField from "../../FormFields/SelectField/SelectField.component";
-import CustomCheckbox from "../../components/FormFields/CustomCheckbox";
-import CustomTextField from "../../FormFields/TextField.component";
+import CustomCheckbox from "../../../components/FormFields/CustomCheckbox";
+import CustomTextField from "../../../FormFields/TextField.component";
 
 const useStyles = makeStyles((theme) => ({
   iconBtnError: {

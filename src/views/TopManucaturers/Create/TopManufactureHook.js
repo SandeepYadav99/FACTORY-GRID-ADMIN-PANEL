@@ -6,15 +6,14 @@ import {
   serviceBadgeDetail,
   serviceBadgeIndustry,
   serviceBadgeUpdate,
-} from "../../services/Badge.service";
-import SnackbarUtils from "../../libs/SnackbarUtils";
+} from "../../../services/Badge.service";
+import SnackbarUtils from "../../../libs/SnackbarUtils";
 import { useDispatch } from "react-redux";
-import { actionFetchBadge } from "../../actions/Badge.action";
 import {
   serviceCreateTopManufacture,
   serviceTopManufactureSearch,
   serviceUpdateTopManufacture,
-} from "../../services/TopManufacture.service";
+} from "../../../services/TopManufacture.service";
 
 const initialForm = {
   industry: "",
