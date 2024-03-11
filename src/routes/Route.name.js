@@ -31,4 +31,5 @@ export default {
   HUB_MASTERS: "/hub/master",
   TASK_DETAIL: "/task/detail/",
   SERVICE_DETAIL: "/service/detail/",
+  TOP_MANUFACTURES:"/top/manufacture"
 };

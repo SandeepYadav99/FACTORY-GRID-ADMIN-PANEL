@@ -42,6 +42,7 @@ import RouteName from "./Route.name";
 import TaskDetailView from "../views/Profile/TaskDetail/TaskDetailView";
 import ServiceListContainer from "../views/Service/List/ServiceListContainer";
 import ServiceDetailView from "../views/Service/Detail/ServiceDetailView";
+import TopManufacatures from "../TopManucaturers/List/TopManufacatures";
 
 const dashboardRoutes = [
   {
@@ -357,6 +358,16 @@ const dashboardRoutes = [
     icon: SupervisedUserCircle,
     component: ServiceDetailView ,
     is_sidebar: false,
+    is_protect: true,
+    should_regex: false,
+  },
+  {
+    path: RouteName.TOP_MANUFACTURES,
+    sidebarName: "Top Manucaturers",
+    navbarName: "Top Manucaturers",
+    icon: SupervisedUserCircle,
+    component: TopManufacatures ,
+    is_sidebar: true,
     is_protect: true,
     should_regex: false,
   }
