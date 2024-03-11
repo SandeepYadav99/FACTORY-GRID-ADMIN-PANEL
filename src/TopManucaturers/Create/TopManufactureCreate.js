@@ -46,8 +46,9 @@ const TopManufactureCreate = ({
     logos,
     data,
     handleDelete,
-    listData,
+    listIndustryData,
     isSubmitting,
+    businessName
   } = useTopManufactureHook({ handleToggleSidePannel, isSidePanel, empId });
   const classes = useStyles();
 
@@ -73,7 +74,7 @@ const TopManufactureCreate = ({
       </div>
 
       <div>
-        <div className={"formFlex"}>
+        {/* <div className={"formFlex"}>
           <div className={"formGroup"}>
             <CustomSelectField
               isError={errorData?.industry}
@@ -87,42 +88,54 @@ const TopManufactureCreate = ({
               <MenuItem value={"FOOTWEAR"}>{"Footwear"}</MenuItem>
             </CustomSelectField>
           </div>
-        </div>
+        </div> */}
         <div className={"formFlex"}>
           <div className={"formGroup"}>
             <Autocomplete
+              multiple
               id="tags-outlined"
               onChange={(e, value) => {
-                changeTextData(value, "assigned_to");
+                changeTextData(value, "industry");
               }}
-              value={form.assigned_to || fetchedAssignedUser || []}
-              options={[]} // filteredAssignedTo ||
-              defaultValue={form?.assigned_to || []}
-              getOptionLabel={(option) => `${option?.name} `}
-              renderOption={(option) => (
-                <div style={{ display: "flex", alignItems: "center" }}>
-                  <div>{` (${option?.email})`}</div>
-                </div>
-              )}
+            
+              value={form.industry || []}
+              options={listIndustryData || []}
+              getOptionLabel={(option) => option.name}
+              defaultValue={form.industry || []}
+              //  getOptionSelected={(option, value) => option.id === value.id}
               renderInput={(params) => (
                 <TextField
                   {...params}
                   variant="outlined"
-                  label="Business Name"
-                  error={errorData?.assigned_to}
-                  InputProps={{
-                    ...params.InputProps,
-                    endAdornment: (
-                      <>
-                        <Search
-                          style={{ marginRight: -20, cursor: "pointer" }}
-                        />
-                      </>
-                    ),
-                  }}
+                  label="Select Industry"
+                  error={errorData?.industry}
                 />
               )}
-              disableClearable
+            />
+          </div>
+        </div>
+        <div className={"formFlex"}>
+          <div className={"formGroup"}>
+            <Autocomplete
+              multiple
+              id="tags-outlined"
+              onChange={(e, value) => {
+                changeTextData(value, "business_name");
+              }}
+            
+              value={form?.business_name || []}
+              options={businessName || []}
+              getOptionLabel={(option) => option?.company_name}
+              defaultValue={form?.business_name || []}
+              //  getOptionSelected={(option, value) => option.id === value.id}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  variant="outlined"
+                  label="Associated Industries"
+                  error={errorData?.business_name}
+                />
+              )}
             />
           </div>
         </div>

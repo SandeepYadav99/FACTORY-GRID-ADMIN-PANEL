@@ -10,10 +10,11 @@ import {
 import SnackbarUtils from "../../libs/SnackbarUtils";
 import { useDispatch } from "react-redux";
 import { actionFetchBadge } from "../../actions/Badge.action";
+import { serviceTopManufactureSearch } from "../../services/TopManufacture.service";
 
 const initialForm = {
-  industry: "",
-  business_name:"",
+  industry: [],
+  business_name:[],
   features_on:false,
   features_on_industry:false,
   priority:"",
@@ -31,6 +32,8 @@ const useTopManufactureHook = ({ handleToggleSidePannel, isSidePanel, empId }) =
   const [logos, setLogos] = useState(null);
   const [selectedValues, setSelectedValues] = useState("");
   const [listData, setListData] = useState(null);
+  const [businessName, setBusinessName]=useState(null);
+  const [listIndustryData, setListIndustryData]=useState(null)
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -41,6 +44,22 @@ const useTopManufactureHook = ({ handleToggleSidePannel, isSidePanel, empId }) =
     });
   }, []);
 
+  useEffect(() => {
+    serviceTopManufactureSearch({ name: form?.business_name ? form?.business_name  : "flipkart"}).then((res) => {
+      if (!res.error) {
+        setBusinessName(res.data);
+      }
+    });
+  }, []);
+
+  useEffect(() => {
+    serviceBadgeIndustry({ id: empId }).then((res) => {
+      if (!res.error) {
+        setListIndustryData(res.data);
+      }
+    });
+  }, []);
+console.log(businessName, "Name")
   useEffect(() => {
     if (empId) {
       serviceBadgeDetail({ id: empId }).then((res) => {
@@ -193,6 +212,8 @@ const useTopManufactureHook = ({ handleToggleSidePannel, isSidePanel, empId }) =
     setShowPasswordCurrent,
     logos,
     selectedValues,
+    businessName,
+    listIndustryData
   };
 };
 
