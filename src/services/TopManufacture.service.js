@@ -1,23 +1,22 @@
 import {getRequest, postRequest} from '../libs/AxiosService.util';
 
-export async function serviceCreateType(params) {
-    return await postRequest('type/create', params);
+export async function serviceCreateTopManufacture(params) {
+    return await postRequest('top/manufacture/create', params);
 }
 
-export async function serviceUpdateType(params) {
-    return await postRequest('type/update', params);
+export async function serviceUpdateTopManufacture(params) {
+    return await postRequest('top/manufacture/update', params);
 }
 
-export async function serviceDeleteType(params) {
-    return await postRequest('type/delete', params);
+export async function serviceDetailTopManufacture(params) {
+    return await postRequest('top/manufacture/detail', params);
+}
+export async function serviceDeleteTopManufacture(params) {
+    return await postRequest('top/manufacture/delete', params);
 }
 
-export async function serviceGetType (params) {
-    return await postRequest('type', params);
-}
-
-export async function serviceGetTypeList (params) {
-    return await getRequest('types', params);
+export async function serviceGetTopManufacture (params) {
+    return await postRequest('top/manufacture', params);
 }
 
 export async function serviceTopManufactureSearch (params) {

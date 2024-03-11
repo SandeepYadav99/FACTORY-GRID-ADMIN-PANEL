@@ -10,10 +10,18 @@ import DataTables from "../../Datatables/Datatable.table";
 import Constants from "../../config/constants";
 import FilterComponent from "../../components/Filter/Filter.component";
 
-import { AccountBox, AccountCircle, Add, Create, Delete, Info } from "@material-ui/icons";
+import {
+  AccountBox,
+  AccountCircle,
+  Add,
+  Create,
+  Delete,
+  Info,
+} from "@material-ui/icons";
 import useTopManufacatureHook from "./TopManufacatureHook";
 import StatusPill from "../../components/Status/StatusPill.component";
 import TopManufactureCreate from "../Create/TopManufactureCreate";
+
 
 const TopManufacatures = (props) => {
   const {
@@ -39,21 +47,21 @@ const TopManufacatures = (props) => {
     all: allData,
     currentPage,
     is_fetching: isFetching,
-  } = useSelector((state) => state.badge);
+  } = useSelector((state) => state.topManufacture);
 
   const renderFirstCell = useCallback((user) => {
     const tempEmailRender = user?.email ? (
-      <a style={{ textTransform: "lowercase",  }}>{user?.email}</a>
+      <a style={{ textTransform: "lowercase" }}>{user?.email}</a>
     ) : null;
 
     return (
       <div className={styles.firstCellFlex}>
         <div>
-          <img src={user?.logo} alt="" />
+          <img src={user?.business?.company_logo} alt="" />
         </div>
         <div className={classNames(styles.firstCellInfo, "openSans")}>
           <p className={styles.firstCellName}>
-            <a href="" >{`${user?.name}`}</a>
+            <a href="">{`${user?.business?.company_name}`}</a>
           </p>{" "}
           <br />
           {tempEmailRender}
@@ -101,28 +109,34 @@ const TopManufacatures = (props) => {
         key: "Account_Manager",
         label: "Account Manager",
         sortable: false,
-        render: (value, all) => <div>{"Account Manager" || "N/A"} </div>,
+        render: (value, all) => <div>{all?.admins?.name || "N/A"} </div>,
       },
       {
         key: "industry",
         label: "Industry",
         sortable: false,
-        render: (value, all) => <div>{"Industry"} </div>,
+        render: (value, all) => <div>{all?.industry?.name} </div>,
       },
 
       {
         key: "featured_on",
         label: "Featured on",
         sortable: false,
-        render: (value, all) => <div><StatusPill status={"Featured on"}/>{""} </div>,
+        render: (value, all) => (
+          <div>
+          {all?.is_featured_home && !all?.is_featured_industry && <StatusPill status={"HOME"} style={{color:"#5F63F2"}}/>}
+          {!all?.is_featured_home && all?.is_featured_industry && <StatusPill status={"INDUSTRY"} style={{color:"#FA55AD"}}/>}
+          {all?.is_featured_home && all?.is_featured_industry && <StatusPill status={"BOTH"} style={{color:"#0F49A0"}} />}
+        </div>
+        ),
       },
       {
         key: "Updaated_on",
         label: "Updated On",
         sortable: false,
-        render: (value, all) => <div>{"Updated On"} </div>,
+        render: (value, all) => <div>{all?.updatedAtText} </div>,
       },
-    
+
       {
         key: "status",
         label: "Status",
@@ -135,13 +149,13 @@ const TopManufacatures = (props) => {
         render: (temp, all) => (
           <div>
             <IconButton>
-              <AccountCircle fontSize={"small"}/>
+              <AccountCircle fontSize={"small"} />
             </IconButton>
             <IconButton>
-              <Delete fontSize={"small"}/>
+              <Delete fontSize={"small"} />
             </IconButton>
             <IconButton>
-              <Create fontSize={"small"}/>
+              <Create fontSize={"small"} />
             </IconButton>
             {/* <Button onClick={() => handleEdit(all)}>Info</Button> */}
           </div>

@@ -2,10 +2,8 @@
 /* eslint-disable no-unused-vars */
 import { useDispatch, useSelector } from "react-redux";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import {
-  actionFetchBadge,
-  actionSetPageBadgeRequests,
-} from "../../actions/Badge.action";
+import { actionFetchTopManufacture, actionSetPageTopManufactureRequests } from "../../actions/TopManufacture.action";
+
 
 const useTopManufacatureHook = ({}) => {
   const [isSidePanel, setSidePanel] = useState(false);
@@ -21,11 +19,11 @@ const useTopManufacatureHook = ({}) => {
     query,
     query_data: queryData,
     all,
-  } = useSelector((state) => state.badge);
+  } = useSelector((state) => state.topManufacture);
 
   useEffect(() => {
     dispatch(
-      actionFetchBadge(
+      actionFetchTopManufacture(
         1,
         {},
         {
@@ -40,13 +38,13 @@ const useTopManufacatureHook = ({}) => {
   useEffect(() => {}, [setEditId]);
 
   const handlePageChange = useCallback((type) => {
-    dispatch(actionSetPageBadgeRequests(type));
+    dispatch(actionSetPageTopManufactureRequests(type));
   }, []);
 
   const queryFilter = useCallback(
     (key, value) => {
       dispatch(
-        actionFetchBadge(1, sortingData, {
+        actionFetchTopManufacture(1, sortingData, {
           query: key == "SEARCH_TEXT" ? value : query,
           query_data: key == "FILTER_DATA" ? value : queryData,
         })
@@ -71,9 +69,9 @@ const useTopManufacatureHook = ({}) => {
 
   const handleSortOrderChange = useCallback(
     (row, order) => {
-      dispatch(actionSetPageBadgeRequests(1));
+      dispatch(actionSetPageTopManufactureRequests(1));
       dispatch(
-        actionFetchBadge(
+        actionFetchTopManufacture(
           1,
           { row, order },
           {

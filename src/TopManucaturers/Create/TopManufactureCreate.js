@@ -48,7 +48,7 @@ const TopManufactureCreate = ({
     handleDelete,
     listIndustryData,
     isSubmitting,
-    businessName
+    businessName,
   } = useTopManufactureHook({ handleToggleSidePannel, isSidePanel, empId });
   const classes = useStyles();
 
@@ -74,35 +74,19 @@ const TopManufactureCreate = ({
       </div>
 
       <div>
-        {/* <div className={"formFlex"}>
-          <div className={"formGroup"}>
-            <CustomSelectField
-              isError={errorData?.industry}
-              errorText={errorData?.industry}
-              label={"Select Industry"}
-              value={form?.industry}
-              handleChange={(value) => {
-                changeTextData(value, "industry");
-              }}
-            >
-              <MenuItem value={"FOOTWEAR"}>{"Footwear"}</MenuItem>
-            </CustomSelectField>
-          </div>
-        </div> */}
         <div className={"formFlex"}>
           <div className={"formGroup"}>
             <Autocomplete
-              multiple
+            
               id="tags-outlined"
               onChange={(e, value) => {
                 changeTextData(value, "industry");
               }}
-            
               value={form.industry || []}
               options={listIndustryData || []}
               getOptionLabel={(option) => option.name}
               defaultValue={form.industry || []}
-              //  getOptionSelected={(option, value) => option.id === value.id}
+              getOptionSelected={(option, value) => option.id === value.id}
               renderInput={(params) => (
                 <TextField
                   {...params}
@@ -114,32 +98,46 @@ const TopManufactureCreate = ({
             />
           </div>
         </div>
+     
+
         <div className={"formFlex"}>
           <div className={"formGroup"}>
             <Autocomplete
-              multiple
               id="tags-outlined"
               onChange={(e, value) => {
                 changeTextData(value, "business_name");
               }}
-            
-              value={form?.business_name || []}
+              value={form.business_name || []} //fetchedAssignedUser ||
               options={businessName || []}
-              getOptionLabel={(option) => option?.company_name}
               defaultValue={form?.business_name || []}
-              //  getOptionSelected={(option, value) => option.id === value.id}
+              getOptionLabel={(option) => option?.company_name}
+              renderOption={(option) => (
+                <div style={{ display: "flex", alignItems: "center" }}>
+                  <div>{`${option?.company_name} `}</div>
+                </div>
+              )}
               renderInput={(params) => (
                 <TextField
                   {...params}
                   variant="outlined"
-                  label="Associated Industries"
+                  label="Business Name"
                   error={errorData?.business_name}
+                  InputProps={{
+                    ...params.InputProps,
+                    endAdornment: (
+                      <>
+                        <Search
+                          style={{ marginRight: -20, cursor: "pointer" }}
+                        />
+                      </>
+                    ),
+                  }}
                 />
               )}
+              disableClearable
             />
           </div>
         </div>
-
         <div className={"formFlex"}>
           <div className={"formGroup"}>
             <CustomCheckbox
@@ -158,6 +156,7 @@ const TopManufactureCreate = ({
                 isError={errorData?.priority}
                 errorText={errorData?.priority}
                 label={"Priority"}
+                type="number"
                 value={form?.priority}
                 onTextChange={(text) => {
                   changeTextData(text, "priority");
@@ -184,13 +183,14 @@ const TopManufactureCreate = ({
             />
           </div>
         </div>
-        {!form?.features_on_industry && (
+        {form?.features_on_industry && (
           <div className={"formFlex"}>
             <div className={"formGroup"}>
               <CustomTextField
                 isError={errorData?.priority1}
                 errorText={errorData?.priority1}
                 label={"Priority"}
+                type="number"
                 value={form?.priority1}
                 onTextChange={(text) => {
                   changeTextData(text, "priority1");

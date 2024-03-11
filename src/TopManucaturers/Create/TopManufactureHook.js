@@ -10,18 +10,26 @@ import {
 import SnackbarUtils from "../../libs/SnackbarUtils";
 import { useDispatch } from "react-redux";
 import { actionFetchBadge } from "../../actions/Badge.action";
-import { serviceTopManufactureSearch } from "../../services/TopManufacture.service";
+import {
+  serviceCreateTopManufacture,
+  serviceTopManufactureSearch,
+  serviceUpdateTopManufacture,
+} from "../../services/TopManufacture.service";
 
 const initialForm = {
-  industry: [],
-  business_name:[],
-  features_on:false,
-  features_on_industry:false,
-  priority:"",
-  priority1:""
+  industry: "",
+  business_name: "",
+  features_on: false,
+  features_on_industry: false,
+  priority: "",
+  priority1: "",
 };
 
-const useTopManufactureHook = ({ handleToggleSidePannel, isSidePanel, empId }) => {
+const useTopManufactureHook = ({
+  handleToggleSidePannel,
+  isSidePanel,
+  empId,
+}) => {
   const [isLoading] = useState(false);
   const [showPasswordCurrent, setShowPasswordCurrent] = useState(false);
   const [errorData, setErrorData] = useState({});
@@ -32,8 +40,9 @@ const useTopManufactureHook = ({ handleToggleSidePannel, isSidePanel, empId }) =
   const [logos, setLogos] = useState(null);
   const [selectedValues, setSelectedValues] = useState("");
   const [listData, setListData] = useState(null);
-  const [businessName, setBusinessName]=useState(null);
-  const [listIndustryData, setListIndustryData]=useState(null)
+  const [businessName, setBusinessName] = useState(null);
+  const [fetchedBusinessName, setFetchedbusinessName] = useState(null);
+  const [listIndustryData, setListIndustryData] = useState(null);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -44,13 +53,22 @@ const useTopManufactureHook = ({ handleToggleSidePannel, isSidePanel, empId }) =
     });
   }, []);
 
+  // useEffect(() => {
+  //   setFetchedAssinedUser(profileDetails);
+  // }, [fetchedAssignedUser]);
   useEffect(() => {
-    serviceTopManufactureSearch({ name: form?.business_name ? form?.business_name  : "flipkart"}).then((res) => {
+    if (!isSidePanel) return;
+    serviceTopManufactureSearch({
+      name: form?.business_name
+        ? form?.business_name?.company_name
+        : form?.business_name,
+      industry_id: form?.industry?.id,
+    }).then((res) => {
       if (!res.error) {
         setBusinessName(res.data);
       }
     });
-  }, []);
+  }, [isSidePanel]);
 
   useEffect(() => {
     serviceBadgeIndustry({ id: empId }).then((res) => {
@@ -59,7 +77,7 @@ const useTopManufactureHook = ({ handleToggleSidePannel, isSidePanel, empId }) =
       }
     });
   }, []);
-console.log(businessName, "Name")
+
   useEffect(() => {
     if (empId) {
       serviceBadgeDetail({ id: empId }).then((res) => {
@@ -88,7 +106,8 @@ console.log(businessName, "Name")
 
   const checkFormValidation = useCallback(() => {
     const errors = { ...errorData };
-    let required = ["name", ...(empId ? [] : ["logo"])];
+    let required = ["industry"];
+  
     required.forEach((val) => {
       if (
         !form?.[val] ||
@@ -113,18 +132,28 @@ console.log(businessName, "Name")
       return;
     }
     setIsSubmitting(true);
+    const industryID =
+      Array.isArray(form.industry) && form.industry.length > 0
+        ? form.industry.map((item) => item.id || item._id)
+        : [];
+
     try {
-      const formData = new FormData();
-      const fields = ["name", "logo", "apply_to", "logic", "industry_id"];
-      fields.forEach((field) => {
-        formData.append(field, form?.[field]);
-      });
-      formData.append("id", empId);
-      const serviceFunction = empId ? serviceBadgeUpdate : serviceBadgeCreate;
+      const formData = {
+        industry_id: form?.industry?.id,
+        business_id: "65709e782460477a596cc512",
+        // business_name:form?.business_name,
+        home_priority: form?.priority,
+        industry_priority: form?.priority1,
+        is_featured_home: form?.features_on,
+        is_featured_industry: form?.features_on_industry,
+      };
+      const serviceFunction = empId
+        ? serviceUpdateTopManufacture
+        : serviceCreateTopManufacture;
       const res = await serviceFunction(formData);
       if (!res.error) {
         handleToggleSidePannel();
-        dispatch(actionFetchBadge());
+        // dispatch(actionFetchBadge());
       } else {
         SnackbarUtils.error(res.message);
       }
@@ -155,18 +184,27 @@ console.log(businessName, "Name")
 
   const changeTextData = useCallback(
     (text, fieldName) => {
-      if (fieldName === "Industry_Specific") {
+      if (fieldName === "Ind") {
         setSelectedValues(text);
       }
       let shouldRemoveError = true;
       const t = { ...form };
-      if (fieldName === "name") {
+      if (fieldName === "industry") {
+        console.log(text, "Industry");
         t[fieldName] = text;
-      } else if (fieldName === "logo") {
+        // t[fieldName] = text?.filter((item, index, self) => {
+        //   return  index === self.findIndex((i) => i.id === item.id && i._id === item._id)
+
+        // });
+      } else if (fieldName === "business_name") {
         t[fieldName] = text;
-      } else if (fieldName === "category") {
+      } else if (fieldName === "features_on") {
         t[fieldName] = text;
-      } else if (fieldName === "industry_id") {
+      } else if (fieldName === "features_on_industry") {
+        t[fieldName] = text;
+      } else if (fieldName === "priority") {
+        t[fieldName] = text;
+      } else if (fieldName === "priority1") {
         t[fieldName] = text;
       } else {
         t[fieldName] = text;
@@ -213,7 +251,7 @@ console.log(businessName, "Name")
     logos,
     selectedValues,
     businessName,
-    listIndustryData
+    listIndustryData,
   };
 };
 
