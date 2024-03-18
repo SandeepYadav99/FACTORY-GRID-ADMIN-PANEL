@@ -115,7 +115,7 @@ const TopManufactureCreate = ({
                   <div>{`${option?.company_name} `}</div>
                 </div>
               )}
-              disabled={!form.industry}
+              disabled={!form.industry && !fetchIndustryData}
               renderInput={(params) => (
                 <TextField
                   {...params}
@@ -146,7 +146,7 @@ const TopManufactureCreate = ({
                 changeTextData(!form?.features_on, "features_on");
               }}
               label={`Feature on Home`}
-              disabled={!form.business_name}
+              disabled={!form.business_name && !fetchedBusinessName}
             />
           </div>
         </div>

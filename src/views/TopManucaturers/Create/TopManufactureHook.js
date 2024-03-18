@@ -10,6 +10,7 @@ import {
   serviceTopManufactureSearch,
   serviceUpdateTopManufacture,
 } from "../../../services/TopManufacture.service";
+import { actionFetchTopManufacture } from "../../../actions/TopManufacture.action";
 
 const initialForm = {
   industry: "",
@@ -53,7 +54,7 @@ const useTopManufactureHook = ({
   // useEffect(() => {
   //   setFetchedAssinedUser(profileDetails);
   // }, [fetchedAssignedUser]);
- 
+
   useEffect(() => {
     if (!isSidePanel) return; //  //
     serviceTopManufactureSearch({
@@ -83,7 +84,7 @@ const useTopManufactureHook = ({
           const data = res?.data;
           setForm({
             ...form,
-         
+
             features_on: data?.is_featured_home,
             features_on_industry: data?.is_featured_industry,
             priority: data?.home_priority,
@@ -114,6 +115,12 @@ const useTopManufactureHook = ({
     if (!fetchIndustryData) {
       required.push("business_name");
     }
+    if (form?.features_on) {
+      required.push("priority");
+    }
+    if (form?.features_on_industry) {
+      required.push("priority1");
+    }
     required.forEach((val) => {
       if (
         !form?.[val] ||
@@ -125,7 +132,6 @@ const useTopManufactureHook = ({
       }
     });
 
-   
     Object.keys(errors).forEach((key) => {
       if (!errors[key]) {
         delete errors[key];
@@ -161,6 +167,7 @@ const useTopManufactureHook = ({
       if (!res.error) {
         handleToggleSidePannel();
         // dispatch(actionFetchBadge());
+        dispatch(actionFetchTopManufacture(1));
       } else {
         SnackbarUtils.error(res.message);
       }
@@ -172,7 +179,7 @@ const useTopManufactureHook = ({
 
   const handleSubmit = useCallback(async () => {
     const errors = checkFormValidation();
-   
+
     if (Object.keys(errors).length > 0) {
       setErrorData(errors);
     } else {
