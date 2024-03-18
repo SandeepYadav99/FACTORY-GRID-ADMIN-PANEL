@@ -172,9 +172,7 @@ const useTopManufactureHook = ({
 
   const handleSubmit = useCallback(async () => {
     const errors = checkFormValidation();
-    if (!form.features_on && !form.features_on_industry) {
-      errors["features"] = SnackbarUtils.error("Select atlist one Check box");
-    }
+   
     if (Object.keys(errors).length > 0) {
       setErrorData(errors);
     } else {

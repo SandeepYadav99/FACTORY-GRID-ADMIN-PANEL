@@ -49,7 +49,7 @@ const TopManufactureCreate = ({
     isSubmitting,
     businessName,
     fetchIndustryData,
-    fetchedBusinessName
+    fetchedBusinessName,
   } = useTopManufactureHook({ handleToggleSidePannel, isSidePanel, empId });
   const classes = useStyles();
 
@@ -78,12 +78,11 @@ const TopManufactureCreate = ({
         <div className={"formFlex"}>
           <div className={"formGroup"}>
             <Autocomplete
-            
               id="tags-outlined"
               onChange={(e, value) => {
                 changeTextData(value, "industry");
               }}
-              value={form.industry || fetchIndustryData || [] }
+              value={form.industry || fetchIndustryData || []}
               options={listIndustryData || []}
               getOptionLabel={(option) => option?.name}
               defaultValue={form.industry || []}
@@ -99,7 +98,6 @@ const TopManufactureCreate = ({
             />
           </div>
         </div>
-     
 
         <div className={"formFlex"}>
           <div className={"formGroup"}>
@@ -108,15 +106,16 @@ const TopManufactureCreate = ({
               onChange={(e, value) => {
                 changeTextData(value, "business_name");
               }}
-              value={form.business_name || fetchedBusinessName || [] } //fetchedAssignedUser ||
+              value={form.business_name || fetchedBusinessName || []} //fetchedAssignedUser ||
               options={businessName || []}
               defaultValue={form?.business_name || []}
-              getOptionLabel={(option) => option?.company_name}//company_name
+              getOptionLabel={(option) => option?.company_name} //company_name
               renderOption={(option) => (
                 <div style={{ display: "flex", alignItems: "center" }}>
                   <div>{`${option?.company_name} `}</div>
                 </div>
               )}
+              disabled={!form.industry}
               renderInput={(params) => (
                 <TextField
                   {...params}
@@ -144,11 +143,10 @@ const TopManufactureCreate = ({
             <CustomCheckbox
               value={form?.features_on}
               handleChange={() => {
-               
                 changeTextData(!form?.features_on, "features_on");
               }}
               label={`Feature on Home`}
-            
+              disabled={!form.business_name}
             />
           </div>
         </div>
@@ -183,7 +181,7 @@ const TopManufactureCreate = ({
                 );
               }}
               label={`Feature on Industry Page`}
-            
+              disabled={!form?.features_on}
             />
           </div>
         </div>
@@ -212,6 +210,7 @@ const TopManufactureCreate = ({
             color={"primary"}
             type={"submit"}
             onClick={handleSubmit}
+            disabled={!form?.features_on}
           >
             {isSubmitting ? (
               <CircularProgress color="success" size="20px" />
