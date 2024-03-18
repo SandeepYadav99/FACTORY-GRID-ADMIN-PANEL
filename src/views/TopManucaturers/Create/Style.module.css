@@ -61,3 +61,7 @@ color: #0F49A0 !important;
 .heading{
     margin-right: 5px;
 }
+.checkboxError {
+    border-color: gray !important;
+   
+  }

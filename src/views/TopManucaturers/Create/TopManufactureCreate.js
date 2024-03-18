@@ -48,6 +48,8 @@ const TopManufactureCreate = ({
     listIndustryData,
     isSubmitting,
     businessName,
+    fetchIndustryData,
+    fetchedBusinessName
   } = useTopManufactureHook({ handleToggleSidePannel, isSidePanel, empId });
   const classes = useStyles();
 
@@ -81,9 +83,9 @@ const TopManufactureCreate = ({
               onChange={(e, value) => {
                 changeTextData(value, "industry");
               }}
-              value={form.industry || []}
+              value={form.industry || fetchIndustryData || [] }
               options={listIndustryData || []}
-              getOptionLabel={(option) => option.name}
+              getOptionLabel={(option) => option?.name}
               defaultValue={form.industry || []}
               getOptionSelected={(option, value) => option.id === value.id}
               renderInput={(params) => (
@@ -106,10 +108,10 @@ const TopManufactureCreate = ({
               onChange={(e, value) => {
                 changeTextData(value, "business_name");
               }}
-              value={form.business_name || []} //fetchedAssignedUser ||
+              value={form.business_name || fetchedBusinessName || [] } //fetchedAssignedUser ||
               options={businessName || []}
               defaultValue={form?.business_name || []}
-              getOptionLabel={(option) => option?.company_name}
+              getOptionLabel={(option) => option?.company_name}//company_name
               renderOption={(option) => (
                 <div style={{ display: "flex", alignItems: "center" }}>
                   <div>{`${option?.company_name} `}</div>
@@ -142,9 +144,11 @@ const TopManufactureCreate = ({
             <CustomCheckbox
               value={form?.features_on}
               handleChange={() => {
+               
                 changeTextData(!form?.features_on, "features_on");
               }}
               label={`Feature on Home`}
+            
             />
           </div>
         </div>
@@ -179,6 +183,7 @@ const TopManufactureCreate = ({
                 );
               }}
               label={`Feature on Industry Page`}
+            
             />
           </div>
         </div>

@@ -9,7 +9,7 @@ export async function serviceUpdateTopManufacture(params) {
 }
 
 export async function serviceDetailTopManufacture(params) {
-    return await postRequest('top/manufacture/detail', params);
+    return await postRequest('top/manufacture/details', params);
 }
 export async function serviceDeleteTopManufacture(params) {
     return await postRequest('top/manufacture/delete', params);

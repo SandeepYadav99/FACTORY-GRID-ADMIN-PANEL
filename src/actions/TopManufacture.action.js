@@ -72,7 +72,7 @@ export function actionUpdateTopManufacture(data) {
     }
 }
 
-export function actionDeleteMasterDelete(id) {
+export function actionDeleteTopManufactureDelete(id) {
     const request = serviceDeleteTopManufacture({ id: id});
     return (dispatch) => {
         dispatch({type: DELETE_ITEM, payload: id})

@@ -39,7 +39,7 @@ const TopManufacatures = (props) => {
     editData,
     editId,
     handleOpenSidePanel,
-    handleToggleSidePannel,
+    handleDelete,
   } = useTopManufacatureHook({});
 
   const {
@@ -148,13 +148,13 @@ const TopManufacatures = (props) => {
         label: "Action",
         render: (temp, all) => (
           <div>
-            <IconButton>
+            <IconButton onClick={()=>handleViewDetails(all)}>
               <AccountCircle fontSize={"small"} />
             </IconButton>
-            <IconButton>
+            <IconButton onClick={()=>handleDelete(all?.id)}>
               <Delete fontSize={"small"} />
             </IconButton>
-            <IconButton>
+            <IconButton onClick={() => handleEdit(all)}>
               <Create fontSize={"small"} />
             </IconButton>
             {/* <Button onClick={() => handleEdit(all)}>Info</Button> */}
@@ -170,6 +170,7 @@ const TopManufacatures = (props) => {
     renderFirstCell,
     renderStatus,
     handleEdit,
+    handleDelete
   ]);
 
   const tableData = useMemo(() => {

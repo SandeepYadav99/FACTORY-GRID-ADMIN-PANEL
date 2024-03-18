@@ -2,8 +2,14 @@
 /* eslint-disable no-unused-vars */
 import { useDispatch, useSelector } from "react-redux";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { actionFetchTopManufacture, actionSetPageTopManufactureRequests } from "../../../actions/TopManufacture.action";
-
+import {
+  actionDeleteTopManufactureDelete,
+  actionFetchTopManufacture,
+  actionSetPageTopManufactureRequests,
+} from "../../../actions/TopManufacture.action";
+import { actionDeleteMasterDelete } from "../../../actions/HubMaster.action";
+import history from "../../../libs/history.utils";
+import RouteName from "../../../routes/Route.name";
 
 const useTopManufacatureHook = ({}) => {
   const [isSidePanel, setSidePanel] = useState(false);
@@ -39,6 +45,10 @@ const useTopManufacatureHook = ({}) => {
 
   const handlePageChange = useCallback((type) => {
     dispatch(actionSetPageTopManufactureRequests(type));
+  }, []);
+
+  const handleDelete = useCallback((id) => {
+    dispatch(actionDeleteTopManufactureDelete(id));
   }, []);
 
   const queryFilter = useCallback(
@@ -103,7 +113,12 @@ const useTopManufacatureHook = ({}) => {
     [setEditId, setSidePanel]
   );
 
-
+  const handleViewDetails = useCallback(
+    (data) => {
+      history.push(`${RouteName.CUSTOMERS_MANUFACTURES}${data?.id}`);
+    },
+    [setEditId, setSidePanel]
+  );
   const configFilter = useMemo(() => {
     return [
       { label: "Created On", name: "createdAt", type: "date" },
@@ -128,6 +143,8 @@ const useTopManufacatureHook = ({}) => {
     configFilter,
     editId,
     handleOpenSidePanel,
+    handleDelete,
+    handleViewDetails,
   };
 };
 

@@ -1,16 +1,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useCallback, useEffect, useRef, useState } from "react";
 
-import {
-  serviceBadgeCreate,
-  serviceBadgeDetail,
-  serviceBadgeIndustry,
-  serviceBadgeUpdate,
-} from "../../../services/Badge.service";
+import { serviceBadgeIndustry } from "../../../services/Badge.service";
 import SnackbarUtils from "../../../libs/SnackbarUtils";
 import { useDispatch } from "react-redux";
 import {
   serviceCreateTopManufacture,
+  serviceDetailTopManufacture,
   serviceTopManufactureSearch,
   serviceUpdateTopManufacture,
 } from "../../../services/TopManufacture.service";
@@ -42,9 +38,11 @@ const useTopManufactureHook = ({
   const [businessName, setBusinessName] = useState(null);
   const [fetchedBusinessName, setFetchedbusinessName] = useState(null);
   const [listIndustryData, setListIndustryData] = useState(null);
+  const [fetchIndustryData, setFetchIndustryData] = useState(null);
   const dispatch = useDispatch();
-
+  console.log(empId, "Id");
   useEffect(() => {
+    if (!isSidePanel) return;
     serviceBadgeIndustry({ id: empId }).then((res) => {
       if (!res.error) {
         setListData(res.data);
@@ -55,8 +53,9 @@ const useTopManufactureHook = ({
   // useEffect(() => {
   //   setFetchedAssinedUser(profileDetails);
   // }, [fetchedAssignedUser]);
+ 
   useEffect(() => {
-    if (!isSidePanel) return;
+    if (!isSidePanel) return; //  //
     serviceTopManufactureSearch({
       name: form?.business_name
         ? form?.business_name?.company_name
@@ -67,7 +66,7 @@ const useTopManufactureHook = ({
         setBusinessName(res.data);
       }
     });
-  }, [isSidePanel]);
+  }, [isSidePanel, form.industry]);
 
   useEffect(() => {
     serviceBadgeIndustry({ id: empId }).then((res) => {
@@ -79,17 +78,20 @@ const useTopManufactureHook = ({
 
   useEffect(() => {
     if (empId) {
-      serviceBadgeDetail({ id: empId }).then((res) => {
+      serviceDetailTopManufacture({ id: empId }).then((res) => {
         if (!res.error) {
-          const data = res.data;
+          const data = res?.data;
           setForm({
             ...form,
-            name: data?.name,
-            apply_to: data?.apply_to,
-            logic: data?.logic,
-            industry_id: data?.industries?._id,
+         
+            features_on: data?.is_featured_home,
+            features_on_industry: data?.is_featured_industry,
+            priority: data?.home_priority,
+            priority1: data?.industry_priority,
           });
           setLogos(data?.logo);
+          setFetchIndustryData(data?.industry);
+          setFetchedbusinessName(data?.business);
         } else {
           // SnackbarUtils.error(res?.message);
         }
@@ -105,8 +107,13 @@ const useTopManufactureHook = ({
 
   const checkFormValidation = useCallback(() => {
     const errors = { ...errorData };
-    let required = ["industry"];
-  
+    let required = [];
+    if (!fetchIndustryData) {
+      required.push("industry");
+    }
+    if (!fetchIndustryData) {
+      required.push("business_name");
+    }
     required.forEach((val) => {
       if (
         !form?.[val] ||
@@ -118,6 +125,7 @@ const useTopManufactureHook = ({
       }
     });
 
+   
     Object.keys(errors).forEach((key) => {
       if (!errors[key]) {
         delete errors[key];
@@ -131,25 +139,25 @@ const useTopManufactureHook = ({
       return;
     }
     setIsSubmitting(true);
-    const industryID =
-      Array.isArray(form.industry) && form.industry.length > 0
-        ? form.industry.map((item) => item.id || item._id)
-        : [];
 
+    const formData = {
+      industry_id: form?.industry?.id || fetchIndustryData?._id,
+      business_id: form?.business_name?._id || fetchedBusinessName?.id,
+
+      home_priority: form?.priority,
+      industry_priority: form?.priority1,
+      is_featured_home: form?.features_on,
+      is_featured_industry: form?.features_on_industry,
+    };
+
+    if (empId) {
+      formData.id = empId;
+    }
     try {
-      const formData = {
-        industry_id: form?.industry?.id,
-        business_id: "65709e782460477a596cc512",
-        // business_name:form?.business_name,
-        home_priority: form?.priority,
-        industry_priority: form?.priority1,
-        is_featured_home: form?.features_on,
-        is_featured_industry: form?.features_on_industry,
-      };
       const serviceFunction = empId
-        ? serviceUpdateTopManufacture
-        : serviceCreateTopManufacture;
-      const res = await serviceFunction(formData);
+        ? serviceUpdateTopManufacture(formData)
+        : serviceCreateTopManufacture(formData);
+      const res = await serviceFunction;
       if (!res.error) {
         handleToggleSidePannel();
         // dispatch(actionFetchBadge());
@@ -164,7 +172,9 @@ const useTopManufactureHook = ({
 
   const handleSubmit = useCallback(async () => {
     const errors = checkFormValidation();
-
+    if (!form.features_on && !form.features_on_industry) {
+      errors["features"] = SnackbarUtils.error("Select atlist one Check box");
+    }
     if (Object.keys(errors).length > 0) {
       setErrorData(errors);
     } else {
@@ -228,7 +238,10 @@ const useTopManufactureHook = ({
 
   const handleReset = useCallback(() => {
     setForm({ ...initialForm });
-  }, [form, setForm]);
+    setErrorData({});
+    setFetchIndustryData(null);
+    setFetchedbusinessName(null);
+  }, [form, setForm, errorData, fetchIndustryData, fetchedBusinessName]);
 
   return {
     form,
@@ -251,6 +264,8 @@ const useTopManufactureHook = ({
     selectedValues,
     businessName,
     listIndustryData,
+    fetchIndustryData,
+    fetchedBusinessName,
   };
 };
 
