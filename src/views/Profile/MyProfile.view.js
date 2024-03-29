@@ -157,7 +157,7 @@ const Profile = () => {
                   <div className={styles.activityFlex}>
                     <Person className={styles.contactIcons} />
 
-                    <span className={styles.activity}>Manager</span>
+                    <span className={styles.activity}>{profileDetails?.manager?.name}</span>
                   </div>
                 </div>
 
