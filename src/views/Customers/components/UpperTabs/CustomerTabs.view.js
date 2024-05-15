@@ -276,12 +276,12 @@ const ManufacturerTabs = ({ classes, theme }) => {
         <TabPanel value={value} index={4} dir={theme.direction}>
           <Badges userProfile={userProfile} />
         </TabPanel>
-        <TabPanel value={value} index={7} dir={theme.direction}>
+        {/* <TabPanel value={value} index={7} dir={theme.direction}>
           <BrandView userProfile={[]} />
-        </TabPanel>
-        <TabPanel value={value} index={8} dir={theme.direction}>
+        </TabPanel> */}
+        {/* <TabPanel value={value} index={8} dir={theme.direction}>
           <RecentUpdate userProfile={[]} />
-        </TabPanel>
+        </TabPanel> */}
       </div>
        <SuspendPopup
         candidateId={userProfile?._id}
