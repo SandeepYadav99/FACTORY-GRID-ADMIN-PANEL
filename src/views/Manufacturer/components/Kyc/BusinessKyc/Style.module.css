@@ -22,6 +22,7 @@
   }
   .sub_kycContainer{
     display: flex !important;
+    align-items: center !important;
   }
   .title {
     color: #000000;

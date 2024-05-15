@@ -45,10 +45,10 @@ const useAddTaskCreate = ({
   const [filteredTask, setFilteredTask] = useState(null);
   const [filteredAssignedTo, setFilteredAssignedTo] = useState(null);
   const [fetchedAssignedUser, setFetchedAssinedUser] = useState(null);
-  const [categoryLists, setCategoryLists] = useState(null);
   const [taskTypes, setTaskTypes] = useState(["DISCUS"]);
   const [helperText, setHelperText] = useState("");
   const dispatch = useDispatch();
+  const [categoryLists, setCategoryLists] = useState(null);
 
   useEffect(() => {
     if (!isSidePanel) return;

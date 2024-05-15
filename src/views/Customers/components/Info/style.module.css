@@ -1,266 +1,42 @@
-.profileFlex {
-    display: flex;
-    /*align-items: center;*/
-}
-
 .upperFlex{
     display: flex;
-    justify-content: space-between;
-    align-items: center;
 }
 
-.resetButton{
-    color: black !important;
-    background-color: white !important;
-    padding: 15px 40px !important;
-    border-radius: 5px !important;
-    font-size: 14px !important;
-    font-weight: 500 !important;
-    margin-right: 15px !important;
-}
-
-.addTask{
-    color: white !important;
-    background-color: #5f63f2 !important;
-    padding: 15px 40px !important;
-    border-radius: 5px !important;
-    font-size: 14px !important;
-    font-weight: 500 !important;
-    margin-right: 15px !important;
-}
-
-.leftSection {
-    /*margin-right: 30px;*/
-    flex: 0.7;
-    margin: auto;
-}
-.rightSection{
-    flex: 1;
-    margin-left: 20px;
+.left{
+    flex: 0.5;
     margin-right: 10px;
 }
 
-.profileHeading{
-    padding-top: 20px;
-    padding-bottom: 30px;
-    font-size: 1rem;
-    font-weight: bolder;
-}
-
-.plain{
-    border-radius: 15px;
-    padding: 1.2rem;
-    margin-bottom: 10px;
-    background-color: white;
-}
-
-.profileContainer{
-    text-align: center;
-}
-
-.name{
-    font-family: 'Inter', sans-serif;
-    margin-top: 18px;
-    margin-bottom: 6px;
-    font-size: 1rem;
-    font-weight: 600;
-}
-
-.position{
-    color: rgb(146, 153, 184);
-    font-size: 0.8rem;
-    font-weight: 600;
-    margin-bottom: 20px;
-}
-
-.designation{
-    color: rgb(146, 153, 184);
-    font-weight: 600;
-    margin-bottom: 15px;
-    font-size: 0.7rem;
-}
-
-.status{
-    margin-bottom: 15px;
-    font-size: 14px;
-    color: #20c997;
-    background: rgba(32,201,151,.1);
-    padding: 3px 10px;
-    border-radius: 20px;
-    text-transform: capitalize;
-    display: inline-block;
-}
-
-.heading{
-    font-size: 0.9rem;
-    color: rgb(146, 153, 184);
-    text-transform: uppercase;
-}
-
-.contactFlex{
-    display: flex;
-    align-items: center;
-    margin-bottom: 20px;
-    color: #5f5151;
-}
-
-.timeFlex{
-    display: flex;
-    align-items: center;
-    color: #5f5151;
-    font-weight: 500;
-    margin-left: 45px;
-    font-size: 0.8rem;
-}
-
-.activityFlex{
-    display: flex;
-    align-items: center;
-    margin-bottom: 20px;
-    color: #5f5151;
-    font-size: 0.8rem;
-}
-
-.email{
-    margin-left: 12px;
-    font-size: 0.9rem;
-}
-
-.info{
-    margin-left: 12px;
-}
-
-.activity{
-    margin-left: 12px;
-    font-size: 0.9rem;
-}
-
-.contactIcons{
-    font-size: 0.9rem !important;
-}
-
-.taskHeading{
-    font-size: 1.1rem;
-    font-weight: 600;
-    padding: 15px 15px;
-    margin-bottom: 0px;
-    margin-top: 0px;
-    /*border-bottom: 1px solid rgb(241, 242, 246);*/
-}
-.check{
-    margin-top: 15px;
-}
-
-.dummy{
-    font-size: 0.8rem;
-    margin-top: 5px;
-    margin-left: 12px;
-    color: #5f5151;
-    margin-bottom: 25px;
-}
-
-.priority{
-    background-color: rgb(255, 85, 0);
-    display: inline-block;
-    padding: 3px 30px;
-    border-radius: 25px;
-    color: white;
-    font-size: 0.8rem;
-    margin-left: 30px;
-}
-
-.taskFlex{
-    display: flex;
-}
-
-.section{
-    font-size: 0.8rem;
-    font-weight: 600;
-    padding: 3px 20px;
-    background-color: #93919136;
-    margin-left: 30px;
-}
-
-.innerText{
+.right {
+    flex: 1;
     margin-left: 10px;
 }
 
-.member{
-    margin-right: 15px;
-    font-weight: 600;
-    width: 100px;
-}
-
-.activityList{
-    margin: 0px;
-    padding: 0px;
-    list-style: none;
-}
-
-.activityList_single{
-    padding: 12px 25px;
-    display: flex;
-    -webkit-box-align: center;
-    align-items: center;
-}
-
-.activityIcon{
-
-    background-color: rgba(95, 99, 242, 0.082);
-    color: rgb(95, 99, 242);
-    padding: 8px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 50%;
+.leftChat{
+    flex: 0.3;
     margin-right: 15px;
 }
 
-.activeIcon{
-    font-size: 16px !important;
+.week{
+    font-size: 12px;
+    color: rgb(146, 153, 184);
 }
 
-.activityContent{
-    flex: 1 1 auto;
-    display: flex;
-    -webkit-box-align: center;
-    align-items: center;
-    -webkit-box-pack: justify;
-    justify-content: space-between;
+.chatWidth{
+    width: 200px;
 }
 
-.activityInfo{
-    display: flex;
-    -webkit-box-align: center;
-    align-items: center;
+.rightChat{
+    flex: 1;
+    margin-left: 15px;
 }
 
-.icon{
-    max-width: 40px;
-    border-radius: 50%;
-    margin-right: 20px;
-}
-
-.nameActivity{
-    color: #5f63f2;
-    font-weight: 600;
-}
-
-.information{
-    margin-bottom: 0px;
-    margin-top: 0px;
-    font-size: 14px;
-    color: rgb(90, 95, 125);
-}
-
-.hours{
-    margin-top: 3px;
-    color: rgb(173, 180, 210);
-    font-size: 0.8rem;
-}
-
-.horizontalDots{
-    color: rgb(173, 180, 210) !important;
+.plain{
+    border-radius: 10px;
+    padding: 1.2rem 1.2rem;
+    margin-bottom: 20px;
+    background-color: white;
+    box-shadow: 0 0 8px rgb(0 0 0 / 15%);
 }
 
 .verified{
@@ -270,30 +46,320 @@
 }
 
 .notverified{
-    color: red;
+    color: yellow;
     font-size: 0.8rem;
     margin-bottom: 20px;
 }
+.inputCity {
+    width: calc(100%);
+    padding-left: 20px;
+    height: 40px;
+    box-sizing: border-box;
+    border: none;
+    /*border: 1px solid #80808021;*/
+    background: rgb(244, 245, 247);
+    border-radius: 30px;
+    font-size: 14px;
+    position: relative;
+    padding-right: 40px;
+    /*margin-left: 12px;*/
+    /*margin-right: 12px;*/
+}
 
-.outerFlex{
+.inputCity:focus {
+    outline: none;
+}
+
+.searchIcon{
+    position: absolute;
+    right: 33px;
+    top: 28px;
+    color: gray;
+}
+
+.templateImg{
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    margin-right: 10px;
+    border: 1px solid #80808021;
+}
+
+.chatIcon{
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    margin-right: 15px;
+    border: 1px solid #80808021;
+}
+
+.chatFlex{
+    display: flex;
+    justify-content: space-around;
+    /*align-items: center;*/
+}
+
+.innerFlex{
+    display: flex;
+}
+
+.chatContainer{
+    margin-top: 30px;
+    text-align: left;
+    /*margin-bottom: 40px;*/
+}
+
+.number{
+    background: #20c997;
+    font-size: 0.7rem;
+    color: white;
+    height: 20px;
+    width: 20px;
     display: flex;
     align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    margin-top: 10px;
+}
+
+.weekFlex{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: end;
+}
+
+.desc{
+    color: rgb(146, 153, 184);
+    font-size: 0.8rem;
+    line-height: 20px;
+}
+
+.chatName{
+    font-weight: 600;
+    font-size: 0.8rem;
+    margin-top: 3px;
+    margin-bottom: 5px;
+}
+.removeBtn{
+    color: red !important;
+}
+
+.profile{
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.user{
+    font-size: 0.8rem;
+    font-weight: 600;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.name{
+    font-size: 0.8rem;
+    margin-bottom: 5px;
+}
+
+.categoryFlex{
+    display: flex;
+    justify-content: center;
+    margin-top: 15px;
+}
+
+.category{
+    background-color: #072ead;
+    padding: 15px 25px;
+    border-radius: 30px;
+    font-size: 0.8rem;
+    color: white;
+    width: 80px;
+    text-align: center;
+}
+
+.ageFlex{
+    display: flex;
     justify-content: space-between;
 }
 
-.btn{
+.gender{
+    font-size: 0.8rem;
     display: flex;
-    justify-content: flex-end;
+    flex-direction: column;
+    align-items: flex-start;
     margin-top: 30px;
-    margin-bottom: 20px;
-    margin-right: 15px;
+    margin-bottom: 15px;
 }
 
-.suspendUser{
-    color: white !important;
-    background-color: #00e5ff !important;
-    padding: 15px !important;
-    border-radius: 5px !important;
-    font-size: 10px !important;
-    font-weight: 500 !important;
+.key{
+    font-weight: 600;
+    font-size: 0.8rem;
+    margin-bottom: 7px;
+}
+
+.head{
+   
+    font-size: 0.8rem;
+    /* display: flex; */
+    margin-bottom: 3px;
+    /* justify-content: space-between; */
+}
+.subhead{
+    font-weight: 600;
+}
+.value{
+    font-size: 0.8rem;
+    margin-left: 10px;
+    text-transform: capitalize;
+    margin-top: 10px;
+}
+
+.cert{
+    text-transform: capitalize;
+    font-size: 0.8rem;
+    margin-top: 10px;
+    margin-left: 15px;
+}
+
+.val{
+    font-size: 0.8rem;
+    margin-left: 10px;
+    font-family: 'Inter', sans-serif;
+    margin-top: 10px;
+}
+
+.designation{
+    font-size: 0.7rem;
+}
+
+.line:after{
+    content: "";
+    display: block;
+    width: 80%;
+    border: 1px solid black;
+    margin: 20px auto;
+}
+
+.contactHeading{
+    margin-bottom: 15px;
+}
+
+.conContainer{
+    margin-bottom: 14px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.attach{
+    color: #1593ff;
+}
+
+/* .verified{
+    color: #F76A6D;
+    font-size: 0.9rem !important;
+    margin-left: 4px;
+} */
+
+.priceFlex{
+    display: flex;
+    justify-content: space-between;
+    font-size: 1rem;
+    font-weight: 600;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.rating{
+    font-size: 0.8rem !important;
+}
+
+/* ACcount*/
+.blockFlex{
+    display: flex;
+    font-size: 0.8rem;
+    justify-content: space-between;
+}
+
+.view{
+    color: #1593ff !important;
+    text-decoration: underline !important;
+    font-size: 0.7rem !important;
+}
+
+.recent{
+    margin-left: 10px;
+    font-size: 0.8rem;
+    margin-bottom: 10px;
+}
+
+
+.headings{
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.noChat{
+    text-align: center;
+    font-size: 1rem;
+    font-weight: 600;
+    padding-top: 30px;
+}
+
+.bgGreen{
+    background: #e6f9ef69;
+}
+.flex {
+    display: flex;
+    align-items: center;
+}
+
+.member{
+    font-size: 0.7rem;
+}
+
+.bottomProfile{
+    display: flex;
+    /*align-items: center;*/
+}
+
+.profileImg{
+    height: 35px;
+}
+
+.info{
+    margin-left: 10px;
+}
+
+.profileName{
+    font-weight: 600;
+    font-size: 0.8rem;
+}
+
+.accountFlex{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.industries{
+    font-size: 0.8rem;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.latest{
+    font-size: 0.8rem;
+}
+
+.activityFlex{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.msgDate{
+    font-weight: 600;
 }
