@@ -4,12 +4,13 @@ import styles from "./style.module.css";
 
 import useCustomerProfileHook from "../../../../helper/CustomerProfileHook";
 import { VerifiedUser } from "@material-ui/icons";
-import AccountQuality from "../AcountQuality/AcountQuality";
+
 import SimplePopovers from "../../../Manufacturer/components/Profile/components/Popover/SimplePopovers";
 import Queries from "../../../Manufacturer/components/Profile/components/Queries/Queries.view";
 import Messages from "../../../Manufacturer/components/Profile/components/Messages/Messages.component";
 import MessageFormView from "../../../Manufacturer/components/Profile/components/Messages/MessageForm.view";
 import Activity from "../../../Manufacturer/components/Profile/components/Activity";
+import AccountQuality from "../AcountQuality/AcountQuality";
 
 
 
